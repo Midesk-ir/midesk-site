@@ -1,0 +1,520 @@
+{
+  "app": {
+    "name": "Midesk",
+    "tagline": "Unified organization management platform for modern teams"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "projects": "Projects",
+    "teams": "Teams",
+    "members": "Members",
+    "settings": "Settings",
+    "notifications": "Notifications",
+    "worklog": "Worklog",
+    "calendar": "Calendar",
+    "leave": "Leave",
+    "sprints": "Sprints",
+    "reports": "Reports",
+    "logout": "Logout",
+    "menu": "Menu"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "email": "Email",
+    "phone": "Phone",
+    "password": "Password",
+    "name": "Name",
+    "loginWithPassword": "Login with password",
+    "loginWithOtp": "Login with SMS code",
+    "googleLogin": "Sign in with Google",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "sendOtp": "Send code",
+    "verifyOtp": "Verify code",
+    "otpSent": "Verification code sent",
+    "otpCode": "Verification code",
+    "resendIn": "Resend in {seconds}s",
+    "resend": "Resend",
+    "demoHint": "Demo: demo{'@'}midesk.io / password"
+  },
+  "onboarding": {
+    "title": "Create organization",
+    "orgName": "Organization name",
+    "region": "Region",
+    "regionIR": "Iran",
+    "regionINTL": "International",
+    "language": "Language",
+    "calendar": "Calendar",
+    "calendarJalali": "Jalali",
+    "calendarGregorian": "Gregorian",
+    "currency": "Currency",
+    "timezone": "Timezone",
+    "inviteMembers": "Invite members (optional)",
+    "inviteEmail": "Member email",
+    "next": "Next",
+    "back": "Back",
+    "finish": "Get started"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "myTasks": "My tasks",
+    "overdueTasks": "Overdue",
+    "activeProjects": "Active projects",
+    "recentActivity": "Recent activity",
+    "emptyTitle": "No projects yet",
+    "emptyDesc": "Create your first project to get started.",
+    "createProject": "Create first project",
+    "activeSprint": "Active sprint",
+    "weekHours": "Hours this week",
+    "pendingLeave": "Pending leave requests"
+  },
+  "projects": {
+    "title": "Projects",
+    "create": "New project",
+    "name": "Project name",
+    "description": "Description",
+    "members": "Members",
+    "tasks": "Tasks",
+    "progress": "Progress",
+    "tabs": {
+      "kanban": "Kanban",
+      "list": "List",
+      "members": "Members",
+      "sprints": "Sprints",
+      "reports": "Reports",
+      "settings": "Settings"
+    },
+    "emptyTitle": "No projects found",
+    "emptyDesc": "Create your team's first project."
+  },
+  "kanban": {
+    "columns": {
+      "backlog": "Backlog",
+      "todo": "To Do",
+      "in_progress": "In Progress",
+      "review": "Review",
+      "done": "Done"
+    },
+    "newTask": "New task",
+    "filterAssignee": "Assignee",
+    "filterLabel": "Label",
+    "filterPriority": "Priority",
+    "search": "Search...",
+    "all": "All",
+    "wipConfirmTitle": "WIP limit reached",
+    "wipConfirmBody": "This column is at its WIP limit. Move the task anyway?",
+    "wipConfirmAction": "Move anyway"
+  },
+  "task": {
+    "title": "Title",
+    "description": "Description",
+    "status": "Status",
+    "priority": "Priority",
+    "assignee": "Assignee",
+    "dueDate": "Due date",
+    "labels": "Labels",
+    "checklist": "Checklist",
+    "comments": "Comments",
+    "addComment": "Add a comment...",
+    "addChecklistItem": "Add item",
+    "priorities": {
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High",
+      "critical": "Critical"
+    },
+    "unassigned": "Unassigned",
+    "storyPoints": "Story points",
+    "sprint": "Sprint",
+    "logTime": "Log time",
+    "details": "Task details"
+  },
+  "teams": {
+    "title": "Teams",
+    "members": "Members",
+    "emptyTitle": "No teams found",
+    "emptyDesc": "Organization teams will appear here."
+  },
+  "members": {
+    "title": "Organization members",
+    "invite": "Invite member",
+    "role": "Role",
+    "changeRole": "Change role",
+    "roles": {
+      "OWNER": "Owner",
+      "ADMIN": "Admin",
+      "MANAGER": "Manager",
+      "MEMBER": "Member"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "profile": "Profile",
+    "organization": "Organization",
+    "avatar": "Avatar",
+    "changePassword": "Change password",
+    "newPassword": "New password",
+    "save": "Save",
+    "saved": "Saved"
+  },
+  "sprint": {
+    "title": "Sprints",
+    "create": "New sprint",
+    "name": "Sprint name",
+    "goal": "Goal",
+    "startDate": "Start",
+    "endDate": "End",
+    "status": "Status",
+    "backlog": "Backlog",
+    "active": "Active",
+    "planning": "Planning",
+    "review": "Review",
+    "closed": "Closed",
+    "activate": "Activate",
+    "close": "Close sprint",
+    "assignToSprint": "Add to sprint",
+    "removeFromSprint": "Remove from sprint",
+    "moveToBacklog": "Move to backlog",
+    "moveToNext": "Move to next sprint",
+    "points": "Points",
+    "tasks": "Tasks",
+    "done": "Done",
+    "daysRemaining": "{days} days left",
+    "progress": "Progress",
+    "emptyTitle": "No sprints yet",
+    "emptyDesc": "Create the first sprint for this project.",
+    "confirmActivate": "The current sprint will be closed. Continue?",
+    "confirmClose": "Close sprint — where should open tasks go?",
+    "noActive": "No active sprint",
+    "selectSprint": "Select sprint"
+  },
+  "reports": {
+    "title": "Reports",
+    "burndown": "Burndown chart",
+    "velocity": "Velocity",
+    "cfd": "Cumulative flow (CFD)",
+    "tabs": {
+      "burndown": "Burndown",
+      "velocity": "Velocity",
+      "cfd": "CFD"
+    },
+    "committed": "Committed",
+    "completed": "Completed",
+    "average": "Average",
+    "remaining": "Remaining",
+    "ideal": "Ideal line",
+    "emptyTitle": "No report data",
+    "emptyDesc": "Reports appear after a sprint starts."
+  },
+  "columns": {
+    "settings": "Column settings",
+    "wip": "WIP limit",
+    "reorder": "Reorder",
+    "wipLimit": "WIP limit",
+    "add": "New column",
+    "name": "Column name",
+    "color": "Color",
+    "isDone": "Done column",
+    "currentCount": "Current count",
+    "saveOrder": "Save order"
+  },
+  "swimlane": {
+    "mode": "Swimlane",
+    "none": "No swimlane",
+    "assignee": "By assignee",
+    "priority": "By priority",
+    "labels": {
+      "unassigned": "Unassigned",
+      "low": "Low priority",
+      "medium": "Medium priority",
+      "high": "High priority",
+      "critical": "Critical priority"
+    }
+  },
+  "worklog": {
+    "title": "Worklog",
+    "form": {
+      "title": "Log time",
+      "project": "Project",
+      "task": "Task (optional)",
+      "date": "Date",
+      "duration": "Duration",
+      "hours": "Hours",
+      "minutes": "Minutes",
+      "description": "Description",
+      "submit": "Log"
+    },
+    "table": {
+      "date": "Date",
+      "project": "Project",
+      "task": "Task",
+      "duration": "Duration",
+      "description": "Description",
+      "emptyTitle": "No time logged",
+      "emptyDesc": "Log your first worklog entry."
+    },
+    "summary": {
+      "title": "Week summary",
+      "total": "Total",
+      "today": "Today",
+      "thisWeek": "This week"
+    },
+    "team": {
+      "title": "Team worklog",
+      "member": "Member",
+      "emptyTitle": "No team entries",
+      "emptyDesc": "No team time logged in this range."
+    }
+  },
+  "calendar": {
+    "title": "Calendar",
+    "month": "Month",
+    "week": "Week",
+    "today": "Today",
+    "newEvent": "New event",
+    "eventTitle": "Title",
+    "eventType": "Event type",
+    "allDay": "All day",
+    "holidays": "Holidays",
+    "shifts": "Shifts",
+    "types": {
+      "meeting": "Meeting",
+      "deadline": "Deadline",
+      "reminder": "Reminder",
+      "other": "Other"
+    },
+    "emptyTitle": "No events",
+    "emptyDesc": "Add a new event or meeting."
+  },
+  "leave": {
+    "title": "Leave",
+    "balance": {
+      "title": "Leave balance",
+      "total": "Total",
+      "used": "Used",
+      "remaining": "Remaining",
+      "days": "days",
+      "hours": "hours"
+    },
+    "request": {
+      "title": "Leave request",
+      "type": "Leave type",
+      "startDate": "Start",
+      "endDate": "End",
+      "duration": "Duration",
+      "note": "Note",
+      "submit": "Submit request",
+      "emptyTitle": "No requests",
+      "emptyDesc": "Submit a new leave request."
+    },
+    "approve": "Approve",
+    "reject": "Reject",
+    "rejectReason": "Rejection reason",
+    "pendingApprovals": "Pending approvals",
+    "status": {
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "cancelled": "Cancelled"
+    }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "markAllRead": "Mark all read",
+    "emptyTitle": "No notifications",
+    "emptyDesc": "New notifications will appear here."
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Failed to load",
+    "retry": "Retry",
+    "cancel": "Cancel",
+    "save": "Save",
+    "create": "Create",
+    "edit": "Edit",
+    "delete": "Delete",
+    "close": "Close",
+    "noResults": "No results found"
+  },
+  "landing": {
+    "nav": {
+      "features": "Features",
+      "howItWorks": "How it works",
+      "pricing": "Pricing",
+      "faq": "FAQ"
+    },
+    "eyebrow": "Unified organization platform",
+    "heroTitleBefore": "Everything your",
+    "heroTitleHighlight": "modern team",
+    "heroTitleAfter": "needs in one place",
+    "heroSubtitle": "Projects, sprints, timesheets, calendar, and teams — no tool sprawl. Built for agile teams in Iran and worldwide.",
+    "getStarted": "Get started free",
+    "getStartedShort": "Start",
+    "login": "Login",
+    "consult": "Free consultation",
+    "stats": {
+      "modules": "integrated modules",
+      "languages": "languages",
+      "calendar": "Jalali & Gregorian",
+      "tenants": "multi-tenant"
+    },
+    "valuesTitle": "Why Midesk?",
+    "values": {
+      "integration": {
+        "title": "True integration",
+        "desc": "Projects, time, calendar, and teams in one database"
+      },
+      "agility": {
+        "title": "Native agility",
+        "desc": "Kanban, sprints, backlog, and Agile reports"
+      },
+      "multitenancy": {
+        "title": "Multi-tenancy",
+        "desc": "Each organization gets isolated data and settings"
+      },
+      "i18n": {
+        "title": "Global & local",
+        "desc": "Persian/English, RTL, and Jalali calendar"
+      }
+    },
+    "featuresTitle": "Available today",
+    "featuresSubtitle": "From Kanban to leave — what you can use in Midesk right now",
+    "featureItems": {
+      "kanban": {
+        "title": "Smart Kanban",
+        "desc": "Drag & drop, swimlanes, WIP limits, and custom columns"
+      },
+      "sprints": {
+        "title": "Sprints & backlog",
+        "desc": "Agile planning with Burndown, Velocity, and CFD charts"
+      },
+      "worklog": {
+        "title": "Timesheet",
+        "desc": "Personal and team worklogs with weekly summaries"
+      },
+      "calendar": {
+        "title": "Calendar & leave",
+        "desc": "Events, holidays, shifts, and leave approvals"
+      },
+      "teams": {
+        "title": "Teams & access",
+        "desc": "Org structure, roles, and member invites"
+      },
+      "dashboard": {
+        "title": "Dashboard",
+        "desc": "Tasks overview, active sprint, and team activity"
+      }
+    },
+    "roadmapBadge": "Coming soon",
+    "roadmapTitle": "On the roadmap",
+    "roadmapItems": {
+      "hr": "HR & attendance",
+      "finance": "Finance & payroll",
+      "ai": "Organizational AI"
+    },
+    "howTitle": "How it works",
+    "howSubtitle": "Get your organization running in three steps",
+    "howSteps": {
+      "register": {
+        "title": "Sign up & create org",
+        "desc": "Create an account, set up your organization, language, and calendar"
+      },
+      "setup": {
+        "title": "Projects & team",
+        "desc": "Create projects, invite members, and configure your Kanban board"
+      },
+      "run": {
+        "title": "Run & track",
+        "desc": "Plan sprints, log time, and monitor progress with reports"
+      }
+    },
+    "testimonialsTitle": "What teams say",
+    "testimonials": {
+      "one": {
+        "quote": "We stopped juggling Jira and spreadsheets. Kanban and timesheets together changed our workflow.",
+        "name": "Sarah Chen",
+        "role": "Product Manager",
+        "company": "Fintech startup"
+      },
+      "two": {
+        "quote": "Jalali calendar and RTL felt natural for our team from day one.",
+        "name": "Ali Rezaei",
+        "role": "Tech Lead",
+        "company": "Software team"
+      },
+      "three": {
+        "quote": "Sprint reports made our planning meetings much faster.",
+        "name": "Maria Santos",
+        "role": "Scrum Master",
+        "company": "Digital agency"
+      }
+    },
+    "pricingTitle": "Plans for every team",
+    "pricingSubtitle": "From free start to enterprise deployment",
+    "pricingPopular": "Popular",
+    "pricingContact": "Contact us",
+    "pricingFree": "Free",
+    "pricingTiers": {
+      "free": {
+        "name": "Free Sign Up",
+        "desc": "To start and explore",
+        "price": "0",
+        "period": "forever",
+        "cta": "Get started",
+        "features": ["Up to 5 members", "2 projects", "Kanban & tasks", "Basic calendar"]
+      },
+      "startup": {
+        "name": "Startup",
+        "desc": "Growing small teams",
+        "price": "Contact",
+        "period": "monthly",
+        "cta": "Request consultation",
+        "features": ["Up to 15 members", "Unlimited projects", "Sprints & reports", "Team timesheet"]
+      },
+      "pro": {
+        "name": "Professional",
+        "desc": "Scaling teams",
+        "price": "Contact",
+        "period": "monthly",
+        "cta": "Request consultation",
+        "features": ["More members", "Leave approvals", "Advanced reports", "Priority support"]
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "desc": "Dedicated deployment & SLA",
+        "price": "Contact",
+        "period": "custom",
+        "cta": "Free consultation",
+        "features": ["Self-hosted", "SSO & security", "Customization", "Dedicated manager"]
+      }
+    },
+    "faqTitle": "FAQ",
+    "faqItems": {
+      "what": {
+        "q": "What is Midesk?",
+        "a": "A SaaS platform for unified organization management: projects, Agile, timesheets, calendar, and teams in one system."
+      },
+      "free": {
+        "q": "Is it really free to start?",
+        "a": "Yes. Free sign-up lets you create an organization and use core features without a credit card."
+      },
+      "calendar": {
+        "q": "Does it support Jalali calendar?",
+        "a": "Yes. Jalali and Gregorian calendars, RTL, and Persian/English are natively supported."
+      },
+      "security": {
+        "q": "Is organization data isolated?",
+        "a": "Yes. Multi-tenant architecture keeps each organization's data and settings separate."
+      },
+      "roadmap": {
+        "q": "When will HR and finance arrive?",
+        "a": "HR, finance, and AI modules are on the product roadmap. Current features focus on projects and teams."
+      }
+    },
+    "ctaTitle": "Ready to unify your team?",
+    "ctaSubtitle": "Start free today — no card, no commitment.",
+    "footerTagline": "Unified organization management platform for modern teams.",
+    "footer": "© Midesk — Built for modern teams"
+  }
+}

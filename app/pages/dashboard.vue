@@ -1,0 +1,246 @@
+<script setup lang="ts">
+import type { DashboardSummary } from '~/types'
+
+definePageMeta({ layout: 'default', middleware: ['auth', 'tenant'] })
+
+const { t } = useI18n()
+const { api } = useApi()
+const { formatRelative } = useCalendar()
+const authStore = useAuthStore()
+
+const summary = ref<DashboardSummary | null>(null)
+const loading = ref(true)
+const error = ref(false)
+
+const isManager = computed(() => {
+  const role = authStore.user?.role
+  return role === 'OWNER' || role === 'ADMIN' || role === 'MANAGER'
+})
+
+const weekHours = computed(() => {
+  const minutes = summary.value?.week_worklog_minutes ?? 0
+  return (minutes / 60).toFixed(1)
+})
+
+const stats = computed(() => [
+  {
+    label: t('dashboard.myTasks'),
+    value: summary.value?.my_tasks.length ?? 0,
+    icon: 'i-lucide-list-todo'
+  },
+  {
+    label: t('dashboard.overdueTasks'),
+    value: summary.value?.overdue_tasks.length ?? 0,
+    icon: 'i-lucide-clock-alert'
+  },
+  {
+    label: t('dashboard.activeProjects'),
+    value: summary.value?.active_projects.length ?? 0,
+    icon: 'i-lucide-folder-kanban'
+  },
+  {
+    label: t('dashboard.recentActivity'),
+    value: summary.value?.recent_activity.length ?? 0,
+    icon: 'i-lucide-activity'
+  }
+])
+
+async function load() {
+  loading.value = true
+  error.value = false
+  try {
+    summary.value = await api<DashboardSummary>('/dashboard/summary')
+  } catch {
+    error.value = true
+  } finally {
+    loading.value = false
+  }
+}
+
+onMounted(load)
+</script>
+
+<template>
+  <div>
+    <div class="mb-8">
+      <h1 class="midesk-page-title">{{ t('dashboard.title') }}</h1>
+      <p class="midesk-page-subtitle">{{ t('app.tagline') }}</p>
+    </div>
+
+    <div v-if="loading" class="space-y-6">
+      <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <USkeleton v-for="i in 4" :key="i" class="midesk-skeleton-stat" />
+      </div>
+
+      <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <USkeleton v-for="i in 3" :key="`widget-${i}`" class="midesk-skeleton-card" />
+      </div>
+
+      <div class="grid gap-4 lg:grid-cols-2">
+        <UiSkeletonCard :rows="4" row-class="h-10 rounded-lg" :show-title="true" />
+        <UiSkeletonCard :rows="4" row-class="h-10 rounded-lg" :show-title="true" />
+      </div>
+
+      <UiSkeletonCard :rows="2" row-class="midesk-skeleton-card-lg" />
+      <UiSkeletonCard :rows="5" row-class="h-10 rounded-lg" />
+    </div>
+
+    <UiEmptyState
+      v-else-if="error"
+      :title="t('common.error')"
+      icon="i-lucide-alert-circle"
+    >
+      <template #action>
+        <UButton color="primary" @click="load">{{ t('common.retry') }}</UButton>
+      </template>
+    </UiEmptyState>
+
+    <UiEmptyState
+      v-else-if="!summary?.active_projects.length"
+      :title="t('dashboard.emptyTitle')"
+      :description="t('dashboard.emptyDesc')"
+      icon="i-lucide-folder-plus"
+    >
+      <template #action>
+        <UButton to="/projects" color="primary">{{ t('dashboard.createProject') }}</UButton>
+      </template>
+    </UiEmptyState>
+
+    <div v-else class="space-y-6">
+      <!-- Stats -->
+      <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <div
+          v-for="stat in stats"
+          :key="stat.label"
+          class="midesk-stat-card"
+        >
+          <div class="mb-3 flex items-center justify-between">
+            <span class="text-sm text-[var(--color-midesk-muted)]">{{ stat.label }}</span>
+            <div class="flex size-9 items-center justify-center rounded-lg bg-[var(--color-midesk-accent-soft)]">
+              <UIcon :name="stat.icon" class="size-4 text-[var(--color-midesk-accent)]" />
+            </div>
+          </div>
+          <p class="text-3xl font-bold tracking-tight text-[var(--color-midesk-text)]">
+            {{ stat.value }}
+          </p>
+        </div>
+      </div>
+
+      <!-- Phase 1 widgets -->
+      <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <section class="midesk-card p-5">
+          <div class="mb-3 flex items-center justify-between">
+            <h2 class="midesk-card-header mb-0">{{ t('dashboard.activeSprint') }}</h2>
+            <UIcon name="i-lucide-zap" class="size-5 text-[var(--color-midesk-accent)]" />
+          </div>
+          <template v-if="summary.active_sprint">
+            <NuxtLink
+              :to="`/projects/${summary.active_sprint.project_id}/sprints`"
+              class="midesk-link text-lg font-semibold"
+            >
+              {{ summary.active_sprint.name }}
+            </NuxtLink>
+            <p class="mt-1 text-sm text-muted">{{ summary.active_sprint.project_name }}</p>
+            <p class="mt-2 text-sm text-[var(--color-midesk-text)]">
+              {{ t('sprint.daysRemaining', { days: summary.active_sprint.days_remaining }) }}
+            </p>
+          </template>
+          <p v-else class="text-sm text-muted">{{ t('sprint.noActive') }}</p>
+        </section>
+
+        <section class="midesk-card p-5">
+          <div class="mb-3 flex items-center justify-between">
+            <h2 class="midesk-card-header mb-0">{{ t('dashboard.weekHours') }}</h2>
+            <UIcon name="i-lucide-clock" class="size-5 text-[var(--color-midesk-accent)]" />
+          </div>
+          <p class="text-3xl font-bold tracking-tight text-[var(--color-midesk-text)]">
+            {{ weekHours }}h
+          </p>
+          <NuxtLink to="/worklog" class="midesk-link mt-2 inline-block text-sm">
+            {{ t('nav.worklog') }}
+          </NuxtLink>
+        </section>
+
+        <section v-if="isManager && summary.pending_leave_count != null" class="midesk-card p-5">
+          <div class="mb-3 flex items-center justify-between">
+            <h2 class="midesk-card-header mb-0">{{ t('dashboard.pendingLeave') }}</h2>
+            <UIcon name="i-lucide-tree-palm" class="size-5 text-[var(--color-midesk-accent)]" />
+          </div>
+          <p class="text-3xl font-bold tracking-tight text-[var(--color-midesk-text)]">
+            {{ summary.pending_leave_count }}
+          </p>
+          <NuxtLink to="/leave" class="midesk-link mt-2 inline-block text-sm">
+            {{ t('nav.leave') }}
+          </NuxtLink>
+        </section>
+      </div>
+
+      <!-- Tasks row -->
+      <div class="grid gap-4 lg:grid-cols-2">
+        <section class="midesk-card p-5">
+          <h2 class="midesk-card-header">{{ t('dashboard.myTasks') }}</h2>
+          <ul class="space-y-2">
+            <li
+              v-for="task in summary.my_tasks"
+              :key="task.id"
+              class="flex items-center justify-between gap-3 rounded-lg px-2 py-2 transition hover:bg-white/[0.03]"
+            >
+              <NuxtLink :to="`/projects/${task.project_id}`" class="midesk-link truncate text-sm">
+                {{ task.title }}
+              </NuxtLink>
+              <UBadge color="primary" size="xs" variant="subtle">
+                {{ t(`kanban.columns.${task.status}`) }}
+              </UBadge>
+            </li>
+          </ul>
+        </section>
+
+        <section class="midesk-card p-5">
+          <h2 class="midesk-card-header">{{ t('dashboard.overdueTasks') }}</h2>
+          <ul v-if="summary.overdue_tasks.length" class="space-y-2">
+            <li
+              v-for="task in summary.overdue_tasks"
+              :key="task.id"
+              class="rounded-lg px-2 py-2 text-sm text-red-400"
+            >
+              {{ task.title }}
+            </li>
+          </ul>
+          <p v-else class="text-sm text-[var(--color-midesk-muted)]">—</p>
+        </section>
+      </div>
+
+      <!-- Projects -->
+      <section class="midesk-card p-5">
+        <div class="mb-4 flex items-center justify-between">
+          <h2 class="midesk-card-header mb-0">{{ t('dashboard.activeProjects') }}</h2>
+          <UButton to="/projects" size="sm" variant="soft" color="primary">
+            {{ t('nav.projects') }}
+          </UButton>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-2">
+          <ProjectCard
+            v-for="project in summary.active_projects"
+            :key="project.id"
+            :project="project"
+          />
+        </div>
+      </section>
+
+      <!-- Activity -->
+      <section class="midesk-card p-5">
+        <h2 class="midesk-card-header">{{ t('dashboard.recentActivity') }}</h2>
+        <ul class="space-y-3">
+          <li
+            v-for="item in summary.recent_activity"
+            :key="item.id"
+            class="flex items-center justify-between gap-4 rounded-lg px-2 py-2 text-sm transition hover:bg-white/[0.03]"
+          >
+            <span class="text-[var(--color-midesk-text)]">{{ item.message }}</span>
+            <span class="shrink-0 text-[var(--color-midesk-muted)]">{{ formatRelative(item.created_at) }}</span>
+          </li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</template>

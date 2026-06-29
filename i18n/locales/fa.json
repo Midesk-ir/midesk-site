@@ -1,0 +1,520 @@
+{
+    "app": {
+        "name": "Midesk",
+        "tagline": "پلتفرم یکپارچه مدیریت سازمان برای تیم‌های مدرن"
+    },
+    "nav": {
+        "dashboard": "داشبورد",
+        "projects": "پروژه‌ها",
+        "teams": "تیم‌ها",
+        "members": "اعضا",
+        "settings": "تنظیمات",
+        "notifications": "اعلان‌ها",
+        "worklog": "تایم‌شیت",
+        "calendar": "تقویم",
+        "leave": "مرخصی",
+        "sprints": "اسپرینت‌ها",
+        "reports": "گزارش‌ها",
+        "logout": "خروج",
+        "menu": "منو"
+    },
+    "auth": {
+        "login": "ورود",
+        "register": "ثبت‌نام",
+        "email": "ایمیل",
+        "phone": "موبایل",
+        "password": "رمز عبور",
+        "name": "نام",
+        "loginWithPassword": "ورود با رمز",
+        "loginWithOtp": "ورود با کد پیامکی",
+        "googleLogin": "ورود با Google",
+        "noAccount": "حساب ندارید؟",
+        "hasAccount": "حساب دارید؟",
+        "sendOtp": "ارسال کد",
+        "verifyOtp": "تأیید کد",
+        "otpSent": "کد تأیید ارسال شد",
+        "otpCode": "کد تأیید",
+        "resendIn": "ارسال مجدد تا {seconds} ثانیه",
+        "resend": "ارسال مجدد",
+        "demoHint": "دمو: demo{'@'}midesk.io / password"
+    },
+    "onboarding": {
+        "title": "ساخت سازمان",
+        "orgName": "نام سازمان",
+        "region": "منطقه",
+        "regionIR": "ایران",
+        "regionINTL": "بین‌الملل",
+        "language": "زبان",
+        "calendar": "تقویم",
+        "calendarJalali": "شمسی",
+        "calendarGregorian": "میلادی",
+        "currency": "ارز",
+        "timezone": "منطقه زمانی",
+        "inviteMembers": "دعوت اعضا (اختیاری)",
+        "inviteEmail": "ایمیل عضو",
+        "next": "بعدی",
+        "back": "قبلی",
+        "finish": "شروع کار"
+    },
+    "dashboard": {
+        "title": "داشبورد",
+        "myTasks": "تسک‌های من",
+        "overdueTasks": "تسک‌های سررسید شده",
+        "activeProjects": "پروژه‌های فعال",
+        "recentActivity": "فعالیت اخیر",
+        "emptyTitle": "هنوز پروژه‌ای ندارید",
+        "emptyDesc": "اولین پروژه را بسازید و کار تیم را شروع کنید.",
+        "createProject": "ساخت اولین پروژه",
+        "activeSprint": "اسپرینت فعال",
+        "weekHours": "ساعات این هفته",
+        "pendingLeave": "مرخصی در انتظار تأیید"
+    },
+    "projects": {
+        "title": "پروژه‌ها",
+        "create": "پروژه جدید",
+        "name": "نام پروژه",
+        "description": "توضیحات",
+        "members": "اعضا",
+        "tasks": "تسک‌ها",
+        "progress": "پیشرفت",
+        "tabs": {
+            "kanban": "کانبان",
+            "list": "فهرست",
+            "members": "اعضا",
+            "sprints": "اسپرینت‌ها",
+            "reports": "گزارش‌ها",
+            "settings": "تنظیمات"
+        },
+        "emptyTitle": "پروژه‌ای یافت نشد",
+        "emptyDesc": "اولین پروژه تیم خود را بسازید."
+    },
+    "kanban": {
+        "columns": {
+            "backlog": "بک‌لاگ",
+            "todo": "برای انجام",
+            "in_progress": "در حال انجام",
+            "review": "بررسی",
+            "done": "انجام شده"
+        },
+        "newTask": "تسک جدید",
+        "filterAssignee": "مسئول",
+        "filterLabel": "برچسب",
+        "filterPriority": "اولویت",
+        "search": "جستجو...",
+        "all": "همه",
+        "wipConfirmTitle": "محدودیت WIP",
+        "wipConfirmBody": "این ستون به حد WIP رسیده است. آیا از انتقال تسک مطمئن هستید؟",
+        "wipConfirmAction": "انتقال به هر حال"
+    },
+    "task": {
+        "title": "عنوان",
+        "description": "توضیحات",
+        "status": "وضعیت",
+        "priority": "اولویت",
+        "assignee": "مسئول",
+        "dueDate": "سررسید",
+        "labels": "برچسب‌ها",
+        "checklist": "چک‌لیست",
+        "comments": "نظرات",
+        "addComment": "افزودن نظر...",
+        "addChecklistItem": "افزودن مورد",
+        "priorities": {
+            "low": "کم",
+            "medium": "متوسط",
+            "high": "بالا",
+            "critical": "بحرانی"
+        },
+        "unassigned": "بدون مسئول",
+        "storyPoints": "امتیاز داستان",
+        "sprint": "اسپرینت",
+        "logTime": "ثبت زمان",
+        "details": "جزئیات تسک"
+    },
+    "teams": {
+        "title": "تیم‌ها",
+        "members": "اعضا",
+        "emptyTitle": "تیمی یافت نشد",
+        "emptyDesc": "تیم‌های سازمان در اینجا نمایش داده می‌شوند."
+    },
+    "members": {
+        "title": "اعضای سازمان",
+        "invite": "دعوت عضو",
+        "role": "نقش",
+        "changeRole": "تغییر نقش",
+        "roles": {
+            "OWNER": "مالک",
+            "ADMIN": "ادمین",
+            "MANAGER": "مدیر",
+            "MEMBER": "عضو"
+        }
+    },
+    "settings": {
+        "title": "تنظیمات",
+        "profile": "پروفایل",
+        "organization": "سازمان",
+        "avatar": "آواتار",
+        "changePassword": "تغییر رمز",
+        "newPassword": "رمز جدید",
+        "save": "ذخیره",
+        "saved": "ذخیره شد"
+    },
+    "sprint": {
+        "title": "اسپرینت‌ها",
+        "create": "اسپرینت جدید",
+        "name": "نام اسپرینت",
+        "goal": "هدف",
+        "startDate": "شروع",
+        "endDate": "پایان",
+        "status": "وضعیت",
+        "backlog": "بک‌لاگ",
+        "active": "فعال",
+        "planning": "در حال برنامه‌ریزی",
+        "review": "بازبینی",
+        "closed": "بسته شده",
+        "activate": "فعال‌سازی",
+        "close": "بستن اسپرینت",
+        "assignToSprint": "افزودن به اسپرینت",
+        "removeFromSprint": "حذف از اسپرینت",
+        "moveToBacklog": "انتقال به بک‌لاگ",
+        "moveToNext": "انتقال به اسپرینت بعد",
+        "points": "امتیاز",
+        "tasks": "تسک‌ها",
+        "done": "انجام شده",
+        "daysRemaining": "{days} روز مانده",
+        "progress": "پیشرفت",
+        "emptyTitle": "اسپرینتی وجود ندارد",
+        "emptyDesc": "اولین اسپرینت پروژه را بسازید.",
+        "confirmActivate": "اسپرینت فعلی بسته می‌شود. ادامه می‌دهید؟",
+        "confirmClose": "بستن اسپرینت — تسک‌های باز را به کجا منتقل کنید؟",
+        "noActive": "اسپرینت فعالی نیست",
+        "selectSprint": "انتخاب اسپرینت"
+    },
+    "reports": {
+        "title": "گزارش‌ها",
+        "burndown": "نمودار Burndown",
+        "velocity": "Velocity",
+        "cfd": "نمودار تجمعی (CFD)",
+        "tabs": {
+            "burndown": "Burndown",
+            "velocity": "Velocity",
+            "cfd": "CFD"
+        },
+        "committed": "تعهد شده",
+        "completed": "تکمیل شده",
+        "average": "میانگین",
+        "remaining": "مانده",
+        "ideal": "خط ایده‌آل",
+        "emptyTitle": "داده گزارش موجود نیست",
+        "emptyDesc": "پس از شروع اسپرینت، گزارش‌ها اینجا نمایش داده می‌شوند."
+    },
+    "columns": {
+        "settings": "تنظیم ستون‌ها",
+        "wip": "محدودیت WIP",
+        "reorder": "تغییر ترتیب",
+        "wipLimit": "حد WIP",
+        "add": "ستون جدید",
+        "name": "نام ستون",
+        "color": "رنگ",
+        "isDone": "ستون انجام‌شده",
+        "currentCount": "تعداد فعلی",
+        "saveOrder": "ذخیره ترتیب"
+    },
+    "swimlane": {
+        "mode": "Swimlane",
+        "none": "بدون Swimlane",
+        "assignee": "بر اساس مسئول",
+        "priority": "بر اساس اولویت",
+        "labels": {
+            "unassigned": "بدون مسئول",
+            "low": "اولویت کم",
+            "medium": "اولویت متوسط",
+            "high": "اولویت بالا",
+            "critical": "اولویت بحرانی"
+        }
+    },
+    "worklog": {
+        "title": "تایم‌شیت",
+        "form": {
+            "title": "ثبت زمان",
+            "project": "پروژه",
+            "task": "تسک (اختیاری)",
+            "date": "تاریخ",
+            "duration": "مدت زمان",
+            "hours": "ساعت",
+            "minutes": "دقیقه",
+            "description": "توضیحات",
+            "submit": "ثبت"
+        },
+        "table": {
+            "date": "تاریخ",
+            "project": "پروژه",
+            "task": "تسک",
+            "duration": "مدت",
+            "description": "توضیحات",
+            "emptyTitle": "زمانی ثبت نشده",
+            "emptyDesc": "اولین ورودی تایم‌شیت را ثبت کنید."
+        },
+        "summary": {
+            "title": "خلاصه هفته",
+            "total": "مجموع",
+            "today": "امروز",
+            "thisWeek": "این هفته"
+        },
+        "team": {
+            "title": "تایم‌شیت تیم",
+            "member": "عضو",
+            "emptyTitle": "ورودی تیمی نیست",
+            "emptyDesc": "ثبت زمان تیم در این بازه خالی است."
+        }
+    },
+    "calendar": {
+        "title": "تقویم",
+        "month": "ماه",
+        "week": "هفته",
+        "today": "امروز",
+        "newEvent": "رویداد جدید",
+        "eventTitle": "عنوان",
+        "eventType": "نوع رویداد",
+        "allDay": "تمام روز",
+        "holidays": "تعطیلات",
+        "shifts": "شیفت‌ها",
+        "types": {
+            "meeting": "جلسه",
+            "deadline": "سررسید",
+            "reminder": "یادآوری",
+            "other": "سایر"
+        },
+        "emptyTitle": "رویدادی نیست",
+        "emptyDesc": "رویداد یا جلسه جدید اضافه کنید."
+    },
+    "leave": {
+        "title": "مرخصی",
+        "balance": {
+            "title": "مانده مرخصی",
+            "total": "مجموع",
+            "used": "مصرف شده",
+            "remaining": "مانده",
+            "days": "روز",
+            "hours": "ساعت"
+        },
+        "request": {
+            "title": "درخواست مرخصی",
+            "type": "نوع مرخصی",
+            "startDate": "شروع",
+            "endDate": "پایان",
+            "duration": "مدت",
+            "note": "توضیحات",
+            "submit": "ارسال درخواست",
+            "emptyTitle": "درخواستی ندارید",
+            "emptyDesc": "درخواست مرخصی جدید ثبت کنید."
+        },
+        "approve": "تأیید",
+        "reject": "رد",
+        "rejectReason": "دلیل رد",
+        "pendingApprovals": "در انتظار تأیید",
+        "status": {
+            "pending": "در انتظار",
+            "approved": "تأیید شده",
+            "rejected": "رد شده",
+            "cancelled": "لغو شده"
+        }
+    },
+    "notifications": {
+        "title": "اعلان‌ها",
+        "markAllRead": "علامت‌گذاری همه",
+        "emptyTitle": "اعلانی ندارید",
+        "emptyDesc": "اعلان‌های جدید اینجا نمایش داده می‌شوند."
+    },
+    "common": {
+        "loading": "در حال بارگذاری...",
+        "error": "خطا در بارگذاری",
+        "retry": "تلاش مجدد",
+        "cancel": "انصراف",
+        "save": "ذخیره",
+        "create": "ایجاد",
+        "edit": "ویرایش",
+        "delete": "حذف",
+        "close": "بستن",
+        "noResults": "نتیجه‌ای یافت نشد"
+    },
+    "landing": {
+        "nav": {
+            "features": "امکانات",
+            "howItWorks": "نحوه کار",
+            "pricing": "قیمت‌ها",
+            "faq": "سوالات"
+        },
+        "eyebrow": "پلتفرم یکپارچه مدیریت سازمان",
+        "heroTitleBefore": "همه‌چیز برای",
+        "heroTitleHighlight": "تیم مدرن",
+        "heroTitleAfter": "در یک جا",
+        "heroSubtitle": "پروژه، اسپرینت، تایم‌شیت، تقویم و تیم — بدون پراکندگی ابزار. برای تیم‌های چابک در ایران و جهان.",
+        "getStarted": "شروع رایگان",
+        "getStartedShort": "شروع",
+        "login": "ورود",
+        "consult": "مشاوره رایگان",
+        "stats": {
+            "modules": "ماژول یکپارچه",
+            "languages": "زبان",
+            "calendar": "تقویم شمسی/میلادی",
+            "tenants": "چندسازمانی"
+        },
+        "valuesTitle": "چرا مای‌دسک؟",
+        "values": {
+            "integration": {
+                "title": "یکپارچگی واقعی",
+                "desc": "پروژه، زمان کار، تقویم و تیم در یک پایگاه‌داده"
+            },
+            "agility": {
+                "title": "چابکی بومی",
+                "desc": "کانبان، اسپرینت، بک‌لاگ و گزارش‌های Agile"
+            },
+            "multitenancy": {
+                "title": "چندمستاجرگی",
+                "desc": "هر سازمان فضای مجزا با تنظیمات مستقل"
+            },
+            "i18n": {
+                "title": "جهانی و بومی",
+                "desc": "فارسی/انگلیسی، RTL و تقویم جلالی"
+            }
+        },
+        "featuresTitle": "امکانات آماده امروز",
+        "featuresSubtitle": "از کانبان تا مرخصی — آنچه همین حالا در Midesk دارید",
+        "featureItems": {
+            "kanban": {
+                "title": "کانبان هوشمند",
+                "desc": "Drag & Drop، Swimlane، WIP و ستون‌های سفارشی"
+            },
+            "sprints": {
+                "title": "اسپرینت و بک‌لاگ",
+                "desc": "برنامه‌ریزی Agile، Burndown، Velocity و CFD"
+            },
+            "worklog": {
+                "title": "تایم‌شیت",
+                "desc": "ثبت ساعات کاری شخصی و تیمی با گزارش هفتگی"
+            },
+            "calendar": {
+                "title": "تقویم و مرخصی",
+                "desc": "رویدادها، تعطیلات، شیفت و تأیید مرخصی"
+            },
+            "teams": {
+                "title": "تیم و دسترسی",
+                "desc": "ساختار سازمانی، نقش‌ها و دعوت اعضا"
+            },
+            "dashboard": {
+                "title": "داشبورد",
+                "desc": "نمای کلی تسک‌ها، اسپرینت فعال و فعالیت تیم"
+            }
+        },
+        "roadmapBadge": "به‌زودی",
+        "roadmapTitle": "در نقشه راه",
+        "roadmapItems": {
+            "hr": "منابع انسانی و تردد",
+            "finance": "مالی و حقوق",
+            "ai": "هوش مصنوعی سازمانی"
+        },
+        "howTitle": "نحوه کارکرد",
+        "howSubtitle": "در سه قدم سازمان خود را راه بیندازید",
+        "howSteps": {
+            "register": {
+                "title": "ثبت‌نام و ساخت سازمان",
+                "desc": "حساب بسازید، سازمان را تنظیم کنید و زبان و تقویم را انتخاب کنید"
+            },
+            "setup": {
+                "title": "پروژه و تیم",
+                "desc": "پروژه بسازید، اعضا را دعوت کنید و کانبان را پیکربندی کنید"
+            },
+            "run": {
+                "title": "اجرا و پیگیری",
+                "desc": "اسپرینت بزنید، زمان ثبت کنید و با گزارش‌ها پیشرفت را ببینید"
+            }
+        },
+        "testimonialsTitle": "نظر تیم‌ها",
+        "testimonials": {
+            "one": {
+                "quote": "دیگر بین Jira و Excel جابه‌جا نمی‌شویم. کانبان و تایم‌شیت کنار هم معجزه کرد.",
+                "name": "سارا محمدی",
+                "role": "مدیر محصول",
+                "company": "استارتاپ فintech"
+            },
+            "two": {
+                "quote": "تقویم شمسی و RTL از روز اول برای تیم ما طبیعی بود.",
+                "name": "Ali Rezaei",
+                "role": "Tech Lead",
+                "company": "تیم نرم‌افزاری"
+            },
+            "three": {
+                "quote": "گزارش‌های اسپرینت به جلسات Planning ما سرعت داد.",
+                "name": "مریم حسینی",
+                "role": "Scrum Master",
+                "company": "آژانس دیجیتال"
+            }
+        },
+        "pricingTitle": "پلن مناسب تیم شما",
+        "pricingSubtitle": "از شروع رایگان تا استقرار سازمانی",
+        "pricingPopular": "محبوب",
+        "pricingContact": "تماس بگیرید",
+        "pricingFree": "رایگان",
+        "pricingTiers": {
+            "free": {
+                "name": "ثبت‌نام رایگان",
+                "desc": "برای شروع و تست",
+                "price": "۰",
+                "period": "برای همیشه",
+                "cta": "شروع کنید",
+                "features": ["تا ۵ عضو", "۲ پروژه", "کانبان و تسک", "تقویم پایه"]
+            },
+            "startup": {
+                "name": "استارتاپ",
+                "desc": "تیم‌های کوچک در رشد",
+                "price": "تماس",
+                "period": "ماهانه",
+                "cta": "درخواست مشاوره",
+                "features": ["تا ۱۵ عضو", "پروژه نامحدود", "اسپرینت و گزارش", "تایم‌شیت تیمی"]
+            },
+            "pro": {
+                "name": "حرفه‌ای",
+                "desc": "تیم‌های در حال مقیاس",
+                "price": "تماس",
+                "period": "ماهانه",
+                "cta": "درخواست مشاوره",
+                "features": ["اعضای بیشتر", "مرخصی و تأیید", "گزارش‌های پیشرفته", "پشتیبانی اولویت‌دار"]
+            },
+            "enterprise": {
+                "name": "سازمانی",
+                "desc": "استقرار اختصاصی و SLA",
+                "price": "تماس",
+                "period": "سفارشی",
+                "cta": "مشاوره رایگان",
+                "features": ["Self-hosted", "SSO و امنیت", "سفارشی‌سازی", "مدیر اختصاصی"]
+            }
+        },
+        "faqTitle": "سوالات متداول",
+        "faqItems": {
+            "what": {
+                "q": "Midesk دقیقاً چیست؟",
+                "a": "پلتفرم SaaS برای مدیریت یکپارچه سازمان: پروژه، Agile، تایم‌شیت، تقویم و تیم در یک سامانه."
+            },
+            "free": {
+                "q": "آیا واقعاً رایگان شروع می‌شود؟",
+                "a": "بله. ثبت‌نام رایگان برای ساخت سازمان و استفاده از امکانات پایه بدون نیاز به کارت بانکی."
+            },
+            "calendar": {
+                "q": "تقویم شمسی پشتیبانی می‌شود؟",
+                "a": "بله. تقویم جلالی و میلادی، RTL و دو زبان فارسی و انگلیسی به‌صورت بومی پشتیبانی می‌شوند."
+            },
+            "security": {
+                "q": "داده‌های سازمان جدا نگه‌داری می‌شود؟",
+                "a": "بله. معماری چندمستاجره (Multi-tenant) هر سازمان را با داده و تنظیمات مجزا نگه می‌دارد."
+            },
+            "roadmap": {
+                "q": "HR و مالی کی اضافه می‌شود؟",
+                "a": "ماژول‌های HR، مالی و AI در نقشه راه محصول هستند. امکانات فعلی روی پروژه و تیم متمرکز است."
+            }
+        },
+        "ctaTitle": "آماده‌اید تیم را یکپارچه کنید؟",
+        "ctaSubtitle": "همین حالا رایگان شروع کنید — بدون کارت، بدون تعهد.",
+        "footerTagline": "پلتفرم یکپارچه مدیریت سازمان برای تیم‌های مدرن.",
+        "footer": "© Midesk — ساخته شده برای تیم‌های مدرن"
+    }
+}
