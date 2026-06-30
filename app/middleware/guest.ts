@@ -1,10 +1,11 @@
-export default defineNuxtRouteMiddleware(() => {
-  const authStore = useAuthStore()
-  const tenantStore = useTenantStore()
+export default defineNuxtRouteMiddleware((to) => {
+  if (!hasAuthSession()) return
 
-  if (!authStore.isAuthenticated) return
+  // Logged-in users can open /login (switch account). Register/verify-otp still redirect.
+  if (to.path === '/login') return
 
-  if (tenantStore.hasTenant) {
+  const tenantId = getTenantIdCookie().value
+  if (tenantId) {
     return navigateTo('/dashboard', { replace: true })
   }
 

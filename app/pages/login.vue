@@ -6,10 +6,23 @@ import { isNavigationFailure } from 'vue-router'
 definePageMeta({ layout: 'auth', middleware: 'guest' })
 
 const { t } = useI18n()
-const { login, loginOtp } = useAuth()
+const { login, loginOtp, logout, bootstrap } = useAuth()
+const authStore = useAuthStore()
 const tenantStore = useTenantStore()
 const route = useRoute()
 const toast = useToast()
+
+const alreadyLoggedIn = computed(() => authStore.isAuthenticated)
+
+onMounted(async () => {
+  if (authStore.isAuthenticated && !authStore.bootstrapped) {
+    try {
+      await bootstrap()
+    } catch {
+      // guest page — ignore bootstrap errors
+    }
+  }
+})
 
 const mode = ref<'password' | 'otp'>('password')
 const loading = ref(false)
@@ -60,6 +73,13 @@ async function onOtpSubmit(values: { phone: string }) {
 }
 
 const showGoogle = computed(() => !tenantStore.isIran)
+
+async function goToApp() {
+  const target = tenantStore.hasTenant
+    ? ((route.query.redirect as string) || '/dashboard')
+    : '/onboarding'
+  await navigateTo(target, { replace: true })
+}
 </script>
 
 <template>
@@ -68,7 +88,20 @@ const showGoogle = computed(() => !tenantStore.isIran)
       <h1 class="text-xl font-semibold">{{ t('auth.login') }}</h1>
     </template>
 
-    <div class="mb-4 flex gap-2">
+    <div v-if="alreadyLoggedIn" class="space-y-4 text-center">
+      <UAvatar :alt="authStore.user?.name ?? ''" size="lg" icon="i-lucide-user" class="mx-auto" />
+      <p class="text-sm text-[var(--color-midesk-muted)]">{{ t('auth.alreadyLoggedIn') }}</p>
+      <p class="font-medium">{{ authStore.user?.name ?? '—' }}</p>
+      <UButton block color="primary" @click="goToApp">
+        {{ t('auth.continueToApp') }}
+      </UButton>
+      <UButton block variant="outline" color="neutral" @click="logout">
+        {{ t('auth.switchAccount') }}
+      </UButton>
+    </div>
+
+    <div v-else>
+      <div class="mb-4 flex gap-2">
       <UButton
         :variant="mode === 'password' ? 'solid' : 'ghost'"
         size="sm"
@@ -168,11 +201,12 @@ const showGoogle = computed(() => !tenantStore.isIran)
       {{ t('auth.googleLogin') }}
     </UButton>
 
-    <p class="mt-6 text-center text-sm text-[var(--color-midesk-muted)]">
-      {{ t('auth.noAccount') }}
-      <NuxtLink to="/register" class="midesk-link hover:underline">
-        {{ t('auth.register') }}
-      </NuxtLink>
-    </p>
+      <p class="mt-6 text-center text-sm text-[var(--color-midesk-muted)]">
+        {{ t('auth.noAccount') }}
+        <NuxtLink to="/register" class="midesk-link hover:underline">
+          {{ t('auth.register') }}
+        </NuxtLink>
+      </p>
+    </div>
   </UCard>
 </template>

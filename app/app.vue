@@ -1,6 +1,5 @@
 <script setup lang="ts">
 const { locale, locales } = useI18n()
-const tenantStore = useTenantStore()
 const colorMode = useColorMode()
 
 colorMode.preference = 'dark'
@@ -14,12 +13,6 @@ useHead({
   htmlAttrs: {
     lang: locale,
     dir
-  }
-})
-
-onMounted(() => {
-  if (tenantStore.tenant?.locale) {
-    locale.value = tenantStore.tenant.locale.startsWith('fa') ? 'fa' : 'en'
   }
 })
 </script>

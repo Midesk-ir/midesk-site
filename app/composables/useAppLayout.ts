@@ -1,28 +1,32 @@
 import { createSharedComposable, useMediaQuery } from '@vueuse/core'
 
 export const useAppLayout = createSharedComposable(() => {
-  const uiStore = useUiStore()
   const isMobileNav = useMediaQuery('(max-width: 1023px)')
 
+  function uiStore() {
+    return useUiStore()
+  }
+
   function toggleSidebar() {
+    const store = uiStore()
     if (isMobileNav.value) {
-      uiStore.sidebarMobileOpen = !uiStore.sidebarMobileOpen
+      store.sidebarMobileOpen = !store.sidebarMobileOpen
       return
     }
-    uiStore.sidebarCollapsed = !uiStore.sidebarCollapsed
+    store.sidebarCollapsed = !store.sidebarCollapsed
   }
 
   function closeMobileSidebar() {
-    uiStore.sidebarMobileOpen = false
+    uiStore().sidebarMobileOpen = false
   }
 
   if (import.meta.client) {
     watch(isMobileNav, (mobile) => {
-      if (!mobile) uiStore.sidebarMobileOpen = false
+      if (!mobile) uiStore().sidebarMobileOpen = false
     })
 
     watch(
-      () => uiStore.sidebarMobileOpen,
+      () => uiStore().sidebarMobileOpen,
       (open) => {
         document.body.style.overflow = open && isMobileNav.value ? 'hidden' : ''
       }

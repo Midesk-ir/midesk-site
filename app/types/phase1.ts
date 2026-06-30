@@ -113,6 +113,11 @@ export interface LeaveBalance {
   remaining: number
 }
 
+export interface LeaveApprovalStep {
+  role: string
+  status: 'pending' | 'approved' | 'rejected' | 'skipped'
+}
+
 export interface LeaveRequest {
   id: string
   user: UserBrief
@@ -123,6 +128,7 @@ export interface LeaveRequest {
   status: LeaveRequestStatus
   note?: string
   reject_reason?: string
+  approval_chain?: LeaveApprovalStep[]
 }
 
 export interface CreateLeaveRequestPayload {

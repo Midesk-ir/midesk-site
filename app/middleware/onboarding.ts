@@ -1,7 +1,8 @@
 export default defineNuxtRouteMiddleware(() => {
-  const tenantStore = useTenantStore()
+  if (!hasAuthSession()) return
 
-  if (tenantStore.hasTenant) {
+  const tenantStore = safeTenantStore()
+  if (tenantStore?.hasTenant) {
     return navigateTo('/dashboard', { replace: true })
   }
 })

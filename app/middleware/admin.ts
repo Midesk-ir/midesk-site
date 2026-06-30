@@ -1,7 +1,6 @@
 export default defineNuxtRouteMiddleware(() => {
-  const authStore = useAuthStore()
-
-  if (!authStore.isAdmin) {
+  const authStore = safeAuthStore()
+  if (!authStore?.isAdmin) {
     return navigateTo('/dashboard', { replace: true })
   }
 })

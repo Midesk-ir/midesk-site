@@ -16,7 +16,19 @@
         "sprints": "اسپرینت‌ها",
         "reports": "گزارش‌ها",
         "logout": "خروج",
-        "menu": "منو"
+        "menu": "منو",
+        "hr": {
+            "section": "منابع انسانی",
+            "dashboard": "داشبورد HR",
+            "personnel": "پرسنل",
+            "attendance": "حضور",
+            "contracts": "قراردادها",
+            "documents": "اسناد",
+            "missions": "مأموریت‌ها",
+            "recruitment": "جذب",
+            "onboarding": "آنبوردینگ",
+            "settings": "تنظیمات HR"
+        }
     },
     "auth": {
         "login": "ورود",
@@ -36,7 +48,10 @@
         "otpCode": "کد تأیید",
         "resendIn": "ارسال مجدد تا {seconds} ثانیه",
         "resend": "ارسال مجدد",
-        "demoHint": "دمو: demo{'@'}midesk.io / password"
+        "demoHint": "دمو: demo{'@'}midesk.io / password",
+        "alreadyLoggedIn": "شما قبلاً وارد شده‌اید",
+        "continueToApp": "ادامه به داشبورد",
+        "switchAccount": "خروج و ورود با حساب دیگر"
     },
     "onboarding": {
         "title": "ساخت سازمان",
@@ -54,7 +69,34 @@
         "inviteEmail": "ایمیل عضو",
         "next": "بعدی",
         "back": "قبلی",
-        "finish": "شروع کار"
+        "finish": "شروع کار",
+        "template": {
+            "addStep": "افزودن مرحله",
+            "newStep": "مرحله جدید",
+            "step": "مرحله",
+            "saved": "قالب ذخیره شد",
+            "emptySteps": "مرحله‌ای وجود ندارد",
+            "fields": {
+                "title": "عنوان مرحله",
+                "description": "توضیحات",
+                "assigneeRole": "نقش مسئول",
+                "deadlineDays": "مهلت (روز)"
+            }
+        },
+        "progress": {
+            "started": "شروع",
+            "completeStep": "تکمیل مرحله"
+        },
+        "list": {
+            "title": "آنبوردینگ‌های فعال",
+            "emptyTitle": "آنبوردینگ فعالی نیست",
+            "emptyDesc": "پیشرفت آنبوردینگ کارکنان اینجا نمایش داده می‌شود."
+        },
+        "status": {
+            "in_progress": "در جریان",
+            "completed": "تکمیل شده",
+            "cancelled": "لغو شده"
+        }
     },
     "dashboard": {
         "title": "داشبورد",
@@ -67,7 +109,8 @@
         "createProject": "ساخت اولین پروژه",
         "activeSprint": "اسپرینت فعال",
         "weekHours": "ساعات این هفته",
-        "pendingLeave": "مرخصی در انتظار تأیید"
+        "pendingLeave": "مرخصی در انتظار تأیید",
+        "attendanceToday": "وضعیت حضور امروز"
     },
     "projects": {
         "title": "پروژه‌ها",
@@ -312,11 +355,320 @@
         "reject": "رد",
         "rejectReason": "دلیل رد",
         "pendingApprovals": "در انتظار تأیید",
+        "approvalChain": {
+            "manager": "مدیر",
+            "hr": "منابع انسانی"
+        },
         "status": {
             "pending": "در انتظار",
             "approved": "تأیید شده",
             "rejected": "رد شده",
             "cancelled": "لغو شده"
+        },
+        "policy": {
+            "title": "سیاست مرخصی",
+            "listTitle": "سیاست‌های تنظیم‌شده",
+            "emptyTitle": "سیاستی تنظیم نشده",
+            "approvers": "تأییدکننده",
+            "autoApprove": "تأیید خودکار",
+            "autoApproveHint": "رد کردن فرآیند تأیید برای این نوع مرخصی",
+            "approvalChain": "زنجیره تأیید",
+            "approvalChainHint": "تأییدکنندگان به ترتیب — از اول تا آخر",
+            "minNoticeDays": "حداقل اطلاع‌رسانی (روز)",
+            "allowNegativeBalance": "اجازه مانده منفی",
+            "allowNegativeBalanceHint": "اجازه درخواست بیش از مانده"
+        },
+        "report": {
+            "title": "گزارش مرخصی",
+            "totalDays": "مجموع روزها",
+            "emptyTitle": "داده‌ای برای گزارش نیست",
+            "emptyDesc": "مصرف مرخصی پس از ثبت اینجا نمایش داده می‌شود.",
+            "columns": {
+                "member": "عضو",
+                "total": "مجموع",
+                "byType": "بر اساس نوع",
+                "byMonth": "بر اساس ماه"
+            }
+        }
+    },
+    "hr": {
+        "dashboard": {
+            "title": "داشبورد منابع انسانی",
+            "personnelCount": "پرسنل فعال",
+            "attendanceToday": "حضور امروز",
+            "expiringContracts": "قراردادهای در حال انقضا",
+            "newCandidates": "نامزدهای جدید",
+            "activeOnboarding": "آنبوردینگ فعال",
+            "present": "حاضر",
+            "absent": "غایب",
+            "onLeave": "مرخصی",
+            "onMission": "مأموریت",
+            "quickLinks": "دسترسی سریع"
+        },
+        "personnel": {
+            "title": "پرسنل",
+            "emptyTitle": "پرسنلی وجود ندارد",
+            "emptyDesc": "کارکنان را اضافه کنید.",
+            "filters": {
+                "search": "جستجو بر اساس نام یا کد…",
+                "allStatus": "همه وضعیت‌ها",
+                "allDepartments": "همه دپارتمان‌ها"
+            },
+            "columns": {
+                "name": "نام",
+                "code": "کد پرسنلی",
+                "department": "دپارتمان",
+                "jobTitle": "سمت",
+                "hireDate": "تاریخ استخدام",
+                "status": "وضعیت"
+            },
+            "status": {
+                "active": "فعال",
+                "on_leave": "مرخصی",
+                "terminated": "قطع همکاری"
+            },
+            "employmentType": {
+                "full_time": "تمام‌وقت",
+                "part_time": "پاره‌وقت",
+                "contract": "قراردادی",
+                "intern": "کارآموز"
+            },
+            "tabs": {
+                "personal": "شخصی",
+                "job": "شغلی",
+                "contracts": "قراردادها",
+                "documents": "مدارک",
+                "attendance": "حضور",
+                "leave": "مرخصی"
+            },
+            "fields": {
+                "user": "کاربر",
+                "employeeCode": "کد پرسنلی",
+                "hireDate": "تاریخ استخدام",
+                "employmentType": "نوع استخدام",
+                "jobTitle": "سمت",
+                "department": "دپارتمان",
+                "nationalId": "کد ملی",
+                "birthDate": "تاریخ تولد",
+                "address": "آدرس",
+                "emergencyContact": "تماس اضطراری",
+                "email": "ایمیل",
+                "phone": "تلفن"
+            }
+        },
+        "attendance": {
+            "emptyTitle": "رکورد حضوری نیست",
+            "emptyDesc": "داده‌های حضور اینجا نمایش داده می‌شود.",
+            "columns": {
+                "member": "عضو",
+                "date": "تاریخ",
+                "checkIn": "ورود",
+                "checkOut": "خروج",
+                "effective": "مؤثر",
+                "overtime": "اضافه‌کاری",
+                "status": "وضعیت"
+            },
+            "status": {
+                "present": "حاضر",
+                "late": "تأخیر",
+                "absent": "غایب",
+                "half_day": "نیم‌روز",
+                "on_leave": "مرخصی",
+                "mission": "مأموریت",
+                "holiday": "تعطیل"
+            },
+            "clock": {
+                "title": "حضور امروز",
+                "checkIn": "ثبت ورود",
+                "checkOut": "ثبت خروج",
+                "startBreak": "شروع استراحت",
+                "endBreak": "پایان استراحت",
+                "checkInAt": "ورود در",
+                "checkOutAt": "خروج در",
+                "doneForToday": "امروز خروج ثبت شده است."
+            },
+            "clockStatus": {
+                "not_started": "شروع نشده",
+                "checked_in": "حاضر",
+                "on_break": "استراحت",
+                "checked_out": "خروج ثبت شده"
+            },
+            "summary": {
+                "title": "خلاصه ماهانه",
+                "present": "روزهای حضور",
+                "late": "روزهای تأخیر",
+                "absent": "روزهای غیبت",
+                "overtime": "اضافه‌کاری"
+            },
+            "myAttendance": "حضور من",
+            "todayOverview": "نمای کلی امروز",
+            "reportMonth": "ماه گزارش",
+            "monthlyReport": "گزارش ماهانه",
+            "history": "سوابق"
+        },
+        "contracts": {
+            "emptyTitle": "قراردادی نیست",
+            "emptyDesc": "قراردادهای استخدام اینجا نمایش داده می‌شود.",
+            "renew": "تمدید",
+            "columns": {
+                "employee": "کارمند",
+                "type": "نوع",
+                "startDate": "شروع",
+                "endDate": "پایان",
+                "salary": "حقوق",
+                "status": "وضعیت"
+            },
+            "type": {
+                "permanent": "دائم",
+                "fixed_term": "مدت‌دار",
+                "trial": "آزمایشی",
+                "intern": "کارآموزی"
+            },
+            "status": {
+                "active": "فعال",
+                "expired": "منقضی",
+                "terminated": "فسخ شده",
+                "renewed": "تمدید شده"
+            },
+            "fields": {
+                "personnel": "کارمند",
+                "type": "نوع قرارداد",
+                "startDate": "تاریخ شروع",
+                "endDate": "تاریخ پایان",
+                "salary": "حقوق پایه",
+                "currency": "ارز"
+            },
+            "expiryAlert": {
+                "title": "قراردادهای در حال انقضا",
+                "daysLeft": "{days} روز مانده"
+            }
+        },
+        "documents": {
+            "upload": "بارگذاری مدرک",
+            "uploadSuccess": "مدرک بارگذاری شد",
+            "download": "دانلود",
+            "listTitle": "اسناد",
+            "emptyTitle": "مدرکی نیست",
+            "emptyDesc": "مدارک بارگذاری‌شده اینجا نمایش داده می‌شود.",
+            "filters": {
+                "allCategories": "همه دسته‌ها",
+                "allPersonnel": "همه پرسنل"
+            },
+            "fields": {
+                "personnel": "کارمند",
+                "category": "دسته‌بندی",
+                "file": "فایل"
+            },
+            "category": {
+                "contract": "قرارداد",
+                "id": "شناسنامه",
+                "certificate": "گواهی",
+                "other": "سایر"
+            }
+        },
+        "missions": {
+            "submit": "ثبت مأموریت",
+            "newRequest": "درخواست مأموریت جدید",
+            "myMissions": "مأموریت‌های من",
+            "allMissions": "همه مأموریت‌ها",
+            "emptyTitle": "مأموریتی نیست",
+            "emptyDesc": "درخواست‌های مأموریت اینجا نمایش داده می‌شود.",
+            "fields": {
+                "destination": "مقصد",
+                "startDate": "تاریخ شروع",
+                "endDate": "تاریخ پایان",
+                "transport": "وسیله نقلیه",
+                "description": "توضیحات"
+            },
+            "status": {
+                "pending": "در انتظار",
+                "approved": "تأیید شده",
+                "rejected": "رد شده",
+                "completed": "تکمیل شده"
+            }
+        },
+        "settings": {
+            "title": "تنظیمات منابع انسانی",
+            "workStart": "شروع کار",
+            "workEnd": "پایان کار",
+            "lateThreshold": "آستانه تأخیر (دقیقه)",
+            "overtimeEnabled": "محاسبه اضافه‌کاری",
+            "overtimeEnabledHint": "فعال‌سازی محاسبه اضافه‌کاری",
+            "contractExpiryAlert": "هشدار انقضای قرارداد (روز)"
+        }
+    },
+    "recruitment": {
+        "priority": {
+            "low": "کم",
+            "medium": "متوسط",
+            "high": "بالا",
+            "urgent": "فوری"
+        },
+        "requisitions": {
+            "create": "ایجاد درخواست",
+            "emptyTitle": "درخواستی نیست",
+            "emptyDesc": "درخواست‌های استخدام اینجا نمایش داده می‌شود.",
+            "columns": {
+                "title": "عنوان",
+                "department": "دپارتمان",
+                "positions": "تعداد",
+                "priority": "اولویت",
+                "candidates": "نامزدها",
+                "status": "وضعیت",
+                "created": "ایجاد"
+            },
+            "status": {
+                "open": "باز",
+                "filled": "تکمیل",
+                "cancelled": "لغو"
+            },
+            "fields": {
+                "title": "عنوان شغل",
+                "department": "دپارتمان",
+                "positions": "تعداد موقعیت",
+                "priority": "اولویت"
+            }
+        },
+        "candidateStatus": {
+            "new": "جدید",
+            "screening": "غربالگری",
+            "interview": "مصاحبه",
+            "offer": "پیشنهاد",
+            "hired": "استخدام شده",
+            "rejected": "رد شده"
+        },
+        "candidate": {
+            "title": "نامزد",
+            "hire": "استخدام",
+            "hiredSuccess": "نامزد با موفقیت استخدام شد"
+        },
+        "interview": {
+            "title": "مصاحبه‌ها",
+            "schedule": "زمان‌بندی مصاحبه",
+            "scheduledSuccess": "مصاحبه زمان‌بندی شد",
+            "submitFeedback": "ثبت بازخورد",
+            "feedbackSuccess": "بازخورد ثبت شد",
+            "avgScore": "میانگین امتیاز",
+            "emptyTitle": "مصاحبه‌ای زمان‌بندی نشده",
+            "fields": {
+                "interviewer": "مصاحبه‌کننده",
+                "type": "نوع مصاحبه",
+                "scheduledAt": "زمان",
+                "score": "امتیاز",
+                "feedback": "بازخورد"
+            },
+            "type": {
+                "phone": "تلفنی",
+                "video": "ویدیویی",
+                "in_person": "حضوری",
+                "technical": "فنی"
+            },
+            "status": {
+                "scheduled": "زمان‌بندی شده",
+                "completed": "انجام شده",
+                "cancelled": "لغو شده",
+                "no_show": "عدم حضور"
+            }
         }
     },
     "notifications": {

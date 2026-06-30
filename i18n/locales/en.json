@@ -16,7 +16,19 @@
     "sprints": "Sprints",
     "reports": "Reports",
     "logout": "Logout",
-    "menu": "Menu"
+    "menu": "Menu",
+    "hr": {
+      "section": "Human Resources",
+      "dashboard": "HR Dashboard",
+      "personnel": "Personnel",
+      "attendance": "Attendance",
+      "contracts": "Contracts",
+      "documents": "Documents",
+      "missions": "Missions",
+      "recruitment": "Recruitment",
+      "onboarding": "Onboarding",
+      "settings": "HR Settings"
+    }
   },
   "auth": {
     "login": "Login",
@@ -36,7 +48,10 @@
     "otpCode": "Verification code",
     "resendIn": "Resend in {seconds}s",
     "resend": "Resend",
-    "demoHint": "Demo: demo{'@'}midesk.io / password"
+    "demoHint": "Demo: demo{'@'}midesk.io / password",
+    "alreadyLoggedIn": "You are already signed in",
+    "continueToApp": "Continue to dashboard",
+    "switchAccount": "Sign out and use another account"
   },
   "onboarding": {
     "title": "Create organization",
@@ -54,7 +69,34 @@
     "inviteEmail": "Member email",
     "next": "Next",
     "back": "Back",
-    "finish": "Get started"
+    "finish": "Get started",
+    "template": {
+      "addStep": "Add step",
+      "newStep": "New step",
+      "step": "Step",
+      "saved": "Template saved",
+      "emptySteps": "No steps yet",
+      "fields": {
+        "title": "Step title",
+        "description": "Description",
+        "assigneeRole": "Assignee role",
+        "deadlineDays": "Deadline (days)"
+      }
+    },
+    "progress": {
+      "started": "Started",
+      "completeStep": "Mark step complete"
+    },
+    "list": {
+      "title": "Active onboardings",
+      "emptyTitle": "No active onboardings",
+      "emptyDesc": "Employee onboarding progress will appear here."
+    },
+    "status": {
+      "in_progress": "In progress",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    }
   },
   "dashboard": {
     "title": "Dashboard",
@@ -67,7 +109,8 @@
     "createProject": "Create first project",
     "activeSprint": "Active sprint",
     "weekHours": "Hours this week",
-    "pendingLeave": "Pending leave requests"
+    "pendingLeave": "Pending leave requests",
+    "attendanceToday": "Today's attendance"
   },
   "projects": {
     "title": "Projects",
@@ -312,11 +355,320 @@
     "reject": "Reject",
     "rejectReason": "Rejection reason",
     "pendingApprovals": "Pending approvals",
+    "approvalChain": {
+      "manager": "Manager",
+      "hr": "HR"
+    },
     "status": {
       "pending": "Pending",
       "approved": "Approved",
       "rejected": "Rejected",
       "cancelled": "Cancelled"
+    },
+    "policy": {
+      "title": "Leave policy",
+      "listTitle": "Configured policies",
+      "emptyTitle": "No policies configured",
+      "approvers": "approvers",
+      "autoApprove": "Auto approve",
+      "autoApproveHint": "Skip approval workflow for this leave type",
+      "approvalChain": "Approval chain",
+      "approvalChainHint": "Approvers in order — first to last",
+      "minNoticeDays": "Minimum notice (days)",
+      "allowNegativeBalance": "Allow negative balance",
+      "allowNegativeBalanceHint": "Permit requests exceeding remaining balance"
+    },
+    "report": {
+      "title": "Leave report",
+      "totalDays": "Total days",
+      "emptyTitle": "No report data",
+      "emptyDesc": "Leave usage will appear here once recorded.",
+      "columns": {
+        "member": "Member",
+        "total": "Total",
+        "byType": "By type",
+        "byMonth": "By month"
+      }
+    }
+  },
+  "hr": {
+    "dashboard": {
+      "title": "HR Dashboard",
+      "personnelCount": "Active personnel",
+      "attendanceToday": "Attendance today",
+      "expiringContracts": "Expiring contracts",
+      "newCandidates": "New candidates",
+      "activeOnboarding": "Active onboarding",
+      "present": "Present",
+      "absent": "Absent",
+      "onLeave": "On leave",
+      "onMission": "On mission",
+      "quickLinks": "Quick links"
+    },
+    "personnel": {
+      "title": "Personnel",
+      "emptyTitle": "No personnel",
+      "emptyDesc": "Add employees to get started.",
+      "filters": {
+        "search": "Search by name or code…",
+        "allStatus": "All statuses",
+        "allDepartments": "All departments"
+      },
+      "columns": {
+        "name": "Name",
+        "code": "Employee code",
+        "department": "Department",
+        "jobTitle": "Job title",
+        "hireDate": "Hire date",
+        "status": "Status"
+      },
+      "status": {
+        "active": "Active",
+        "on_leave": "On leave",
+        "terminated": "Terminated"
+      },
+      "employmentType": {
+        "full_time": "Full time",
+        "part_time": "Part time",
+        "contract": "Contract",
+        "intern": "Intern"
+      },
+      "tabs": {
+        "personal": "Personal",
+        "job": "Job",
+        "contracts": "Contracts",
+        "documents": "Documents",
+        "attendance": "Attendance",
+        "leave": "Leave"
+      },
+      "fields": {
+        "user": "User",
+        "employeeCode": "Employee code",
+        "hireDate": "Hire date",
+        "employmentType": "Employment type",
+        "jobTitle": "Job title",
+        "department": "Department",
+        "nationalId": "National ID",
+        "birthDate": "Birth date",
+        "address": "Address",
+        "emergencyContact": "Emergency contact",
+        "email": "Email",
+        "phone": "Phone"
+      }
+    },
+    "attendance": {
+      "emptyTitle": "No attendance records",
+      "emptyDesc": "Attendance data will appear here.",
+      "columns": {
+        "member": "Member",
+        "date": "Date",
+        "checkIn": "Check in",
+        "checkOut": "Check out",
+        "effective": "Effective",
+        "overtime": "Overtime",
+        "status": "Status"
+      },
+      "status": {
+        "present": "Present",
+        "late": "Late",
+        "absent": "Absent",
+        "half_day": "Half day",
+        "on_leave": "On leave",
+        "mission": "Mission",
+        "holiday": "Holiday"
+      },
+      "clock": {
+        "title": "Today's attendance",
+        "checkIn": "Check in",
+        "checkOut": "Check out",
+        "startBreak": "Start break",
+        "endBreak": "End break",
+        "checkInAt": "Checked in at",
+        "checkOutAt": "Checked out at",
+        "doneForToday": "You have checked out for today."
+      },
+      "clockStatus": {
+        "not_started": "Not started",
+        "checked_in": "Checked in",
+        "on_break": "On break",
+        "checked_out": "Checked out"
+      },
+      "summary": {
+        "title": "Monthly summary",
+        "present": "Present days",
+        "late": "Late days",
+        "absent": "Absent days",
+        "overtime": "Overtime"
+      },
+      "myAttendance": "My attendance",
+      "todayOverview": "Today's overview",
+      "reportMonth": "Report month",
+      "monthlyReport": "Monthly report",
+      "history": "History"
+    },
+    "contracts": {
+      "emptyTitle": "No contracts",
+      "emptyDesc": "Employment contracts will appear here.",
+      "renew": "Renew",
+      "columns": {
+        "employee": "Employee",
+        "type": "Type",
+        "startDate": "Start date",
+        "endDate": "End date",
+        "salary": "Salary",
+        "status": "Status"
+      },
+      "type": {
+        "permanent": "Permanent",
+        "fixed_term": "Fixed term",
+        "trial": "Trial",
+        "intern": "Intern"
+      },
+      "status": {
+        "active": "Active",
+        "expired": "Expired",
+        "terminated": "Terminated",
+        "renewed": "Renewed"
+      },
+      "fields": {
+        "personnel": "Employee",
+        "type": "Contract type",
+        "startDate": "Start date",
+        "endDate": "End date",
+        "salary": "Base salary",
+        "currency": "Currency"
+      },
+      "expiryAlert": {
+        "title": "Contracts expiring soon",
+        "daysLeft": "{days} days left"
+      }
+    },
+    "documents": {
+      "upload": "Upload document",
+      "uploadSuccess": "Document uploaded",
+      "download": "Download",
+      "listTitle": "Documents",
+      "emptyTitle": "No documents",
+      "emptyDesc": "Uploaded documents will appear here.",
+      "filters": {
+        "allCategories": "All categories",
+        "allPersonnel": "All personnel"
+      },
+      "fields": {
+        "personnel": "Employee",
+        "category": "Category",
+        "file": "File"
+      },
+      "category": {
+        "contract": "Contract",
+        "id": "ID",
+        "certificate": "Certificate",
+        "other": "Other"
+      }
+    },
+    "missions": {
+      "submit": "Submit mission",
+      "newRequest": "New mission request",
+      "myMissions": "My missions",
+      "allMissions": "All missions",
+      "emptyTitle": "No missions",
+      "emptyDesc": "Mission requests will appear here.",
+      "fields": {
+        "destination": "Destination",
+        "startDate": "Start date",
+        "endDate": "End date",
+        "transport": "Transport",
+        "description": "Description"
+      },
+      "status": {
+        "pending": "Pending",
+        "approved": "Approved",
+        "rejected": "Rejected",
+        "completed": "Completed"
+      }
+    },
+    "settings": {
+      "title": "HR settings",
+      "workStart": "Work start time",
+      "workEnd": "Work end time",
+      "lateThreshold": "Late threshold (minutes)",
+      "overtimeEnabled": "Overtime tracking",
+      "overtimeEnabledHint": "Enable overtime calculation",
+      "contractExpiryAlert": "Contract expiry alert (days)"
+    }
+  },
+  "recruitment": {
+    "priority": {
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High",
+      "urgent": "Urgent"
+    },
+    "requisitions": {
+      "create": "Create requisition",
+      "emptyTitle": "No requisitions",
+      "emptyDesc": "Open job requisitions will appear here.",
+      "columns": {
+        "title": "Title",
+        "department": "Department",
+        "positions": "Positions",
+        "priority": "Priority",
+        "candidates": "Candidates",
+        "status": "Status",
+        "created": "Created"
+      },
+      "status": {
+        "open": "Open",
+        "filled": "Filled",
+        "cancelled": "Cancelled"
+      },
+      "fields": {
+        "title": "Job title",
+        "department": "Department",
+        "positions": "Number of positions",
+        "priority": "Priority"
+      }
+    },
+    "candidateStatus": {
+      "new": "New",
+      "screening": "Screening",
+      "interview": "Interview",
+      "offer": "Offer",
+      "hired": "Hired",
+      "rejected": "Rejected"
+    },
+    "candidate": {
+      "title": "Candidate",
+      "hire": "Hire",
+      "hiredSuccess": "Candidate hired successfully"
+    },
+    "interview": {
+      "title": "Interviews",
+      "schedule": "Schedule interview",
+      "scheduledSuccess": "Interview scheduled",
+      "submitFeedback": "Submit feedback",
+      "feedbackSuccess": "Feedback submitted",
+      "avgScore": "Avg. score",
+      "emptyTitle": "No interviews scheduled",
+      "fields": {
+        "interviewer": "Interviewer",
+        "type": "Interview type",
+        "scheduledAt": "Scheduled at",
+        "score": "Score",
+        "feedback": "Feedback"
+      },
+      "type": {
+        "phone": "Phone",
+        "video": "Video",
+        "in_person": "In person",
+        "technical": "Technical"
+      },
+      "status": {
+        "scheduled": "Scheduled",
+        "completed": "Completed",
+        "cancelled": "Cancelled",
+        "no_show": "No show"
+      }
     }
   },
   "notifications": {

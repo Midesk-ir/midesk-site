@@ -12,11 +12,18 @@ dayjs.extend(relativeTime)
 dayjs.extend(jalaliPlugin)
 
 export function useCalendar() {
-  const tenantStore = useTenantStore()
   const { locale } = useI18n()
+  const tenantId = useCookie<string | null>('midesk_tenant_id')
 
-  const calendarType = computed(() => tenantStore.calendarType)
-  const tz = computed(() => tenantStore.tenant?.timezone ?? 'Asia/Tehran')
+  const calendarType = computed(() => {
+    if (import.meta.server || !tenantId.value) return 'jalali'
+    return useTenantStore().calendarType
+  })
+
+  const tz = computed(() => {
+    if (import.meta.server || !tenantId.value) return 'Asia/Tehran'
+    return useTenantStore().tenant?.timezone ?? 'Asia/Tehran'
+  })
 
   function formatDate(
     date: string | Date | null | undefined,
@@ -48,7 +55,9 @@ export function useCalendar() {
   }
 
   function formatCurrency(amount: number, currency?: string): string {
-    const curr = currency ?? tenantStore.tenant?.default_currency ?? 'IRR'
+    const curr = currency
+      ?? (import.meta.client && tenantId.value ? useTenantStore().tenant?.default_currency : null)
+      ?? 'IRR'
     const intlLocale = isPersianLocale(locale.value) ? 'fa-IR' : 'en-US'
     const formatted = new Intl.NumberFormat(intlLocale, {
       style: 'currency',

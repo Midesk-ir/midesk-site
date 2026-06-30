@@ -1,15 +1,18 @@
+import { bootstrapSession } from '~/utils/api-fetch'
+
 export default defineNuxtRouteMiddleware(async () => {
+  if (!hasAuthSession()) {
+    return navigateTo('/login', { replace: true })
+  }
+
+  if (!hasActivePinia()) return
+
   const authStore = useAuthStore()
   const tenantStore = useTenantStore()
   const config = useRuntimeConfig()
   const localeCookie = useCookie<string>('i18n_locale', { default: () => 'fa' })
 
-  if (!authStore.isAuthenticated) {
-    return navigateTo('/login', { replace: true })
-  }
-
   if (!authStore.bootstrapped) {
-    const { bootstrapSession } = await import('~/utils/api-fetch')
     try {
       await bootstrapSession(
         {
@@ -22,6 +25,8 @@ export default defineNuxtRouteMiddleware(async () => {
         tenantStore
       )
     } catch {
+      authStore.clearAuth()
+      tenantStore.clearTenant()
       return navigateTo('/login', { replace: true })
     }
   }

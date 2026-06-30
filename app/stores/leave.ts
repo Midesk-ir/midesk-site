@@ -5,10 +5,9 @@ import type {
   LeaveRequest,
   LeaveType
 } from '~/types/phase1'
+import { storeApi } from '~/utils/api-client'
 
 export const useLeaveStore = defineStore('leave', () => {
-  const { api } = useApi()
-
   const types = ref<LeaveType[]>([])
   const balances = ref<LeaveBalance[]>([])
   const myRequests = ref<LeaveRequest[]>([])
@@ -19,16 +18,16 @@ export const useLeaveStore = defineStore('leave', () => {
     loading.value = true
     try {
       const [typesRes, balancesRes, myRes] = await Promise.all([
-        api<{ data: LeaveType[] }>('/leave/types'),
-        api<{ data: LeaveBalance[] }>('/leave/balance'),
-        api<{ data: LeaveRequest[] }>('/leave/requests/my')
+        storeApi<{ data: LeaveType[] }>('/leave/types'),
+        storeApi<{ data: LeaveBalance[] }>('/leave/balance'),
+        storeApi<{ data: LeaveRequest[] }>('/leave/requests/my')
       ])
       types.value = typesRes.data
       balances.value = balancesRes.data
       myRequests.value = myRes.data
 
       try {
-        const pendingRes = await api<{ data: LeaveRequest[] }>(
+        const pendingRes = await storeApi<{ data: LeaveRequest[] }>(
           '/leave/requests/pending'
         )
         pendingApprovals.value = pendingRes.data
@@ -48,7 +47,7 @@ export const useLeaveStore = defineStore('leave', () => {
   }
 
   async function request(payload: CreateLeaveRequestPayload) {
-    const data = await api<{ data: LeaveRequest }>('/leave/requests', {
+    const data = await storeApi<{ data: LeaveRequest }>('/leave/requests', {
       method: 'POST',
       body: payload
     })
@@ -57,7 +56,7 @@ export const useLeaveStore = defineStore('leave', () => {
   }
 
   async function approve(id: string) {
-    const data = await api<{ data: LeaveRequest }>(
+    const data = await storeApi<{ data: LeaveRequest }>(
       `/leave/requests/${id}/approve`,
       { method: 'PATCH' }
     )
@@ -68,7 +67,7 @@ export const useLeaveStore = defineStore('leave', () => {
   }
 
   async function reject(id: string, reason: string) {
-    const data = await api<{ data: LeaveRequest }>(
+    const data = await storeApi<{ data: LeaveRequest }>(
       `/leave/requests/${id}/reject`,
       { method: 'PATCH', body: { reason } }
     )

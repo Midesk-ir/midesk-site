@@ -5,10 +5,9 @@ import type {
   CreateSprintPayload,
   Sprint
 } from '~/types/phase1'
+import { storeApi } from '~/utils/api-client'
 
 export const useSprintStore = defineStore('sprint', () => {
-  const { api } = useApi()
-
   const sprints = ref<Sprint[]>([])
   const activeSprint = ref<Sprint | null>(null)
   const backlog = ref<Task[]>([])
@@ -19,7 +18,7 @@ export const useSprintStore = defineStore('sprint', () => {
     projectId.value = id
     loading.value = true
     try {
-      const data = await api<{ data: Sprint[] }>(`/projects/${id}/sprints`)
+      const data = await storeApi<{ data: Sprint[] }>(`/projects/${id}/sprints`)
       sprints.value = data.data
       activeSprint.value = data.data.find(s => s.status === 'active') ?? null
       return data.data
@@ -29,13 +28,13 @@ export const useSprintStore = defineStore('sprint', () => {
   }
 
   async function fetchBacklog(id: string) {
-    const data = await api<{ data: Task[] }>(`/projects/${id}/backlog`)
+    const data = await storeApi<{ data: Task[] }>(`/projects/${id}/backlog`)
     backlog.value = data.data
     return data.data
   }
 
   async function createSprint(id: string, payload: CreateSprintPayload) {
-    const data = await api<{ data: Sprint }>(`/projects/${id}/sprints`, {
+    const data = await storeApi<{ data: Sprint }>(`/projects/${id}/sprints`, {
       method: 'POST',
       body: payload
     })
@@ -44,7 +43,7 @@ export const useSprintStore = defineStore('sprint', () => {
   }
 
   async function activate(id: string, sprintId: string) {
-    const data = await api<{ data: Sprint }>(
+    const data = await storeApi<{ data: Sprint }>(
       `/projects/${id}/sprints/${sprintId}/activate`,
       { method: 'PATCH' }
     )
@@ -65,7 +64,7 @@ export const useSprintStore = defineStore('sprint', () => {
     sprintId: string,
     payload: CloseSprintPayload
   ) {
-    const data = await api<{ data: Sprint }>(
+    const data = await storeApi<{ data: Sprint }>(
       `/projects/${id}/sprints/${sprintId}/close`,
       { method: 'PATCH', body: payload }
     )
@@ -76,7 +75,7 @@ export const useSprintStore = defineStore('sprint', () => {
   }
 
   async function assignTask(taskId: string, sprintId: string | null) {
-    const data = await api<{ data: Task }>(`/tasks/${taskId}/sprint`, {
+    const data = await storeApi<{ data: Task }>(`/tasks/${taskId}/sprint`, {
       method: 'PATCH',
       body: { sprint_id: sprintId }
     })

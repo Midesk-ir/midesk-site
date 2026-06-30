@@ -1,10 +1,8 @@
 export default defineNuxtRouteMiddleware(() => {
-  const authStore = useAuthStore()
-  const tenantStore = useTenantStore()
+  if (!hasAuthSession()) return
 
-  if (!authStore.isAuthenticated) return
+  const tenantId = getTenantIdCookie().value
+  if (tenantId) return
 
-  if (!tenantStore.hasTenant) {
-    return navigateTo('/onboarding', { replace: true })
-  }
+  return navigateTo('/onboarding', { replace: true })
 })

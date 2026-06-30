@@ -1,9 +1,8 @@
 import { defineStore } from 'pinia'
 import type { CalendarEvent, Holiday, Shift } from '~/types/phase1'
+import { storeApi } from '~/utils/api-client'
 
 export const useCalendarStore = defineStore('calendar', () => {
-  const { api } = useApi()
-
   const events = ref<CalendarEvent[]>([])
   const holidays = ref<Holiday[]>([])
   const shifts = ref<Shift[]>([])
@@ -26,9 +25,9 @@ export const useCalendarStore = defineStore('calendar', () => {
     loading.value = true
     try {
       const [eventsRes, holidaysRes, shiftsRes] = await Promise.all([
-        api<{ data: CalendarEvent[] }>('/calendar/events'),
-        api<{ data: Holiday[] }>('/calendar/holidays'),
-        api<{ data: Shift[] }>('/calendar/shifts')
+        storeApi<{ data: CalendarEvent[] }>('/calendar/events'),
+        storeApi<{ data: Holiday[] }>('/calendar/holidays'),
+        storeApi<{ data: Shift[] }>('/calendar/shifts')
       ])
       events.value = filterByMonth(eventsRes.data, prefix)
       holidays.value = filterByMonth(holidaysRes.data, prefix)
@@ -44,7 +43,7 @@ export const useCalendarStore = defineStore('calendar', () => {
   }
 
   async function createEvent(payload: Omit<CalendarEvent, 'id'>) {
-    const data = await api<{ data: CalendarEvent }>('/calendar/events', {
+    const data = await storeApi<{ data: CalendarEvent }>('/calendar/events', {
       method: 'POST',
       body: payload
     })

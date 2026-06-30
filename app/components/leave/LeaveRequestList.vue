@@ -52,6 +52,22 @@ const statusColor: Record<LeaveRequest['status'], 'warning' | 'success' | 'error
           <p v-if="req.reject_reason" class="mt-1 text-sm text-red-400">
             {{ req.reject_reason }}
           </p>
+          <div v-if="req.approval_chain?.length" class="mt-2 flex flex-wrap items-center gap-1.5">
+            <template v-for="(step, idx) in req.approval_chain" :key="idx">
+              <span
+                v-if="idx > 0"
+                class="text-[var(--color-midesk-muted)]"
+              >→</span>
+              <UBadge
+                :color="step.status === 'approved' ? 'success' : step.status === 'rejected' ? 'error' : 'warning'"
+                variant="subtle"
+                size="sm"
+              >
+                {{ t(`leave.approvalChain.${step.role}`) }}
+                {{ step.status === 'approved' ? '✓' : step.status === 'pending' ? '⏳' : '✗' }}
+              </UBadge>
+            </template>
+          </div>
         </div>
         <UBadge :color="statusColor[req.status]" variant="subtle">
           {{ t(`leave.status.${req.status}`) }}

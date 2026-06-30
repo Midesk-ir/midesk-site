@@ -1,5 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  ssr: false,
+
   modules: [
     '@nuxt/eslint',
     '@nuxt/ui',
@@ -32,23 +34,6 @@ export default defineNuxtConfig({
       cookieKey: 'i18n_locale',
       redirectOn: 'root'
     }
-  },
-
-  routeRules: {
-    '/': { prerender: true },
-    '/login': { ssr: false },
-    '/register': { ssr: false },
-    '/verify-otp': { ssr: false },
-    '/onboarding': { ssr: false },
-    '/dashboard/**': { ssr: false },
-    '/projects/**': { ssr: false },
-    '/worklog/**': { ssr: false },
-    '/calendar/**': { ssr: false },
-    '/leave/**': { ssr: false },
-    '/teams/**': { ssr: false },
-    '/members/**': { ssr: false },
-    '/settings/**': { ssr: false },
-    '/notifications/**': { ssr: false }
   },
 
   compatibilityDate: '2025-01-15',

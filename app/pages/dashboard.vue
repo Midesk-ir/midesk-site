@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import type { DashboardSummary } from '~/types'
+import type { HrDashboardSummary } from '~/types/phase2'
+import type { ClockStatus } from '~/types/phase2'
 
 definePageMeta({ layout: 'default', middleware: ['auth', 'tenant'] })
 
@@ -7,8 +9,12 @@ const { t } = useI18n()
 const { api } = useApi()
 const { formatRelative } = useCalendar()
 const authStore = useAuthStore()
+const leaveStore = useLeaveStore()
+const { can } = usePermissions()
 
 const summary = ref<DashboardSummary | null>(null)
+const hrSummary = ref<HrDashboardSummary | null>(null)
+const clockStatus = ref<ClockStatus | null>(null)
 const loading = ref(true)
 const error = ref(false)
 
@@ -21,6 +27,10 @@ const weekHours = computed(() => {
   const minutes = summary.value?.week_worklog_minutes ?? 0
   return (minutes / 60).toFixed(1)
 })
+
+const totalLeaveRemaining = computed(() =>
+  leaveStore.balances.reduce((sum, b) => sum + b.remaining, 0)
+)
 
 const stats = computed(() => [
   {
@@ -49,7 +59,25 @@ async function load() {
   loading.value = true
   error.value = false
   try {
-    summary.value = await api<DashboardSummary>('/dashboard/summary')
+    const tasks: Promise<unknown>[] = [
+      api<DashboardSummary>('/dashboard/summary').then(data => { summary.value = data }),
+      leaveStore.fetchAll().catch(() => {})
+    ]
+    if (can('hr:attendance:clock')) {
+      tasks.push(
+        api<{ data: { clock_status: ClockStatus } }>('/hr/attendance/my').then(res => {
+          clockStatus.value = res.data.clock_status
+        }).catch(() => {})
+      )
+    }
+    if (can('hr:dashboard:view')) {
+      tasks.push(
+        api<{ data: HrDashboardSummary }>('/hr/dashboard').then(res => {
+          hrSummary.value = res.data
+        }).catch(() => {})
+      )
+    }
+    await Promise.all(tasks)
   } catch {
     error.value = true
   } finally {
@@ -171,6 +199,72 @@ onMounted(load)
           </p>
           <NuxtLink to="/leave" class="midesk-link mt-2 inline-block text-sm">
             {{ t('nav.leave') }}
+          </NuxtLink>
+        </section>
+
+        <section v-if="leaveStore.balances.length" class="midesk-card p-5">
+          <div class="mb-3 flex items-center justify-between">
+            <h2 class="midesk-card-header mb-0">{{ t('leave.balance.title') }}</h2>
+            <UIcon name="i-lucide-tree-palm" class="size-5 text-[var(--color-midesk-accent)]" />
+          </div>
+          <p class="text-3xl font-bold tracking-tight text-[var(--color-midesk-text)]">
+            {{ totalLeaveRemaining }}
+            <span class="text-base font-normal text-[var(--color-midesk-muted)]">{{ t('leave.balance.days') }}</span>
+          </p>
+          <NuxtLink to="/leave" class="midesk-link mt-2 inline-block text-sm">
+            {{ t('nav.leave') }}
+          </NuxtLink>
+        </section>
+
+        <section v-if="clockStatus" class="midesk-card p-5">
+          <div class="mb-3 flex items-center justify-between">
+            <h2 class="midesk-card-header mb-0">{{ t('dashboard.attendanceToday') }}</h2>
+            <UIcon name="i-lucide-clock" class="size-5 text-[var(--color-midesk-accent)]" />
+          </div>
+          <p class="text-lg font-semibold text-[var(--color-midesk-text)]">
+            {{ t(`hr.attendance.clockStatus.${clockStatus}`) }}
+          </p>
+          <NuxtLink to="/hr/attendance/my" class="midesk-link mt-2 inline-block text-sm">
+            {{ t('hr.attendance.myAttendance') }}
+          </NuxtLink>
+        </section>
+
+        <section v-if="hrSummary?.expiring_contracts.length" class="midesk-card p-5">
+          <div class="mb-3 flex items-center justify-between">
+            <h2 class="midesk-card-header mb-0">{{ t('hr.dashboard.expiringContracts') }}</h2>
+            <UIcon name="i-lucide-file-warning" class="size-5 text-red-400" />
+          </div>
+          <p class="text-3xl font-bold tracking-tight text-[var(--color-midesk-text)]">
+            {{ hrSummary.expiring_contracts.length }}
+          </p>
+          <NuxtLink to="/hr/contracts" class="midesk-link mt-2 inline-block text-sm">
+            {{ t('nav.hr.contracts') }}
+          </NuxtLink>
+        </section>
+
+        <section v-if="hrSummary && hrSummary.new_candidates_count > 0" class="midesk-card p-5">
+          <div class="mb-3 flex items-center justify-between">
+            <h2 class="midesk-card-header mb-0">{{ t('hr.dashboard.newCandidates') }}</h2>
+            <UIcon name="i-lucide-user-plus" class="size-5 text-[var(--color-midesk-accent)]" />
+          </div>
+          <p class="text-3xl font-bold tracking-tight text-[var(--color-midesk-text)]">
+            {{ hrSummary.new_candidates_count }}
+          </p>
+          <NuxtLink to="/hr/recruitment" class="midesk-link mt-2 inline-block text-sm">
+            {{ t('nav.hr.recruitment') }}
+          </NuxtLink>
+        </section>
+
+        <section v-if="hrSummary?.active_onboarding.length" class="midesk-card p-5">
+          <div class="mb-3 flex items-center justify-between">
+            <h2 class="midesk-card-header mb-0">{{ t('hr.dashboard.activeOnboarding') }}</h2>
+            <UIcon name="i-lucide-user-check" class="size-5 text-[var(--color-midesk-accent)]" />
+          </div>
+          <p class="text-3xl font-bold tracking-tight text-[var(--color-midesk-text)]">
+            {{ hrSummary.active_onboarding.length }}
+          </p>
+          <NuxtLink to="/hr/onboarding" class="midesk-link mt-2 inline-block text-sm">
+            {{ t('nav.hr.onboarding') }}
           </NuxtLink>
         </section>
       </div>

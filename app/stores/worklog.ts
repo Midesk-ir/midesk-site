@@ -4,6 +4,7 @@ import type {
   Worklog,
   WorklogFilters
 } from '~/types/phase1'
+import { storeApi } from '~/utils/api-client'
 
 export interface WeekSummaryDay {
   date: string
@@ -11,8 +12,6 @@ export interface WeekSummaryDay {
 }
 
 export const useWorklogStore = defineStore('worklog', () => {
-  const { api } = useApi()
-
   const myWorklogs = ref<Worklog[]>([])
   const weekSummary = ref<WeekSummaryDay[]>([])
   const teamWorklogs = ref<Worklog[]>([])
@@ -21,7 +20,7 @@ export const useWorklogStore = defineStore('worklog', () => {
   async function fetchMy(filters?: WorklogFilters) {
     loading.value = true
     try {
-      const data = await api<{ data: Worklog[] }>('/worklogs/my', {
+      const data = await storeApi<{ data: Worklog[] }>('/worklogs/my', {
         query: filters
       })
       myWorklogs.value = data.data
@@ -32,13 +31,13 @@ export const useWorklogStore = defineStore('worklog', () => {
   }
 
   async function fetchWeekSummary() {
-    const data = await api<{ data: WeekSummaryDay[] }>('/worklogs/reports')
+    const data = await storeApi<{ data: WeekSummaryDay[] }>('/worklogs/reports')
     weekSummary.value = data.data
     return data.data
   }
 
   async function log(payload: CreateWorklogPayload) {
-    const data = await api<{ data: Worklog }>('/worklogs', {
+    const data = await storeApi<{ data: Worklog }>('/worklogs', {
       method: 'POST',
       body: payload
     })
@@ -47,7 +46,7 @@ export const useWorklogStore = defineStore('worklog', () => {
   }
 
   async function update(id: string, payload: Partial<CreateWorklogPayload>) {
-    const data = await api<{ data: Worklog }>(`/worklogs/${id}`, {
+    const data = await storeApi<{ data: Worklog }>(`/worklogs/${id}`, {
       method: 'PATCH',
       body: payload
     })
@@ -57,12 +56,12 @@ export const useWorklogStore = defineStore('worklog', () => {
   }
 
   async function remove(id: string) {
-    await api(`/worklogs/${id}`, { method: 'DELETE' })
+    await storeApi(`/worklogs/${id}`, { method: 'DELETE' })
     myWorklogs.value = myWorklogs.value.filter(w => w.id !== id)
   }
 
   async function fetchTeam(filters?: WorklogFilters) {
-    const data = await api<{ data: Worklog[] }>('/worklogs/team', {
+    const data = await storeApi<{ data: Worklog[] }>('/worklogs/team', {
       query: filters
     })
     teamWorklogs.value = data.data

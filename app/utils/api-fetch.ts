@@ -43,14 +43,14 @@ export async function bootstrapSession(
 
 export function createApiContext() {
   const config = useRuntimeConfig()
-  const authStore = useAuthStore()
-  const tenantStore = useTenantStore()
+  const token = useCookie<string | null>('midesk_token')
+  const tenantId = useCookie<string | null>('midesk_tenant_id')
   const localeCookie = useCookie<string>('i18n_locale', { default: () => 'fa' })
 
   return (): ApiContext => ({
     baseURL: config.public.apiBase,
-    token: toValue(authStore.token),
-    tenantId: toValue(tenantStore.tenantId),
+    token: token.value,
+    tenantId: tenantId.value,
     locale: localeCookie.value || 'fa'
   })
 }

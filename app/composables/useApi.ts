@@ -3,10 +3,7 @@ import type { ApiError } from '~/types'
 import { apiFetch, createApiContext } from '~/utils/api-fetch'
 
 export function useApi() {
-  const authStore = useAuthStore()
-  const tenantStore = useTenantStore()
   const getContext = createApiContext()
-  const toast = useToast()
 
   async function api<T>(
     url: string,
@@ -20,6 +17,8 @@ export function useApi() {
       const data = fetchError.data
 
       if (status === 401) {
+        const authStore = useAuthStore()
+        const tenantStore = useTenantStore()
         authStore.clearAuth()
         tenantStore.clearTenant()
         if (!url.startsWith('/auth/')) {
@@ -33,7 +32,7 @@ export function useApi() {
       }
 
       if (status === 403 || (status && status >= 500)) {
-        toast.add({
+        useToast().add({
           title: data?.message || 'Error',
           color: 'error'
         })

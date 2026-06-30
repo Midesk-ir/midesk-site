@@ -1,3 +1,5 @@
+import { getPermissionsForRole } from '../../../utils/permissions'
+
 export default defineEventHandler((event) => {
   const db = useMockDb()
   const { user, session } = db.requireAuth(event)
@@ -7,6 +9,6 @@ export default defineEventHandler((event) => {
   return {
     user,
     tenant,
-    permissions: ['project:read', 'project:write', 'task:read', 'task:write', 'member:invite']
+    permissions: getPermissionsForRole(user.role)
   }
 })

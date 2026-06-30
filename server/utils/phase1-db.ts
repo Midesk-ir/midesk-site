@@ -134,7 +134,11 @@ let leaveRequests: LeaveRequest[] = [
     end_date: '2026-07-03',
     duration_days: 3,
     status: 'pending',
-    note: 'سفر خانوادگی'
+    note: 'سفر خانوادگی',
+    approval_chain: [
+      { role: 'manager', status: 'approved' },
+      { role: 'hr', status: 'pending' }
+    ]
   },
   {
     id: 'lr2',
@@ -144,7 +148,11 @@ let leaveRequests: LeaveRequest[] = [
     end_date: '2026-06-26',
     duration_days: 2,
     status: 'approved',
-    note: 'معاینه پزشکی'
+    note: 'معاینه پزشکی',
+    approval_chain: [
+      { role: 'manager', status: 'approved' },
+      { role: 'hr', status: 'approved' }
+    ]
   }
 ]
 
@@ -537,7 +545,11 @@ export function usePhase1Db() {
         end_date: payload.end_date,
         duration_days,
         status: 'pending',
-        note: payload.note
+        note: payload.note,
+        approval_chain: [
+          { role: 'manager', status: 'pending' },
+          { role: 'hr', status: 'pending' }
+        ]
       }
       leaveRequests.unshift(req)
       return req
