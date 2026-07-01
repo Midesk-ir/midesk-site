@@ -45,9 +45,11 @@ onMounted(load)
   <div>
     <div class="midesk-page-header">
       <h1 class="midesk-page-title">{{ t('projects.title') }}</h1>
-      <UButton icon="i-lucide-plus" color="primary" class="shrink-0" @click="showCreate = true">
-        {{ t('projects.create') }}
-      </UButton>
+      <LayoutMideskPageHeaderActions>
+        <LayoutMideskPageHeaderButton variant="primary" icon="i-lucide-plus" @click="showCreate = true">
+          {{ t('projects.create') }}
+        </LayoutMideskPageHeaderButton>
+      </LayoutMideskPageHeaderActions>
     </div>
 
     <div v-if="loading" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

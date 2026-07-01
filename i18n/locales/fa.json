@@ -13,6 +13,11 @@
         "worklog": "تایم‌شیت",
         "calendar": "تقویم",
         "leave": "مرخصی",
+        "chat": "چت",
+        "meetings": "جلسات",
+        "ai": "هوش مصنوعی",
+        "notes": "یادداشت‌ها",
+        "collabSection": "همکاری",
         "sprints": "اسپرینت‌ها",
         "reports": "گزارش‌ها",
         "logout": "خروج",
@@ -28,6 +33,18 @@
             "recruitment": "جذب",
             "onboarding": "آنبوردینگ",
             "settings": "تنظیمات HR"
+        },
+        "finance": {
+            "section": "مالی",
+            "dashboard": "داشبورد مالی",
+            "expenses": "هزینه‌ها",
+            "budgets": "بودجه",
+            "invoices": "فاکتورها",
+            "purchaseRequests": "درخواست خرید",
+            "purchaseOrders": "سفارش خرید",
+            "vendors": "تأمین‌کنندگان",
+            "payroll": "حقوق و فیش",
+            "myFinance": "مالی من"
         }
     },
     "auth": {
@@ -737,7 +754,13 @@
         "title": "اعلان‌ها",
         "markAllRead": "علامت‌گذاری همه",
         "emptyTitle": "اعلانی ندارید",
-        "emptyDesc": "اعلان‌های جدید اینجا نمایش داده می‌شوند."
+        "emptyDesc": "اعلان‌های جدید اینجا نمایش داده می‌شوند.",
+        "settings": {
+            "title": "تنظیمات اعلان",
+            "subtitle": "کانال اعلان برای هر رویداد",
+            "event": "رویداد",
+            "channels": { "in_app": "درون‌برنامه", "email": "ایمیل", "sms": "پیامک", "push": "Push", "telegram": "تلگرام" }
+        }
     },
     "common": {
         "loading": "در حال بارگذاری...",
@@ -750,7 +773,295 @@
         "delete": "حذف",
         "close": "بستن",
         "noResults": "نتیجه‌ای یافت نشد",
-        "fillRequired": "لطفاً فیلدهای الزامی را پر کنید"
+        "fillRequired": "لطفاً فیلدهای الزامی را پر کنید",
+        "select": "انتخاب کنید",
+        "optional": "اختیاری",
+        "actions": "عملیات"
+    },
+    "finance": {
+        "dashboard": {
+            "title": "داشبورد مالی",
+            "subtitle": "خلاصه بودجه، هزینه‌ها و حقوق",
+            "pendingExpenses": "هزینه‌های در انتظار",
+            "overdueInvoices": "فاکتورهای معوق",
+            "latestPayslip": "آخرین فیش حقوقی",
+            "myPendingExpenses": "هزینه‌های من در انتظار",
+            "payrollStatus": "حقوق ماه جاری",
+            "budgetCenters": "مراکز هزینه",
+            "payroll": {
+                "not_calculated": "محاسبه نشده",
+                "calculated": "محاسبه‌شده",
+                "approved": "تأیید شده",
+                "paid": "پرداخت شده"
+            },
+            "emptyTitle": "داده‌ای برای نمایش نیست",
+            "emptyDesc": "خلاصه مالی هنوز بارگذاری نشده یا دسترسی ندارید.",
+            "quickLinks": "دسترسی سریع"
+        },
+        "expenses": {
+            "newExpense": "ثبت هزینه جدید",
+            "pageSubtitle": "ثبت، پیگیری و تأیید هزینه‌های سازمان",
+            "myExpenses": "هزینه‌های من",
+            "detail": "جزئیات هزینه",
+            "emptyTitle": "هزینه‌ای ثبت نشده",
+            "emptyDesc": "اولین هزینه را ثبت کنید.",
+            "columns": {
+                "date": "تاریخ",
+                "user": "کاربر",
+                "category": "دسته‌بندی",
+                "amount": "مبلغ",
+                "status": "وضعیت"
+            },
+            "fields": {
+                "category": "دسته‌بندی",
+                "date": "تاریخ",
+                "costCenter": "مرکز هزینه",
+                "budget": "بودجه",
+                "amount": "مبلغ",
+                "currency": "ارز",
+                "description": "توضیحات",
+                "receipt": "رسید / پیوست"
+            },
+            "filters": {
+                "status": "وضعیت",
+                "category": "دسته‌بندی",
+                "allStatuses": "همه وضعیت‌ها",
+                "allCategories": "همه دسته‌ها",
+                "fromDate": "از تاریخ",
+                "toDate": "تا تاریخ"
+            },
+            "categories": {
+                "travel": "سفر",
+                "office": "اداری",
+                "software": "نرم‌افزار",
+                "meals": "پذیرایی",
+                "equipment": "تجهیزات",
+                "other": "سایر"
+            },
+            "status": {
+                "draft": "پیش‌نویس",
+                "submitted": "ارسال‌شده",
+                "manager_review": "بررسی مدیر",
+                "finance_review": "بررسی مالی",
+                "approved": "تأیید شده",
+                "ready_to_pay": "آماده پرداخت",
+                "paid": "پرداخت شده",
+                "rejected": "رد شده"
+            },
+            "flow": {
+                "draft": "پیش‌نویس",
+                "submitted": "ارسال",
+                "manager": "مدیر",
+                "finance": "مالی",
+                "approved": "تأیید",
+                "paid": "پرداخت",
+                "rejected": "رد شده"
+            },
+            "actions": {
+                "create": "ثبت هزینه",
+                "created": "هزینه ثبت شد",
+                "submit": "ارسال برای تأیید"
+            },
+            "rejectTitle": "رد هزینه",
+            "rejectHint": "دلیل رد را وارد کنید (اختیاری).",
+            "rejectReason": "دلیل رد"
+        },
+        "payroll": {
+            "payslipTitle": "جزئیات فیش حقوقی",
+            "baseSalary": "حقوق پایه",
+            "overtime": "اضافه‌کاری",
+            "gross": "ناخالص",
+            "net": "خالص پرداختی",
+            "pageSubtitle": "محاسبه، تأیید و پرداخت حقوق ماهانه",
+            "calculateTitle": "محاسبه حقوق",
+            "selectedCount": "{count} مورد انتخاب شده",
+            "emptyTitle": "رکورد حقوقی موجود نیست",
+            "emptyDesc": "دوره را انتخاب کنید و حقوق را محاسبه کنید.",
+            "fields": {
+                "period": "دوره (ماه)"
+            },
+            "columns": {
+                "employee": "کارمند",
+                "period": "دوره",
+                "base": "پایه",
+                "overtime": "اضافه‌کاری",
+                "deductions": "کسورات",
+                "net": "خالص",
+                "status": "وضعیت"
+            },
+            "status": {
+                "draft": "پیش‌نویس",
+                "calculated": "محاسبه‌شده",
+                "approved": "تأیید شده",
+                "paid": "پرداخت شده"
+            },
+            "actions": {
+                "calculate": "محاسبه حقوق",
+                "calculated": "حقوق محاسبه شد",
+                "approve": "تأیید",
+                "bulkPay": "پرداخت {count} مورد",
+                "bulkPaid": "پرداخت گروهی انجام شد"
+            }
+        },
+        "invoices": {
+            "pageSubtitle": "مدیریت فاکتورهای تأمین‌کنندگان",
+            "newInvoice": "فاکتور جدید",
+            "emptyTitle": "فاکتوری ثبت نشده",
+            "emptyDesc": "اولین فاکتور را ثبت کنید.",
+            "fields": {
+                "vendor": "تأمین‌کننده",
+                "number": "شماره فاکتور",
+                "issueDate": "تاریخ صدور",
+                "dueDate": "سررسید",
+                "amount": "مبلغ",
+                "currency": "ارز",
+                "description": "توضیحات"
+            },
+            "columns": {
+                "number": "شماره",
+                "vendor": "تأمین‌کننده",
+                "dueDate": "سررسید",
+                "amount": "مبلغ",
+                "status": "وضعیت"
+            },
+            "filters": {
+                "status": "وضعیت",
+                "allStatuses": "همه وضعیت‌ها"
+            },
+            "status": {
+                "draft": "پیش‌نویس",
+                "sent": "ارسال‌شده",
+                "partially_paid": "پرداخت جزئی",
+                "paid": "پرداخت شده",
+                "overdue": "معوق",
+                "cancelled": "لغو شده"
+            },
+            "actions": {
+                "create": "ثبت فاکتور",
+                "created": "فاکتور ثبت شد",
+                "pay": "پرداخت",
+                "paid": "فاکتور پرداخت شد"
+            }
+        },
+        "vendors": {
+            "pageSubtitle": "فهرست تأمین‌کنندگان سازمان",
+            "newVendor": "تأمین‌کننده جدید",
+            "emptyTitle": "تأمین‌کننده‌ای ثبت نشده",
+            "emptyDesc": "اولین تأمین‌کننده را اضافه کنید.",
+            "fields": {
+                "name": "نام",
+                "code": "کد",
+                "contact": "نام تماس",
+                "email": "ایمیل",
+                "phone": "تلفن",
+                "taxId": "شناسه مالیاتی"
+            },
+            "columns": {
+                "name": "نام",
+                "code": "کد",
+                "contact": "تماس",
+                "email": "ایمیل"
+            },
+            "actions": {
+                "create": "ثبت تأمین‌کننده",
+                "created": "تأمین‌کننده ثبت شد"
+            }
+        },
+        "purchaseRequests": {
+            "pageSubtitle": "درخواست خرید تجهیزات و ملزومات",
+            "newRequest": "درخواست جدید",
+            "emptyTitle": "درخواست خریدی ثبت نشده",
+            "emptyDesc": "درخواست خرید جدید ثبت کنید.",
+            "fields": {
+                "title": "عنوان",
+                "description": "توضیحات",
+                "items": "اقلام",
+                "itemName": "نام کالا",
+                "qty": "تعداد",
+                "unitPrice": "قیمت واحد",
+                "total": "جمع"
+            },
+            "columns": {
+                "title": "عنوان",
+                "user": "درخواست‌دهنده",
+                "amount": "مبلغ",
+                "date": "تاریخ",
+                "status": "وضعیت"
+            },
+            "status": {
+                "draft": "پیش‌نویس",
+                "submitted": "ارسال‌شده",
+                "owner_review": "بررسی مدیر",
+                "finance_review": "بررسی مالی",
+                "approved": "تأیید شده",
+                "rejected": "رد شده",
+                "converted": "تبدیل به سفارش"
+            },
+            "actions": {
+                "create": "ثبت درخواست",
+                "created": "درخواست ثبت شد",
+                "addItem": "افزودن ردیف",
+                "submit": "ارسال",
+                "ownerApprove": "تأیید مدیر",
+                "financeApprove": "تأیید مالی",
+                "convert": "تبدیل به PO",
+                "converted": "سفارش خرید ایجاد شد"
+            }
+        },
+        "purchaseOrders": {
+            "pageSubtitle": "سفارش‌های خرید صادرشده",
+            "emptyTitle": "سفارش خریدی موجود نیست",
+            "emptyDesc": "پس از تأیید درخواست خرید، سفارش اینجا نمایش داده می‌شود.",
+            "columns": {
+                "title": "عنوان",
+                "vendor": "تأمین‌کننده",
+                "amount": "مبلغ",
+                "date": "تاریخ",
+                "status": "وضعیت"
+            },
+            "status": {
+                "draft": "پیش‌نویس",
+                "issued": "صادر شده",
+                "received": "دریافت شده",
+                "cancelled": "لغو شده"
+            }
+        },
+        "budgets": {
+            "overview": "مصرف بودجه",
+            "overviewHint": "مصرف هر مرکز هزینه نسبت به بودجه سال جاری",
+            "pageSubtitle": "پایش بودجه و مراکز هزینه سازمان",
+            "budget": "بودجه",
+            "spent": "مصرف",
+            "utilized": "مصرف‌شده",
+            "costCenters": "مراکز هزینه",
+            "newBudget": "بودجه جدید",
+            "emptyTitle": "داده بودجه موجود نیست",
+            "noCostCenters": "مرکز هزینه‌ای تعریف نشده",
+            "fields": {
+                "costCenter": "مرکز هزینه",
+                "year": "سال",
+                "amount": "مبلغ بودجه"
+            },
+            "actions": {
+                "create": "ایجاد بودجه",
+                "created": "بودجه ایجاد شد"
+            }
+        },
+        "my": {
+            "subtitle": "فیش حقوقی، هزینه‌ها و رسیدهای پرداخت",
+            "tabs": {
+                "payslips": "فیش‌های حقوقی",
+                "expenses": "هزینه‌های من",
+                "receipts": "رسیدهای پرداخت"
+            },
+            "payslipsEmpty": "فیش حقوقی موجود نیست",
+            "receiptsEmpty": "رسید پرداختی موجود نیست",
+            "payslipStatus": {
+                "calculated": "محاسبه‌شده",
+                "approved": "تأیید شده",
+                "paid": "پرداخت شده"
+            }
+        }
     },
     "landing": {
         "nav": {
@@ -819,6 +1130,14 @@
             "dashboard": {
                 "title": "داشبورد",
                 "desc": "نمای کلی تسک‌ها، اسپرینت فعال و فعالیت تیم"
+            },
+            "hr": {
+                "title": "منابع انسانی",
+                "desc": "پرسنل، قرارداد، تردد، استخدام و آنبوردینگ"
+            },
+            "finance": {
+                "title": "مالی و حقوق",
+                "desc": "هزینه، بودجه، فیش حقوقی و تأیید مالی"
             }
         },
         "roadmapBadge": "به‌زودی",
@@ -923,13 +1242,98 @@
                 "a": "بله. معماری چندمستاجره (Multi-tenant) هر سازمان را با داده و تنظیمات مجزا نگه می‌دارد."
             },
             "roadmap": {
-                "q": "HR و مالی کی اضافه می‌شود؟",
-                "a": "ماژول‌های HR، مالی و AI در نقشه راه محصول هستند. امکانات فعلی روی پروژه و تیم متمرکز است."
+                "q": "چه چیزهایی در نقشه راه است؟",
+                "a": "ماژول HR و مالی هم‌اکنون در دسترس است. هوش مصنوعی سازمانی در نقشه راه بعدی محصول قرار دارد."
             }
         },
         "ctaTitle": "آماده‌اید تیم را یکپارچه کنید؟",
         "ctaSubtitle": "همین حالا رایگان شروع کنید — بدون کارت، بدون تعهد.",
         "footerTagline": "پلتفرم یکپارچه مدیریت سازمان برای تیم‌های مدرن.",
         "footer": "© Midesk — ساخته شده برای تیم‌های مدرن"
+    },
+    "chat": {
+        "search": "جستجوی کانال…",
+        "create": "کانال جدید",
+        "pageSubtitle": "پیام‌های تیم، گروه و کانال",
+        "conversations": "مکالمات",
+        "selectChannel": "یک مکالمه را انتخاب کنید",
+        "selectChannelDesc": "از لیست سمت راست یک گفتگو را انتخاب کنید یا مکالمه جدید بسازید.",
+        "emptyRoster": "مکالمه‌ای یافت نشد",
+        "readonly": "فقط خواندنی",
+        "unnamed": "بدون نام",
+        "members": "عضو",
+        "inputPlaceholder": "پیام بنویسید…",
+        "loadOlder": "پیام‌های قدیمی‌تر",
+        "actions": { "reply": "پاسخ", "react": "واکنش" },
+        "tabs": { "all": "همه", "dm": "شخصی", "group": "گروه", "channel": "کانال" },
+        "types": { "dm": "پیام خصوصی", "group": "گروه", "channel": "کانال" },
+        "fields": { "type": "نوع", "name": "نام", "members": "اعضا" }
+    },
+    "meetings": {
+        "create": "جلسه جدید",
+        "created": "جلسه ایجاد شد",
+        "join": "ورود",
+        "leave": "خروج",
+        "room": "اتاق جلسه",
+        "attendees": "حاضرین",
+        "details": "جزئیات",
+        "organizer": "برگزارکننده",
+        "statusLabel": "وضعیت",
+        "pageSubtitle": "جلسات آنلاین تیم",
+        "emptyTitle": "جلسه‌ای یافت نشد",
+        "emptyDesc": "فیلتر دیگری را امتحان کنید یا جلسه جدید بسازید.",
+        "filters": { "today": "امروز", "upcoming": "آینده", "past": "گذشته", "all": "همه" },
+        "status": { "scheduled": "برنامه‌ریزی‌شده", "in_progress": "در حال برگزاری", "completed": "پایان‌یافته", "cancelled": "لغوشده" },
+        "attendeeStatus": { "invited": "دعوت‌شده", "accepted": "پذیرفته", "declined": "رد شده", "attended": "حاضر" },
+        "fields": {
+            "title": "عنوان",
+            "start": "شروع",
+            "end": "پایان",
+            "startDate": "تاریخ شروع",
+            "startTime": "ساعت شروع",
+            "endDate": "تاریخ پایان",
+            "endTime": "ساعت پایان",
+            "provider": "سرویس",
+            "attendees": "حاضرین",
+            "attendeesPlaceholder": "انتخاب اعضا…"
+        }
+    },
+    "ai": {
+        "subtitle": "پرسش از AI سازمانی",
+        "formTitle": "پرسش جدید",
+        "formDesc": "سؤال خود را بنویسید یا از میانبرهای زیر استفاده کنید.",
+        "formHint": "پاسخ بر اساس زمینه انتخاب‌شده تولید می‌شود.",
+        "prompt": "سؤال شما",
+        "send": "ارسال",
+        "history": "تاریخچه",
+        "processing": "در حال پردازش…",
+        "copy": "کپی",
+        "copied": "کپی شد",
+        "emptyTitle": "هنوز درخواستی ندارید",
+        "status": { "queued": "در صف", "processing": "در حال پردازش", "completed": "تکمیل", "failed": "خطا" },
+        "context": { "label": "زمینه", "id": "شناسه زمینه", "general": "عمومی", "project": "پروژه", "task": "تسک", "candidate": "کاندیدا" },
+        "shortcuts": {
+            "label": "میانبرها",
+            "taskAnalysis": "تحلیل تسک‌های پروژه",
+            "taskAnalysisPrompt": "تسک‌های پروژه فعلی را تحلیل کن",
+            "document": "تولید سند",
+            "documentPrompt": "یک پیش‌نویس سند HR بنویس",
+            "resume": "غربال رزومه",
+            "resumePrompt": "این رزومه را ارزیابی کن"
+        }
+    },
+    "notes": {
+        "create": "یادداشت جدید",
+        "pin": "سنجاق",
+        "pinned": "سنجاق‌شده",
+        "pageSubtitle": "یادداشت‌های شخصی و تیمی",
+        "edit": "ویرایش",
+        "preview": "پیش‌نمایش",
+        "untitled": "بدون عنوان",
+        "emptyTitle": "یادداشتی نیست",
+        "emptyDesc": "اولین یادداشت خود را بسازید.",
+        "filters": { "all": "همه" },
+        "visibility": { "private": "شخصی", "team": "تیمی", "project": "پروژه" },
+        "fields": { "title": "عنوان", "body": "متن", "visibility": "دسترسی", "color": "رنگ" }
     }
 }

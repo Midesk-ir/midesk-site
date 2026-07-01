@@ -14,7 +14,6 @@ const emit = defineEmits<{
 }>()
 
 const { t } = useI18n()
-const { formatCurrency } = useCalendar()
 const toast = useToast()
 
 const attachmentFile = ref<File | null>(null)
@@ -100,7 +99,7 @@ function onSubmit() {
     </div>
 
     <p v-if="form.base_salary" class="text-sm text-[var(--color-midesk-muted)]">
-      {{ formatCurrency(form.base_salary, form.currency) }}
+      <MideskCurrency :amount="form.base_salary" :currency="form.currency" />
     </p>
 
     <MideskFormField

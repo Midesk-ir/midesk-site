@@ -31,15 +31,16 @@ onMounted(load)
   <div>
     <div class="midesk-page-header">
       <h1 class="midesk-page-title">{{ t('nav.hr.recruitment') }}</h1>
-      <UButton
-        v-if="can('hr:recruitment:manage')"
-        icon="i-lucide-plus"
-        color="primary"
-        class="shrink-0"
-        @click="showCreate = true"
-      >
-        {{ t('recruitment.requisitions.create') }}
-      </UButton>
+      <LayoutMideskPageHeaderActions>
+        <LayoutMideskPageHeaderButton
+          v-if="can('hr:recruitment:manage')"
+          variant="primary"
+          icon="i-lucide-plus"
+          @click="showCreate = true"
+        >
+          {{ t('recruitment.requisitions.create') }}
+        </LayoutMideskPageHeaderButton>
+      </LayoutMideskPageHeaderActions>
     </div>
 
     <RecruitmentRequisitionList

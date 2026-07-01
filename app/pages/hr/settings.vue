@@ -40,7 +40,7 @@ onMounted(load)
 
 <template>
   <div>
-    <h1 class="midesk-page-title mb-6">{{ t('nav.hr.settings') }}</h1>
+    <LayoutMideskPageHeader :title="t('nav.hr.settings')" />
 
     <USkeleton v-if="loading" class="midesk-skeleton-card h-80" />
 

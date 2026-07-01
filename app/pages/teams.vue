@@ -21,7 +21,7 @@ onMounted(async () => {
 
 <template>
   <div>
-    <h1 class="mb-6 text-2xl font-bold mb-1">{{ t('teams.title') }}</h1>
+    <LayoutMideskPageHeader :title="t('teams.title')" />
 
     <div v-if="loading" class="grid gap-4 sm:grid-cols-2">
       <USkeleton v-for="i in 2" :key="i" class="h-32" />

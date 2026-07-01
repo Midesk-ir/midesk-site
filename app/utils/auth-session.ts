@@ -1,6 +1,7 @@
 import { getActivePinia, setActivePinia } from 'pinia'
 
 const BOOTSTRAP_CACHE_KEY = 'midesk_bootstrap'
+export const BOOTSTRAP_CACHE_VERSION = 2
 
 export function getAuthTokenCookie() {
   return useCookie<string | null>('midesk_token')
@@ -33,7 +34,16 @@ export function readBootstrapCache(): { user: import('~/types').User, permission
   try {
     const raw = sessionStorage.getItem(BOOTSTRAP_CACHE_KEY)
     if (!raw) return null
-    return JSON.parse(raw) as { user: import('~/types').User, permissions: string[] }
+    const parsed = JSON.parse(raw) as {
+      v?: number
+      user: import('~/types').User
+      permissions: string[]
+    }
+    if (parsed.v !== BOOTSTRAP_CACHE_VERSION) {
+      sessionStorage.removeItem(BOOTSTRAP_CACHE_KEY)
+      return null
+    }
+    return { user: parsed.user, permissions: parsed.permissions }
   } catch {
     sessionStorage.removeItem(BOOTSTRAP_CACHE_KEY)
     return null
@@ -42,7 +52,7 @@ export function readBootstrapCache(): { user: import('~/types').User, permission
 
 export function writeBootstrapCache(data: { user: import('~/types').User, permissions: string[] }) {
   if (!import.meta.client) return
-  sessionStorage.setItem(BOOTSTRAP_CACHE_KEY, JSON.stringify(data))
+  sessionStorage.setItem(BOOTSTRAP_CACHE_KEY, JSON.stringify({ ...data, v: BOOTSTRAP_CACHE_VERSION }))
 }
 
 export function clearBootstrapCache() {

@@ -93,10 +93,10 @@ onMounted(load)
 
 <template>
   <div>
-    <div class="mb-8">
-      <h1 class="midesk-page-title">{{ t('dashboard.title') }}</h1>
-      <p class="midesk-page-subtitle">{{ t('app.tagline') }}</p>
-    </div>
+    <LayoutMideskPageHeader
+      :title="t('dashboard.title')"
+      :subtitle="t('app.tagline')"
+    />
 
     <div v-if="loading" class="space-y-6">
       <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
@@ -257,6 +257,82 @@ onMounted(load)
           </p>
           <NuxtLink to="/hr/onboarding" class="midesk-link mt-2 inline-block text-sm">
             {{ t('nav.hr.onboarding') }}
+          </NuxtLink>
+        </section>
+
+        <section
+          v-if="summary.finance_widget?.pending_expenses_count != null"
+          class="midesk-card p-5"
+        >
+          <div class="mb-3 flex items-center justify-between">
+            <h2 class="midesk-card-header mb-0">{{ t('finance.dashboard.pendingExpenses') }}</h2>
+            <UIcon name="i-lucide-receipt" class="size-5 text-[var(--color-midesk-accent)]" />
+          </div>
+          <p class="text-3xl font-bold tracking-tight text-[var(--color-midesk-text)]">
+            {{ summary.finance_widget.pending_expenses_count }}
+          </p>
+          <p class="mt-1 text-sm text-[var(--color-midesk-muted)]">
+            <MideskCurrency
+              :amount="summary.finance_widget.pending_expenses_amount ?? 0"
+              :currency="summary.finance_widget.currency"
+            />
+          </p>
+          <NuxtLink to="/finance/expenses" class="midesk-link mt-2 inline-block text-sm">
+            {{ t('nav.finance.expenses') }}
+          </NuxtLink>
+        </section>
+
+        <section
+          v-if="summary.finance_widget?.overdue_invoices_count != null"
+          class="midesk-card p-5"
+        >
+          <div class="mb-3 flex items-center justify-between">
+            <h2 class="midesk-card-header mb-0">{{ t('finance.dashboard.overdueInvoices') }}</h2>
+            <UIcon name="i-lucide-file-warning" class="size-5 text-amber-400" />
+          </div>
+          <p class="text-3xl font-bold tracking-tight text-[var(--color-midesk-text)]">
+            {{ summary.finance_widget.overdue_invoices_count }}
+          </p>
+          <NuxtLink to="/finance/invoices?status=overdue" class="midesk-link mt-2 inline-block text-sm">
+            {{ t('nav.finance.invoices') }}
+          </NuxtLink>
+        </section>
+
+        <section
+          v-if="summary.finance_widget?.latest_payslip"
+          class="midesk-card p-5"
+        >
+          <div class="mb-3 flex items-center justify-between">
+            <h2 class="midesk-card-header mb-0">{{ t('finance.dashboard.latestPayslip') }}</h2>
+            <UIcon name="i-lucide-file-text" class="size-5 text-[var(--color-midesk-accent)]" />
+          </div>
+          <p class="text-lg font-semibold text-[var(--color-midesk-text)]">
+            {{ summary.finance_widget.latest_payslip.period }}
+          </p>
+          <p class="mt-1 text-2xl font-bold text-[var(--color-midesk-text)]">
+            <MideskCurrency
+              :amount="summary.finance_widget.latest_payslip.net_amount"
+              :currency="summary.finance_widget.latest_payslip.currency"
+            />
+          </p>
+          <NuxtLink to="/my-finance" class="midesk-link mt-2 inline-block text-sm">
+            {{ t('nav.finance.myFinance') }}
+          </NuxtLink>
+        </section>
+
+        <section
+          v-if="summary.finance_widget?.my_pending_expenses_count != null"
+          class="midesk-card p-5"
+        >
+          <div class="mb-3 flex items-center justify-between">
+            <h2 class="midesk-card-header mb-0">{{ t('finance.dashboard.myPendingExpenses') }}</h2>
+            <UIcon name="i-lucide-wallet" class="size-5 text-[var(--color-midesk-accent)]" />
+          </div>
+          <p class="text-3xl font-bold tracking-tight text-[var(--color-midesk-text)]">
+            {{ summary.finance_widget.my_pending_expenses_count }}
+          </p>
+          <NuxtLink to="/my-finance" class="midesk-link mt-2 inline-block text-sm">
+            {{ t('finance.expenses.myExpenses') }}
           </NuxtLink>
         </section>
       </div>

@@ -119,6 +119,8 @@ onMounted(async () => {
     </div>
 
     <template v-else>
+      <LayoutMideskPageHeader :title="t('reports.title')" />
+
       <UTabs v-model="tab" :items="tabItems" :content="false" class="mb-6" />
 
       <section class="midesk-card p-5">

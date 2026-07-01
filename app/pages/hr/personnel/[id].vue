@@ -64,30 +64,25 @@ onMounted(async () => {
 
 <template>
   <div>
-    <div class="mb-6">
-      <UButton
-        to="/hr/personnel"
-        variant="ghost"
-        color="neutral"
-        icon="i-lucide-arrow-right"
-        size="sm"
-        class="mb-3"
-      >
-        {{ t('nav.hr.personnel') }}
-      </UButton>
-      <div class="flex flex-wrap items-center justify-between gap-3">
+    <LayoutMideskPageHeader
+      back-to="/hr/personnel"
+      :back-label="t('nav.hr.personnel')"
+    >
+      <template #title>
         <h1 v-if="detail" class="midesk-page-title">{{ detail.user.name }}</h1>
         <h1 v-else class="midesk-page-title">{{ t('nav.hr.personnel') }}</h1>
-        <UButton
+      </template>
+      <template #actions>
+        <LayoutMideskPageHeaderButton
           v-if="detail && can('hr:personnel:update')"
+          variant="soft-primary"
           icon="i-lucide-pencil"
-          variant="soft"
           @click="showEdit = true"
         >
           {{ t('common.edit') }}
-        </UButton>
-      </div>
-    </div>
+        </LayoutMideskPageHeaderButton>
+      </template>
+    </LayoutMideskPageHeader>
 
     <div v-if="loading" class="space-y-4">
       <USkeleton class="midesk-skeleton-card h-32" />

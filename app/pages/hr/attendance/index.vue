@@ -32,17 +32,17 @@ onMounted(load)
 
 <template>
   <div>
-    <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
-      <h1 class="midesk-page-title">{{ t('nav.hr.attendance') }}</h1>
-      <UButton
-        to="/hr/attendance/my"
-        variant="soft"
-        color="primary"
-        icon="i-lucide-user"
-      >
-        {{ t('hr.attendance.myAttendance') }}
-      </UButton>
-    </div>
+    <LayoutMideskPageHeader :title="t('nav.hr.attendance')">
+      <template #actions>
+        <LayoutMideskPageHeaderButton
+          to="/hr/attendance/my"
+          variant="soft-primary"
+          icon="i-lucide-user"
+        >
+          {{ t('hr.attendance.myAttendance') }}
+        </LayoutMideskPageHeaderButton>
+      </template>
+    </LayoutMideskPageHeader>
 
     <div class="space-y-6">
       <HrAttendanceClock v-if="can('hr:attendance:clock')" />

@@ -50,20 +50,18 @@ onMounted(load)
 
 <template>
   <div>
-    <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
-      <div>
-        <h1 class="midesk-page-title">{{ t('worklog.title') }}</h1>
-      </div>
-      <UButton
-        v-if="['OWNER', 'ADMIN', 'MANAGER'].includes(authStore.user?.role ?? '')"
-        to="/worklog/team"
-        variant="soft"
-        color="primary"
-        icon="i-lucide-users"
-      >
-        {{ t('worklog.team.title') }}
-      </UButton>
-    </div>
+    <LayoutMideskPageHeader :title="t('worklog.title')">
+      <template #actions>
+        <LayoutMideskPageHeaderButton
+          v-if="['OWNER', 'ADMIN', 'MANAGER'].includes(authStore.user?.role ?? '')"
+          to="/worklog/team"
+          variant="soft-primary"
+          icon="i-lucide-users"
+        >
+          {{ t('worklog.team.title') }}
+        </LayoutMideskPageHeaderButton>
+      </template>
+    </LayoutMideskPageHeader>
 
     <div class="grid gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
       <div class="space-y-6">

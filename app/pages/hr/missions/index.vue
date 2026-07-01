@@ -64,7 +64,7 @@ onMounted(load)
 
 <template>
   <div>
-    <h1 class="midesk-page-title mb-6">{{ t('nav.hr.missions') }}</h1>
+    <LayoutMideskPageHeader :title="t('nav.hr.missions')" />
 
     <div class="space-y-6">
       <section

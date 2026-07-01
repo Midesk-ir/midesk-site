@@ -44,9 +44,11 @@ onMounted(load)
   <div>
     <div class="midesk-page-header">
       <h1 class="midesk-page-title">{{ t('members.title') }}</h1>
-      <UButton icon="i-lucide-user-plus" color="primary" class="shrink-0" @click="showInvite = true">
-        {{ t('members.invite') }}
-      </UButton>
+      <LayoutMideskPageHeaderActions>
+        <LayoutMideskPageHeaderButton variant="primary" icon="i-lucide-user-plus" @click="showInvite = true">
+          {{ t('members.invite') }}
+        </LayoutMideskPageHeaderButton>
+      </LayoutMideskPageHeaderActions>
     </div>
 
     <UCard v-if="loading" class="midesk-glass border-[var(--color-midesk-border)]">

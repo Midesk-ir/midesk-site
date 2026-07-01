@@ -17,9 +17,11 @@ async function handleClick(id: string, url: string | null) {
   <div>
     <div class="midesk-page-header">
       <h1 class="midesk-page-title">{{ t('notifications.title') }}</h1>
-      <UButton variant="outline" size="sm" class="shrink-0" @click="markAllRead">
-        {{ t('notifications.markAllRead') }}
-      </UButton>
+      <LayoutMideskPageHeaderActions>
+        <LayoutMideskPageHeaderButton variant="outline" @click="markAllRead">
+          {{ t('notifications.markAllRead') }}
+        </LayoutMideskPageHeaderButton>
+      </LayoutMideskPageHeaderActions>
     </div>
 
     <div v-if="loading" class="space-y-3">

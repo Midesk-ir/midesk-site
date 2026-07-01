@@ -134,6 +134,14 @@ export interface DashboardSummary {
   active_sprint?: import('./phase1').Sprint & { project_name: string, days_remaining: number } | null
   week_worklog_minutes?: number
   pending_leave_count?: number
+  finance_widget?: {
+    pending_expenses_count?: number
+    pending_expenses_amount?: number
+    overdue_invoices_count?: number
+    currency?: string
+    latest_payslip?: import('./phase3').MyPayslipBrief | null
+    my_pending_expenses_count?: number
+  }
 }
 
 export interface ApiError {
@@ -182,3 +190,5 @@ export const PRIORITY_COLORS: Record<TaskPriority, string> = {
 
 export * from './phase1'
 export * from './phase2'
+export * from './phase3'
+export * from './phase4'

@@ -17,9 +17,11 @@ onMounted(load)
       <div>
         <h1 class="midesk-page-title">{{ t('worklog.team.title') }}</h1>
       </div>
-      <UButton to="/worklog" variant="ghost" icon="i-lucide-arrow-right" class="shrink-0">
-        {{ t('worklog.title') }}
-      </UButton>
+      <LayoutMideskPageHeaderActions>
+        <LayoutMideskPageHeaderButton to="/worklog" back>
+          {{ t('worklog.title') }}
+        </LayoutMideskPageHeaderButton>
+      </LayoutMideskPageHeaderActions>
     </div>
 
     <WorklogTable

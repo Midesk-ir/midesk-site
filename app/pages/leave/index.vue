@@ -53,30 +53,27 @@ onMounted(load)
 
 <template>
   <div>
-    <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
-      <h1 class="midesk-page-title">{{ t('leave.title') }}</h1>
-      <div class="flex flex-wrap gap-2">
-        <UButton
+    <LayoutMideskPageHeader :title="t('leave.title')">
+      <template #actions>
+        <LayoutMideskPageHeaderButton
           v-if="can('leave:policies:view')"
           to="/leave/policies"
-          variant="soft"
-          color="neutral"
+          variant="soft-neutral"
           icon="i-lucide-shield"
         >
           {{ t('leave.policy.title') }}
-        </UButton>
-        <UButton
+        </LayoutMideskPageHeaderButton>
+        <LayoutMideskPageHeaderButton
           v-if="leaveStore.pendingApprovals.length"
           to="/leave/requests"
-          variant="soft"
-          color="primary"
+          variant="soft-primary"
           icon="i-lucide-clipboard-check"
         >
           {{ t('leave.pendingApprovals') }}
           ({{ leaveStore.pendingApprovals.length }})
-        </UButton>
-      </div>
-    </div>
+        </LayoutMideskPageHeaderButton>
+      </template>
+    </LayoutMideskPageHeader>
 
     <UiEmptyState
       v-if="error"

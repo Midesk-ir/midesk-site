@@ -1,15 +1,51 @@
-# Midesk — Frontend (Phase 0–2)
+# Midesk Site
 
-Nuxt 4 SPA for Midesk: auth, projects, kanban, teams, and **Phase 2 HR** (personnel, attendance, contracts, documents, missions, recruitment, onboarding, leave policies).
+Frontend for **Midesk** — a unified organization management platform (projects, HR, finance, collaboration). Built as a Nuxt 4 SPA with a built-in mock API for local development.
+
+> **فارسی:** اپلیکیشن وب Midesk با Nuxt 4 — شامل پروژه، کانبان، منابع انسانی، مالی، چت، جلسات، AI و یادداشت. API موک داخل همان ریپو برای توسعه محلی.
+
+---
+
+## Features
+
+| Area | Capabilities |
+|------|----------------|
+| **Core** | Auth (email / OTP), multi-tenant onboarding, dashboard, members, teams, notifications |
+| **Projects** | Kanban, tasks, sprints, backlog, worklogs, reports (burndown, CFD, velocity) |
+| **Calendar** | Events, holidays, shifts |
+| **Leave** | Requests, balances, policies, approvals, reports |
+| **HR (Phase 2)** | Personnel, attendance, contracts, documents, missions, recruitment, onboarding |
+| **Finance (Phase 3)** | Expenses, budgets, invoices, purchase requests/orders, vendors, payroll, personal finance |
+| **Collaboration (Phase 4)** | Chat (DM / group / channel), meetings (Jitsi/BBB), AI assistant, notes, notification preferences |
+
+### UX highlights
+
+- **fa / en** with RTL/LTR, Jalali calendar, Vazirmatn font
+- Dark glass UI (`midesk-card`, page headers, segment tabs)
+- **IRR currency** formatting with correct RTL layout
+- Permission-based navigation (`usePermissions`, Spatie-style strings)
+- Mock real-time layer (Echo-compatible bus) for chat & notifications
+
+---
 
 ## Stack
 
-- Nuxt 4 + Vue 3 + TypeScript
-- Nuxt UI + Tailwind CSS 4
-- Pinia, @nuxtjs/i18n (fa/en + RTL/LTR)
-- vee-validate + zod, vuedraggable, dayjs + jalali, ApexCharts
+| Layer | Technology |
+|-------|------------|
+| Framework | Nuxt 4, Vue 3, TypeScript |
+| UI | Nuxt UI 4, Tailwind CSS 4 |
+| State | Pinia |
+| i18n | `@nuxtjs/i18n` |
+| Forms | vee-validate + zod |
+| Charts | ApexCharts |
+| Dates | dayjs + jalali-dayjs, `@mahlaparvaz/vue-datepicker` |
+| Other | vuedraggable, markdown-it, vue-sonner |
+
+---
 
 ## Quick start
+
+**Requirements:** Node.js 22+, pnpm 9+
 
 ```bash
 pnpm install
@@ -18,32 +54,17 @@ pnpm run dev
 
 Open [http://localhost:3000](http://localhost:3000)
 
-## Demo credentials
+### Demo login
 
-- **Email:** `demo@midesk.io`
-- **Password:** `password`
-- **OTP (SMS login):** `123456`
+| Field | Value |
+|-------|--------|
+| Email | `demo@midesk.io` |
+| Password | `password` |
+| OTP (SMS flow) | `123456` |
 
-## Mock API
+Demo user is **OWNER** (`u1`) with full permissions on tenant `t1`.
 
-Nitro mock API at `/api/v1/*` for local development. Point `runtimeConfig.public.apiBase` to your backend when ready.
-
-### Phase 2 HR routes
-
-| Route | Description |
-|-------|-------------|
-| `/hr` | HR dashboard |
-| `/hr/personnel` | Personnel list + create |
-| `/hr/personnel/[id]` | Profile (tabs) + edit |
-| `/hr/attendance` | Team attendance (HR) |
-| `/hr/attendance/my` | My clock + history |
-| `/hr/contracts` | Contracts + renew/create |
-| `/hr/documents` | Document upload/list |
-| `/hr/missions` | Missions |
-| `/hr/recruitment` | Requisitions + kanban |
-| `/hr/onboarding` | Templates + progress |
-| `/hr/settings` | HR settings |
-| `/leave/policies` | Leave policies |
+---
 
 ## Scripts
 
@@ -52,20 +73,158 @@ Nitro mock API at `/api/v1/*` for local development. Point `runtimeConfig.public
 | `pnpm run dev` | Development server |
 | `pnpm run build` | Production build |
 | `pnpm run preview` | Preview production build |
-| `pnpm run typecheck` | TypeScript check |
+| `pnpm run typecheck` | Vue/TS type check |
 | `pnpm run lint` | ESLint |
+
+CI (`.github/workflows/ci.yml`) runs **lint** and **typecheck** on every push.
+
+---
+
+## Configuration
+
+```ts
+// nuxt.config.ts
+runtimeConfig.public.apiBase  // default: '/api/v1'
+```
+
+Point `apiBase` to your Laravel/backend API when replacing the mock layer. Auth uses `Authorization: Bearer <token>` and `X-Tenant-Id` headers (see `app/utils/api-fetch.ts`).
+
+**Locale cookie:** `i18n_locale` (`fa` | `en`)
+
+---
 
 ## Project structure
 
 ```
 app/
-├── components/   # hr, recruitment, onboarding, leave, kanban, layout, …
-├── composables/  # useApi, useAuth, usePermissions, …
-├── layouts/      # default, auth, marketing
-├── middleware/   # auth, guest, tenant, hr, …
-├── pages/        # routes incl. hr/*
-├── stores/       # auth, hr (incl. attendance, recruitment), leave, …
-└── types/        # phase1.ts, phase2.ts
-i18n/locales/     # fa.json, en.json
-server/api/v1/    # mock REST API (hr/*, leave/*, …)
+├── components/       # Feature UI (hr, finance, chat, meeting, notes, ai, layout, …)
+├── composables/      # useApi, useAuth, usePermissions, useRealtime, useCalendar, …
+├── layouts/          # default, auth, auth-onboarding, marketing, fullscreen
+├── middleware/       # auth, guest, tenant, hr, finance, admin, manager, …
+├── pages/            # File-based routes
+├── plugins/          # auth-bootstrap, echo (mock), datepicker portal, …
+├── stores/           # Pinia stores per domain
+├── types/            # phase1.ts … phase4.ts
+└── utils/            # api-client, currency-format, session-bootstrap, …
+
+i18n/locales/         # fa.json, en.json
+
+server/
+├── api/v1/           # Mock REST handlers (mirror future backend)
+└── utils/            # mock-db, phase1-db … phase4-db, permissions
 ```
+
+### Mock data layers
+
+| Module | Server util |
+|--------|-------------|
+| Core / projects / tasks | `phase1-db.ts` |
+| HR / leave | `phase2-db.ts` |
+| Finance | `phase3-db.ts` |
+| Chat / meetings / AI / notes | `phase4-db.ts` |
+
+All routes go through `useMockDb()` in `server/utils/mock-db.ts`.
+
+---
+
+## Main routes
+
+### Core & projects
+
+| Path | Description |
+|------|-------------|
+| `/` | Landing (marketing) |
+| `/login`, `/register`, `/verify-otp` | Auth |
+| `/onboarding` | Tenant setup |
+| `/dashboard` | Dashboard |
+| `/projects`, `/projects/[id]` | Projects & kanban |
+| `/projects/[id]/sprints`, `/reports`, `/settings` | Sprints & analytics |
+| `/teams`, `/members` | Teams & invites |
+| `/worklog`, `/worklog/team` | Time tracking |
+| `/calendar` | Calendar |
+| `/notifications`, `/settings` | Notifications & profile |
+
+### HR & leave
+
+| Path | Description |
+|------|-------------|
+| `/hr` | HR dashboard |
+| `/hr/personnel`, `/hr/personnel/[id]` | Personnel |
+| `/hr/attendance`, `/hr/attendance/my` | Attendance |
+| `/hr/contracts`, `/hr/documents`, `/hr/missions` | Contracts, docs, missions |
+| `/hr/recruitment`, `/hr/recruitment/[id]` | Recruitment |
+| `/hr/onboarding`, `/hr/settings` | Onboarding & HR settings |
+| `/leave`, `/leave/requests`, `/leave/policies` | Leave |
+
+### Finance
+
+| Path | Description |
+|------|-------------|
+| `/finance` | Finance dashboard |
+| `/finance/expenses`, `/finance/expenses/my` | Expenses |
+| `/finance/budgets`, `/finance/invoices` | Budgets & invoices |
+| `/finance/purchase-requests`, `/finance/purchase-orders` | Procurement |
+| `/finance/vendors`, `/finance/payroll` | Vendors & payroll |
+| `/my-finance` | Personal finance view |
+
+### Collaboration
+
+| Path | Description |
+|------|-------------|
+| `/chat`, `/chat/[channelId]` | Messenger (roster + conversation) |
+| `/meetings`, `/meetings/[id]`, `/meetings/[id]/room` | Meetings |
+| `/ai` | AI assistant |
+| `/notes` | Notes |
+| `/settings/notifications` | Notification preferences |
+
+---
+
+## Conventions
+
+### Page header
+
+Use `LayoutMideskPageHeader` with `#actions` and `LayoutMideskPageHeaderButton`:
+
+```vue
+<LayoutMideskPageHeader :title="t('nav.notes')" :subtitle="t('notes.pageSubtitle')">
+  <template #actions>
+    <LayoutMideskPageHeaderButton variant="primary" icon="i-lucide-plus" @click="open = true">
+      {{ t('notes.create') }}
+    </LayoutMideskPageHeaderButton>
+  </template>
+</LayoutMideskPageHeader>
+```
+
+Button variants: `primary`, `outline`, `soft-primary`, `soft-neutral`, `nav` (back).
+
+### Filter tabs
+
+Use `UiSegmentTabs` for pill-style filters (meetings, notes, etc.).
+
+### Permissions
+
+Server: `requireAuthWithPermission(event, 'resource:action')`  
+Client: `usePermissions().can('finance:expenses:view')`  
+Role matrix: `server/utils/permissions.ts`
+
+### API from stores
+
+```ts
+import { storeApi } from '~/utils/api-client'
+await storeApi<{ data: T[] }>('/notes')
+```
+
+---
+
+## Replacing the mock API
+
+1. Set `runtimeConfig.public.apiBase` to your backend URL (e.g. `https://api.example.com/v1`).
+2. Keep the same route shapes and `{ data: … }` response envelope where possible.
+3. Implement real broadcasting auth at `/api/v1/broadcasting/auth` for WebSockets.
+4. Remove or disable Nitro handlers under `server/api/v1/` when fully migrated.
+
+---
+
+## License
+
+Private — © Midesk. All rights reserved unless otherwise specified by the repository owner.

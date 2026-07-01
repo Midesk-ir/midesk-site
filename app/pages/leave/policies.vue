@@ -72,12 +72,13 @@ onMounted(load)
 
 <template>
   <div>
-    <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
-      <h1 class="midesk-page-title">{{ t('leave.policy.title') }}</h1>
-      <UButton to="/leave" variant="soft" color="neutral" icon="i-lucide-arrow-right">
-        {{ t('nav.leave') }}
-      </UButton>
-    </div>
+    <LayoutMideskPageHeader :title="t('leave.policy.title')">
+      <template #actions>
+        <LayoutMideskPageHeaderButton to="/leave" back>
+          {{ t('nav.leave') }}
+        </LayoutMideskPageHeaderButton>
+      </template>
+    </LayoutMideskPageHeader>
 
     <div class="space-y-6">
       <LeavePolicyForm

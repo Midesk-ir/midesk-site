@@ -65,7 +65,7 @@ onMounted(async () => {
 
 <template>
   <div>
-    <h1 class="midesk-page-title mb-6">{{ t('nav.hr.documents') }}</h1>
+    <LayoutMideskPageHeader :title="t('nav.hr.documents')" />
 
     <div class="space-y-6">
       <HrDocumentUpload

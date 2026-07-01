@@ -5,7 +5,7 @@ const { t } = useI18n()
 const { nextIcon } = useDirectionalIcons()
 
 const stats = [
-  { value: '6+', labelKey: 'landing.stats.modules' },
+  { value: '8+', labelKey: 'landing.stats.modules' },
   { value: '2', labelKey: 'landing.stats.languages' },
   { value: '2', labelKey: 'landing.stats.calendar' },
   { value: '✓', labelKey: 'landing.stats.tenants' }
@@ -24,7 +24,9 @@ const features = [
   { key: 'worklog', icon: 'i-lucide-clock' },
   { key: 'calendar', icon: 'i-lucide-calendar-days' },
   { key: 'teams', icon: 'i-lucide-users' },
-  { key: 'dashboard', icon: 'i-lucide-layout-dashboard' }
+  { key: 'dashboard', icon: 'i-lucide-layout-dashboard' },
+  { key: 'hr', icon: 'i-lucide-building-2' },
+  { key: 'finance', icon: 'i-lucide-wallet' }
 ] as const
 
 const howSteps = ['register', 'setup', 'run'] as const
@@ -40,7 +42,7 @@ const pricingTiers = [
 
 const faqItems = ['what', 'free', 'calendar', 'security', 'roadmap'] as const
 
-const roadmapItems = ['hr', 'finance', 'ai'] as const
+const roadmapItems = ['ai'] as const
 
 const faqAccordion = computed(() =>
   faqItems.map(key => ({

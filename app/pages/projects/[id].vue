@@ -40,10 +40,12 @@ onMounted(loadProject)
     </div>
 
     <template v-else-if="project">
-      <div class="mb-6 min-w-0">
-        <h1 class="midesk-page-title">{{ project.name }}</h1>
-        <p v-if="project.description" class="mt-1 text-sm text-muted">{{ project.description }}</p>
-      </div>
+      <LayoutMideskPageHeader>
+        <template #title>
+          <h1 class="midesk-page-title">{{ project.name }}</h1>
+          <p v-if="project.description" class="midesk-page-subtitle">{{ project.description }}</p>
+        </template>
+      </LayoutMideskPageHeader>
 
       <ProjectSubNav :project-id="projectId" />
 

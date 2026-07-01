@@ -31,7 +31,37 @@ export const PERMISSIONS = {
   'hr:settings:manage': 'hr:settings:manage',
   'leave:policies:view': 'leave:policies:view',
   'leave:policies:manage': 'leave:policies:manage',
-  'leave:report:view': 'leave:report:view'
+  'leave:report:view': 'leave:report:view',
+  // Finance (phase 3)
+  'finance:dashboard:view': 'finance:dashboard:view',
+  'finance:expenses:view': 'finance:expenses:view',
+  'finance:expenses:create': 'finance:expenses:create',
+  'finance:expenses:approve': 'finance:expenses:approve',
+  'finance:expenses:pay': 'finance:expenses:pay',
+  'finance:budgets:view': 'finance:budgets:view',
+  'finance:budgets:manage': 'finance:budgets:manage',
+  'finance:invoices:view': 'finance:invoices:view',
+  'finance:payroll:view': 'finance:payroll:view',
+  'finance:my:view': 'finance:my:view',
+  // Collaboration (phase 4)
+  'chat:view': 'chat:view',
+  'chat:manage': 'chat:manage',
+  'meetings:view': 'meetings:view',
+  'meetings:manage': 'meetings:manage',
+  'ai:view': 'ai:view',
+  'ai:query': 'ai:query',
+  'notes:view': 'notes:view',
+  'notes:manage': 'notes:manage',
+  'notifications:preferences': 'notifications:preferences',
+  'performance:dashboard:view': 'performance:dashboard:view',
+  'performance:indicators:view': 'performance:indicators:view',
+  'performance:indicators:manage': 'performance:indicators:manage',
+  'performance:scores:view': 'performance:scores:view',
+  'performance:scores:manage': 'performance:scores:manage',
+  'performance:objectives:view': 'performance:objectives:view',
+  'performance:objectives:manage': 'performance:objectives:manage',
+  'performance:reviews:view': 'performance:reviews:view',
+  'performance:reviews:manage': 'performance:reviews:manage'
 } as const
 
 export type Permission = (typeof PERMISSIONS)[keyof typeof PERMISSIONS]
@@ -77,7 +107,24 @@ const ROLE_PERMISSIONS: Record<UserRole, Permission[]> = {
     PERMISSIONS['hr:attendance:view'],
     PERMISSIONS['hr:missions:view'],
     PERMISSIONS['hr:missions:approve'],
-    PERMISSIONS['leave:report:view']
+    PERMISSIONS['leave:report:view'],
+    PERMISSIONS['finance:expenses:view'],
+    PERMISSIONS['finance:expenses:create'],
+    PERMISSIONS['finance:expenses:approve'],
+    PERMISSIONS['finance:my:view'],
+    PERMISSIONS['chat:view'],
+    PERMISSIONS['chat:manage'],
+    PERMISSIONS['meetings:view'],
+    PERMISSIONS['meetings:manage'],
+    PERMISSIONS['ai:view'],
+    PERMISSIONS['ai:query'],
+    PERMISSIONS['notes:view'],
+    PERMISSIONS['notes:manage'],
+    PERMISSIONS['notifications:preferences'],
+    PERMISSIONS['performance:dashboard:view'],
+    PERMISSIONS['performance:scores:view'],
+    PERMISSIONS['performance:objectives:view'],
+    PERMISSIONS['performance:reviews:view']
   ],
   MEMBER: [
     PERMISSIONS['project:read'],
@@ -86,7 +133,19 @@ const ROLE_PERMISSIONS: Record<UserRole, Permission[]> = {
     PERMISSIONS['hr:attendance:clock'],
     PERMISSIONS['hr:attendance:view'],
     PERMISSIONS['hr:missions:view'],
-    PERMISSIONS['hr:missions:request']
+    PERMISSIONS['hr:missions:request'],
+    PERMISSIONS['finance:expenses:create'],
+    PERMISSIONS['finance:my:view'],
+    PERMISSIONS['chat:view'],
+    PERMISSIONS['meetings:view'],
+    PERMISSIONS['ai:view'],
+    PERMISSIONS['ai:query'],
+    PERMISSIONS['notes:view'],
+    PERMISSIONS['notes:manage'],
+    PERMISSIONS['notifications:preferences'],
+    PERMISSIONS['performance:dashboard:view'],
+    PERMISSIONS['performance:objectives:view'],
+    PERMISSIONS['performance:reviews:view']
   ]
 }
 

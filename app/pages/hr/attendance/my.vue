@@ -35,9 +35,11 @@ onMounted(load)
 
 <template>
   <div>
-    <div class="mb-6">
-      <h1 class="midesk-page-title">{{ t('hr.attendance.myAttendance') }}</h1>
-    </div>
+    <LayoutMideskPageHeader
+      back-to="/hr/attendance"
+      :back-label="t('nav.hr.attendance')"
+      :title="t('hr.attendance.myAttendance')"
+    />
 
     <div class="space-y-6">
       <HrAttendanceClock />

@@ -36,6 +36,13 @@ export function useNotifications() {
     count.value = 0
   }
 
+  function prependNotification(n: Notification) {
+    if (!notifications.value.some(x => x.id === n.id)) {
+      notifications.value.unshift(n)
+    }
+    if (!n.read_at) count.value += 1
+  }
+
   return {
     count,
     notifications,
@@ -43,6 +50,7 @@ export function useNotifications() {
     fetchCount,
     fetchNotifications,
     markRead,
-    markAllRead
+    markAllRead,
+    prependNotification
   }
 }

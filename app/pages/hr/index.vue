@@ -37,10 +37,10 @@ const attendance = computed(() => dashboard.value?.attendance_today)
 
 <template>
   <div>
-    <div class="mb-8">
-      <h1 class="midesk-page-title">{{ t('hr.dashboard.title') }}</h1>
-      <p class="midesk-page-subtitle">{{ t('app.tagline') }}</p>
-    </div>
+    <LayoutMideskPageHeader
+      :title="t('hr.dashboard.title')"
+      :subtitle="t('app.tagline')"
+    />
 
     <div v-if="loading" class="space-y-6">
       <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">

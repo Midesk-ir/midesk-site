@@ -13,6 +13,11 @@
     "worklog": "Worklog",
     "calendar": "Calendar",
     "leave": "Leave",
+    "chat": "Chat",
+    "meetings": "Meetings",
+    "ai": "AI",
+    "notes": "Notes",
+    "collabSection": "Collaboration",
     "sprints": "Sprints",
     "reports": "Reports",
     "logout": "Logout",
@@ -28,6 +33,18 @@
       "recruitment": "Recruitment",
       "onboarding": "Onboarding",
       "settings": "HR Settings"
+    },
+    "finance": {
+      "section": "Finance",
+      "dashboard": "Finance Dashboard",
+      "expenses": "Expenses",
+      "budgets": "Budgets",
+      "invoices": "Invoices",
+      "purchaseRequests": "Purchase requests",
+      "purchaseOrders": "Purchase orders",
+      "vendors": "Vendors",
+      "payroll": "Payroll",
+      "myFinance": "My Finance"
     }
   },
   "auth": {
@@ -737,7 +754,13 @@
     "title": "Notifications",
     "markAllRead": "Mark all read",
     "emptyTitle": "No notifications",
-    "emptyDesc": "New notifications will appear here."
+    "emptyDesc": "New notifications will appear here.",
+    "settings": {
+      "title": "Notification settings",
+      "subtitle": "Delivery channel per event type",
+      "event": "Event",
+      "channels": { "in_app": "In-app", "email": "Email", "sms": "SMS", "push": "Push", "telegram": "Telegram" }
+    }
   },
   "common": {
     "loading": "Loading...",
@@ -750,7 +773,295 @@
     "delete": "Delete",
     "close": "Close",
       "noResults": "No results found",
-      "fillRequired": "Please fill in all required fields"
+      "fillRequired": "Please fill in all required fields",
+      "select": "Select",
+      "optional": "Optional",
+      "actions": "Actions"
+  },
+  "finance": {
+    "dashboard": {
+      "title": "Finance Dashboard",
+      "subtitle": "Budget, expenses and payroll summary",
+      "pendingExpenses": "Pending expenses",
+      "overdueInvoices": "Overdue invoices",
+      "latestPayslip": "Latest payslip",
+      "myPendingExpenses": "My pending expenses",
+      "payrollStatus": "Current payroll",
+      "budgetCenters": "Cost centers",
+      "payroll": {
+        "not_calculated": "Not calculated",
+        "calculated": "Calculated",
+        "approved": "Approved",
+        "paid": "Paid"
+      },
+      "emptyTitle": "Nothing to show",
+      "emptyDesc": "Finance summary is not loaded yet or you lack access.",
+      "quickLinks": "Quick links"
+    },
+    "expenses": {
+      "newExpense": "New expense",
+      "pageSubtitle": "Submit, track and approve organizational expenses",
+      "myExpenses": "My expenses",
+      "detail": "Expense details",
+      "emptyTitle": "No expenses yet",
+      "emptyDesc": "Create your first expense.",
+      "columns": {
+        "date": "Date",
+        "user": "User",
+        "category": "Category",
+        "amount": "Amount",
+        "status": "Status"
+      },
+      "fields": {
+        "category": "Category",
+        "date": "Date",
+        "costCenter": "Cost center",
+        "budget": "Budget",
+        "amount": "Amount",
+        "currency": "Currency",
+        "description": "Description",
+        "receipt": "Receipt / attachment"
+      },
+      "filters": {
+        "status": "Status",
+        "category": "Category",
+        "allStatuses": "All statuses",
+        "allCategories": "All categories",
+        "fromDate": "From date",
+        "toDate": "To date"
+      },
+      "categories": {
+        "travel": "Travel",
+        "office": "Office",
+        "software": "Software",
+        "meals": "Meals",
+        "equipment": "Equipment",
+        "other": "Other"
+      },
+      "status": {
+        "draft": "Draft",
+        "submitted": "Submitted",
+        "manager_review": "Manager review",
+        "finance_review": "Finance review",
+        "approved": "Approved",
+        "ready_to_pay": "Ready to pay",
+        "paid": "Paid",
+        "rejected": "Rejected"
+      },
+      "flow": {
+        "draft": "Draft",
+        "submitted": "Submit",
+        "manager": "Manager",
+        "finance": "Finance",
+        "approved": "Approved",
+        "paid": "Paid",
+        "rejected": "Rejected"
+      },
+      "actions": {
+        "create": "Create expense",
+        "created": "Expense created",
+        "submit": "Submit for approval"
+      },
+      "rejectTitle": "Reject expense",
+      "rejectHint": "Enter a rejection reason (optional).",
+      "rejectReason": "Rejection reason"
+    },
+    "payroll": {
+      "payslipTitle": "Payslip details",
+      "baseSalary": "Base salary",
+      "overtime": "Overtime",
+      "gross": "Gross",
+      "net": "Net pay",
+      "pageSubtitle": "Calculate, approve and pay monthly payroll",
+      "calculateTitle": "Calculate payroll",
+      "selectedCount": "{count} selected",
+      "emptyTitle": "No payroll records",
+      "emptyDesc": "Pick a period and run payroll calculation.",
+      "fields": {
+        "period": "Period (month)"
+      },
+      "columns": {
+        "employee": "Employee",
+        "period": "Period",
+        "base": "Base",
+        "overtime": "Overtime",
+        "deductions": "Deductions",
+        "net": "Net",
+        "status": "Status"
+      },
+      "status": {
+        "draft": "Draft",
+        "calculated": "Calculated",
+        "approved": "Approved",
+        "paid": "Paid"
+      },
+      "actions": {
+        "calculate": "Calculate payroll",
+        "calculated": "Payroll calculated",
+        "approve": "Approve",
+        "bulkPay": "Pay {count} selected",
+        "bulkPaid": "Bulk payment completed"
+      }
+    },
+    "invoices": {
+      "pageSubtitle": "Manage vendor invoices",
+      "newInvoice": "New invoice",
+      "emptyTitle": "No invoices yet",
+      "emptyDesc": "Create your first invoice.",
+      "fields": {
+        "vendor": "Vendor",
+        "number": "Invoice number",
+        "issueDate": "Issue date",
+        "dueDate": "Due date",
+        "amount": "Amount",
+        "currency": "Currency",
+        "description": "Description"
+      },
+      "columns": {
+        "number": "Number",
+        "vendor": "Vendor",
+        "dueDate": "Due date",
+        "amount": "Amount",
+        "status": "Status"
+      },
+      "filters": {
+        "status": "Status",
+        "allStatuses": "All statuses"
+      },
+      "status": {
+        "draft": "Draft",
+        "sent": "Sent",
+        "partially_paid": "Partially paid",
+        "paid": "Paid",
+        "overdue": "Overdue",
+        "cancelled": "Cancelled"
+      },
+      "actions": {
+        "create": "Create invoice",
+        "created": "Invoice created",
+        "pay": "Pay",
+        "paid": "Invoice paid"
+      }
+    },
+    "vendors": {
+      "pageSubtitle": "Organization vendor directory",
+      "newVendor": "New vendor",
+      "emptyTitle": "No vendors yet",
+      "emptyDesc": "Add your first vendor to get started.",
+      "fields": {
+        "name": "Name",
+        "code": "Code",
+        "contact": "Contact name",
+        "email": "Email",
+        "phone": "Phone",
+        "taxId": "Tax ID"
+      },
+      "columns": {
+        "name": "Name",
+        "code": "Code",
+        "contact": "Contact",
+        "email": "Email"
+      },
+      "actions": {
+        "create": "Add vendor",
+        "created": "Vendor added"
+      }
+    },
+    "purchaseRequests": {
+      "pageSubtitle": "Equipment and supply purchase requests",
+      "newRequest": "New request",
+      "emptyTitle": "No purchase requests",
+      "emptyDesc": "Create a purchase request to begin the approval flow.",
+      "fields": {
+        "title": "Title",
+        "description": "Description",
+        "items": "Line items",
+        "itemName": "Item name",
+        "qty": "Qty",
+        "unitPrice": "Unit price",
+        "total": "Total"
+      },
+      "columns": {
+        "title": "Title",
+        "user": "Requester",
+        "amount": "Amount",
+        "date": "Date",
+        "status": "Status"
+      },
+      "status": {
+        "draft": "Draft",
+        "submitted": "Submitted",
+        "owner_review": "Manager review",
+        "finance_review": "Finance review",
+        "approved": "Approved",
+        "rejected": "Rejected",
+        "converted": "Converted to PO"
+      },
+      "actions": {
+        "create": "Create request",
+        "created": "Request created",
+        "addItem": "Add line",
+        "submit": "Submit",
+        "ownerApprove": "Manager approve",
+        "financeApprove": "Finance approve",
+        "convert": "Convert to PO",
+        "converted": "Purchase order created"
+      }
+    },
+    "purchaseOrders": {
+      "pageSubtitle": "Issued purchase orders",
+      "emptyTitle": "No purchase orders",
+      "emptyDesc": "Approved purchase requests can be converted into orders here.",
+      "columns": {
+        "title": "Title",
+        "vendor": "Vendor",
+        "amount": "Amount",
+        "date": "Date",
+        "status": "Status"
+      },
+      "status": {
+        "draft": "Draft",
+        "issued": "Issued",
+        "received": "Received",
+        "cancelled": "Cancelled"
+      }
+    },
+    "budgets": {
+      "overview": "Budget utilization",
+      "overviewHint": "Spending per cost center against the current year budget",
+      "pageSubtitle": "Track organizational budgets and cost centers",
+      "budget": "Budget",
+      "spent": "Spent",
+      "utilized": "utilized",
+      "costCenters": "Cost centers",
+      "newBudget": "New budget",
+      "emptyTitle": "No budget data",
+      "noCostCenters": "No cost centers defined",
+      "fields": {
+        "costCenter": "Cost center",
+        "year": "Year",
+        "amount": "Budget amount"
+      },
+      "actions": {
+        "create": "Create budget",
+        "created": "Budget created"
+      }
+    },
+    "my": {
+      "subtitle": "Payslips, expenses and payment receipts",
+      "tabs": {
+        "payslips": "Payslips",
+        "expenses": "My expenses",
+        "receipts": "Receipts"
+      },
+      "payslipsEmpty": "No payslips available",
+      "receiptsEmpty": "No receipts available",
+      "payslipStatus": {
+        "calculated": "Calculated",
+        "approved": "Approved",
+        "paid": "Paid"
+      }
+    }
   },
   "landing": {
     "nav": {
@@ -819,6 +1130,14 @@
       "dashboard": {
         "title": "Dashboard",
         "desc": "Tasks overview, active sprint, and team activity"
+      },
+      "hr": {
+        "title": "Human resources",
+        "desc": "Personnel, contracts, attendance, recruitment, and onboarding"
+      },
+      "finance": {
+        "title": "Finance & payroll",
+        "desc": "Expenses, budgets, payslips, and finance approvals"
       }
     },
     "roadmapBadge": "Coming soon",
@@ -923,13 +1242,98 @@
         "a": "Yes. Multi-tenant architecture keeps each organization's data and settings separate."
       },
       "roadmap": {
-        "q": "When will HR and finance arrive?",
-        "a": "HR, finance, and AI modules are on the product roadmap. Current features focus on projects and teams."
+        "q": "What is on the roadmap?",
+        "a": "HR and finance modules are available today. Organizational AI is planned for a future release."
       }
     },
     "ctaTitle": "Ready to unify your team?",
     "ctaSubtitle": "Start free today — no card, no commitment.",
     "footerTagline": "Unified organization management platform for modern teams.",
     "footer": "© Midesk — Built for modern teams"
+  },
+  "chat": {
+    "search": "Search channels…",
+    "create": "New channel",
+    "pageSubtitle": "Team, group, and channel messages",
+    "conversations": "Conversations",
+    "selectChannel": "Select a conversation",
+    "selectChannelDesc": "Pick a chat from the list on the right or start a new one.",
+    "emptyRoster": "No conversations found",
+    "readonly": "Read only",
+    "unnamed": "Unnamed",
+    "members": "members",
+    "inputPlaceholder": "Write a message…",
+    "loadOlder": "Load older messages",
+    "actions": { "reply": "Reply", "react": "React" },
+    "tabs": { "all": "All", "dm": "Direct", "group": "Group", "channel": "Channel" },
+    "types": { "dm": "Direct message", "group": "Group", "channel": "Channel" },
+    "fields": { "type": "Type", "name": "Name", "members": "Members" }
+  },
+  "meetings": {
+    "create": "New meeting",
+    "created": "Meeting created",
+    "join": "Join",
+    "leave": "Leave",
+    "room": "Meeting room",
+    "attendees": "Attendees",
+    "details": "Details",
+    "organizer": "Organizer",
+    "statusLabel": "Status",
+    "pageSubtitle": "Team video meetings",
+    "emptyTitle": "No meetings",
+    "emptyDesc": "Try another filter or create a new meeting.",
+    "filters": { "today": "Today", "upcoming": "Upcoming", "past": "Past", "all": "All" },
+    "status": { "scheduled": "Scheduled", "in_progress": "In progress", "completed": "Completed", "cancelled": "Cancelled" },
+    "attendeeStatus": { "invited": "Invited", "accepted": "Accepted", "declined": "Declined", "attended": "Attended" },
+    "fields": {
+      "title": "Title",
+      "start": "Start",
+      "end": "End",
+      "startDate": "Start date",
+      "startTime": "Start time",
+      "endDate": "End date",
+      "endTime": "End time",
+      "provider": "Provider",
+      "attendees": "Attendees",
+      "attendeesPlaceholder": "Select members…"
+    }
+  },
+  "ai": {
+    "subtitle": "Ask organizational AI",
+    "formTitle": "New question",
+    "formDesc": "Write your question or use a shortcut below.",
+    "formHint": "The answer is generated based on the selected context.",
+    "prompt": "Your question",
+    "send": "Send",
+    "history": "History",
+    "processing": "Processing…",
+    "copy": "Copy",
+    "copied": "Copied",
+    "emptyTitle": "No requests yet",
+    "status": { "queued": "Queued", "processing": "Processing", "completed": "Completed", "failed": "Failed" },
+    "context": { "label": "Context", "id": "Context ID", "general": "General", "project": "Project", "task": "Task", "candidate": "Candidate" },
+    "shortcuts": {
+      "label": "Shortcuts",
+      "taskAnalysis": "Analyze project tasks",
+      "taskAnalysisPrompt": "Analyze current project tasks",
+      "document": "Generate document",
+      "documentPrompt": "Draft an HR policy document",
+      "resume": "Screen resume",
+      "resumePrompt": "Evaluate this resume"
+    }
+  },
+  "notes": {
+    "create": "New note",
+    "pin": "Pin",
+    "pinned": "Pinned",
+    "pageSubtitle": "Personal and team notes",
+    "edit": "Edit",
+    "preview": "Preview",
+    "untitled": "Untitled",
+    "emptyTitle": "No notes",
+    "emptyDesc": "Create your first note.",
+    "filters": { "all": "All" },
+    "visibility": { "private": "Private", "team": "Team", "project": "Project" },
+    "fields": { "title": "Title", "body": "Body", "visibility": "Visibility", "color": "Color" }
   }
 }

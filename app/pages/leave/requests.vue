@@ -30,9 +30,11 @@ onMounted(load)
       <div>
         <h1 class="midesk-page-title">{{ t('leave.pendingApprovals') }}</h1>
       </div>
-      <UButton to="/leave" variant="ghost" icon="i-lucide-arrow-right" class="shrink-0">
-        {{ t('leave.title') }}
-      </UButton>
+      <LayoutMideskPageHeaderActions>
+        <LayoutMideskPageHeaderButton to="/leave" back>
+          {{ t('leave.title') }}
+        </LayoutMideskPageHeaderButton>
+      </LayoutMideskPageHeaderActions>
     </div>
 
     <div v-if="loading" class="space-y-4">

@@ -85,7 +85,13 @@ async function saveOrg() {
 
 <template>
   <div>
-    <h1 class="midesk-page-title mb-6">{{ t('settings.title') }}</h1>
+    <LayoutMideskPageHeader :title="t('settings.title')">
+      <template #actions>
+        <LayoutMideskPageHeaderButton to="/settings/notifications" icon="i-lucide-bell">
+          {{ t('notifications.settings.title') }}
+        </LayoutMideskPageHeaderButton>
+      </template>
+    </LayoutMideskPageHeader>
 
     <div v-if="loading" class="space-y-4">
       <USkeleton class="h-10 w-64 rounded-lg" />

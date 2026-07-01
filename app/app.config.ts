@@ -184,7 +184,29 @@ export default defineAppConfig({
         label: 'truncate text-start',
         leadingIcon: 'shrink-0',
         trailingIcon: 'shrink-0'
-      }
+      },
+      compoundVariants: [
+        {
+          color: 'primary',
+          variant: 'solid',
+          class: 'bg-[var(--color-midesk-accent)] text-white hover:bg-[color-mix(in_srgb,var(--color-midesk-accent)_88%,white)]'
+        },
+        {
+          color: 'neutral',
+          variant: 'outline',
+          class: 'bg-[color-mix(in_srgb,var(--color-midesk-surface)_88%,transparent)] text-[var(--color-midesk-text)] ring-1 ring-inset ring-[var(--color-midesk-border)] hover:bg-white/[0.08]'
+        },
+        {
+          color: 'primary',
+          variant: 'soft',
+          class: 'bg-[var(--color-midesk-accent-soft)] text-[var(--color-midesk-accent)] ring-1 ring-inset ring-[color-mix(in_srgb,var(--color-midesk-accent)_28%,transparent)]'
+        },
+        {
+          color: 'neutral',
+          variant: 'soft',
+          class: 'bg-white/[0.06] text-[var(--color-midesk-text)] ring-1 ring-inset ring-white/10'
+        }
+      ]
     },
     dropdownMenu: {
       slots: {

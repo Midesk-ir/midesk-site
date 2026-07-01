@@ -22,5 +22,13 @@ export function usePermissions() {
     ])
   )
 
-  return { can, canAny, canAll, isHrAdmin }
+  const isFinanceAdmin = computed(() =>
+    canAny([
+      'finance:dashboard:view',
+      'finance:budgets:manage',
+      'finance:expenses:pay'
+    ])
+  )
+
+  return { can, canAny, canAll, isHrAdmin, isFinanceAdmin }
 }

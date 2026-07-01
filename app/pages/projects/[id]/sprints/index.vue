@@ -172,11 +172,17 @@ onMounted(load)
     </div>
 
     <template v-else>
-      <div class="mb-6 flex flex-wrap items-center justify-between gap-4">
+      <div class="midesk-page-header">
         <h2 class="text-lg font-semibold">{{ t('sprint.title') }}</h2>
-        <UButton color="primary" icon="i-lucide-plus" @click="showCreateForm = true">
-          {{ t('sprint.create') }}
-        </UButton>
+        <LayoutMideskPageHeaderActions>
+          <LayoutMideskPageHeaderButton
+            variant="primary"
+            icon="i-lucide-plus"
+            @click="showCreateForm = true"
+          >
+            {{ t('sprint.create') }}
+          </LayoutMideskPageHeaderButton>
+        </LayoutMideskPageHeaderActions>
       </div>
 
       <div class="grid gap-6 lg:grid-cols-2">

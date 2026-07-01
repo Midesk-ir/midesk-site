@@ -5,6 +5,7 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 import jalaliPlugin from 'jalali-dayjs'
 import 'dayjs/locale/fa'
 import { isPersianLocale, localizeDigits } from '~/utils/localeDigits'
+import { formatCurrencyText } from '~/utils/currency-format'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -58,13 +59,7 @@ export function useCalendar() {
     const curr = currency
       ?? (import.meta.client && tenantId.value ? useTenantStore().tenant?.default_currency : null)
       ?? 'IRR'
-    const intlLocale = isPersianLocale(locale.value) ? 'fa-IR' : 'en-US'
-    const formatted = new Intl.NumberFormat(intlLocale, {
-      style: 'currency',
-      currency: curr,
-      maximumFractionDigits: curr === 'IRR' ? 0 : 2
-    }).format(amount)
-    return localizeDigits(formatted, locale.value)
+    return formatCurrencyText(amount, curr, locale.value)
   }
 
   function isOverdue(date: string | null | undefined): boolean {

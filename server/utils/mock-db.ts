@@ -15,6 +15,8 @@ import type {
 } from '../../app/types'
 import { initPhase1Tasks, usePhase1Db } from './phase1-db'
 import { usePhase2Db } from './phase2-db'
+import { usePhase3Db } from './phase3-db'
+import { usePhase4Db } from './phase4-db'
 
 interface Session {
   token: string
@@ -317,6 +319,8 @@ function getTenantId(event: H3Event, session: Session) {
 export function useMockDb() {
   const phase1 = usePhase1Db()
   const phase2 = usePhase2Db()
+  const phase3 = usePhase3Db()
+  const phase4 = usePhase4Db()
   return {
     sessions,
     otpCodes,
@@ -331,6 +335,8 @@ export function useMockDb() {
     projectMembers,
     phase1,
     phase2,
+    phase3,
+    phase4,
     getAuth,
     requireAuth,
     getTenantId,

@@ -116,7 +116,7 @@ onMounted(load)
 
 <template>
   <div>
-    <h1 class="midesk-page-title mb-6">{{ t('nav.hr.onboarding') }}</h1>
+    <LayoutMideskPageHeader :title="t('nav.hr.onboarding')" />
 
     <div v-if="loading" class="space-y-4">
       <USkeleton class="h-10 w-64 rounded-lg" />

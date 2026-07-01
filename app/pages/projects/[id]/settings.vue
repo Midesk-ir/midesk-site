@@ -71,9 +71,11 @@ function onSettingsSaved() {
   <div v-else>
     <div class="midesk-page-header">
       <h2 class="text-lg font-semibold">{{ t('columns.settings') }}</h2>
-      <UButton icon="i-lucide-settings-2" variant="soft" class="shrink-0" @click="settingsOpen = true">
-        {{ t('columns.settings') }}
-      </UButton>
+      <LayoutMideskPageHeaderActions>
+        <LayoutMideskPageHeaderButton variant="soft-primary" icon="i-lucide-settings-2" @click="settingsOpen = true">
+          {{ t('columns.settings') }}
+        </LayoutMideskPageHeaderButton>
+      </LayoutMideskPageHeaderActions>
     </div>
 
     <UCard v-if="loading" class="midesk-glass border-[var(--color-midesk-border)]">

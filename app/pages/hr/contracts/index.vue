@@ -92,17 +92,18 @@ onMounted(load)
 
 <template>
   <div>
-    <div class="midesk-page-header mb-6">
+    <div class="midesk-page-header">
       <h1 class="midesk-page-title">{{ t('nav.hr.contracts') }}</h1>
-      <UButton
-        v-if="can('hr:contracts:manage')"
-        icon="i-lucide-plus"
-        color="primary"
-        class="shrink-0"
-        @click="showCreate = true"
-      >
-        {{ t('common.create') }}
-      </UButton>
+      <LayoutMideskPageHeaderActions>
+        <LayoutMideskPageHeaderButton
+          v-if="can('hr:contracts:manage')"
+          variant="primary"
+          icon="i-lucide-plus"
+          @click="showCreate = true"
+        >
+          {{ t('common.create') }}
+        </LayoutMideskPageHeaderButton>
+      </LayoutMideskPageHeaderActions>
     </div>
 
     <div class="space-y-6">

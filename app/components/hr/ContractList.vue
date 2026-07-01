@@ -11,7 +11,7 @@ const emit = defineEmits<{
 }>()
 
 const { t } = useI18n()
-const { formatDate, formatCurrency } = useCalendar()
+const { formatDate } = useCalendar()
 
 const typeColor: Record<ContractType, 'primary' | 'info' | 'warning' | 'neutral'> = {
   permanent: 'primary',
@@ -73,7 +73,9 @@ const statusColor: Record<ContractStatus, 'success' | 'error' | 'warning' | 'neu
             </td>
             <td class="px-4 py-3 whitespace-nowrap">{{ formatDate(contract.start_date) }}</td>
             <td class="px-4 py-3 whitespace-nowrap">{{ formatDate(contract.end_date) }}</td>
-            <td class="px-4 py-3">{{ formatCurrency(contract.base_salary, contract.currency) }}</td>
+            <td class="px-4 py-3">
+              <MideskCurrency :amount="contract.base_salary" :currency="contract.currency" />
+            </td>
             <td class="px-4 py-3">
               <UBadge :color="statusColor[contract.status]" variant="subtle" size="xs">
                 {{ t(`hr.contracts.status.${contract.status}`) }}

@@ -28,9 +28,7 @@ onMounted(load)
 
 <template>
   <div>
-    <div class="mb-6">
-      <h1 class="midesk-page-title">{{ t('calendar.title') }}</h1>
-    </div>
+    <LayoutMideskPageHeader :title="t('calendar.title')" />
 
     <div class="space-y-6">
       <CalendarView

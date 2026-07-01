@@ -99,26 +99,24 @@ function exportCsv() {
   <div class="space-y-5">
     <div class="midesk-page-header">
       <h2 class="midesk-page-title">{{ t('leave.report.title') }}</h2>
-      <div class="flex flex-wrap gap-2">
-        <UButton
+      <LayoutMideskPageHeaderActions>
+        <LayoutMideskPageHeaderButton
           v-if="report.length"
+          variant="soft-primary"
           icon="i-lucide-download"
-          variant="soft"
-          color="primary"
           @click="exportCsv"
         >
           {{ t('leave.report.export') }}
-        </UButton>
-        <UButton
+        </LayoutMideskPageHeaderButton>
+        <LayoutMideskPageHeaderButton
+          variant="soft-neutral"
           icon="i-lucide-refresh-cw"
-          variant="soft"
-          color="neutral"
           :loading="loading"
           @click="fetchReport"
         >
           {{ t('common.retry') }}
-        </UButton>
-      </div>
+        </LayoutMideskPageHeaderButton>
+      </LayoutMideskPageHeaderActions>
     </div>
 
     <div v-if="loading" class="midesk-glass rounded-xl border border-[var(--color-midesk-border)] p-5">

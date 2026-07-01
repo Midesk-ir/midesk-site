@@ -76,47 +76,43 @@ onMounted(load)
     </div>
 
     <template v-else-if="sprint">
-      <div class="mb-6">
-        <UButton
-          :to="`/projects/${projectId}/sprints`"
-          variant="ghost"
-          size="sm"
-          icon="i-lucide-arrow-left"
-          class="mb-3"
-        >
-          {{ t('sprint.title') }}
-        </UButton>
-        <div class="flex flex-wrap items-start justify-between gap-4">
-          <div>
-            <div class="flex flex-wrap items-center gap-2">
-              <h2 class="text-lg font-semibold">{{ sprint.name }}</h2>
-              <UBadge
-                :color="sprint.status === 'active' ? 'success' : 'neutral'"
-                variant="subtle"
-              >
-                {{ t(`sprint.${sprint.status}`) }}
-              </UBadge>
+      <LayoutMideskPageHeader
+        :back-to="`/projects/${projectId}/sprints`"
+        :back-label="t('sprint.title')"
+      >
+        <template #title>
+          <div class="flex flex-wrap items-start justify-between gap-4 w-full">
+            <div>
+              <div class="flex flex-wrap items-center gap-2">
+                <h2 class="text-lg font-semibold">{{ sprint.name }}</h2>
+                <UBadge
+                  :color="sprint.status === 'active' ? 'success' : 'neutral'"
+                  variant="subtle"
+                >
+                  {{ t(`sprint.${sprint.status}`) }}
+                </UBadge>
+              </div>
+              <p v-if="sprint.goal" class="midesk-page-subtitle">
+                {{ sprint.goal }}
+              </p>
+              <p class="mt-2 text-sm text-[var(--color-midesk-muted)]">
+                {{ formatDate(sprint.start_date) }} – {{ formatDate(sprint.end_date) }}
+              </p>
             </div>
-            <p v-if="sprint.goal" class="mt-1 text-sm text-[var(--color-midesk-muted)]">
-              {{ sprint.goal }}
-            </p>
-            <p class="mt-2 text-sm text-[var(--color-midesk-muted)]">
-              {{ formatDate(sprint.start_date) }} – {{ formatDate(sprint.end_date) }}
-            </p>
-          </div>
-          <div class="text-end text-sm">
-            <p class="font-medium">
-              {{ sprint.completed_points }}/{{ sprint.total_points }} {{ t('sprint.points') }}
-            </p>
-            <div class="mt-2 h-1.5 w-32 overflow-hidden rounded-full bg-white/10">
-              <div
-                class="h-full rounded-full bg-[var(--color-midesk-accent)]"
-                :style="{ width: `${progressPercent}%` }"
-              />
+            <div class="text-end text-sm">
+              <p class="font-medium">
+                {{ sprint.completed_points }}/{{ sprint.total_points }} {{ t('sprint.points') }}
+              </p>
+              <div class="mt-2 h-1.5 w-32 overflow-hidden rounded-full bg-white/10">
+                <div
+                  class="h-full rounded-full bg-[var(--color-midesk-accent)]"
+                  :style="{ width: `${progressPercent}%` }"
+                />
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        </template>
+      </LayoutMideskPageHeader>
 
       <section class="midesk-card p-5">
         <h2 class="midesk-card-header">

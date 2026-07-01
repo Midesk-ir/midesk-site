@@ -1,7 +1,10 @@
 <script setup lang="ts">
-const { count, fetchCount, notifications, fetchNotifications, markRead } = useNotifications()
+import type { Notification } from '~/types'
+
+const { count, fetchCount, notifications, fetchNotifications, markRead, prependNotification } = useNotifications()
 const { t, locale } = useI18n()
 const { formatRelative } = useCalendar()
+const { listenToNotifications } = useRealtime()
 
 const badgeText = computed(() => (count.value > 99 ? '99+' : count.value))
 
@@ -9,6 +12,10 @@ const chipPosition = computed(() => (locale.value === 'fa' ? 'top-left' : 'top-r
 
 onMounted(() => {
   fetchCount()
+  listenToNotifications?.((n) => {
+    prependNotification(n as Notification)
+    fetchCount()
+  })
 })
 
 async function onOpen() {

@@ -74,25 +74,20 @@ onMounted(load)
 
 <template>
   <div>
-    <div class="mb-6">
-      <UButton
-        to="/hr/recruitment"
-        variant="ghost"
-        color="neutral"
-        icon="i-lucide-arrow-right"
-        size="sm"
-        class="mb-3"
-      >
-        {{ t('nav.hr.recruitment') }}
-      </UButton>
-      <h1 class="midesk-page-title">
-        {{ requisition?.title ?? t('nav.hr.recruitment') }}
-      </h1>
-      <p v-if="requisition" class="mt-1 text-sm text-[var(--color-midesk-muted)]">
-        {{ requisition.department ?? '—' }}
-        · {{ requisition.positions_count }} {{ t('recruitment.requisitions.columns.positions') }}
-      </p>
-    </div>
+    <LayoutMideskPageHeader
+      back-to="/hr/recruitment"
+      :back-label="t('nav.hr.recruitment')"
+    >
+      <template #title>
+        <h1 class="midesk-page-title">
+          {{ requisition?.title ?? t('nav.hr.recruitment') }}
+        </h1>
+        <p v-if="requisition" class="midesk-page-subtitle">
+          {{ requisition.department ?? '—' }}
+          · {{ requisition.positions_count }} {{ t('recruitment.requisitions.columns.positions') }}
+        </p>
+      </template>
+    </LayoutMideskPageHeader>
 
     <RecruitmentCandidateKanban
       :candidates="recruitmentStore.candidates"

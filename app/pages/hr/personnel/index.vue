@@ -76,15 +76,16 @@ onMounted(async () => {
   <div>
     <div class="midesk-page-header">
       <h1 class="midesk-page-title">{{ t('nav.hr.personnel') }}</h1>
-      <UButton
-        v-if="can('hr:personnel:create')"
-        icon="i-lucide-user-plus"
-        color="primary"
-        class="shrink-0"
-        @click="showCreate = true"
-      >
-        {{ t('common.create') }}
-      </UButton>
+      <LayoutMideskPageHeaderActions>
+        <LayoutMideskPageHeaderButton
+          v-if="can('hr:personnel:create')"
+          variant="primary"
+          icon="i-lucide-user-plus"
+          @click="showCreate = true"
+        >
+          {{ t('common.create') }}
+        </LayoutMideskPageHeaderButton>
+      </LayoutMideskPageHeaderActions>
     </div>
 
     <HrPersonnelList
