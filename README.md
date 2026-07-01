@@ -80,6 +80,44 @@ CI (`.github/workflows/ci.yml`) runs **lint** and **typecheck** on every push.
 
 ---
 
+## Docker
+
+Production image runs the Nitro server (SPA + mock API at `/api/v1`).
+
+```bash
+# Production
+docker compose up --build
+
+# Or build & run manually
+docker build -t midesk-site .
+docker run --rm -p 3000:3000 midesk-site
+```
+
+Open [http://localhost:3000](http://localhost:3000)
+
+### Development in Docker (hot reload)
+
+```bash
+docker compose --profile dev up dev
+```
+
+### Environment
+
+Copy `.env.example` to `.env` and adjust if needed:
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `PORT` | `3000` | Host port (compose) |
+| `NUXT_PUBLIC_API_BASE` | `/api/v1` | API base URL |
+
+When pointing to an external backend:
+
+```bash
+NUXT_PUBLIC_API_BASE=https://api.example.com/v1 docker compose up --build
+```
+
+---
+
 ## Configuration
 
 ```ts
