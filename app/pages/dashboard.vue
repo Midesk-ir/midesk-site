@@ -50,11 +50,33 @@ const stats = computed(() => [
     icon: 'i-lucide-folder-kanban'
   },
   {
-    label: t('dashboard.recentActivity'),
-    value: summary.value?.recent_activity.length ?? 0,
-    icon: 'i-lucide-activity'
+    label: t('dashboard.unreadNotifications'),
+    value: summary.value?.notifications_unread ?? 0,
+    icon: 'i-lucide-bell',
+    to: '/notifications'
   }
 ])
+
+const quickLinks = computed(() => [
+  { label: t('nav.worklog'), to: '/worklog', icon: 'i-lucide-clock', show: true },
+  { label: t('nav.calendar'), to: '/calendar', icon: 'i-lucide-calendar', show: true },
+  { label: t('nav.leave'), to: '/leave', icon: 'i-lucide-tree-palm', show: true },
+  { label: t('nav.chat'), to: '/chat', icon: 'i-lucide-message-square', show: can('chat:view') },
+  { label: t('nav.meetings'), to: '/meetings', icon: 'i-lucide-video', show: can('meetings:view') },
+  { label: t('nav.ai'), to: '/ai', icon: 'i-lucide-sparkles', show: can('ai:view') },
+  { label: t('nav.notes'), to: '/notes', icon: 'i-lucide-sticky-note', show: can('notes:view') },
+  { label: t('nav.correspondence'), to: '/correspondence', icon: 'i-lucide-mail', show: can('correspondence:view') },
+  { label: t('nav.surveys'), to: '/surveys', icon: 'i-lucide-clipboard-list', show: can('surveys:view') },
+  { label: t('nav.crm'), to: '/crm', icon: 'i-lucide-handshake', show: can('crm:view') },
+  { label: t('nav.reportBuilder'), to: '/reports', icon: 'i-lucide-bar-chart-4', show: can('reports:view') },
+  { label: t('nav.performance'), to: '/performance', icon: 'i-lucide-gauge', show: can('performance:dashboard:view') },
+  { label: t('nav.hr.dashboard'), to: '/hr', icon: 'i-lucide-building-2', show: can('hr:dashboard:view') },
+  { label: t('nav.finance.dashboard'), to: '/finance', icon: 'i-lucide-wallet', show: can('finance:dashboard:view') },
+  { label: t('nav.finance.myFinance'), to: '/my-finance', icon: 'i-lucide-banknote', show: can('finance:my:view') && !can('finance:dashboard:view') },
+  { label: t('nav.teams'), to: '/teams', icon: 'i-lucide-users', show: true },
+  { label: t('nav.settings'), to: '/settings', icon: 'i-lucide-settings', show: true },
+  { label: t('nav.subscription'), to: '/subscription', icon: 'i-lucide-credit-card', show: authStore.isOwner }
+].filter(item => item.show))
 
 async function load() {
   loading.value = true
@@ -129,10 +151,13 @@ onMounted(load)
     <div v-else class="space-y-6">
       <!-- Stats -->
       <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <div
+        <component
+          :is="stat.to ? 'NuxtLink' : 'div'"
           v-for="stat in stats"
           :key="stat.label"
-          class="midesk-stat-card"
+          :to="stat.to"
+          class="midesk-stat-card block transition hover:ring-1 hover:ring-[var(--color-midesk-border)]"
+          :class="{ 'cursor-pointer': stat.to }"
         >
           <div class="mb-3 flex items-center justify-between">
             <span class="text-sm text-[var(--color-midesk-muted)]">{{ stat.label }}</span>
@@ -143,8 +168,24 @@ onMounted(load)
           <p class="text-3xl font-bold tracking-tight text-[var(--color-midesk-text)]">
             {{ stat.value }}
           </p>
-        </div>
+        </component>
       </div>
+
+      <!-- Quick links -->
+      <section v-if="quickLinks.length" class="midesk-card p-5">
+        <h2 class="midesk-card-header">{{ t('dashboard.quickLinks') }}</h2>
+        <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6">
+          <NuxtLink
+            v-for="link in quickLinks"
+            :key="link.to"
+            :to="link.to"
+            class="flex w-full items-center gap-3 rounded-xl border border-[var(--color-midesk-border)] bg-white/[0.02] px-4 py-3 text-sm font-medium transition hover:border-[var(--color-midesk-accent)] hover:bg-white/[0.04]"
+          >
+            <UIcon :name="link.icon" class="size-5 shrink-0 text-[var(--color-midesk-accent)]" />
+            <span class="truncate">{{ link.label }}</span>
+          </NuxtLink>
+        </div>
+      </section>
 
       <!-- Phase 1 widgets -->
       <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
@@ -333,6 +374,131 @@ onMounted(load)
           </p>
           <NuxtLink to="/my-finance" class="midesk-link mt-2 inline-block text-sm">
             {{ t('finance.expenses.myExpenses') }}
+          </NuxtLink>
+        </section>
+
+        <section
+          v-if="summary.collab_widget?.chat_unread != null && summary.collab_widget.chat_unread > 0"
+          class="midesk-card p-5"
+        >
+          <div class="mb-3 flex items-center justify-between">
+            <h2 class="midesk-card-header mb-0">{{ t('dashboard.chatUnread') }}</h2>
+            <UIcon name="i-lucide-message-square" class="size-5 text-[var(--color-midesk-accent)]" />
+          </div>
+          <p class="text-3xl font-bold tracking-tight text-[var(--color-midesk-text)]">
+            {{ summary.collab_widget.chat_unread }}
+          </p>
+          <NuxtLink to="/chat" class="midesk-link mt-2 inline-block text-sm">
+            {{ t('nav.chat') }}
+          </NuxtLink>
+        </section>
+
+        <section
+          v-if="summary.collab_widget?.meetings_today != null"
+          class="midesk-card p-5"
+        >
+          <div class="mb-3 flex items-center justify-between">
+            <h2 class="midesk-card-header mb-0">{{ t('dashboard.meetingsToday') }}</h2>
+            <UIcon name="i-lucide-video" class="size-5 text-[var(--color-midesk-accent)]" />
+          </div>
+          <p class="text-3xl font-bold tracking-tight text-[var(--color-midesk-text)]">
+            {{ summary.collab_widget.meetings_today }}
+          </p>
+          <p v-if="summary.collab_widget.meetings_upcoming" class="mt-1 text-sm text-[var(--color-midesk-muted)]">
+            {{ t('dashboard.meetingsUpcoming') }}: {{ summary.collab_widget.meetings_upcoming }}
+          </p>
+          <NuxtLink to="/meetings" class="midesk-link mt-2 inline-block text-sm">
+            {{ t('nav.meetings') }}
+          </NuxtLink>
+        </section>
+
+        <section
+          v-if="summary.correspondence_widget?.inbox_pending != null"
+          class="midesk-card p-5"
+        >
+          <div class="mb-3 flex items-center justify-between">
+            <h2 class="midesk-card-header mb-0">{{ t('dashboard.correspondenceInbox') }}</h2>
+            <UIcon name="i-lucide-inbox" class="size-5 text-[var(--color-midesk-accent)]" />
+          </div>
+          <p class="text-3xl font-bold tracking-tight text-[var(--color-midesk-text)]">
+            {{ summary.correspondence_widget.inbox_pending }}
+          </p>
+          <NuxtLink to="/correspondence/inbox" class="midesk-link mt-2 inline-block text-sm">
+            {{ t('correspondence.inbox') }}
+          </NuxtLink>
+        </section>
+
+        <section
+          v-if="summary.crm_widget?.hot_opportunities != null"
+          class="midesk-card p-5"
+        >
+          <div class="mb-3 flex items-center justify-between">
+            <h2 class="midesk-card-header mb-0">{{ t('dashboard.crmHotDeals') }}</h2>
+            <UIcon name="i-lucide-flame" class="size-5 text-orange-400" />
+          </div>
+          <p class="text-3xl font-bold tracking-tight text-[var(--color-midesk-text)]">
+            {{ summary.crm_widget.hot_opportunities }}
+          </p>
+          <p class="mt-1 text-sm text-[var(--color-midesk-muted)]">
+            {{ summary.crm_widget.open_opportunities }} {{ t('dashboard.crmOpenDeals') }}
+            · {{ summary.crm_widget.contacts_count }} {{ t('dashboard.crmContacts') }}
+          </p>
+          <NuxtLink to="/crm" class="midesk-link mt-2 inline-block text-sm">
+            {{ t('nav.crm') }}
+          </NuxtLink>
+        </section>
+
+        <section
+          v-if="summary.surveys_widget?.active_count != null"
+          class="midesk-card p-5"
+        >
+          <div class="mb-3 flex items-center justify-between">
+            <h2 class="midesk-card-header mb-0">{{ t('dashboard.activeSurveys') }}</h2>
+            <UIcon name="i-lucide-clipboard-list" class="size-5 text-[var(--color-midesk-accent)]" />
+          </div>
+          <p class="text-3xl font-bold tracking-tight text-[var(--color-midesk-text)]">
+            {{ summary.surveys_widget.active_count }}
+          </p>
+          <p v-if="summary.surveys_widget.draft_count" class="mt-1 text-sm text-[var(--color-midesk-muted)]">
+            {{ summary.surveys_widget.draft_count }} {{ t('dashboard.draftSurveys') }}
+          </p>
+          <NuxtLink to="/surveys" class="midesk-link mt-2 inline-block text-sm">
+            {{ t('nav.surveys') }}
+          </NuxtLink>
+        </section>
+
+        <section
+          v-if="summary.performance_widget?.objectives_at_risk != null"
+          class="midesk-card p-5"
+        >
+          <div class="mb-3 flex items-center justify-between">
+            <h2 class="midesk-card-header mb-0">{{ t('dashboard.objectivesAtRisk') }}</h2>
+            <UIcon name="i-lucide-alert-triangle" class="size-5 text-amber-400" />
+          </div>
+          <p class="text-3xl font-bold tracking-tight text-[var(--color-midesk-text)]">
+            {{ summary.performance_widget.objectives_at_risk }}
+          </p>
+          <p v-if="summary.performance_widget.upcoming_reviews" class="mt-1 text-sm text-[var(--color-midesk-muted)]">
+            {{ summary.performance_widget.upcoming_reviews }} {{ t('dashboard.upcomingReviews') }}
+          </p>
+          <NuxtLink to="/performance" class="midesk-link mt-2 inline-block text-sm">
+            {{ t('nav.performance') }}
+          </NuxtLink>
+        </section>
+
+        <section
+          v-if="summary.reports_widget?.saved_count != null"
+          class="midesk-card p-5"
+        >
+          <div class="mb-3 flex items-center justify-between">
+            <h2 class="midesk-card-header mb-0">{{ t('dashboard.savedReports') }}</h2>
+            <UIcon name="i-lucide-bar-chart-4" class="size-5 text-[var(--color-midesk-accent)]" />
+          </div>
+          <p class="text-3xl font-bold tracking-tight text-[var(--color-midesk-text)]">
+            {{ summary.reports_widget.saved_count }}
+          </p>
+          <NuxtLink to="/reports" class="midesk-link mt-2 inline-block text-sm">
+            {{ t('nav.reportBuilder') }}
           </NuxtLink>
         </section>
       </div>

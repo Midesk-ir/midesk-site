@@ -1,11 +1,12 @@
 import { isPersianLocale, localizeDigits } from '~/utils/localeDigits'
 
 export interface CurrencyParts {
-  /** Render unit and amount in a fixed LTR row (unit on the left). */
+  /** Logical order: amount then unit (e.g. ۲۲,۷۰۰,۰۰۰ ریال). */
   split: boolean
   unit: string
   amount: string
   text: string
+  dir: 'ltr' | 'rtl'
 }
 
 function resolveCurrency(currency?: string | null): string {
@@ -28,11 +29,16 @@ export function formatCurrencyParts(
       locale
     )
     const unit = persian ? 'ریال' : 'Rial'
+    const dir = persian ? 'rtl' : 'ltr'
+    const plain = `${amountStr}\u00A0${unit}`
+    // RLI/PDI keeps amount→unit reading order inside RTL parents; LTR uses plain text.
+    const text = persian ? `\u2067${plain}\u2069` : plain
     return {
       split: true,
       unit,
       amount: amountStr,
-      text: `${unit}\u00A0${amountStr}`
+      text,
+      dir
     }
   }
 
@@ -49,7 +55,8 @@ export function formatCurrencyParts(
     split: false,
     unit: '',
     amount: '',
-    text
+    text,
+    dir: persian ? 'rtl' : 'ltr'
   }
 }
 

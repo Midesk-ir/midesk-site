@@ -17,6 +17,7 @@ Frontend for **Midesk** — a unified organization management platform (projects
 | **HR (Phase 2)** | Personnel, attendance, contracts, documents, missions, recruitment, onboarding |
 | **Finance (Phase 3)** | Expenses, budgets, invoices, purchase requests/orders, vendors, payroll, personal finance |
 | **Collaboration (Phase 4)** | Chat (DM / group / channel), meetings (Jitsi/BBB), AI assistant, notes, notification preferences |
+| **Phase 5** | Correspondence, surveys, CRM, custom reports, project files, subscription, super-admin, guests/roles, performance (KPI/OKR) |
 
 ### UX highlights
 
@@ -160,6 +161,8 @@ server/
 | HR / leave | `phase2-db.ts` |
 | Finance | `phase3-db.ts` |
 | Chat / meetings / AI / notes | `phase4-db.ts` |
+| Phase 5 (correspondence, CRM, …) | `phase5-db.ts` |
+| Phase 5 modules | `phase5-db.ts` |
 
 All routes go through `useMockDb()` in `server/utils/mock-db.ts`.
 
@@ -214,6 +217,19 @@ All routes go through `useMockDb()` in `server/utils/mock-db.ts`.
 | `/ai` | AI assistant |
 | `/notes` | Notes |
 | `/settings/notifications` | Notification preferences |
+
+### Phase 5
+
+| Path | Description |
+|------|-------------|
+| `/correspondence`, `/correspondence/inbox`, `/correspondence/[id]` | Correspondence & routing |
+| `/surveys`, `/surveys/[id]`, `/surveys/[id]/edit`, `/surveys/[id]/report` | Surveys |
+| `/crm`, `/crm/contacts`, `/crm/opportunities` | CRM |
+| `/reports`, `/reports/new`, `/reports/[id]` | Custom report builder |
+| `/projects/[id]/files` | Project file manager |
+| `/subscription`, `/subscription/checkout` | Subscription (OWNER) |
+| `/performance`, `/performance/objectives`, `/performance/reviews` | KPI / OKR / reviews |
+| `/super-admin/*` | Super admin panel (`superadmin@midesk.io` / `superadmin`) |
 
 ---
 

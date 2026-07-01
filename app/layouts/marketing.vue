@@ -22,7 +22,7 @@ const navLinks = computed(() => [
           <AppLogo />
         </NuxtLink>
 
-        <nav class="midesk-marketing-nav hidden items-center gap-1 lg:flex">
+        <nav class="midesk-marketing-nav hidden items-center gap-1 lg:flex" :aria-label="t('landing.nav.ariaLabel')">
           <a
             v-for="link in navLinks"
             :key="link.to"

@@ -142,6 +142,32 @@ export interface DashboardSummary {
     latest_payslip?: import('./phase3').MyPayslipBrief | null
     my_pending_expenses_count?: number
   }
+  collab_widget?: {
+    chat_unread?: number
+    meetings_today?: number
+    meetings_upcoming?: number
+    notes_count?: number
+  }
+  correspondence_widget?: {
+    inbox_pending?: number
+  }
+  crm_widget?: {
+    hot_opportunities?: number
+    open_opportunities?: number
+    contacts_count?: number
+  }
+  surveys_widget?: {
+    active_count?: number
+    draft_count?: number
+  }
+  performance_widget?: {
+    objectives_at_risk?: number
+    upcoming_reviews?: number
+  }
+  reports_widget?: {
+    saved_count?: number
+  }
+  notifications_unread?: number
 }
 
 export interface ApiError {
@@ -192,3 +218,4 @@ export * from './phase1'
 export * from './phase2'
 export * from './phase3'
 export * from './phase4'
+export * from './phase5'

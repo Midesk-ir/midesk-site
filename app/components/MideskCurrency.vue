@@ -17,12 +17,17 @@ const parts = computed(() =>
   <span
     v-if="parts.split"
     class="midesk-currency"
+    :dir="parts.dir"
     v-bind="$attrs"
   >
-    <span class="midesk-currency__unit">{{ parts.unit }}</span>
-    <span class="midesk-currency__amount">{{ parts.amount }}</span>
+    {{ parts.amount }}&nbsp;{{ parts.unit }}
   </span>
-  <span v-else class="midesk-currency-amount" v-bind="$attrs">
+  <span
+    v-else
+    class="midesk-currency-amount"
+    :dir="parts.dir"
+    v-bind="$attrs"
+  >
     {{ parts.text }}
   </span>
 </template>

@@ -17,6 +17,7 @@ import { initPhase1Tasks, usePhase1Db } from './phase1-db'
 import { usePhase2Db } from './phase2-db'
 import { usePhase3Db } from './phase3-db'
 import { usePhase4Db } from './phase4-db'
+import { usePhase5Db } from './phase5-db'
 
 interface Session {
   token: string
@@ -321,6 +322,7 @@ export function useMockDb() {
   const phase2 = usePhase2Db()
   const phase3 = usePhase3Db()
   const phase4 = usePhase4Db()
+  const phase5 = usePhase5Db()
   return {
     sessions,
     otpCodes,
@@ -337,6 +339,7 @@ export function useMockDb() {
     phase2,
     phase3,
     phase4,
+    phase5,
     getAuth,
     requireAuth,
     getTenantId,

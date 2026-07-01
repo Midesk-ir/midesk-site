@@ -21,6 +21,8 @@ export const useAuthStore = defineStore('auth', () => {
     return role === 'OWNER' || role === 'ADMIN'
   })
 
+  const isOwner = computed(() => user.value?.role === 'OWNER')
+
   function setAuth(data: { token: string, user: User }) {
     token.value = data.token
     user.value = data.user
@@ -52,6 +54,7 @@ export const useAuthStore = defineStore('auth', () => {
     bootstrapped,
     isAuthenticated,
     isAdmin,
+    isOwner,
     setAuth,
     setBootstrap,
     clearAuth,

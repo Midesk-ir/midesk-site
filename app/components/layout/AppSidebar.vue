@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { SidebarNavGroupItem } from '~/components/layout/SidebarNavGroup.vue'
+
 const uiStore = useUiStore()
 const authStore = useAuthStore()
 const route = useRoute()
@@ -6,16 +8,63 @@ const { logout } = useAuth()
 const { t, localeProperties } = useI18n()
 const { isMobileNav, closeMobileSidebar } = useAppLayout()
 const { can, canAny } = usePermissions()
+const chatStore = useChatStore()
 
-const hrExpanded = ref(true)
-const financeExpanded = ref(true)
+const workExpanded = ref(false)
+const collabExpanded = ref(false)
+const businessExpanded = ref(false)
+const hrExpanded = ref(false)
+const financeExpanded = ref(false)
+const orgExpanded = ref(false)
 
 watch(() => route.path, (path) => {
+  if (path.startsWith('/worklog') || path.startsWith('/calendar') || path.startsWith('/leave')) {
+    workExpanded.value = true
+  }
+  if (path.startsWith('/chat') || path.startsWith('/meetings') || path === '/ai' || path.startsWith('/notes')) {
+    collabExpanded.value = true
+  }
+  if (path.startsWith('/correspondence') || path.startsWith('/surveys') || path.startsWith('/crm')
+    || path.startsWith('/reports') || path.startsWith('/performance')) {
+    businessExpanded.value = true
+  }
   if (path.startsWith('/hr')) hrExpanded.value = true
   if (path.startsWith('/finance') || path === '/my-finance') financeExpanded.value = true
+  if (path.startsWith('/teams') || path.startsWith('/members') || path.startsWith('/settings')
+    || path.startsWith('/subscription')) {
+    orgExpanded.value = true
+  }
 }, { immediate: true })
 
 const isRtl = computed(() => localeProperties.value.dir === 'rtl')
+const showCompact = computed(() => uiStore.sidebarCollapsed && !isMobileNav.value)
+const chatUnread = computed(() => chatStore.unreadTotal)
+
+const navItemsPrimary = computed(() => [
+  { label: t('nav.dashboard'), to: '/dashboard', icon: 'i-lucide-layout-dashboard' },
+  { label: t('nav.projects'), to: '/projects', icon: 'i-lucide-folder-kanban' }
+])
+
+const workNavItems = computed<SidebarNavGroupItem[]>(() => [
+  { label: t('nav.worklog'), to: '/worklog', icon: 'i-lucide-clock' },
+  { label: t('nav.calendar'), to: '/calendar', icon: 'i-lucide-calendar' },
+  { label: t('nav.leave'), to: '/leave', icon: 'i-lucide-tree-palm' }
+])
+
+const collabNavItems = computed<SidebarNavGroupItem[]>(() => [
+  { label: t('nav.chat'), to: '/chat', icon: 'i-lucide-message-square', badge: chatUnread.value },
+  { label: t('nav.meetings'), to: '/meetings', icon: 'i-lucide-video' },
+  { label: t('nav.ai'), to: '/ai', icon: 'i-lucide-sparkles' },
+  { label: t('nav.notes'), to: '/notes', icon: 'i-lucide-sticky-note' }
+])
+
+const businessNavItems = computed<SidebarNavGroupItem[]>(() => [
+  { label: t('nav.correspondence'), to: '/correspondence', icon: 'i-lucide-mail', show: can('correspondence:view') },
+  { label: t('nav.surveys'), to: '/surveys', icon: 'i-lucide-clipboard-list', show: can('surveys:view') },
+  { label: t('nav.crm'), to: '/crm', icon: 'i-lucide-handshake', show: can('crm:view') },
+  { label: t('nav.reportBuilder'), to: '/reports', icon: 'i-lucide-bar-chart-4', show: can('reports:view') },
+  { label: t('nav.performance'), to: '/performance', icon: 'i-lucide-gauge', show: can('performance:dashboard:view') }
+].filter(item => item.show).map(({ label, to, icon }) => ({ label, to, icon })))
 
 const showHrNav = computed(() => {
   if (!authStore.isAuthenticated) return false
@@ -24,7 +73,7 @@ const showHrNav = computed(() => {
     || authStore.permissions.some((p: string) => p.startsWith('hr:'))
 })
 
-const hrNavItems = computed(() => [
+const hrNavItems = computed<SidebarNavGroupItem[]>(() => [
   { label: t('nav.hr.dashboard'), to: '/hr', icon: 'i-lucide-chart-pie', show: can('hr:dashboard:view') },
   { label: t('nav.hr.personnel'), to: '/hr/personnel', icon: 'i-lucide-id-card', show: can('hr:personnel:view') },
   {
@@ -44,23 +93,14 @@ const hrNavItems = computed(() => [
   { label: t('nav.hr.recruitment'), to: '/hr/recruitment', icon: 'i-lucide-user-search', show: can('hr:recruitment:view') },
   { label: t('nav.hr.onboarding'), to: '/hr/onboarding', icon: 'i-lucide-clipboard-list', show: can('hr:onboarding:view') },
   { label: t('nav.hr.settings'), to: '/hr/settings', icon: 'i-lucide-sliders-horizontal', show: can('hr:settings:manage') }
-].filter(item => item.show))
-
-const hrDropdownItems = computed(() => [
-  hrNavItems.value.map(item => ({
-    label: item.label,
-    icon: item.icon,
-    to: item.to,
-    onSelect: () => onNavigate()
-  }))
-])
+].filter(item => item.show).map(({ label, to, icon }) => ({ label, to, icon })))
 
 const showFinanceNav = computed(() => {
   if (!authStore.isAuthenticated) return false
   return authStore.permissions.some((p: string) => p.startsWith('finance:'))
 })
 
-const financeNavItems = computed(() => [
+const financeNavItems = computed<SidebarNavGroupItem[]>(() => [
   { label: t('nav.finance.dashboard'), to: '/finance', icon: 'i-lucide-chart-pie', show: can('finance:dashboard:view') },
   { label: t('nav.finance.expenses'), to: '/finance/expenses', icon: 'i-lucide-receipt', show: canAny(['finance:expenses:view', 'finance:expenses:create', 'finance:expenses:approve', 'finance:expenses:pay']) },
   { label: t('nav.finance.budgets'), to: '/finance/budgets', icon: 'i-lucide-pie-chart', show: can('finance:budgets:view') },
@@ -70,42 +110,14 @@ const financeNavItems = computed(() => [
   { label: t('nav.finance.vendors'), to: '/finance/vendors', icon: 'i-lucide-truck', show: can('finance:invoices:view') },
   { label: t('nav.finance.payroll'), to: '/finance/payroll', icon: 'i-lucide-banknote', show: can('finance:payroll:view') },
   { label: t('nav.finance.myFinance'), to: '/my-finance', icon: 'i-lucide-wallet', show: can('finance:my:view') }
-].filter(item => item.show))
+].filter(item => item.show).map(({ label, to, icon }) => ({ label, to, icon })))
 
-const financeDropdownItems = computed(() => [
-  financeNavItems.value.map(item => ({
-    label: item.label,
-    icon: item.icon,
-    to: item.to,
-    onSelect: () => onNavigate()
-  }))
-])
-
-const navItemsCollab = computed(() => [
-  { label: t('nav.chat'), to: '/chat', icon: 'i-lucide-message-square', badge: chatUnread.value },
-  { label: t('nav.meetings'), to: '/meetings', icon: 'i-lucide-video' },
-  { label: t('nav.ai'), to: '/ai', icon: 'i-lucide-sparkles' },
-  { label: t('nav.notes'), to: '/notes', icon: 'i-lucide-sticky-note' }
-])
-
-const chatStore = useChatStore()
-const chatUnread = computed(() => chatStore.unreadTotal)
-
-const navItemsPrimary = computed(() => [
-  { label: t('nav.dashboard'), to: '/dashboard', icon: 'i-lucide-layout-dashboard' },
-  { label: t('nav.projects'), to: '/projects', icon: 'i-lucide-folder-kanban' },
-  { label: t('nav.worklog'), to: '/worklog', icon: 'i-lucide-clock' },
-  { label: t('nav.calendar'), to: '/calendar', icon: 'i-lucide-calendar' },
-  { label: t('nav.leave'), to: '/leave', icon: 'i-lucide-tree-palm' }
-])
-
-const navItemsSecondary = computed(() => [
+const orgNavItems = computed<SidebarNavGroupItem[]>(() => [
   { label: t('nav.teams'), to: '/teams', icon: 'i-lucide-users' },
   ...(authStore.isAdmin ? [{ label: t('nav.members'), to: '/members', icon: 'i-lucide-user-cog' }] : []),
-  { label: t('nav.settings'), to: '/settings', icon: 'i-lucide-settings' }
+  { label: t('nav.settings'), to: '/settings', icon: 'i-lucide-settings' },
+  ...(authStore.isOwner ? [{ label: t('nav.subscription'), to: '/subscription', icon: 'i-lucide-credit-card' }] : [])
 ])
-
-const showCompact = computed(() => uiStore.sidebarCollapsed && !isMobileNav.value)
 
 function isActive(path: string) {
   if (path === '/hr' || path === '/finance') {
@@ -117,12 +129,10 @@ function isActive(path: string) {
   return route.path === path || route.path.startsWith(`${path}/`)
 }
 
-function isHrActive() {
-  return route.path === '/hr' || route.path.startsWith('/hr/')
-}
-
-function isFinanceActive() {
-  return route.path === '/finance' || route.path.startsWith('/finance/') || route.path === '/my-finance'
+function isWorkActive() {
+  return route.path.startsWith('/worklog')
+    || route.path.startsWith('/calendar')
+    || route.path.startsWith('/leave')
 }
 
 function isCollabActive() {
@@ -132,16 +142,31 @@ function isCollabActive() {
     || route.path.startsWith('/notes')
 }
 
+function isBusinessActive() {
+  return route.path.startsWith('/correspondence')
+    || route.path.startsWith('/surveys')
+    || route.path.startsWith('/crm')
+    || route.path.startsWith('/reports')
+    || route.path.startsWith('/performance')
+}
+
+function isHrActive() {
+  return route.path === '/hr' || route.path.startsWith('/hr/')
+}
+
+function isFinanceActive() {
+  return route.path === '/finance' || route.path.startsWith('/finance/') || route.path === '/my-finance'
+}
+
+function isOrgActive() {
+  return route.path.startsWith('/teams')
+    || route.path.startsWith('/members')
+    || route.path.startsWith('/settings')
+    || route.path.startsWith('/subscription')
+}
+
 function onNavigate() {
   if (isMobileNav.value) closeMobileSidebar()
-}
-
-function toggleHr() {
-  hrExpanded.value = !hrExpanded.value
-}
-
-function toggleFinance() {
-  financeExpanded.value = !financeExpanded.value
 }
 
 onMounted(() => {
@@ -155,7 +180,6 @@ onMounted(() => {
     :class="{ 'midesk-sidebar-open': uiStore.sidebarMobileOpen }"
     :aria-hidden="isMobileNav && !uiStore.sidebarMobileOpen"
   >
-    <!-- Logo -->
     <div
       class="midesk-sidebar-brand shrink-0"
       :class="showCompact ? 'midesk-sidebar-brand-collapsed' : 'midesk-sidebar-brand-expanded'"
@@ -173,7 +197,6 @@ onMounted(() => {
       />
     </div>
 
-    <!-- Nav -->
     <nav class="min-h-0 flex-1 space-y-1 overflow-y-auto p-3">
       <NuxtLink
         v-for="item in navItemsPrimary"
@@ -193,216 +216,84 @@ onMounted(() => {
         <span v-if="!showCompact" class="truncate">{{ item.label }}</span>
       </NuxtLink>
 
-      <NuxtLink
-        v-for="item in navItemsCollab"
-        :key="item.to"
-        :to="item.to"
-        :title="showCompact ? item.label : undefined"
-        class="relative flex w-full items-center rounded-xl text-sm font-medium transition-all duration-150"
-        :class="[
-          showCompact ? 'justify-center p-2.5' : 'gap-3 px-3 py-2.5',
-          isActive(item.to)
-            ? 'bg-[var(--color-midesk-accent)] text-white shadow-[0_0_20px_var(--color-midesk-accent-glow)]'
-            : 'text-[var(--color-midesk-muted)] hover:bg-white/[0.06] hover:text-[var(--color-midesk-text)]'
-        ]"
-        @click="onNavigate"
-      >
-        <UIcon :name="item.icon" class="size-5 shrink-0" />
-        <span v-if="!showCompact" class="truncate">{{ item.label }}</span>
-        <UBadge
-          v-if="item.badge && item.badge > 0"
-          color="error"
-          size="xs"
-          class="absolute top-1.5 end-1.5 min-w-[1rem]"
-        >
-          {{ item.badge > 99 ? '99+' : item.badge }}
-        </UBadge>
-      </NuxtLink>
+      
 
-      <!-- HR cascading menu -->
-      <div v-if="showHrNav && hrNavItems.length" class="pt-1">
-        <UDropdownMenu
-          v-if="showCompact"
-          :items="hrDropdownItems"
-          :content="{ side: isRtl ? 'left' : 'right', align: 'start', sideOffset: 8 }"
-        >
-          <button
-            type="button"
-            :title="t('nav.hr.section')"
-            class="relative flex w-full items-center justify-center rounded-xl p-2.5 transition-all duration-150"
-            :class="isHrActive()
-              ? 'bg-[var(--color-midesk-accent)] text-white shadow-[0_0_20px_var(--color-midesk-accent-glow)]'
-              : 'text-[var(--color-midesk-muted)] hover:bg-white/[0.06] hover:text-[var(--color-midesk-text)]'"
-          >
-            <UIcon name="i-lucide-building-2" class="size-5 shrink-0" />
-            <span
-              class="absolute bottom-1 end-1 flex size-3.5 items-center justify-center rounded-full bg-[var(--color-midesk-accent)] text-white"
-            >
-              <UIcon name="i-lucide-chevrons-up-down" class="size-2.5" />
-            </span>
-          </button>
-        </UDropdownMenu>
+      <LayoutSidebarNavGroup
+        v-model:expanded="workExpanded"
+        :label="t('nav.workSection')"
+        icon="i-lucide-briefcase"
+        :items="workNavItems"
+        :show-compact="showCompact"
+        :is-rtl="isRtl"
+        :is-group-active="isWorkActive()"
+        :is-item-active="isActive"
+        @navigate="onNavigate"
+      />
 
-        <template v-else>
-          <button
-            type="button"
-            class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-150"
-            :class="isHrActive()
-              ? 'bg-white/[0.06] text-[var(--color-midesk-text)] ring-1 ring-[var(--color-midesk-border)]'
-              : 'text-[var(--color-midesk-muted)] hover:bg-white/[0.06] hover:text-[var(--color-midesk-text)]'"
-            :aria-expanded="hrExpanded"
-            :aria-label="t('nav.hr.section')"
-            @click="toggleHr"
-          >
-            <UIcon name="i-lucide-building-2" class="size-5 shrink-0" />
-            <span class="min-w-0 flex-1 truncate text-start">{{ t('nav.hr.section') }}</span>
-            <span
-              class="flex size-6 shrink-0 items-center justify-center rounded-md border border-[var(--color-midesk-border)] bg-white/[0.04]"
-              :class="hrExpanded ? 'text-[var(--color-midesk-accent)]' : 'text-[var(--color-midesk-muted)]'"
-              aria-hidden="true"
-            >
-              <UIcon
-                :name="isRtl ? 'i-lucide-chevron-left' : 'i-lucide-chevron-right'"
-                class="size-3.5 transition-transform duration-200"
-                :class="{ 'rotate-90': hrExpanded && !isRtl, '-rotate-90': hrExpanded && isRtl }"
-              />
-            </span>
-          </button>
+      <LayoutSidebarNavGroup
+        v-model:expanded="collabExpanded"
+        :label="t('nav.collabSection')"
+        icon="i-lucide-message-square"
+        :items="collabNavItems"
+        :show-compact="showCompact"
+        :is-rtl="isRtl"
+        :is-group-active="isCollabActive()"
+        :is-item-active="isActive"
+        @navigate="onNavigate"
+      />
 
-          <Transition
-            enter-active-class="transition duration-200 ease-out"
-            enter-from-class="opacity-0 -translate-y-1"
-            enter-to-class="opacity-100 translate-y-0"
-            leave-active-class="transition duration-150 ease-in"
-            leave-from-class="opacity-100 translate-y-0"
-            leave-to-class="opacity-0 -translate-y-1"
-          >
-            <div
-              v-show="hrExpanded"
-              class="mt-1 space-y-0.5 border-s-2 border-[var(--color-midesk-border)] ps-3 ms-3.5"
-              role="group"
-              :aria-label="t('nav.hr.section')"
-            >
-              <NuxtLink
-                v-for="item in hrNavItems"
-                :key="item.to"
-                :to="item.to"
-                class="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm transition-all duration-150"
-                :class="isActive(item.to)
-                  ? 'bg-[var(--color-midesk-accent-soft)] font-medium text-[var(--color-midesk-accent)]'
-                  : 'text-[var(--color-midesk-muted)] hover:bg-white/[0.04] hover:text-[var(--color-midesk-text)]'"
-                @click="onNavigate"
-              >
-                <UIcon :name="item.icon" class="size-4 shrink-0" />
-                <span class="truncate">{{ item.label }}</span>
-              </NuxtLink>
-            </div>
-          </Transition>
-        </template>
-      </div>
+      <LayoutSidebarNavGroup
+        v-if="businessNavItems.length"
+        v-model:expanded="businessExpanded"
+        :label="t('nav.businessSection')"
+        icon="i-lucide-layers"
+        :items="businessNavItems"
+        :show-compact="showCompact"
+        :is-rtl="isRtl"
+        :is-group-active="isBusinessActive()"
+        :is-item-active="isActive"
+        @navigate="onNavigate"
+      />
 
-      <!-- Finance cascading menu -->
-      <div v-if="showFinanceNav && financeNavItems.length" class="pt-1">
-        <UDropdownMenu
-          v-if="showCompact"
-          :items="financeDropdownItems"
-          :content="{ side: isRtl ? 'left' : 'right', align: 'start', sideOffset: 8 }"
-        >
-          <button
-            type="button"
-            :title="t('nav.finance.section')"
-            class="relative flex w-full items-center justify-center rounded-xl p-2.5 transition-all duration-150"
-            :class="isFinanceActive()
-              ? 'bg-[var(--color-midesk-accent)] text-white shadow-[0_0_20px_var(--color-midesk-accent-glow)]'
-              : 'text-[var(--color-midesk-muted)] hover:bg-white/[0.06] hover:text-[var(--color-midesk-text)]'"
-          >
-            <UIcon name="i-lucide-wallet" class="size-5 shrink-0" />
-            <span
-              class="absolute bottom-1 end-1 flex size-3.5 items-center justify-center rounded-full bg-[var(--color-midesk-accent)] text-white"
-            >
-              <UIcon name="i-lucide-chevrons-up-down" class="size-2.5" />
-            </span>
-          </button>
-        </UDropdownMenu>
+      <LayoutSidebarNavGroup
+        v-if="showHrNav && hrNavItems.length"
+        v-model:expanded="hrExpanded"
+        :label="t('nav.hr.section')"
+        icon="i-lucide-building-2"
+        :items="hrNavItems"
+        :show-compact="showCompact"
+        :is-rtl="isRtl"
+        :is-group-active="isHrActive()"
+        :is-item-active="isActive"
+        @navigate="onNavigate"
+      />
 
-        <template v-else>
-          <button
-            type="button"
-            class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-150"
-            :class="isFinanceActive()
-              ? 'bg-white/[0.06] text-[var(--color-midesk-text)] ring-1 ring-[var(--color-midesk-border)]'
-              : 'text-[var(--color-midesk-muted)] hover:bg-white/[0.06] hover:text-[var(--color-midesk-text)]'"
-            :aria-expanded="financeExpanded"
-            :aria-label="t('nav.finance.section')"
-            @click="toggleFinance"
-          >
-            <UIcon name="i-lucide-wallet" class="size-5 shrink-0" />
-            <span class="min-w-0 flex-1 truncate text-start">{{ t('nav.finance.section') }}</span>
-            <span
-              class="flex size-6 shrink-0 items-center justify-center rounded-md border border-[var(--color-midesk-border)] bg-white/[0.04]"
-              :class="financeExpanded ? 'text-[var(--color-midesk-accent)]' : 'text-[var(--color-midesk-muted)]'"
-              aria-hidden="true"
-            >
-              <UIcon
-                :name="isRtl ? 'i-lucide-chevron-left' : 'i-lucide-chevron-right'"
-                class="size-3.5 transition-transform duration-200"
-                :class="{ 'rotate-90': financeExpanded && !isRtl, '-rotate-90': financeExpanded && isRtl }"
-              />
-            </span>
-          </button>
+      <LayoutSidebarNavGroup
+        v-if="showFinanceNav && financeNavItems.length"
+        v-model:expanded="financeExpanded"
+        :label="t('nav.finance.section')"
+        icon="i-lucide-wallet"
+        :items="financeNavItems"
+        :show-compact="showCompact"
+        :is-rtl="isRtl"
+        :is-group-active="isFinanceActive()"
+        :is-item-active="isActive"
+        @navigate="onNavigate"
+      />
 
-          <Transition
-            enter-active-class="transition duration-200 ease-out"
-            enter-from-class="opacity-0 -translate-y-1"
-            enter-to-class="opacity-100 translate-y-0"
-            leave-active-class="transition duration-150 ease-in"
-            leave-from-class="opacity-100 translate-y-0"
-            leave-to-class="opacity-0 -translate-y-1"
-          >
-            <div
-              v-show="financeExpanded"
-              class="mt-1 space-y-0.5 border-s-2 border-[var(--color-midesk-border)] ps-3 ms-3.5"
-              role="group"
-              :aria-label="t('nav.finance.section')"
-            >
-              <NuxtLink
-                v-for="item in financeNavItems"
-                :key="item.to"
-                :to="item.to"
-                class="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm transition-all duration-150"
-                :class="isActive(item.to)
-                  ? 'bg-[var(--color-midesk-accent-soft)] font-medium text-[var(--color-midesk-accent)]'
-                  : 'text-[var(--color-midesk-muted)] hover:bg-white/[0.04] hover:text-[var(--color-midesk-text)]'"
-                @click="onNavigate"
-              >
-                <UIcon :name="item.icon" class="size-4 shrink-0" />
-                <span class="truncate">{{ item.label }}</span>
-              </NuxtLink>
-            </div>
-          </Transition>
-        </template>
-      </div>
-
-      <NuxtLink
-        v-for="item in navItemsSecondary"
-        :key="item.to"
-        :to="item.to"
-        :title="showCompact ? item.label : undefined"
-        class="flex w-full items-center rounded-xl text-sm font-medium transition-all duration-150"
-        :class="[
-          showCompact ? 'justify-center p-2.5' : 'gap-3 px-3 py-2.5',
-          isActive(item.to)
-            ? 'bg-[var(--color-midesk-accent)] text-white shadow-[0_0_20px_var(--color-midesk-accent-glow)]'
-            : 'text-[var(--color-midesk-muted)] hover:bg-white/[0.06] hover:text-[var(--color-midesk-text)]'
-        ]"
-        @click="onNavigate"
-      >
-        <UIcon :name="item.icon" class="size-5 shrink-0" />
-        <span v-if="!showCompact" class="truncate">{{ item.label }}</span>
-      </NuxtLink>
+      <LayoutSidebarNavGroup
+        v-model:expanded="orgExpanded"
+        :label="t('nav.orgSection')"
+        icon="i-lucide-building"
+        :items="orgNavItems"
+        :show-compact="showCompact"
+        :is-rtl="isRtl"
+        :is-group-active="isOrgActive()"
+        :is-item-active="isActive"
+        @navigate="onNavigate"
+      />
     </nav>
 
-    <!-- Footer -->
     <div
       class="shrink-0 space-y-1 border-t border-[var(--color-midesk-border)] p-3"
       :class="showCompact ? 'flex flex-col items-center' : ''"

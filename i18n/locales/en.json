@@ -17,7 +17,16 @@
     "meetings": "Meetings",
     "ai": "AI",
     "notes": "Notes",
+    "correspondence": "Correspondence",
+    "surveys": "Surveys",
+    "crm": "CRM",
+    "reportBuilder": "Report builder",
+    "performance": "Performance",
+    "subscription": "Subscription",
     "collabSection": "Collaboration",
+    "workSection": "Time & schedule",
+    "businessSection": "Business & processes",
+    "orgSection": "Organization",
     "sprints": "Sprints",
     "reports": "Reports",
     "logout": "Logout",
@@ -68,7 +77,49 @@
     "demoHint": "Demo: demo{'@'}midesk.io / password",
     "alreadyLoggedIn": "You are already signed in",
     "continueToApp": "Continue to dashboard",
-    "switchAccount": "Sign out and use another account"
+    "switchAccount": "Sign out and use another account",
+    "backHome": "Home",
+    "loginSubtitle": "Sign in to your unified team workspace",
+    "registerSubtitle": "Create your organization in under 5 minutes",
+    "registerCta": "Create free account",
+    "createFreeAccount": "Create free account",
+    "or": "or",
+    "selectedPlan": "Selected plan: {plan}",
+    "registerBenefits": {
+      "free": "No credit card",
+      "fast": "5-minute setup",
+      "secure": "Isolated & secure data"
+    },
+    "showcase": {
+      "eyebrow": "Unified organization platform",
+      "loginTitle": "One login, every tool",
+      "loginSubtitle": "Projects, HR, finance, chat & reports — one dashboard",
+      "registerTitle": "Your team's growth starts here",
+      "registerSubtitle": "Agile teams replace 10 tools with one platform",
+      "slides": {
+        "kanban": {
+          "title": "Kanban & Agile sprints",
+          "desc": "Planning, backlog & Burndown reports in one place"
+        },
+        "hr": {
+          "title": "Full HR suite",
+          "desc": "Personnel, attendance, contracts & recruitment"
+        },
+        "collab": {
+          "title": "Real-time collaboration",
+          "desc": "Team chat, online meetings & shared notes"
+        },
+        "reports": {
+          "title": "Reports & CRM",
+          "desc": "Finance dashboards, sales pipeline & custom reports"
+        }
+      },
+      "stats": {
+        "modules": { "value": "15+", "label": "modules" },
+        "setup": { "value": "5 min", "label": "setup" },
+        "free": { "value": "Free", "label": "to start" }
+      }
+    }
   },
   "onboarding": {
     "title": "Create organization",
@@ -157,7 +208,22 @@
     "activeSprint": "Active sprint",
     "weekHours": "Hours this week",
     "pendingLeave": "Pending leave requests",
-    "attendanceToday": "Today's attendance"
+    "attendanceToday": "Today's attendance",
+    "quickLinks": "Quick links",
+    "unreadNotifications": "Unread notifications",
+    "chatUnread": "Unread messages",
+    "meetingsToday": "Meetings today",
+    "meetingsUpcoming": "Upcoming meetings",
+    "myNotes": "My notes",
+    "correspondenceInbox": "Pending routing",
+    "crmHotDeals": "Hot opportunities",
+    "crmOpenDeals": "Open opportunities",
+    "crmContacts": "CRM contacts",
+    "activeSurveys": "Active surveys",
+    "draftSurveys": "Draft surveys",
+    "objectivesAtRisk": "Objectives at risk",
+    "upcomingReviews": "Upcoming reviews",
+    "savedReports": "Saved reports"
   },
   "projects": {
     "title": "Projects",
@@ -173,6 +239,7 @@
       "members": "Members",
       "sprints": "Sprints",
       "reports": "Reports",
+      "files": "Files",
       "settings": "Settings"
     },
     "emptyTitle": "No projects found",
@@ -264,7 +331,9 @@
     "organization": "Organization",
     "tabs": {
       "profileDesc": "Your account name and password",
-      "organizationDesc": "Organization name, calendar, currency, and timezone"
+      "organizationDesc": "Organization name, calendar, currency, and timezone",
+      "guestsDesc": "Invite external guests with limited project access",
+      "rolesDesc": "Define custom roles and permission sets"
     },
     "avatar": "Avatar",
     "changePassword": "Change password",
@@ -302,24 +371,6 @@
     "confirmClose": "Close sprint — where should open tasks go?",
     "noActive": "No active sprint",
     "selectSprint": "Select sprint"
-  },
-  "reports": {
-    "title": "Reports",
-    "burndown": "Burndown chart",
-    "velocity": "Velocity",
-    "cfd": "Cumulative flow (CFD)",
-    "tabs": {
-      "burndown": "Burndown",
-      "velocity": "Velocity",
-      "cfd": "CFD"
-    },
-    "committed": "Committed",
-    "completed": "Completed",
-    "average": "Average",
-    "remaining": "Remaining",
-    "ideal": "Ideal line",
-    "emptyTitle": "No report data",
-    "emptyDesc": "Reports appear after a sprint starts."
   },
   "columns": {
     "settings": "Column settings",
@@ -776,7 +827,10 @@
       "fillRequired": "Please fill in all required fields",
       "select": "Select",
       "optional": "Optional",
-      "actions": "Actions"
+      "actions": "Actions",
+      "view": "View",
+      "back": "Back",
+      "next": "Next"
   },
   "finance": {
     "dashboard": {
@@ -860,7 +914,9 @@
       "actions": {
         "create": "Create expense",
         "created": "Expense created",
-        "submit": "Submit for approval"
+        "submit": "Submit for approval",
+        "financeApprove": "Finance approve",
+        "pay": "Pay"
       },
       "rejectTitle": "Reject expense",
       "rejectHint": "Enter a rejection reason (optional).",
@@ -1033,6 +1089,7 @@
       "budget": "Budget",
       "spent": "Spent",
       "utilized": "utilized",
+      "remaining": "Remaining",
       "costCenters": "Cost centers",
       "newBudget": "New budget",
       "emptyTitle": "No budget data",
@@ -1065,6 +1122,7 @@
   },
   "landing": {
     "nav": {
+      "ariaLabel": "Main navigation",
       "features": "Features",
       "howItWorks": "How it works",
       "pricing": "Pricing",
@@ -1074,7 +1132,10 @@
     "heroTitleBefore": "Everything your",
     "heroTitleHighlight": "modern team",
     "heroTitleAfter": "needs in one place",
-    "heroSubtitle": "Projects, sprints, timesheets, calendar, and teams — no tool sprawl. Built for agile teams in Iran and worldwide.",
+    "heroSubtitle": "Projects, HR, finance, CRM, chat, meetings & AI — no tool sprawl. Built for agile teams in Iran and worldwide.",
+    "heroTrust": "No credit card · 5-minute setup · Persian support",
+    "heroCtaNote": "14-day full access — cancel anytime",
+    "viewPlans": "View plans",
     "getStarted": "Get started free",
     "getStartedShort": "Start",
     "login": "Login",
@@ -1082,8 +1143,45 @@
     "stats": {
       "modules": "integrated modules",
       "languages": "languages",
-      "calendar": "Jalali & Gregorian",
-      "tenants": "multi-tenant"
+      "setup": "setup time",
+      "scale": "scalable"
+    },
+    "heroChips": {
+      "kanban": "Kanban",
+      "hr": "HR",
+      "crm": "CRM",
+      "chat": "Chat",
+      "ai": "AI",
+      "finance": "Finance"
+    },
+    "socialProof": "Built for teams in",
+    "socialItems": {
+      "agile": "Agile & Scrum",
+      "hr": "Human resources",
+      "finance": "Finance & accounting",
+      "remote": "Remote & hybrid"
+    },
+    "compareTitle": "One platform instead of scattered tools",
+    "compareSubtitle": "Lower cost, unified data, faster decisions",
+    "compareBefore": "Before",
+    "compareAfter": "With Midesk",
+    "compareItems": {
+      "tools": {
+        "before": "Jira + Excel + separate chat + HR software",
+        "after": "All modules in one dashboard with shared data"
+      },
+      "data": {
+        "before": "Manual reporting and human error",
+        "after": "Report builder, dashboards & live KPIs"
+      },
+      "calendar": {
+        "before": "Gregorian-only Western tools",
+        "after": "Jalali calendar, RTL & native Persian"
+      },
+      "cost": {
+        "before": "Multiple subscriptions + integrations",
+        "after": "One transparent plan with free start"
+      }
     },
     "valuesTitle": "Why Midesk?",
     "values": {
@@ -1104,8 +1202,26 @@
         "desc": "Persian/English, RTL, and Jalali calendar"
       }
     },
-    "featuresTitle": "Available today",
-    "featuresSubtitle": "From Kanban to leave — what you can use in Midesk right now",
+    "featuresTitle": "Everything your organization needs",
+    "featuresSubtitle": "From Kanban to CRM and AI — available in Midesk today",
+    "featureCategories": {
+      "projects": {
+        "title": "Projects & Agile",
+        "desc": "Plan, execute and report for product teams"
+      },
+      "people": {
+        "title": "People & time",
+        "desc": "HR, calendar, teams & performance"
+      },
+      "business": {
+        "title": "Business ops",
+        "desc": "Finance, sales, correspondence & surveys"
+      },
+      "collab": {
+        "title": "Smart collaboration",
+        "desc": "Communication, meetings, AI & reports"
+      }
+    },
     "featureItems": {
       "kanban": {
         "title": "Smart Kanban",
@@ -1138,14 +1254,43 @@
       "finance": {
         "title": "Finance & payroll",
         "desc": "Expenses, budgets, payslips, and finance approvals"
+      },
+      "crm": {
+        "title": "CRM & sales",
+        "desc": "Contacts, pipeline and sales opportunities"
+      },
+      "correspondence": {
+        "title": "Correspondence",
+        "desc": "Letters, routing, e-sign and archive"
+      },
+      "surveys": {
+        "title": "Surveys",
+        "desc": "Form builder, responses and analytics"
+      },
+      "chat": {
+        "title": "Team chat",
+        "desc": "DM, group and channel messaging"
+      },
+      "meetings": {
+        "title": "Online meetings",
+        "desc": "Scheduling and integrated meeting rooms"
+      },
+      "ai": {
+        "title": "AI assistant",
+        "desc": "Task analysis, screening and content generation"
+      },
+      "notes": {
+        "title": "Notes",
+        "desc": "Personal and shared Markdown notes"
+      },
+      "reports": {
+        "title": "Report builder",
+        "desc": "Custom reports from multiple data sources"
+      },
+      "performance": {
+        "title": "Performance & OKR",
+        "desc": "Goals, KPIs and periodic reviews"
       }
-    },
-    "roadmapBadge": "Coming soon",
-    "roadmapTitle": "On the roadmap",
-    "roadmapItems": {
-      "hr": "HR & attendance",
-      "finance": "Finance & payroll",
-      "ai": "Organizational AI"
     },
     "howTitle": "How it works",
     "howSubtitle": "Get your organization running in three steps",
@@ -1185,7 +1330,9 @@
       }
     },
     "pricingTitle": "Plans for every team",
-    "pricingSubtitle": "From free start to enterprise deployment",
+    "pricingSubtitle": "From free start to enterprise — no surprises",
+    "pricingBadge": "Free to start",
+    "pricingGuarantee": "No credit card to start · upgrade anytime",
     "pricingPopular": "Popular",
     "pricingContact": "Contact us",
     "pricingFree": "Free",
@@ -1211,8 +1358,8 @@
         "desc": "Scaling teams",
         "price": "Contact",
         "period": "monthly",
-        "cta": "Request consultation",
-        "features": ["More members", "Leave approvals", "Advanced reports", "Priority support"]
+        "cta": "Start with Pro",
+        "features": ["All modules", "CRM & correspondence", "Advanced reports", "Priority support"]
       },
       "enterprise": {
         "name": "Enterprise",
@@ -1242,14 +1389,21 @@
         "a": "Yes. Multi-tenant architecture keeps each organization's data and settings separate."
       },
       "roadmap": {
-        "q": "What is on the roadmap?",
-        "a": "HR and finance modules are available today. Organizational AI is planned for a future release."
+        "q": "What is coming next?",
+        "a": "Advanced AI, more integrations and enterprise customization tools are on the roadmap."
       }
     },
+    "ctaBadge": "Start now",
     "ctaTitle": "Ready to unify your team?",
     "ctaSubtitle": "Start free today — no card, no commitment.",
     "footerTagline": "Unified organization management platform for modern teams.",
-    "footer": "© Midesk — Built for modern teams"
+    "footer": "© Midesk — Built for modern teams",
+    "seo": {
+      "title": "Midesk | Project, HR & Finance Management Software",
+      "description": "Midesk is an all-in-one SaaS platform for modern organizations: Kanban, sprints, timesheets, Jalali calendar, HR, finance, chat, and custom reports — built for agile teams in Iran and worldwide.",
+      "keywords": "project management, kanban software, sprint planning, timesheet, HR software, payroll, organization management, jalali calendar, SaaS, agile",
+      "ogImageAlt": "Midesk — unified organization management platform"
+    }
   },
   "chat": {
     "search": "Search channels…",
@@ -1321,6 +1475,384 @@
       "resume": "Screen resume",
       "resumePrompt": "Evaluate this resume"
     }
+  },
+  "guest": {
+    "title": "Guest access",
+    "invite": "Invite guest",
+    "invited": "Guest invited",
+    "revoke": "Revoke",
+    "revoked": "Guest access revoked",
+    "emptyTitle": "No guests",
+    "emptyDesc": "Invite external collaborators with read-only or comment access.",
+    "columns": {
+      "email": "Email",
+      "name": "Name",
+      "role": "Role",
+      "projects": "Projects",
+      "expiresAt": "Expires"
+    },
+    "roles": {
+      "viewer": "Viewer",
+      "commenter": "Commenter"
+    },
+    "fields": {
+      "email": "Email",
+      "name": "Name",
+      "role": "Role",
+      "projects": "Projects",
+      "expiresAt": "Expires at"
+    }
+  },
+  "roles": {
+    "title": "Custom roles",
+    "create": "New role",
+    "edit": "Edit role",
+    "emptyTitle": "No custom roles",
+    "emptyDesc": "Create roles with tailored permission sets for your team.",
+    "permissionCount": "{count} permissions",
+    "fields": {
+      "name": "Role name",
+      "permissions": "Permissions"
+    },
+    "groups": {
+      "correspondence": "Correspondence",
+      "surveys": "Surveys",
+      "crm": "CRM",
+      "reports": "Reports",
+      "files": "Files",
+      "subscription": "Subscription",
+      "guests": "Guests",
+      "roles": "Roles",
+      "performance": "Performance"
+    }
+  },
+  "superAdmin": {
+    "panelTitle": "Super Admin Panel",
+    "loginTitle": "Super Admin Login",
+    "demoHint": "Demo: superadmin{'@'}midesk.io / superadmin",
+    "nav": {
+      "dashboard": "Dashboard",
+      "tenants": "Tenants",
+      "plans": "Plans",
+      "financial": "Financial",
+      "consultations": "Consultations",
+      "settings": "Settings"
+    },
+    "dashboard": {
+      "title": "Platform Dashboard",
+      "subtitle": "Overview of tenants, revenue, and subscriptions",
+      "tenantsCount": "Total tenants",
+      "mrr": "MRR",
+      "arr": "ARR",
+      "activeSubscriptions": "Active subscriptions",
+      "newThisMonth": "New this month",
+      "revenueChart": "Revenue trend"
+    },
+    "tenants": {
+      "title": "Tenants",
+      "subtitle": "Manage tenant organizations",
+      "search": "Search tenants…",
+      "emptyTitle": "No tenants",
+      "emptyDesc": "No tenants match your search.",
+      "suspend": "Suspend",
+      "suspended": "Tenant suspended",
+      "columns": {
+        "name": "Name",
+        "plan": "Plan",
+        "status": "Status",
+        "users": "Users",
+        "mrr": "MRR",
+        "created": "Created"
+      },
+      "status": {
+        "active": "Active",
+        "suspended": "Suspended",
+        "trial": "Trial"
+      }
+    },
+    "plans": {
+      "title": "Subscription plans",
+      "subtitle": "Manage pricing and features",
+      "create": "New plan",
+      "edit": "Edit plan",
+      "emptyTitle": "No plans",
+      "emptyDesc": "Create your first subscription plan.",
+      "saved": "Plan saved",
+      "deleted": "Plan deleted",
+      "columns": {
+        "name": "Name",
+        "code": "Code",
+        "monthly": "Monthly",
+        "yearly": "Yearly",
+        "maxUsers": "Max users",
+        "maxProjects": "Max projects"
+      },
+      "fields": {
+        "name": "Name",
+        "code": "Code",
+        "features": "Features (comma-separated)",
+        "priceMonthlyIr": "Monthly price (IRR)",
+        "priceMonthlyIntl": "Monthly price (USD)",
+        "priceYearlyIr": "Yearly price (IRR)",
+        "priceYearlyIntl": "Yearly price (USD)",
+        "maxUsers": "Max users",
+        "maxProjects": "Max projects"
+      }
+    },
+    "financial": {
+      "title": "Financial overview",
+      "subtitle": "Revenue metrics and breakdown",
+      "mrr": "Monthly recurring revenue",
+      "arr": "Annual recurring revenue",
+      "byPlan": "Revenue by plan",
+      "byCycle": "Revenue by billing cycle",
+      "monthly": "Monthly billing",
+      "yearly": "Yearly billing",
+      "cancellations": "Cancellations this month"
+    },
+    "consultations": {
+      "title": "Consultation requests",
+      "subtitle": "Manage inbound demo and sales inquiries",
+      "emptyTitle": "No consultations",
+      "emptyDesc": "No consultation requests yet.",
+      "statusUpdated": "Status updated",
+      "columns": {
+        "name": "Name",
+        "email": "Email",
+        "company": "Company",
+        "message": "Message",
+        "status": "Status",
+        "created": "Created"
+      },
+      "status": {
+        "pending": "Pending",
+        "contacted": "Contacted",
+        "closed": "Closed"
+      }
+    },
+    "settings": {
+      "title": "Platform settings",
+      "subtitle": "Global configuration for Midesk",
+      "saved": "Settings saved",
+      "fields": {
+        "platformName": "Platform name",
+        "supportEmail": "Support email",
+        "defaultTrialDays": "Default trial days",
+        "maintenanceMode": "Maintenance mode"
+      }
+    }
+  },
+  "subscription": {
+    "pageSubtitle": "Manage your organization plan and billing",
+    "currentPlan": "Current plan",
+    "comparePlans": "Compare plans",
+    "invoices": "Invoices",
+    "checkout": "Checkout",
+    "upgrade": "Upgrade",
+    "current": "Current",
+    "plan": "Plan",
+    "priceMonthly": "Monthly price",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "pay": "Pay now",
+    "paymentSuccess": "Payment successful",
+    "paymentFailed": "Payment failed",
+    "expiresAt": "Expires",
+    "noInvoices": "No invoices yet",
+    "invoicePlan": "Plan",
+    "invoiceAmount": "Amount",
+    "invoiceDue": "Due date",
+    "invoiceStatus": "Status",
+    "invoiceStatuses": { "pending": "Pending", "paid": "Paid", "failed": "Failed" },
+    "status": { "active": "Active", "expired": "Expired", "trial": "Trial" },
+    "usage": { "users": "Users", "projects": "Projects" }
+  },
+  "files": {
+    "title": "Project files",
+    "subtitle": "Upload and manage project documents",
+    "root": "Root",
+    "empty": "No files in this folder",
+    "name": "Name",
+    "size": "Size",
+    "version": "Version",
+    "uploadedBy": "Uploaded by",
+    "dropHint": "Drag and drop files here",
+    "selectFile": "Choose file",
+    "uploaded": "File uploaded",
+    "deleted": "File deleted",
+    "newVersion": "New version uploaded"
+  },
+  "reports": {
+    "title": "Reports",
+    "burndown": "Burndown chart",
+    "velocity": "Velocity",
+    "cfd": "Cumulative flow (CFD)",
+    "tabs": {
+      "burndown": "Burndown",
+      "velocity": "Velocity",
+      "cfd": "CFD"
+    },
+    "committed": "Committed",
+    "completed": "Completed",
+    "average": "Average",
+    "remaining": "Remaining",
+    "ideal": "Ideal line",
+    "emptyTitle": "No report data",
+    "emptyDesc": "Reports appear after a sprint starts.",
+    "view": "View report",
+    "pageSubtitle": "Build custom reports from your data",
+    "create": "New report",
+    "name": "Report name",
+    "dataSource": "Data source",
+    "chartType": "Chart type",
+    "empty": "No saved reports",
+    "run": "Run",
+    "save": "Save report",
+    "saved": "Report saved",
+    "preview": "Preview",
+    "columns": "columns",
+    "contains": "contains",
+    "addFilter": "Add filter",
+    "chartPreview": "Chart preview",
+    "scheduleFrequency": "Schedule frequency",
+    "daily": "Daily",
+    "weekly": "Weekly",
+    "monthly": "Monthly",
+    "types": { "table": "Table", "bar": "Bar chart", "line": "Line chart", "pie": "Pie chart" }
+  },
+  "crm": {
+    "dashboardSubtitle": "Sales funnel and activity overview",
+    "contactsSubtitle": "Manage leads, customers and partners",
+    "pipelineSubtitle": "Drag opportunities across sales stages",
+    "nav": {
+      "dashboard": "Dashboard",
+      "contacts": "Contacts",
+      "pipeline": "Pipeline"
+    },
+    "contacts": "Contacts",
+    "pipeline": "Pipeline",
+    "addContact": "Add contact",
+    "addOpportunity": "Add opportunity",
+    "backToContacts": "Back to contacts",
+    "addActivity": "Log activity",
+    "opportunities": "Opportunities",
+    "activities": "Activities",
+    "summary": "Summary",
+    "createdAt": "Created",
+    "probability": "Probability",
+    "searchContacts": "Search contacts…",
+    "selectContact": "Select contact",
+    "tagsPlaceholder": "e.g. VIP, B2B",
+    "contactCreated": "Contact created",
+    "opportunityCreated": "Opportunity created",
+    "activityCreated": "Activity logged",
+    "stageUpdated": "Stage updated",
+    "emptyContactsTitle": "No contacts",
+    "emptyContactsDesc": "Add your first contact to start tracking relationships.",
+    "emptyOpportunitiesTitle": "No opportunities",
+    "emptyOpportunitiesDesc": "Create an opportunity linked to this contact.",
+    "emptyActivitiesTitle": "No activities",
+    "emptyActivitiesDesc": "Log calls, emails and meetings here.",
+    "emptyHotTitle": "No hot deals",
+    "emptyHotDesc": "High-probability opportunities will appear here.",
+    "emptyPipelineColumn": "Drop here",
+    "funnel": "Sales funnel",
+    "hotOpportunities": "Hot opportunities",
+    "recentActivity": "Recent activity",
+    "tabs": {
+      "info": "Profile",
+      "opportunities": "Opportunities",
+      "activities": "Activities"
+    },
+    "fields": {
+      "name": "Name",
+      "company": "Company",
+      "email": "Email",
+      "phone": "Phone",
+      "type": "Type",
+      "tags": "Tags",
+      "assignedTo": "Assigned to",
+      "title": "Title",
+      "contact": "Contact",
+      "value": "Value",
+      "stage": "Stage",
+      "probability": "Probability (%)",
+      "expectedClose": "Expected close"
+    },
+    "types": { "lead": "Lead", "customer": "Customer", "partner": "Partner", "vendor": "Vendor" },
+    "filters": { "all": "All" },
+    "stages": { "lead": "Lead", "qualified": "Qualified", "proposal": "Proposal", "negotiation": "Negotiation", "won": "Won", "lost": "Lost" },
+    "activityType": "Activity type",
+    "activitySubject": "Subject",
+    "activityNotes": "Notes",
+    "activityTypes": { "call": "Call", "email": "Email", "meeting": "Meeting", "note": "Note" }
+  },
+  "surveys": {
+    "pageSubtitle": "Create and analyze surveys",
+    "create": "New survey",
+    "createModalDesc": "Enter basic details, then add questions on the next screen.",
+    "createHint": "After saving, you will be taken to the question editor.",
+    "createAndEdit": "Create and add questions",
+    "created": "Survey created",
+    "emptyTitle": "No surveys yet",
+    "emptyDesc": "Create your first survey to collect feedback from your team.",
+    "report": "Report",
+    "editQuestions": "Edit questions",
+    "publish": "Publish",
+    "published": "Survey published",
+    "submit": "Submit",
+    "submitted": "Response submitted",
+    "addQuestion": "Add question",
+    "questionTitle": "Question title",
+    "required": "Required",
+    "avgRating": "avg rating",
+    "fields": { "title": "Title", "type": "Type", "status": "Status", "responses": "Responses" },
+    "types": { "survey": "Survey", "quiz": "Quiz", "form": "Form" },
+    "statuses": { "draft": "Draft", "active": "Active", "closed": "Closed" },
+    "questionTypes": { "text": "Short text", "textarea": "Long text", "single_choice": "Single choice", "multiple_choice": "Multiple choice", "rating": "Rating", "number": "Number", "date": "Date" }
+  },
+  "correspondence": {
+    "pageSubtitle": "Internal correspondence and routing",
+    "create": "New letter",
+    "inbox": "My inbox",
+    "send": "Send",
+    "sent": "Letter sent",
+    "sign": "Sign",
+    "signed": "Letter signed",
+    "route": "Route",
+    "routed": "Routed successfully",
+    "completed": "Marked complete",
+    "markComplete": "Complete",
+    "inboxEmpty": "No routed items",
+    "noRouting": "No routing history",
+    "number": "Number",
+    "subject": "Subject",
+    "body": "Body",
+    "type": "Type",
+    "status": "Status",
+    "priority": "Priority",
+    "toUser": "Recipient",
+    "action": "Action",
+    "note": "Note",
+    "dueDate": "Due date",
+    "tabs": { "outgoing": "Outgoing", "incoming": "Incoming", "internal": "Internal", "archive": "Archive" },
+    "types": { "incoming": "Incoming", "outgoing": "Outgoing", "internal": "Internal" },
+    "statuses": { "draft": "Draft", "sent": "Sent", "received": "Received", "archived": "Archived" },
+    "priorities": { "normal": "Normal", "urgent": "Urgent", "confidential": "Confidential" },
+    "actions": { "review": "Review", "approve": "Approve", "sign": "Sign", "for_info": "For info", "execute": "Execute" },
+    "routingStatuses": { "pending": "Pending", "seen": "Seen", "completed": "Completed" }
+  },
+  "performance": {
+    "pageSubtitle": "KPIs, OKRs and performance reviews",
+    "objectives": "Objectives (OKR)",
+    "reviews": "Reviews",
+    "kpis": "Key indicators",
+    "employee": "Employee",
+    "period": "Period",
+    "reviewStatus": "Status",
+    "summary": { "on_track": "On track", "at_risk": "At risk", "off_track": "Off track", "completed": "Completed" },
+    "statuses": { "on_track": "On track", "at_risk": "At risk", "off_track": "Off track", "completed": "Completed" },
+    "reviewStatuses": { "scheduled": "Scheduled", "in_progress": "In progress", "completed": "Completed" }
   },
   "notes": {
     "create": "New note",

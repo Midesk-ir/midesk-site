@@ -12,14 +12,14 @@
         <div class="midesk-landing-preview-logo" />
         <div class="midesk-landing-preview-nav">
           <div class="is-active" />
-          <div /><div /><div />
+          <div /><div /><div /><div />
         </div>
       </aside>
 
       <div class="midesk-landing-preview-main">
         <div class="midesk-landing-preview-topbar" />
         <div class="midesk-landing-preview-stats">
-          <div v-for="i in 3" :key="i" />
+          <div v-for="i in 4" :key="i" />
         </div>
         <div class="midesk-landing-preview-board">
           <div v-for="col in 4" :key="col" class="midesk-landing-preview-column">
@@ -35,6 +35,16 @@
     <div class="midesk-landing-preview-float midesk-landing-preview-float--chart">
       <UIcon name="i-lucide-line-chart" class="size-4 text-[var(--color-midesk-accent)]" />
       <span>Burndown</span>
+    </div>
+
+    <div class="midesk-landing-preview-float midesk-landing-preview-float--crm">
+      <UIcon name="i-lucide-trending-up" class="size-3.5 text-emerald-400" />
+      <span>CRM</span>
+    </div>
+
+    <div class="midesk-landing-preview-float midesk-landing-preview-float--ai">
+      <UIcon name="i-lucide-sparkles" class="size-3.5 text-violet-400" />
+      <span>AI</span>
     </div>
 
     <div class="midesk-landing-preview-float midesk-landing-preview-float--notif">

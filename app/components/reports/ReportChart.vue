@@ -28,20 +28,6 @@ function buildConfig(): ApexOptions {
   }
 }
 
-async function render() {
-  if (!import.meta.client || !container.value) return
-
-  const config = buildConfig()
-
-  if (chart) {
-    await chart.updateOptions(config, true, true)
-    return
-  }
-
-  chart = new ApexCharts(container.value, config)
-  await chart.render()
-}
-
 async function destroyChart() {
   if (chart) {
     await chart.destroy()
@@ -49,9 +35,20 @@ async function destroyChart() {
   }
 }
 
+async function render() {
+  if (!import.meta.client || !container.value) return
+
+  await destroyChart()
+  chart = new ApexCharts(container.value, buildConfig())
+  await chart.render()
+}
+
 watch(
   () => [props.options, props.series, props.type, props.height, locale.value],
-  () => { render() },
+  async () => {
+    await nextTick()
+    await render()
+  },
   { deep: true }
 )
 

@@ -61,7 +61,22 @@ export const PERMISSIONS = {
   'performance:objectives:view': 'performance:objectives:view',
   'performance:objectives:manage': 'performance:objectives:manage',
   'performance:reviews:view': 'performance:reviews:view',
-  'performance:reviews:manage': 'performance:reviews:manage'
+  'performance:reviews:manage': 'performance:reviews:manage',
+  // Phase 5
+  'correspondence:view': 'correspondence:view',
+  'correspondence:manage': 'correspondence:manage',
+  'surveys:view': 'surveys:view',
+  'surveys:manage': 'surveys:manage',
+  'crm:view': 'crm:view',
+  'crm:manage': 'crm:manage',
+  'reports:view': 'reports:view',
+  'reports:manage': 'reports:manage',
+  'files:view': 'files:view',
+  'files:manage': 'files:manage',
+  'subscription:view': 'subscription:view',
+  'subscription:manage': 'subscription:manage',
+  'guests:manage': 'guests:manage',
+  'roles:manage': 'roles:manage'
 } as const
 
 export type Permission = (typeof PERMISSIONS)[keyof typeof PERMISSIONS]
@@ -124,7 +139,15 @@ const ROLE_PERMISSIONS: Record<UserRole, Permission[]> = {
     PERMISSIONS['performance:dashboard:view'],
     PERMISSIONS['performance:scores:view'],
     PERMISSIONS['performance:objectives:view'],
-    PERMISSIONS['performance:reviews:view']
+    PERMISSIONS['performance:reviews:view'],
+    PERMISSIONS['correspondence:view'],
+    PERMISSIONS['correspondence:manage'],
+    PERMISSIONS['surveys:view'],
+    PERMISSIONS['surveys:manage'],
+    PERMISSIONS['crm:view'],
+    PERMISSIONS['crm:manage'],
+    PERMISSIONS['reports:view'],
+    PERMISSIONS['files:view']
   ],
   MEMBER: [
     PERMISSIONS['project:read'],
@@ -145,7 +168,12 @@ const ROLE_PERMISSIONS: Record<UserRole, Permission[]> = {
     PERMISSIONS['notifications:preferences'],
     PERMISSIONS['performance:dashboard:view'],
     PERMISSIONS['performance:objectives:view'],
-    PERMISSIONS['performance:reviews:view']
+    PERMISSIONS['performance:reviews:view'],
+    PERMISSIONS['correspondence:view'],
+    PERMISSIONS['surveys:view'],
+    PERMISSIONS['crm:view'],
+    PERMISSIONS['reports:view'],
+    PERMISSIONS['files:view']
   ]
 }
 

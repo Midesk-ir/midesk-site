@@ -17,7 +17,16 @@
         "meetings": "جلسات",
         "ai": "هوش مصنوعی",
         "notes": "یادداشت‌ها",
+        "correspondence": "دبیرخانه",
+        "surveys": "نظرسنجی",
+        "crm": "CRM",
+        "reportBuilder": "گزارش‌ساز",
+        "performance": "عملکرد",
+        "subscription": "اشتراک",
         "collabSection": "همکاری",
+        "workSection": "زمان و برنامه",
+        "businessSection": "فرآیند و کسب‌وکار",
+        "orgSection": "سازمان",
         "sprints": "اسپرینت‌ها",
         "reports": "گزارش‌ها",
         "logout": "خروج",
@@ -68,7 +77,49 @@
         "demoHint": "دمو: demo{'@'}midesk.io / password",
         "alreadyLoggedIn": "شما قبلاً وارد شده‌اید",
         "continueToApp": "ادامه به داشبورد",
-        "switchAccount": "خروج و ورود با حساب دیگر"
+        "switchAccount": "خروج و ورود با حساب دیگر",
+        "backHome": "صفحه اصلی",
+        "loginSubtitle": "به فضای کاری یکپارچه تیم خود وارد شوید",
+        "registerSubtitle": "در کمتر از ۵ دقیقه سازمان خود را بسازید و شروع کنید",
+        "registerCta": "ساخت حساب رایگان",
+        "createFreeAccount": "ساخت حساب رایگان",
+        "or": "یا",
+        "selectedPlan": "پلن انتخابی: {plan}",
+        "registerBenefits": {
+            "free": "بدون کارت بانکی",
+            "fast": "راه‌اندازی ۵ دقیقه‌ای",
+            "secure": "داده‌های ایزوله و امن"
+        },
+        "showcase": {
+            "eyebrow": "پلتفرم یکپارچه مدیریت سازمان",
+            "loginTitle": "یک ورود، همه ابزارها",
+            "loginSubtitle": "پروژه، HR، مالی، چت و گزارش — همه در یک داشبورد",
+            "registerTitle": "سفر رشد تیم از همین‌جا شروع می‌شود",
+            "registerSubtitle": "هزاران تیم چابک به جای ۱۰ ابزار جدا، یک پلتفرم دارند",
+            "slides": {
+                "kanban": {
+                    "title": "کانبان و اسپرینت Agile",
+                    "desc": "برنامه‌ریزی، بک‌لاگ و گزارش Burndown در یک جا"
+                },
+                "hr": {
+                    "title": "منابع انسانی کامل",
+                    "desc": "پرسنل، تردد، قرارداد، استخدام و آنبوردینگ"
+                },
+                "collab": {
+                    "title": "همکاری بلادرنگ",
+                    "desc": "چت تیمی، جلسات آنلاین و یادداشت‌های مشترک"
+                },
+                "reports": {
+                    "title": "گزارش‌ساز و CRM",
+                    "desc": "داشبورد مالی، فروش و گزارش‌های سفارشی"
+                }
+            },
+            "stats": {
+                "modules": { "value": "15+", "label": "ماژول" },
+                "setup": { "value": "۵ دقیقه", "label": "راه‌اندازی" },
+                "free": { "value": "رایگان", "label": "شروع" }
+            }
+        }
     },
     "onboarding": {
         "title": "ساخت سازمان",
@@ -157,7 +208,23 @@
         "activeSprint": "اسپرینت فعال",
         "weekHours": "ساعات این هفته",
         "pendingLeave": "مرخصی در انتظار تأیید",
-        "attendanceToday": "وضعیت حضور امروز"
+        "attendanceToday": "وضعیت حضور امروز",
+        "quickLinks": "دسترسی سریع",
+        "unreadNotifications": "اعلان خوانده‌نشده",
+        "chatUnread": "پیام خوانده‌نشده",
+        "meetingsToday": "جلسات امروز",
+        "meetingsUpcoming": "جلسات پیش‌رو",
+        "myNotes": "یادداشت‌های من",
+        "correspondenceInbox": "ارجاع در انتظار",
+        "crmHotDeals": "فرصت‌های داغ",
+        "crmOpenDeals": "فرصت‌های باز",
+        "crmContacts": "مخاطبین CRM",
+        "activeSurveys": "نظرسنجی فعال",
+        "draftSurveys": "پیش‌نویس نظرسنجی",
+        "objectivesAtRisk": "اهداف در خطر",
+        "upcomingReviews": "بازبینی پیش‌رو",
+        "savedReports": "گزارش ذخیره‌شده",
+        "millionUnit": "میلیون"
     },
     "projects": {
         "title": "پروژه‌ها",
@@ -173,6 +240,7 @@
             "members": "اعضا",
             "sprints": "اسپرینت‌ها",
             "reports": "گزارش‌ها",
+            "files": "فایل‌ها",
             "settings": "تنظیمات"
         },
         "emptyTitle": "پروژه‌ای یافت نشد",
@@ -264,7 +332,9 @@
         "organization": "سازمان",
         "tabs": {
             "profileDesc": "نام و رمز عبور حساب کاربری شما",
-            "organizationDesc": "نام، تقویم، ارز و منطقه زمانی سازمان"
+            "organizationDesc": "نام، تقویم، ارز و منطقه زمانی سازمان",
+            "guestsDesc": "دعوت همکاران خارجی با دسترسی محدود به پروژه",
+            "rolesDesc": "تعریف نقش‌های سفارشی و مجموعه دسترسی‌ها"
         },
         "avatar": "آواتار",
         "changePassword": "تغییر رمز",
@@ -302,24 +372,6 @@
         "confirmClose": "بستن اسپرینت — تسک‌های باز را به کجا منتقل کنید؟",
         "noActive": "اسپرینت فعالی نیست",
         "selectSprint": "انتخاب اسپرینت"
-    },
-    "reports": {
-        "title": "گزارش‌ها",
-        "burndown": "نمودار Burndown",
-        "velocity": "Velocity",
-        "cfd": "نمودار تجمعی (CFD)",
-        "tabs": {
-            "burndown": "Burndown",
-            "velocity": "Velocity",
-            "cfd": "CFD"
-        },
-        "committed": "تعهد شده",
-        "completed": "تکمیل شده",
-        "average": "میانگین",
-        "remaining": "مانده",
-        "ideal": "خط ایده‌آل",
-        "emptyTitle": "داده گزارش موجود نیست",
-        "emptyDesc": "پس از شروع اسپرینت، گزارش‌ها اینجا نمایش داده می‌شوند."
     },
     "columns": {
         "settings": "تنظیم ستون‌ها",
@@ -776,7 +828,10 @@
         "fillRequired": "لطفاً فیلدهای الزامی را پر کنید",
         "select": "انتخاب کنید",
         "optional": "اختیاری",
-        "actions": "عملیات"
+        "actions": "عملیات",
+        "view": "مشاهده",
+        "back": "بازگشت",
+        "next": "بعدی"
     },
     "finance": {
         "dashboard": {
@@ -860,7 +915,9 @@
             "actions": {
                 "create": "ثبت هزینه",
                 "created": "هزینه ثبت شد",
-                "submit": "ارسال برای تأیید"
+                "submit": "ارسال برای تأیید",
+                "financeApprove": "تأیید مالی",
+                "pay": "پرداخت"
             },
             "rejectTitle": "رد هزینه",
             "rejectHint": "دلیل رد را وارد کنید (اختیاری).",
@@ -1033,6 +1090,7 @@
             "budget": "بودجه",
             "spent": "مصرف",
             "utilized": "مصرف‌شده",
+            "remaining": "مانده",
             "costCenters": "مراکز هزینه",
             "newBudget": "بودجه جدید",
             "emptyTitle": "داده بودجه موجود نیست",
@@ -1065,6 +1123,7 @@
     },
     "landing": {
         "nav": {
+            "ariaLabel": "ناوبری اصلی",
             "features": "امکانات",
             "howItWorks": "نحوه کار",
             "pricing": "قیمت‌ها",
@@ -1074,7 +1133,10 @@
         "heroTitleBefore": "همه‌چیز برای",
         "heroTitleHighlight": "تیم مدرن",
         "heroTitleAfter": "در یک جا",
-        "heroSubtitle": "پروژه، اسپرینت، تایم‌شیت، تقویم و تیم — بدون پراکندگی ابزار. برای تیم‌های چابک در ایران و جهان.",
+        "heroSubtitle": "پروژه، HR، مالی، CRM، چت، جلسات و هوش مصنوعی — بدون پراکندگی ابزار. برای تیم‌های چابک در ایران و جهان.",
+        "heroTrust": "بدون کارت بانکی · راه‌اندازی در ۵ دقیقه · پشتیبانی فارسی",
+        "heroCtaNote": "۱۴ روز دسترسی کامل — لغو هر زمان",
+        "viewPlans": "مشاهده پلن‌ها",
         "getStarted": "شروع رایگان",
         "getStartedShort": "شروع",
         "login": "ورود",
@@ -1082,8 +1144,45 @@
         "stats": {
             "modules": "ماژول یکپارچه",
             "languages": "زبان",
-            "calendar": "تقویم شمسی/میلادی",
-            "tenants": "چندسازمانی"
+            "setup": "راه‌اندازی",
+            "scale": "مقیاس‌پذیر"
+        },
+        "heroChips": {
+            "kanban": "کانبان",
+            "hr": "HR",
+            "crm": "CRM",
+            "chat": "چت",
+            "ai": "هوش مصنوعی",
+            "finance": "مالی"
+        },
+        "socialProof": "مناسب برای تیم‌های",
+        "socialItems": {
+            "agile": "چابک و اسکرام",
+            "hr": "منابع انسانی",
+            "finance": "مالی و حسابداری",
+            "remote": "ریموت و هیبرید"
+        },
+        "compareTitle": "یک پلتفرم به‌جای ابزارهای پراکنده",
+        "compareSubtitle": "هزینه کمتر، داده یکپارچه، تصمیم سریع‌تر",
+        "compareBefore": "قبل",
+        "compareAfter": "با Midesk",
+        "compareItems": {
+            "tools": {
+                "before": "Jira + Excel + چت جدا + نرم‌افزار HR",
+                "after": "همه ماژول‌ها در یک داشبورد با داده مشترک"
+            },
+            "data": {
+                "before": "گزارش‌گیری دستی و خطای انسانی",
+                "after": "گزارش‌ساز، داشبورد و KPI زنده"
+            },
+            "calendar": {
+                "before": "تقویم میلادی و ابزار غربی",
+                "after": "تقویم شمسی، RTL و فارسی بومی"
+            },
+            "cost": {
+                "before": "اشتراک چند ابزار + یکپارچه‌سازی",
+                "after": "یک پلن شفاف با شروع رایگان"
+            }
         },
         "valuesTitle": "چرا مای‌دسک؟",
         "values": {
@@ -1104,8 +1203,26 @@
                 "desc": "فارسی/انگلیسی، RTL و تقویم جلالی"
             }
         },
-        "featuresTitle": "امکانات آماده امروز",
-        "featuresSubtitle": "از کانبان تا مرخصی — آنچه همین حالا در Midesk دارید",
+        "featuresTitle": "همه‌چیز که سازمان نیاز دارد",
+        "featuresSubtitle": "از کانبان تا CRM و هوش مصنوعی — همین حالا در Midesk",
+        "featureCategories": {
+            "projects": {
+                "title": "پروژه و Agile",
+                "desc": "برنامه‌ریزی، اجرا و گزارش تیم محصول"
+            },
+            "people": {
+                "title": "افراد و زمان",
+                "desc": "HR، تقویم، تیم و ارزیابی عملکرد"
+            },
+            "business": {
+                "title": "کسب‌وکار",
+                "desc": "مالی، فروش، دبیرخانه و نظرسنجی"
+            },
+            "collab": {
+                "title": "همکاری هوشمند",
+                "desc": "ارتباط، جلسه، AI و گزارش‌ساز"
+            }
+        },
         "featureItems": {
             "kanban": {
                 "title": "کانبان هوشمند",
@@ -1138,14 +1255,43 @@
             "finance": {
                 "title": "مالی و حقوق",
                 "desc": "هزینه، بودجه، فیش حقوقی و تأیید مالی"
+            },
+            "crm": {
+                "title": "CRM و فروش",
+                "desc": "مخاطبین، پایپ‌لاین و فرصت‌های فروش"
+            },
+            "correspondence": {
+                "title": "دبیرخانه",
+                "desc": "مکاتبات، ارجاع، امضا و بایگانی"
+            },
+            "surveys": {
+                "title": "نظرسنجی",
+                "desc": "طراحی فرم، جمع‌آوری پاسخ و گزارش"
+            },
+            "chat": {
+                "title": "چت سازمانی",
+                "desc": "پیام خصوصی، گروه و کانال تیمی"
+            },
+            "meetings": {
+                "title": "جلسات آنلاین",
+                "desc": "برنامه‌ریزی و اتاق جلسه یکپارچه"
+            },
+            "ai": {
+                "title": "هوش مصنوعی",
+                "desc": "دستیار AI، تحلیل تسک و تولید محتوا"
+            },
+            "notes": {
+                "title": "یادداشت‌ها",
+                "desc": "یادداشت شخصی و اشتراکی با Markdown"
+            },
+            "reports": {
+                "title": "گزارش‌ساز",
+                "desc": "گزارش سفارشی از منابع داده مختلف"
+            },
+            "performance": {
+                "title": "عملکرد و OKR",
+                "desc": "اهداف، KPI و ارزیابی دوره‌ای"
             }
-        },
-        "roadmapBadge": "به‌زودی",
-        "roadmapTitle": "در نقشه راه",
-        "roadmapItems": {
-            "hr": "منابع انسانی و تردد",
-            "finance": "مالی و حقوق",
-            "ai": "هوش مصنوعی سازمانی"
         },
         "howTitle": "نحوه کارکرد",
         "howSubtitle": "در سه قدم سازمان خود را راه بیندازید",
@@ -1185,7 +1331,9 @@
             }
         },
         "pricingTitle": "پلن مناسب تیم شما",
-        "pricingSubtitle": "از شروع رایگان تا استقرار سازمانی",
+        "pricingSubtitle": "از شروع رایگان تا استقرار سازمانی — بدون غافلگیری",
+        "pricingBadge": "شروع رایگان",
+        "pricingGuarantee": "بدون کارت بانکی برای شروع · ارتقا هر زمان",
         "pricingPopular": "محبوب",
         "pricingContact": "تماس بگیرید",
         "pricingFree": "رایگان",
@@ -1211,8 +1359,8 @@
                 "desc": "تیم‌های در حال مقیاس",
                 "price": "تماس",
                 "period": "ماهانه",
-                "cta": "درخواست مشاوره",
-                "features": ["اعضای بیشتر", "مرخصی و تأیید", "گزارش‌های پیشرفته", "پشتیبانی اولویت‌دار"]
+                "cta": "شروع با پلن حرفه‌ای",
+                "features": ["همه ماژول‌ها", "CRM و دبیرخانه", "گزارش‌ساز پیشرفته", "پشتیبانی اولویت‌دار"]
             },
             "enterprise": {
                 "name": "سازمانی",
@@ -1242,14 +1390,21 @@
                 "a": "بله. معماری چندمستاجره (Multi-tenant) هر سازمان را با داده و تنظیمات مجزا نگه می‌دارد."
             },
             "roadmap": {
-                "q": "چه چیزهایی در نقشه راه است؟",
-                "a": "ماژول HR و مالی هم‌اکنون در دسترس است. هوش مصنوعی سازمانی در نقشه راه بعدی محصول قرار دارد."
+                "q": "چه امکاناتی اضافه می‌شود؟",
+                "a": "هوش مصنوعی پیشرفته‌تر، یکپارچه‌سازی‌های بیشتر و ابزارهای سفارشی‌سازی سازمانی در نقشه راه هستند."
             }
         },
+        "ctaBadge": "همین الان",
         "ctaTitle": "آماده‌اید تیم را یکپارچه کنید؟",
         "ctaSubtitle": "همین حالا رایگان شروع کنید — بدون کارت، بدون تعهد.",
         "footerTagline": "پلتفرم یکپارچه مدیریت سازمان برای تیم‌های مدرن.",
-        "footer": "© Midesk — ساخته شده برای تیم‌های مدرن"
+        "footer": "© Midesk — ساخته شده برای تیم‌های مدرن",
+        "seo": {
+            "title": "Midesk | نرم‌افزار مدیریت پروژه، منابع انسانی و مالی سازمانی",
+            "description": "Midesk پلتفرم SaaS یکپارچه برای مدیریت سازمان است: کانبان، اسپرینت، تایم‌شیت، تقویم شمسی، HR، مالی، چت و گزارش‌ساز — مناسب تیم‌های چابک در ایران و جهان.",
+            "keywords": "مدیریت پروژه, نرم افزار کانبان, اسپرینت, تایم شیت, منابع انسانی, حقوق و دستمزد, مدیریت سازمان, تقویم شمسی, SaaS, Agile",
+            "ogImageAlt": "Midesk — پلتفرم یکپارچه مدیریت سازمان"
+        }
     },
     "chat": {
         "search": "جستجوی کانال…",
@@ -1321,6 +1476,274 @@
             "resume": "غربال رزومه",
             "resumePrompt": "این رزومه را ارزیابی کن"
         }
+    },
+    "superAdmin": {
+        "panelTitle": "پنل سوپر ادمین",
+        "loginTitle": "ورود سوپر ادمین",
+        "demoHint": "دمو: superadmin{'@'}midesk.io / superadmin",
+        "nav": {
+            "dashboard": "داشبورد",
+            "tenants": "مستأجران",
+            "plans": "پلن‌ها",
+            "financial": "مالی",
+            "consultations": "مشاوره‌ها",
+            "settings": "تنظیمات"
+        },
+        "dashboard": {
+            "title": "داشبورد پلتفرم",
+            "subtitle": "نمای کلی مستأجران، درآمد و اشتراک‌ها",
+            "tenantsCount": "کل مستأجران",
+            "mrr": "MRR",
+            "arr": "ARR",
+            "activeSubscriptions": "اشتراک‌های فعال",
+            "newThisMonth": "جدید این ماه",
+            "revenueChart": "روند درآمد"
+        },
+        "tenants": {
+            "title": "مستأجران",
+            "subtitle": "مدیریت سازمان‌های مستأجر",
+            "search": "جستجوی مستأجر…",
+            "emptyTitle": "مستأجری نیست",
+            "emptyDesc": "مستأجری با این جستجو یافت نشد.",
+            "suspend": "تعلیق",
+            "suspended": "مستأجر تعلیق شد",
+            "columns": {
+                "name": "نام",
+                "plan": "پلن",
+                "status": "وضعیت",
+                "users": "کاربران",
+                "mrr": "MRR",
+                "created": "تاریخ ایجاد"
+            },
+            "status": {
+                "active": "فعال",
+                "suspended": "تعلیق‌شده",
+                "trial": "آزمایشی"
+            }
+        },
+        "plans": {
+            "title": "پلن‌های اشتراک",
+            "subtitle": "مدیریت قیمت‌گذاری و امکانات",
+            "create": "پلن جدید",
+            "edit": "ویرایش پلن",
+            "emptyTitle": "پلنی نیست",
+            "emptyDesc": "اولین پلن اشتراک را بسازید.",
+            "saved": "پلن ذخیره شد",
+            "deleted": "پلن حذف شد",
+            "columns": {
+                "name": "نام",
+                "code": "کد",
+                "monthly": "ماهانه",
+                "yearly": "سالانه",
+                "maxUsers": "حداکثر کاربر",
+                "maxProjects": "حداکثر پروژه"
+            },
+            "fields": {
+                "name": "نام",
+                "code": "کد",
+                "features": "امکانات (با کاما جدا کنید)",
+                "priceMonthlyIr": "قیمت ماهانه (ریال)",
+                "priceMonthlyIntl": "قیمت ماهانه (دلار)",
+                "priceYearlyIr": "قیمت سالانه (ریال)",
+                "priceYearlyIntl": "قیمت سالانه (دلار)",
+                "maxUsers": "حداکثر کاربر",
+                "maxProjects": "حداکثر پروژه"
+            }
+        },
+        "financial": {
+            "title": "نمای مالی",
+            "subtitle": "شاخص‌های درآمد و تفکیک",
+            "mrr": "درآمد ماهانه تکرارشونده",
+            "arr": "درآمد سالانه تکرارشونده",
+            "byPlan": "درآمد بر اساس پلن",
+            "byCycle": "درآمد بر اساس دوره پرداخت",
+            "monthly": "پرداخت ماهانه",
+            "yearly": "پرداخت سالانه",
+            "cancellations": "لغو اشتراک این ماه"
+        },
+        "consultations": {
+            "title": "درخواست‌های مشاوره",
+            "subtitle": "مدیریت درخواست‌های دمو و فروش",
+            "emptyTitle": "درخواستی نیست",
+            "emptyDesc": "هنوز درخواست مشاوره‌ای ثبت نشده.",
+            "statusUpdated": "وضعیت به‌روز شد",
+            "columns": {
+                "name": "نام",
+                "email": "ایمیل",
+                "company": "شرکت",
+                "message": "پیام",
+                "status": "وضعیت",
+                "created": "تاریخ"
+            },
+            "status": {
+                "pending": "در انتظار",
+                "contacted": "تماس گرفته‌شده",
+                "closed": "بسته‌شده"
+            }
+        },
+        "settings": {
+            "title": "تنظیمات پلتفرم",
+            "subtitle": "پیکربندی سراسری Midesk",
+            "saved": "تنظیمات ذخیره شد",
+            "fields": {
+                "platformName": "نام پلتفرم",
+                "supportEmail": "ایمیل پشتیبانی",
+                "defaultTrialDays": "روزهای پیش‌فرض آزمایشی",
+                "maintenanceMode": "حالت تعمیر و نگهداری"
+            }
+        }
+    },
+    "guest": {
+        "title": "دسترسی مهمان",
+        "invite": "دعوت مهمان",
+        "invited": "مهمان دعوت شد",
+        "revoke": "لغو دسترسی",
+        "revoked": "دسترسی مهمان لغو شد",
+        "emptyTitle": "مهمانی نیست",
+        "emptyDesc": "همکاران خارجی را با دسترسی محدود دعوت کنید.",
+        "columns": { "email": "ایمیل", "name": "نام", "role": "نقش", "projects": "پروژه‌ها", "expiresAt": "انقضا" },
+        "roles": { "viewer": "مشاهده‌گر", "commenter": "نظردهنده" },
+        "fields": { "email": "ایمیل", "name": "نام", "role": "نقش", "projects": "پروژه‌ها", "expiresAt": "تاریخ انقضا" }
+    },
+    "roles": {
+        "title": "نقش‌های سفارشی",
+        "create": "نقش جدید",
+        "edit": "ویرایش نقش",
+        "emptyTitle": "نقش سفارشی نیست",
+        "emptyDesc": "نقش‌های با مجموعه دسترسی دلخواه بسازید.",
+        "permissionCount": "{count} دسترسی",
+        "fields": { "name": "نام نقش", "permissions": "دسترسی‌ها" },
+        "groups": {
+            "correspondence": "دبیرخانه", "surveys": "نظرسنجی", "crm": "CRM", "reports": "گزارش‌ساز",
+            "files": "فایل‌ها", "subscription": "اشتراک", "guests": "مهمان‌ها", "roles": "نقش‌ها", "performance": "عملکرد"
+        }
+    },
+    "subscription": {
+        "pageSubtitle": "مدیریت پلن و صورتحساب سازمان",
+        "currentPlan": "پلن فعلی", "comparePlans": "مقایسه پلن‌ها", "invoices": "صورتحساب‌ها",
+        "checkout": "پرداخت", "upgrade": "ارتقا", "current": "فعلی", "plan": "پلن", "priceMonthly": "قیمت ماهانه",
+        "monthly": "ماهانه", "yearly": "سالانه", "pay": "پرداخت", "paymentSuccess": "پرداخت موفق", "paymentFailed": "پرداخت ناموفق",
+        "expiresAt": "انقضا", "noInvoices": "صورتحسابی نیست",
+        "invoicePlan": "پلن", "invoiceAmount": "مبلغ", "invoiceDue": "سررسید", "invoiceStatus": "وضعیت",
+        "invoiceStatuses": { "pending": "در انتظار", "paid": "پرداخت‌شده", "failed": "ناموفق" },
+        "status": { "active": "فعال", "expired": "منقضی", "trial": "آزمایشی" },
+        "usage": { "users": "کاربران", "projects": "پروژه‌ها" }
+    },
+    "files": {
+        "title": "فایل‌های پروژه", "subtitle": "آپلود و مدیریت اسناد پروژه", "root": "ریشه", "empty": "فایلی در این پوشه نیست",
+        "name": "نام", "size": "حجم", "version": "نسخه", "uploadedBy": "آپلودکننده",
+        "dropHint": "فایل را اینجا رها کنید", "selectFile": "انتخاب فایل",
+        "uploaded": "فایل آپلود شد", "deleted": "فایل حذف شد", "newVersion": "نسخه جدید آپلود شد"
+    },
+    "reports": {
+        "title": "گزارش‌ها",
+        "burndown": "نمودار Burndown",
+        "velocity": "Velocity",
+        "cfd": "نمودار تجمعی (CFD)",
+        "tabs": {
+            "burndown": "Burndown",
+            "velocity": "Velocity",
+            "cfd": "CFD"
+        },
+        "committed": "تعهد شده",
+        "completed": "تکمیل شده",
+        "average": "میانگین",
+        "remaining": "مانده",
+        "ideal": "خط ایده‌آل",
+        "emptyTitle": "داده گزارش موجود نیست",
+        "emptyDesc": "پس از شروع اسپرینت، گزارش‌ها اینجا نمایش داده می‌شوند.",
+        "view": "مشاهده گزارش",
+        "pageSubtitle": "گزارش‌های سفارشی از داده‌های سازمان",
+        "create": "گزارش جدید", "name": "نام گزارش", "dataSource": "منبع داده", "chartType": "نوع نمودار",
+        "empty": "گزارش ذخیره‌شده‌ای نیست", "run": "اجرا", "save": "ذخیره گزارش", "saved": "گزارش ذخیره شد",
+        "preview": "پیش‌نمایش", "columns": "ستون", "contains": "شامل", "addFilter": "افزودن فیلتر",
+        "chartPreview": "پیش‌نمایش نمودار", "scheduleFrequency": "تناوب ارسال",
+        "daily": "روزانه", "weekly": "هفتگی", "monthly": "ماهانه",
+        "types": { "table": "جدول", "bar": "ستونی", "line": "خطی", "pie": "دایره‌ای" }
+    },
+    "crm": {
+        "dashboardSubtitle": "قیف فروش و فعالیت‌های اخیر",
+        "contactsSubtitle": "مدیریت سرنخ‌ها، مشتریان و شرکا",
+        "pipelineSubtitle": "فرصت‌ها را بین مراحل فروش جابه‌جا کنید",
+        "nav": { "dashboard": "داشبورد", "contacts": "مخاطبین", "pipeline": "قیف فروش" },
+        "contacts": "مخاطبین",
+        "pipeline": "قیف فروش",
+        "addContact": "مخاطب جدید",
+        "addOpportunity": "فرصت جدید",
+        "backToContacts": "بازگشت به مخاطبین",
+        "addActivity": "ثبت فعالیت",
+        "opportunities": "فرصت‌ها",
+        "activities": "فعالیت‌ها",
+        "summary": "خلاصه",
+        "createdAt": "تاریخ ایجاد",
+        "probability": "احتمال",
+        "searchContacts": "جستجوی مخاطب…",
+        "selectContact": "انتخاب مخاطب",
+        "tagsPlaceholder": "مثلاً VIP، B2B",
+        "contactCreated": "مخاطب ایجاد شد",
+        "opportunityCreated": "فرصت ایجاد شد",
+        "activityCreated": "فعالیت ثبت شد",
+        "stageUpdated": "مرحله به‌روز شد",
+        "emptyContactsTitle": "مخاطبی نیست",
+        "emptyContactsDesc": "اولین مخاطب را اضافه کنید.",
+        "emptyOpportunitiesTitle": "فرصتی نیست",
+        "emptyOpportunitiesDesc": "فرصت فروش مرتبط با این مخاطب بسازید.",
+        "emptyActivitiesTitle": "فعالیتی نیست",
+        "emptyActivitiesDesc": "تماس، ایمیل و جلسه را اینجا ثبت کنید.",
+        "emptyHotTitle": "فرصت داغی نیست",
+        "emptyHotDesc": "فرصت‌های با احتمال بالا اینجا نمایش داده می‌شوند.",
+        "emptyPipelineColumn": "اینجا رها کنید",
+        "funnel": "قیف فروش",
+        "hotOpportunities": "فرصت‌های داغ",
+        "recentActivity": "فعالیت اخیر",
+        "tabs": { "info": "پروفایل", "opportunities": "فرصت‌ها", "activities": "فعالیت‌ها" },
+        "fields": {
+            "name": "نام", "company": "شرکت", "email": "ایمیل", "phone": "تلفن", "type": "نوع",
+            "tags": "برچسب‌ها", "assignedTo": "مسئول", "title": "عنوان", "contact": "مخاطب",
+            "value": "ارزش", "stage": "مرحله", "probability": "احتمال (%)", "expectedClose": "تاریخ بسته‌شدن"
+        },
+        "types": { "lead": "سرنخ", "customer": "مشتری", "partner": "شریک", "vendor": "تأمین‌کننده" },
+        "filters": { "all": "همه" },
+        "stages": { "lead": "سرنخ", "qualified": "واجد شرایط", "proposal": "پیشنهاد", "negotiation": "مذاکره", "won": "برنده", "lost": "از دست رفته" },
+        "activityType": "نوع فعالیت", "activitySubject": "موضوع", "activityNotes": "یادداشت",
+        "activityTypes": { "call": "تماس", "email": "ایمیل", "meeting": "جلسه", "note": "یادداشت" }
+    },
+    "surveys": {
+        "pageSubtitle": "ساخت و تحلیل نظرسنجی",
+        "create": "نظرسنجی جدید",
+        "createModalDesc": "اطلاعات پایه را وارد کنید؛ سپس سؤالات را در صفحه بعد اضافه می‌کنید.",
+        "createHint": "بعد از ذخیره، به ویرایشگر سؤالات هدایت می‌شوید.",
+        "createAndEdit": "ایجاد و افزودن سؤالات",
+        "created": "نظرسنجی ایجاد شد",
+        "emptyTitle": "نظرسنجی‌ای نیست",
+        "emptyDesc": "اولین نظرسنجی را برای جمع‌آوری بازخورد بسازید.", "report": "گزارش", "editQuestions": "ویرایش سؤالات", "publish": "انتشار", "published": "منتشر شد",
+        "submit": "ارسال پاسخ", "submitted": "پاسخ ثبت شد", "addQuestion": "سؤال جدید", "questionTitle": "عنوان سؤال",
+        "required": "الزامی", "avgRating": "میانگین امتیاز",
+        "fields": { "title": "عنوان", "type": "نوع", "status": "وضعیت", "responses": "پاسخ‌ها" },
+        "types": { "survey": "نظرسنجی", "quiz": "آزمون", "form": "فرم" },
+        "statuses": { "draft": "پیش‌نویس", "active": "فعال", "closed": "بسته" },
+        "questionTypes": { "text": "متن کوتاه", "textarea": "متن بلند", "single_choice": "تک‌گزینه‌ای", "multiple_choice": "چندگزینه‌ای", "rating": "امتیاز", "number": "عدد", "date": "تاریخ" }
+    },
+    "correspondence": {
+        "pageSubtitle": "نامه‌نگاری و ارجاع داخلی",
+        "create": "نامه جدید", "inbox": "صندوق من", "send": "ارسال", "sent": "نامه ارسال شد", "sign": "امضا", "signed": "امضا شد",
+        "route": "ارجاع", "routed": "ارجاع شد", "completed": "تکمیل شد", "markComplete": "تکمیل", "inboxEmpty": "ارجاعی نیست", "noRouting": "ارجاعی ثبت نشده",
+        "number": "شماره", "subject": "موضوع", "body": "متن", "type": "نوع", "status": "وضعیت", "priority": "اولویت",
+        "toUser": "گیرنده", "action": "اقدام", "note": "یادداشت", "dueDate": "مهلت",
+        "tabs": { "outgoing": "صادره", "incoming": "وارده", "internal": "داخلی", "archive": "آرشیو" },
+        "types": { "incoming": "وارده", "outgoing": "صادره", "internal": "داخلی" },
+        "statuses": { "draft": "پیش‌نویس", "sent": "ارسال‌شده", "received": "دریافت‌شده", "archived": "آرشیو" },
+        "priorities": { "normal": "عادی", "urgent": "فوری", "confidential": "محرمانه" },
+        "actions": { "review": "بررسی", "approve": "تأیید", "sign": "امضا", "for_info": "اطلاع", "execute": "اقدام" },
+        "routingStatuses": { "pending": "در انتظار", "seen": "مشاهده‌شده", "completed": "تکمیل" }
+    },
+    "performance": {
+        "pageSubtitle": "KPI، OKR و بازبینی عملکرد",
+        "objectives": "اهداف (OKR)", "reviews": "بازبینی‌ها", "kpis": "شاخص‌های کلیدی",
+        "employee": "کارمند", "period": "دوره", "reviewStatus": "وضعیت",
+        "summary": { "on_track": "در مسیر", "at_risk": "در خطر", "off_track": "خارج از مسیر", "completed": "تکمیل" },
+        "statuses": { "on_track": "در مسیر", "at_risk": "در خطر", "off_track": "خارج از مسیر", "completed": "تکمیل" },
+        "reviewStatuses": { "scheduled": "برنامه‌ریزی‌شده", "in_progress": "در جریان", "completed": "تکمیل" }
     },
     "notes": {
         "create": "یادداشت جدید",

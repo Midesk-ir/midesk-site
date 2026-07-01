@@ -2,6 +2,33 @@
 export default defineNuxtConfig({
   ssr: false,
 
+  app: {
+    head: {
+      charset: 'utf-8',
+      viewport: 'width=device-width, initial-scale=1',
+      titleTemplate: '%s',
+      link: [
+        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }
+      ],
+      meta: [
+        { name: 'theme-color', content: '#0f1117' },
+        { name: 'format-detection', content: 'telephone=no' }
+      ]
+    }
+  },
+
+  routeRules: {
+    '/': { ssr: true, prerender: true },
+    '/robots.txt': { prerender: true },
+    '/sitemap.xml': { prerender: true }
+  },
+
+  nitro: {
+    prerender: {
+      routes: ['/', '/robots.txt', '/sitemap.xml']
+    }
+  },
+
   modules: [
     '@nuxt/eslint',
     '@nuxt/ui',
@@ -17,7 +44,8 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      apiBase: '/api/v1'
+      apiBase: '/api/v1',
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || ''
     }
   },
 

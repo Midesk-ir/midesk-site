@@ -87,40 +87,48 @@ async function goToApp() {
 </script>
 
 <template>
-  <UCard class="midesk-glass midesk-form-card border-[var(--color-midesk-border)]">
-    <template #header>
-      <h1 class="text-xl font-semibold">{{ t('auth.login') }}</h1>
-    </template>
+  <div class="midesk-auth-card">
+    <div class="midesk-auth-card-header">
+      <div class="midesk-auth-card-icon-wrap">
+        <UIcon name="i-lucide-log-in" class="size-6 text-[var(--color-midesk-accent)]" />
+      </div>
+      <h1 class="midesk-auth-card-title">{{ t('auth.login') }}</h1>
+      <p class="midesk-auth-card-subtitle">{{ t('auth.loginSubtitle') }}</p>
+    </div>
 
-    <div v-if="alreadyLoggedIn" class="space-y-4 text-center">
-      <USkeleton v-if="sessionLoading" class="mx-auto size-12 rounded-full" />
-      <UAvatar v-else :alt="authStore.user?.name ?? ''" size="lg" icon="i-lucide-user" class="mx-auto" />
+    <div v-if="alreadyLoggedIn" class="midesk-auth-card-body space-y-4 text-center">
+      <USkeleton v-if="sessionLoading" class="mx-auto size-14 rounded-2xl" />
+      <UAvatar v-else :alt="authStore.user?.name ?? ''" size="xl" icon="i-lucide-user" class="mx-auto" />
       <p class="text-sm text-[var(--color-midesk-muted)]">{{ t('auth.alreadyLoggedIn') }}</p>
-      <p class="font-medium">{{ authStore.user?.name ?? '—' }}</p>
-      <UButton block color="primary" :loading="sessionLoading" @click="goToApp">
+      <p class="text-lg font-semibold">{{ authStore.user?.name ?? '—' }}</p>
+      <UButton block size="lg" color="primary" :loading="sessionLoading" @click="goToApp">
         {{ t('auth.continueToApp') }}
       </UButton>
-      <UButton block variant="outline" color="neutral" :disabled="sessionLoading" @click="logout">
+      <UButton block size="lg" variant="outline" color="neutral" :disabled="sessionLoading" @click="logout">
         {{ t('auth.switchAccount') }}
       </UButton>
     </div>
 
-    <div v-else>
-      <div class="mb-4 flex gap-2">
-        <UButton
-          :variant="mode === 'password' ? 'solid' : 'ghost'"
-          size="sm"
+    <div v-else class="midesk-auth-card-body">
+      <div class="midesk-auth-mode-tabs">
+        <button
+          type="button"
+          class="midesk-auth-mode-tab"
+          :class="{ 'is-active': mode === 'password' }"
           @click="mode = 'password'"
         >
+          <UIcon name="i-lucide-key-round" class="size-4" />
           {{ t('auth.loginWithPassword') }}
-        </UButton>
-        <UButton
-          :variant="mode === 'otp' ? 'solid' : 'ghost'"
-          size="sm"
+        </button>
+        <button
+          type="button"
+          class="midesk-auth-mode-tab"
+          :class="{ 'is-active': mode === 'otp' }"
           @click="mode = 'otp'"
         >
+          <UIcon name="i-lucide-smartphone" class="size-4" />
           {{ t('auth.loginWithOtp') }}
-        </UButton>
+        </button>
       </div>
 
       <VeeForm
@@ -140,6 +148,7 @@ async function goToApp() {
                 :model-value="field.value"
                 type="email"
                 placeholder=" "
+                icon="i-lucide-mail"
                 @update:model-value="field.onChange"
                 @blur="field.onBlur"
               />
@@ -155,13 +164,19 @@ async function goToApp() {
                 :model-value="field.value"
                 type="password"
                 placeholder=" "
+                icon="i-lucide-lock"
                 @update:model-value="field.onChange"
                 @blur="field.onBlur"
               />
             </MideskFormField>
           </VeeField>
-          <p class="text-xs text-[var(--color-midesk-muted)]">{{ t('auth.demoHint') }}</p>
-          <UButton type="submit" block :loading="loading" color="primary">
+
+          <div class="midesk-auth-demo-hint">
+            <UIcon name="i-lucide-sparkles" class="size-4 shrink-0 text-[var(--color-midesk-accent)]" />
+            <span>{{ t('auth.demoHint') }}</span>
+          </div>
+
+          <UButton type="submit" block size="lg" :loading="loading" color="primary" class="midesk-auth-submit">
             {{ t('auth.login') }}
           </UButton>
         </div>
@@ -184,23 +199,25 @@ async function goToApp() {
                 :model-value="field.value"
                 placeholder=" "
                 dir="ltr"
+                icon="i-lucide-phone"
                 @update:model-value="field.onChange"
                 @blur="field.onBlur"
               />
             </MideskFormField>
           </VeeField>
-          <UButton type="submit" block :loading="loading" color="primary">
+          <UButton type="submit" block size="lg" :loading="loading" color="primary" class="midesk-auth-submit">
             {{ t('auth.sendOtp') }}
           </UButton>
         </div>
       </VeeForm>
 
-      <p class="mt-6 text-center text-sm text-[var(--color-midesk-muted)]">
-        {{ t('auth.noAccount') }}
-        <NuxtLink to="/register" class="midesk-link hover:underline">
-          {{ t('auth.register') }}
-        </NuxtLink>
-      </p>
+      <div class="midesk-auth-divider">
+        <span>{{ t('auth.or') }}</span>
+      </div>
+
+      <UButton to="/register" block size="lg" variant="outline" color="neutral" class="midesk-auth-alt-cta">
+        {{ t('auth.createFreeAccount') }}
+      </UButton>
     </div>
-  </UCard>
+  </div>
 </template>

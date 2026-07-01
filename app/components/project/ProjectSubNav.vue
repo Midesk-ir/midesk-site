@@ -23,6 +23,11 @@ const links = computed(() => [
     active: route.path === `/projects/${props.projectId}/reports`
   },
   {
+    label: t('projects.tabs.files'),
+    to: `/projects/${props.projectId}/files`,
+    active: route.path === `/projects/${props.projectId}/files`
+  },
+  {
     label: t('projects.tabs.settings'),
     to: `/projects/${props.projectId}/settings`,
     active: route.path === `/projects/${props.projectId}/settings`
