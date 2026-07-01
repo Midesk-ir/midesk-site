@@ -6,7 +6,8 @@ const props = defineProps<{
 }>()
 
 const { t } = useI18n()
-const { formatDate, formatDateTime } = useCalendar()
+const { formatDate } = useCalendar()
+const { can } = usePermissions()
 
 const activeTab = ref('personal')
 
@@ -19,6 +20,22 @@ const tabs = computed(() => [
   { label: t('hr.personnel.tabs.leave'), value: 'leave', icon: 'i-lucide-plane' }
 ])
 
+const attendanceStats = computed(() => {
+  const records = props.detail.recent_attendance
+  return {
+    present: records.filter(r => r.status === 'present' || r.status === 'late').length,
+    late: records.filter(r => r.status === 'late').length,
+    absent: records.filter(r => r.status === 'absent').length,
+    overtime_minutes: records.reduce((sum, r) => sum + r.overtime_minutes, 0)
+  }
+})
+
+const statusColor: Record<string, 'warning' | 'success' | 'error' | 'neutral'> = {
+  pending: 'warning',
+  approved: 'success',
+  rejected: 'error',
+  cancelled: 'neutral'
+}
 </script>
 
 <template>
@@ -40,7 +57,7 @@ const tabs = computed(() => [
       </div>
     </div>
 
-    <UTabs v-model="activeTab" :items="tabs" class="w-full" />
+    <UTabs v-model="activeTab" :items="tabs" :content="false" class="w-full" />
 
     <div v-if="activeTab === 'personal'" class="midesk-glass rounded-xl border border-[var(--color-midesk-border)] p-5">
       <dl class="grid gap-4 sm:grid-cols-2">
@@ -92,53 +109,96 @@ const tabs = computed(() => [
       </dl>
     </div>
 
-    <div v-else-if="activeTab === 'contracts'">
-      <HrContractList
-        v-if="detail.contracts.length"
-        :contracts="detail.contracts"
-      />
-      <UiEmptyState
-        v-else
-        :title="t('hr.contracts.emptyTitle')"
-        icon="i-lucide-file-text"
-      />
-    </div>
-
-    <div v-else-if="activeTab === 'documents'">
-      <HrDocumentList
-        v-if="detail.documents.length"
-        :documents="detail.documents"
-      />
-      <UiEmptyState
-        v-else
-        :title="t('hr.documents.emptyTitle')"
-        icon="i-lucide-folder"
-      />
-    </div>
-
-    <div v-else-if="activeTab === 'attendance'" class="midesk-glass overflow-hidden rounded-xl border border-[var(--color-midesk-border)]">
-      <HrAttendanceTable :records="detail.recent_attendance" />
-    </div>
-
-    <div v-else-if="activeTab === 'leave'" class="midesk-glass rounded-xl border border-[var(--color-midesk-border)] p-5">
-      <UiEmptyState
-        v-if="!detail.leave_balances?.length"
-        :title="t('leave.balance.title')"
-        :description="t('common.noResults')"
-        icon="i-lucide-plane"
-      />
-      <ul v-else class="divide-y divide-[var(--color-midesk-border)]">
-        <li
-          v-for="bal in detail.leave_balances"
-          :key="bal.leave_type.id"
-          class="flex items-center justify-between py-3"
+    <div v-else-if="activeTab === 'contracts'" class="space-y-3">
+      <div class="flex justify-end">
+        <UButton
+          v-if="can('hr:contracts:manage')"
+          to="/hr/contracts"
+          size="sm"
+          variant="soft"
+          icon="i-lucide-refresh-cw"
         >
-          <span class="font-medium">{{ bal.leave_type.name }}</span>
-          <span class="text-[var(--color-midesk-muted)]">
-            {{ bal.remaining }} {{ t('leave.balance.days') }}
-          </span>
-        </li>
-      </ul>
+          {{ t('hr.contracts.renew') }}
+        </UButton>
+      </div>
+      <HrContractList v-if="detail.contracts.length" :contracts="detail.contracts" />
+      <UiEmptyState v-else :title="t('hr.contracts.emptyTitle')" icon="i-lucide-file-text" />
+    </div>
+
+    <div v-else-if="activeTab === 'documents'" class="space-y-3">
+      <div class="flex justify-end">
+        <UButton
+          v-if="can('hr:documents:manage')"
+          to="/hr/documents"
+          size="sm"
+          variant="soft"
+          icon="i-lucide-upload"
+        >
+          {{ t('hr.documents.upload') }}
+        </UButton>
+      </div>
+      <HrDocumentList v-if="detail.documents.length" :documents="detail.documents" />
+      <UiEmptyState v-else :title="t('hr.documents.emptyTitle')" icon="i-lucide-folder" />
+    </div>
+
+    <div v-else-if="activeTab === 'attendance'" class="space-y-4">
+      <HrAttendanceSummary :history-stats="attendanceStats" />
+      <div class="midesk-glass overflow-hidden rounded-xl border border-[var(--color-midesk-border)]">
+        <HrAttendanceTable :records="detail.recent_attendance" />
+      </div>
+    </div>
+
+    <div v-else-if="activeTab === 'leave'" class="space-y-4">
+      <div class="midesk-glass rounded-xl border border-[var(--color-midesk-border)] p-5">
+        <h3 class="mb-3 text-sm font-medium">{{ t('leave.balance.title') }}</h3>
+        <UiEmptyState
+          v-if="!detail.leave_balances?.length"
+          :title="t('leave.balance.title')"
+          :description="t('common.noResults')"
+          icon="i-lucide-plane"
+        />
+        <ul v-else class="divide-y divide-[var(--color-midesk-border)]">
+          <li
+            v-for="bal in detail.leave_balances"
+            :key="bal.leave_type.id"
+            class="flex items-center justify-between py-3"
+          >
+            <span class="font-medium">{{ bal.leave_type.name }}</span>
+            <span class="text-[var(--color-midesk-muted)]">
+              {{ bal.remaining }} {{ t('leave.balance.days') }}
+            </span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="midesk-glass overflow-hidden rounded-xl border border-[var(--color-midesk-border)]">
+        <div class="border-b border-[var(--color-midesk-border)] px-5 py-4">
+          <h3 class="midesk-card-header mb-0">{{ t('leave.request.title') }}</h3>
+        </div>
+        <UiEmptyState
+          v-if="!detail.leave_requests?.length"
+          :title="t('leave.request.emptyTitle')"
+          icon="i-lucide-plane"
+          class="py-8"
+        />
+        <ul v-else class="divide-y divide-[var(--color-midesk-border)]">
+          <li
+            v-for="req in detail.leave_requests"
+            :key="req.id"
+            class="flex flex-wrap items-center justify-between gap-3 px-5 py-4"
+          >
+            <div>
+              <p class="font-medium">{{ req.leave_type.name }}</p>
+              <p class="text-sm text-[var(--color-midesk-muted)]">
+                {{ formatDate(req.start_date) }} – {{ formatDate(req.end_date) }}
+              </p>
+            </div>
+            <UBadge :color="statusColor[req.status]" variant="subtle">
+              {{ t(`leave.status.${req.status}`) }}
+            </UBadge>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>

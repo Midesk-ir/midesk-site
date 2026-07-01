@@ -11,6 +11,9 @@ const hrStore = useHrStore()
 const { can } = usePermissions()
 
 const showCreate = ref(false)
+const creating = ref(false)
+const showDeleteConfirm = ref(false)
+const deleteTargetId = ref<string | null>(null)
 const users = ref<User[]>([])
 const filters = ref<PersonnelFilters>({})
 
@@ -31,12 +34,15 @@ async function loadPersonnel() {
 watch(filters, loadPersonnel, { deep: true })
 
 async function onCreate(payload: CreatePersonnelPayload) {
+  creating.value = true
   try {
     await hrStore.createPersonnel(payload)
     showCreate.value = false
     toast.add({ title: t('common.create'), color: 'success' })
   } catch {
     toast.add({ title: t('common.error'), color: 'error' })
+  } finally {
+    creating.value = false
   }
 }
 
@@ -44,10 +50,18 @@ function onEdit(person: Personnel) {
   navigateTo(`/hr/personnel/${person.id}`)
 }
 
-async function onDelete(id: string) {
+function onDelete(id: string) {
+  deleteTargetId.value = id
+  showDeleteConfirm.value = true
+}
+
+async function confirmDelete() {
+  if (!deleteTargetId.value) return
   try {
-    await hrStore.deletePersonnel(id)
+    await hrStore.deletePersonnel(deleteTargetId.value)
     toast.add({ title: t('common.delete'), color: 'success' })
+    showDeleteConfirm.value = false
+    deleteTargetId.value = null
   } catch {
     toast.add({ title: t('common.error'), color: 'error' })
   }
@@ -82,7 +96,15 @@ onMounted(async () => {
     />
 
     <MideskModal v-model:open="showCreate" :title="t('hr.personnel.title')">
-      <HrPersonnelForm :users="users" @submit="onCreate" />
+      <HrPersonnelForm :users="users" :loading="creating" @submit="onCreate" />
+    </MideskModal>
+
+    <MideskModal v-model:open="showDeleteConfirm" :title="t('common.delete')">
+      <p class="text-sm text-[var(--color-midesk-muted)]">{{ t('hr.personnel.deleteConfirm') }}</p>
+      <template #footer>
+        <UButton variant="ghost" @click="showDeleteConfirm = false">{{ t('common.cancel') }}</UButton>
+        <UButton color="error" @click="confirmDelete">{{ t('common.delete') }}</UButton>
+      </template>
     </MideskModal>
   </div>
 </template>

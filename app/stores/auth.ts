@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import type { BootstrapData, User } from '~/types'
+import { clearBootstrapCache, readBootstrapCache, writeBootstrapCache } from '~/utils/auth-session'
 
 export const useAuthStore = defineStore('auth', () => {
   const token = useCookie<string | null>('midesk_token', {
@@ -8,9 +9,11 @@ export const useAuthStore = defineStore('auth', () => {
     secure: import.meta.env.PROD
   })
 
-  const user = ref<User | null>(null)
-  const permissions = ref<string[]>([])
-  const bootstrapped = ref(false)
+  const cachedBootstrap = import.meta.client ? readBootstrapCache() : null
+
+  const user = ref<User | null>(cachedBootstrap?.user ?? null)
+  const permissions = ref<string[]>(cachedBootstrap?.permissions ?? [])
+  const bootstrapped = ref(!!cachedBootstrap)
 
   const isAuthenticated = computed(() => !!token.value)
   const isAdmin = computed(() => {
@@ -27,6 +30,7 @@ export const useAuthStore = defineStore('auth', () => {
     user.value = data.user
     permissions.value = data.permissions
     bootstrapped.value = true
+    writeBootstrapCache({ user: data.user, permissions: data.permissions })
   }
 
   function clearAuth() {
@@ -34,6 +38,7 @@ export const useAuthStore = defineStore('auth', () => {
     user.value = null
     permissions.value = []
     bootstrapped.value = false
+    clearBootstrapCache()
   }
 
   function hasPermission(permission: string) {

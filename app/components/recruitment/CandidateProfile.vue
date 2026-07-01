@@ -8,6 +8,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   hire: [id: string]
   scheduleInterview: []
+  feedbackSubmitted: []
 }>()
 
 const { t } = useI18n()
@@ -15,12 +16,16 @@ const { formatDateTime } = useCalendar()
 const { can } = usePermissions()
 const recruitmentStore = useRecruitmentStore()
 const toast = useToast()
+const { download, downloading } = useAuthenticatedDownload()
 
 const hiring = ref(false)
+const feedbackInterviewId = ref<string | null>(null)
 
 const canHire = computed(() =>
   can('hr:recruitment:manage') && props.candidate.status === 'offer'
 )
+
+const canManage = computed(() => can('hr:recruitment:manage'))
 
 async function onHire() {
   hiring.value = true
@@ -33,6 +38,11 @@ async function onHire() {
   } finally {
     hiring.value = false
   }
+}
+
+function onFeedbackSubmitted() {
+  feedbackInterviewId.value = null
+  emit('feedbackSubmitted')
 }
 </script>
 
@@ -49,6 +59,28 @@ async function onHire() {
           {{ t('recruitment.interview.avgScore') }}: {{ candidate.average_score.toFixed(1) }}
         </UBadge>
       </div>
+    </div>
+
+    <div
+      v-if="candidate.resume_filename"
+      class="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-[var(--color-midesk-border)] bg-white/[0.02] px-4 py-3"
+    >
+      <div class="flex items-center gap-3">
+        <UIcon name="i-lucide-file-text" class="size-5 text-[var(--color-midesk-accent)]" />
+        <div>
+          <p class="text-sm font-medium">{{ t('recruitment.candidate.resume') }}</p>
+          <p class="text-xs text-[var(--color-midesk-muted)]">{{ candidate.resume_filename }}</p>
+        </div>
+      </div>
+      <UButton
+        size="sm"
+        variant="soft"
+        icon="i-lucide-download"
+        :loading="downloading"
+        @click="download(`/hr/candidates/${candidate.id}/resume`, candidate.resume_filename!)"
+      >
+        {{ t('recruitment.candidate.downloadResume') }}
+      </UButton>
     </div>
 
     <div class="flex flex-wrap gap-2">
@@ -105,11 +137,27 @@ async function onHire() {
               <UBadge v-if="interview.score" color="primary" variant="subtle" size="xs">
                 {{ interview.score }}/5
               </UBadge>
+              <UButton
+                v-if="canManage && interview.status !== 'cancelled'"
+                size="xs"
+                variant="ghost"
+                @click="feedbackInterviewId = feedbackInterviewId === interview.id ? null : interview.id"
+              >
+                {{ interview.score ? t('common.edit') : t('recruitment.interview.submitFeedback') }}
+              </UButton>
             </div>
           </div>
-          <p v-if="interview.feedback" class="mt-2 text-sm text-[var(--color-midesk-muted)]">
+          <p v-if="interview.feedback && feedbackInterviewId !== interview.id" class="mt-2 text-sm text-[var(--color-midesk-muted)]">
             {{ interview.feedback }}
           </p>
+          <div v-if="feedbackInterviewId === interview.id" class="mt-3 border-t border-[var(--color-midesk-border)] pt-3">
+            <RecruitmentInterviewFeedback
+              :interview-id="interview.id"
+              :initial-score="interview.score"
+              :initial-feedback="interview.feedback"
+              @submitted="onFeedbackSubmitted"
+            />
+          </div>
         </li>
       </ul>
     </div>

@@ -168,7 +168,7 @@ onMounted(loadProjects)
 
       <div class="grid gap-4 sm:grid-cols-2">
         <MideskFormField :label="t('worklog.form.date')" :model-value="form.logged_date" field-class="midesk-ltr-field" required>
-          <UInput v-model="form.logged_date" type="date" />
+          <MideskDatePicker v-model="form.logged_date" />
         </MideskFormField>
         <MideskFormField
           :label="t('worklog.form.duration')"

@@ -64,6 +64,19 @@ async function reject() {
           <p v-if="request.note" class="mt-1 text-sm text-[var(--color-midesk-muted)]">
             {{ request.note }}
           </p>
+          <div v-if="request.approval_chain?.length" class="mt-2 flex flex-wrap items-center gap-1.5">
+            <template v-for="(step, idx) in request.approval_chain" :key="idx">
+              <span v-if="idx > 0" class="text-[var(--color-midesk-muted)]">→</span>
+              <UBadge
+                :color="step.status === 'approved' ? 'success' : step.status === 'rejected' ? 'error' : 'warning'"
+                variant="subtle"
+                size="sm"
+              >
+                {{ t(`leave.approvalChain.${step.role}`) }}
+                {{ step.status === 'approved' ? '✓' : step.status === 'pending' ? '⏳' : '✗' }}
+              </UBadge>
+            </template>
+          </div>
         </div>
       </div>
 

@@ -9,13 +9,19 @@ const { api } = useApi()
 const { formatDate } = useCalendar()
 
 const loading = ref(true)
+const error = ref(false)
 const report = ref<LeaveReportItem[]>([])
+const toast = useToast()
 
 async function fetchReport() {
   loading.value = true
+  error.value = false
   try {
     const res = await api<{ data: LeaveReportItem[] }>('/leave/report')
     report.value = res.data
+  } catch {
+    error.value = true
+    toast.add({ title: t('common.error'), color: 'error' })
   } finally {
     loading.value = false
   }
@@ -62,26 +68,72 @@ function typeKeys(item: LeaveReportItem) {
 function monthKeys(item: LeaveReportItem) {
   return Object.keys(item.by_month).sort()
 }
+
+function exportCsv() {
+  if (!report.value.length) return
+  const header = [
+    t('leave.report.columns.member'),
+    t('leave.report.columns.total'),
+    t('leave.report.columns.byType'),
+    t('leave.report.columns.byMonth')
+  ]
+  const rows = report.value.map((item) => {
+    const byType = typeKeys(item).map(k => `${k}:${item.by_type[k]}`).join('; ')
+    const byMonth = monthKeys(item).map(m => `${m}:${item.by_month[m]}`).join('; ')
+    return [item.user.name, String(item.total_days), byType, byMonth]
+  })
+  const csv = [header, ...rows]
+    .map(cols => cols.map(col => `"${String(col).replace(/"/g, '""')}"`).join(','))
+    .join('\n')
+  const blob = new Blob([`\uFEFF${csv}`], { type: 'text/csv;charset=utf-8;' })
+  const url = URL.createObjectURL(blob)
+  const link = document.createElement('a')
+  link.href = url
+  link.download = 'leave-report.csv'
+  link.click()
+  URL.revokeObjectURL(url)
+}
 </script>
 
 <template>
   <div class="space-y-5">
     <div class="midesk-page-header">
       <h2 class="midesk-page-title">{{ t('leave.report.title') }}</h2>
-      <UButton
-        icon="i-lucide-refresh-cw"
-        variant="soft"
-        color="neutral"
-        :loading="loading"
-        @click="fetchReport"
-      >
-        {{ t('common.retry') }}
-      </UButton>
+      <div class="flex flex-wrap gap-2">
+        <UButton
+          v-if="report.length"
+          icon="i-lucide-download"
+          variant="soft"
+          color="primary"
+          @click="exportCsv"
+        >
+          {{ t('leave.report.export') }}
+        </UButton>
+        <UButton
+          icon="i-lucide-refresh-cw"
+          variant="soft"
+          color="neutral"
+          :loading="loading"
+          @click="fetchReport"
+        >
+          {{ t('common.retry') }}
+        </UButton>
+      </div>
     </div>
 
     <div v-if="loading" class="midesk-glass rounded-xl border border-[var(--color-midesk-border)] p-5">
       <USkeleton class="h-80" />
     </div>
+
+    <UiEmptyState
+      v-else-if="error"
+      :title="t('common.error')"
+      icon="i-lucide-circle-alert"
+    >
+      <template #action>
+        <UButton color="primary" @click="fetchReport">{{ t('common.retry') }}</UButton>
+      </template>
+    </UiEmptyState>
 
     <UiEmptyState
       v-else-if="!report.length"

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { resolveUiLocale } from '~/utils/ui-locale'
+
 const { locale, locales } = useI18n()
 const colorMode = useColorMode()
 
@@ -9,6 +11,8 @@ const dir = computed(() => {
   return current?.dir ?? 'rtl'
 })
 
+const uiLocale = computed(() => resolveUiLocale(locale.value))
+
 useHead({
   htmlAttrs: {
     lang: locale,
@@ -18,7 +22,7 @@ useHead({
 </script>
 
 <template>
-  <UApp :toaster="{ position: dir === 'rtl' ? 'top-left' : 'top-right' }">
+  <UApp :locale="uiLocale" :toaster="{ position: dir === 'rtl' ? 'top-left' : 'top-right' }">
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>

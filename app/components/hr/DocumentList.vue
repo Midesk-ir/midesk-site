@@ -8,16 +8,12 @@ defineProps<{
 
 const { t } = useI18n()
 const { formatDate, formatRelative } = useCalendar()
-const config = useRuntimeConfig()
+const { download, downloading } = useAuthenticatedDownload()
 
 function formatSize(bytes: number) {
   if (bytes < 1024) return `${bytes} B`
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`
-}
-
-function downloadUrl(id: string) {
-  return `${config.public.apiBase}/hr/documents/${id}/download`
 }
 
 const categoryIcon: Record<DocumentCategory, string> = {
@@ -62,12 +58,12 @@ const categoryIcon: Record<DocumentCategory, string> = {
           </div>
         </div>
         <UButton
-          :to="downloadUrl(doc.id)"
-          target="_blank"
           icon="i-lucide-download"
           size="sm"
           variant="soft"
           color="primary"
+          :loading="downloading"
+          @click="download(`/hr/documents/${doc.id}/download`, doc.filename)"
         >
           {{ t('hr.documents.download') }}
         </UButton>

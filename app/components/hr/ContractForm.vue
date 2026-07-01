@@ -4,6 +4,9 @@ import type { ContractType, CreateContractPayload, Personnel } from '~/types/pha
 const props = defineProps<{
   personnel?: Personnel[]
   initial?: Partial<CreateContractPayload>
+  allowFile?: boolean
+  submitLabel?: 'create' | 'save'
+  loading?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -12,8 +15,9 @@ const emit = defineEmits<{
 
 const { t } = useI18n()
 const { formatCurrency } = useCalendar()
+const toast = useToast()
 
-const submitting = ref(false)
+const attachmentFile = ref<File | null>(null)
 
 const form = reactive<CreateContractPayload>({
   personnel_id: '',
@@ -52,8 +56,10 @@ watch(
 )
 
 function onSubmit() {
-  if (!form.personnel_id || !form.start_date || !form.base_salary) return
-  submitting.value = true
+  if (!form.personnel_id || !form.start_date || !form.base_salary) {
+    toast.add({ title: t('common.fillRequired'), color: 'warning' })
+    return
+  }
   emit('submit', {
     personnel_id: form.personnel_id,
     type: form.type,
@@ -62,7 +68,6 @@ function onSubmit() {
     base_salary: form.base_salary,
     currency: form.currency
   })
-  submitting.value = false
 }
 </script>
 
@@ -78,10 +83,10 @@ function onSubmit() {
 
     <div class="grid gap-4 sm:grid-cols-2">
       <MideskFormField :label="t('hr.contracts.fields.startDate')" :model-value="form.start_date" field-class="midesk-ltr-field" required>
-        <UInput v-model="form.start_date" type="date" />
+        <MideskDatePicker v-model="form.start_date" />
       </MideskFormField>
       <MideskFormField :label="t('hr.contracts.fields.endDate')" :model-value="form.end_date" field-class="midesk-ltr-field">
-        <UInput v-model="form.end_date" type="date" />
+        <MideskDatePicker v-model="form.end_date" />
       </MideskFormField>
     </div>
 
@@ -98,9 +103,21 @@ function onSubmit() {
       {{ formatCurrency(form.base_salary, form.currency) }}
     </p>
 
+    <MideskFormField
+      v-if="allowFile"
+      :label="t('hr.contracts.fields.attachment')"
+      :model-value="attachmentFile?.name"
+    >
+      <input
+        type="file"
+        class="block w-full text-sm text-[var(--color-midesk-muted)] file:me-4 file:rounded-lg file:border-0 file:bg-[var(--color-midesk-accent-soft)] file:px-4 file:py-2 file:text-sm file:font-medium file:text-[var(--color-midesk-accent)]"
+        @change="attachmentFile = ($event.target as HTMLInputElement).files?.[0] ?? null"
+      >
+    </MideskFormField>
+
     <div class="flex justify-end">
-      <UButton type="submit" color="primary" :loading="submitting">
-        {{ t('common.create') }}
+      <UButton type="submit" color="primary" :loading="loading">
+        {{ submitLabel === 'save' ? t('common.save') : t('common.create') }}
       </UButton>
     </div>
   </form>

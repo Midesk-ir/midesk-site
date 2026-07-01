@@ -1,16 +1,14 @@
 import type { NitroFetchOptions, NitroFetchRequest } from 'nitropack'
 import type { ApiError } from '~/types'
-import { apiFetch, createApiContext } from '~/utils/api-fetch'
+import { apiFetch, buildApiContext } from '~/utils/api-fetch'
 
 export function useApi() {
-  const getContext = createApiContext()
-
   async function api<T>(
     url: string,
     options: NitroFetchOptions<NitroFetchRequest> = {}
   ): Promise<T> {
     try {
-      return await apiFetch<T>(getContext(), url, options)
+      return await apiFetch<T>(buildApiContext(), url, options)
     } catch (error: unknown) {
       const fetchError = error as { statusCode?: number, data?: ApiError }
       const status = fetchError.statusCode
@@ -22,12 +20,9 @@ export function useApi() {
         authStore.clearAuth()
         tenantStore.clearTenant()
         if (!url.startsWith('/auth/')) {
-          await navigateTo('/login', { replace: true })
+          const route = useRoute()
+          await navigateTo(`/login?redirect=${encodeURIComponent(route.fullPath)}`, { replace: true })
         }
-        throw error
-      }
-
-      if (status === 422 && data?.details) {
         throw error
       }
 

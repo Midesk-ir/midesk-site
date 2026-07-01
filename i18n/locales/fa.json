@@ -55,6 +55,30 @@
     },
     "onboarding": {
         "title": "ساخت سازمان",
+        "subtitle": "در چند مرحله ساده، فضای کاری تیم خود را بسازید",
+        "stepOf": "مرحله {current} از {total}",
+        "preview": "پیش‌نمایش تنظیمات",
+        "addInvite": "افزودن ایمیل دیگر",
+        "regionIRHint": "تقویم شمسی، فارسی و ریال",
+        "regionINTLHint": "تقویم میلادی، انگلیسی و دلار",
+        "steps": {
+            "org": {
+                "title": "نام سازمان",
+                "description": "نامی انتخاب کنید که تیم شما بشناسد"
+            },
+            "region": {
+                "title": "منطقه فعالیت",
+                "description": "زبان و تقویم پیش‌فرض بر اساس منطقه تنظیم می‌شود"
+            },
+            "settings": {
+                "title": "تنظیمات پایه",
+                "description": "تقویم، ارز و منطقه زمانی سازمان"
+            },
+            "invite": {
+                "title": "دعوت اعضا",
+                "description": "می‌توانید بعداً هم اعضا را اضافه کنید"
+            }
+        },
         "orgName": "نام سازمان",
         "region": "منطقه",
         "regionIR": "ایران",
@@ -91,6 +115,12 @@
             "title": "آنبوردینگ‌های فعال",
             "emptyTitle": "آنبوردینگ فعالی نیست",
             "emptyDesc": "پیشرفت آنبوردینگ کارکنان اینجا نمایش داده می‌شود."
+        },
+        "hrTabs": {
+            "template": "قالب آنبوردینگ",
+            "employees": "کارمندان در جریان",
+            "selectEmployee": "یک کارمند انتخاب کنید",
+            "selectEmployeeDesc": "از لیست کارمند یک نفر را انتخاب کنید تا جزئیات پیشرفت آنبوردینگ نمایش داده شود."
         },
         "status": {
             "in_progress": "در جریان",
@@ -140,6 +170,9 @@
             "done": "انجام شده"
         },
         "newTask": "تسک جدید",
+        "addCard": "افزودن کارت",
+        "addCardPlaceholder": "عنوان این کارت را وارد کنید...",
+        "addCardSubmit": "افزودن کارت",
         "filterAssignee": "مسئول",
         "filterLabel": "برچسب",
         "filterPriority": "اولویت",
@@ -148,6 +181,10 @@
         "wipConfirmTitle": "محدودیت WIP",
         "wipConfirmBody": "این ستون به حد WIP رسیده است. آیا از انتقال تسک مطمئن هستید؟",
         "wipConfirmAction": "انتقال به هر حال"
+    },
+    "datepicker": {
+        "placeholder": "انتخاب تاریخ...",
+        "clear": "پاک کردن تاریخ"
     },
     "task": {
         "title": "عنوان",
@@ -171,7 +208,20 @@
         "storyPoints": "امتیاز داستان",
         "sprint": "اسپرینت",
         "logTime": "ثبت زمان",
-        "details": "جزئیات تسک"
+        "details": "جزئیات تسک",
+        "addDescription": "توضیحات تسک را بنویسید...",
+        "detailsPanel": "جزئیات",
+        "activity": "فعالیت",
+        "noComments": "هنوز نظری ثبت نشده",
+        "noChecklist": "چک‌لیستی وجود ندارد",
+        "lastUpdated": "آخرین بروزرسانی",
+        "saving": "در حال ذخیره...",
+        "saved": "ذخیره شد",
+        "markComplete": "علامت‌گذاری به‌عنوان انجام‌شده",
+        "markIncomplete": "بازگرداندن به حالت ناتمام",
+        "postComment": "ارسال نظر",
+        "commentShortcut": "Ctrl+Enter برای ارسال",
+        "overdue": "سررسید گذشته"
     },
     "teams": {
         "title": "تیم‌ها",
@@ -195,6 +245,10 @@
         "title": "تنظیمات",
         "profile": "پروفایل",
         "organization": "سازمان",
+        "tabs": {
+            "profileDesc": "نام و رمز عبور حساب کاربری شما",
+            "organizationDesc": "نام، تقویم، ارز و منطقه زمانی سازمان"
+        },
         "avatar": "آواتار",
         "changePassword": "تغییر رمز",
         "newPassword": "رمز جدید",
@@ -368,6 +422,7 @@
         "policy": {
             "title": "سیاست مرخصی",
             "listTitle": "سیاست‌های تنظیم‌شده",
+            "editTitle": "ویرایش سیاست",
             "emptyTitle": "سیاستی تنظیم نشده",
             "approvers": "تأییدکننده",
             "autoApprove": "تأیید خودکار",
@@ -381,6 +436,7 @@
         "report": {
             "title": "گزارش مرخصی",
             "totalDays": "مجموع روزها",
+            "export": "خروجی CSV",
             "emptyTitle": "داده‌ای برای گزارش نیست",
             "emptyDesc": "مصرف مرخصی پس از ثبت اینجا نمایش داده می‌شود.",
             "columns": {
@@ -409,6 +465,7 @@
             "title": "پرسنل",
             "emptyTitle": "پرسنلی وجود ندارد",
             "emptyDesc": "کارکنان را اضافه کنید.",
+            "deleteConfirm": "آیا از حذف این پرسنل مطمئن هستید؟",
             "filters": {
                 "search": "جستجو بر اساس نام یا کد…",
                 "allStatus": "همه وضعیت‌ها",
@@ -485,6 +542,7 @@
                 "endBreak": "پایان استراحت",
                 "checkInAt": "ورود در",
                 "checkOutAt": "خروج در",
+                "duration": "مدت حضور",
                 "doneForToday": "امروز خروج ثبت شده است."
             },
             "clockStatus": {
@@ -509,6 +567,7 @@
         "contracts": {
             "emptyTitle": "قراردادی نیست",
             "emptyDesc": "قراردادهای استخدام اینجا نمایش داده می‌شود.",
+            "create": "ثبت قرارداد",
             "renew": "تمدید",
             "columns": {
                 "employee": "کارمند",
@@ -536,7 +595,8 @@
                 "startDate": "تاریخ شروع",
                 "endDate": "تاریخ پایان",
                 "salary": "حقوق پایه",
-                "currency": "ارز"
+                "currency": "ارز",
+                "attachment": "پیوست قرارداد"
             },
             "expiryAlert": {
                 "title": "قراردادهای در حال انقضا",
@@ -640,7 +700,9 @@
         "candidate": {
             "title": "نامزد",
             "hire": "استخدام",
-            "hiredSuccess": "نامزد با موفقیت استخدام شد"
+            "hiredSuccess": "نامزد با موفقیت استخدام شد",
+            "resume": "رزومه",
+            "downloadResume": "دانلود رزومه"
         },
         "interview": {
             "title": "مصاحبه‌ها",
@@ -687,7 +749,8 @@
         "edit": "ویرایش",
         "delete": "حذف",
         "close": "بستن",
-        "noResults": "نتیجه‌ای یافت نشد"
+        "noResults": "نتیجه‌ای یافت نشد",
+        "fillRequired": "لطفاً فیلدهای الزامی را پر کنید"
     },
     "landing": {
         "nav": {

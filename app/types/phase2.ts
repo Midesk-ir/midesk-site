@@ -38,6 +38,7 @@ export interface PersonnelDetail extends Personnel {
   documents: HrDocument[]
   recent_attendance: AttendanceRecord[]
   leave_balances?: Array<{ leave_type: LeaveType, remaining: number }>
+  leave_requests?: import('./phase1').LeaveRequest[]
 }
 
 export interface PersonnelFilters {

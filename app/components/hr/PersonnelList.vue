@@ -14,6 +14,7 @@ const emit = defineEmits<{
 
 const { t } = useI18n()
 const { formatDate } = useCalendar()
+const { can } = usePermissions()
 
 const filters = reactive<PersonnelFilters>({
   status: undefined,
@@ -121,19 +122,23 @@ watch(filters, (val) => {
               </UBadge>
             </td>
             <td class="px-4 py-3">
-              <div class="flex justify-end gap-1">
+              <div v-if="can('hr:personnel:update') || can('hr:personnel:delete')" class="flex justify-end gap-1">
                 <UButton
+                  v-if="can('hr:personnel:update')"
                   icon="i-lucide-pencil"
                   size="xs"
                   variant="ghost"
                   color="neutral"
+                  :aria-label="t('common.edit')"
                   @click="emit('edit', person)"
                 />
                 <UButton
+                  v-if="can('hr:personnel:delete')"
                   icon="i-lucide-trash-2"
                   size="xs"
                   variant="ghost"
                   color="error"
+                  :aria-label="t('common.delete')"
                   @click="emit('delete', person.id)"
                 />
               </div>

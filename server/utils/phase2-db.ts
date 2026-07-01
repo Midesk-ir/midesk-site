@@ -29,7 +29,7 @@ import type {
 } from '../../app/types/phase2'
 
 const users: UserBrief[] = [
-  { id: 'u1', name: 'علی رضایی', avatar_url: null },
+  { id: 'u1', name: 'علی محمدآبادی', avatar_url: null },
   { id: 'u2', name: 'Sara Johnson', avatar_url: null },
   { id: 'u3', name: 'محمد کریمی', avatar_url: null },
   { id: 'u4', name: 'فاطمه احمدی', avatar_url: null }

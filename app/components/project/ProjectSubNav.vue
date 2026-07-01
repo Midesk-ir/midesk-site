@@ -37,9 +37,7 @@ const links = computed(() => [
       :key="link.to"
       :to="link.to"
       class="midesk-subnav-link"
-      :class="link.active
-        ? 'text-[var(--color-midesk-accent)] after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:bg-[var(--color-midesk-accent)]'
-        : 'text-[var(--color-midesk-muted)] hover:text-[var(--color-midesk-text)]'"
+      :class="{ 'midesk-subnav-link--active': link.active }"
     >
       {{ link.label }}
     </NuxtLink>

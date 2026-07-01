@@ -3,9 +3,22 @@ definePageMeta({ middleware: ['manager'] })
 
 const { t } = useI18n()
 const leaveStore = useLeaveStore()
+const toast = useToast()
+
+const loading = ref(true)
+const error = ref(false)
 
 async function load() {
-  await leaveStore.fetchAll()
+  loading.value = true
+  error.value = false
+  try {
+    await leaveStore.fetchAll()
+  } catch {
+    error.value = true
+    toast.add({ title: t('common.error'), color: 'error' })
+  } finally {
+    loading.value = false
+  }
 }
 
 onMounted(load)
@@ -22,10 +35,24 @@ onMounted(load)
       </UButton>
     </div>
 
+    <div v-if="loading" class="space-y-4">
+      <USkeleton v-for="i in 3" :key="i" class="h-24 rounded-xl" />
+    </div>
+
     <UiEmptyState
-      v-if="!leaveStore.loading && !leaveStore.pendingApprovals.length"
+      v-else-if="error"
+      :title="t('common.error')"
+      icon="i-lucide-circle-alert"
+    >
+      <template #action>
+        <UButton color="primary" @click="load">{{ t('common.retry') }}</UButton>
+      </template>
+    </UiEmptyState>
+
+    <UiEmptyState
+      v-else-if="!leaveStore.pendingApprovals.length"
       :title="t('common.noResults')"
-      icon="i-lucide-check-circle"
+      icon="i-lucide-circle-check"
     />
 
     <div v-else class="space-y-4">

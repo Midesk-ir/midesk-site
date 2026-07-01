@@ -24,13 +24,20 @@ interface Session {
 
 import type { H3Event } from 'h3'
 
-const sessions = new Map<string, Session>()
-const otpCodes = new Map<string, { code: string, expires: number }>()
+declare global {
+  // eslint-disable-next-line no-var
+  var __midesk_sessions: Map<string, Session> | undefined
+  // eslint-disable-next-line no-var
+  var __midesk_otpCodes: Map<string, { code: string, expires: number }> | undefined
+}
+
+const sessions = globalThis.__midesk_sessions ??= new Map<string, Session>()
+const otpCodes = globalThis.__midesk_otpCodes ??= new Map<string, { code: string, expires: number }>()
 
 let users: User[] = [
   {
     id: 'u1',
-    name: 'علی رضایی',
+    name: 'علی محمدآبادی',
     email: 'demo@midesk.io',
     phone: '09121234567',
     avatar_url: null,
@@ -104,7 +111,7 @@ let tasks: Task[] = [
     description: 'طراحی و پیاده‌سازی landing page',
     status: 'done',
     priority: 'high',
-    assignee: { id: 'u1', name: 'علی رضایی', avatar_url: null },
+    assignee: { id: 'u1', name: 'علی محمدآبادی', avatar_url: null },
     labels: [labels[3]!],
     due_date: '2026-03-01T00:00:00Z',
     order_index: 1000,
@@ -125,7 +132,7 @@ let tasks: Task[] = [
     description: 'Drag & Drop با optimistic UI',
     status: 'in_progress',
     priority: 'critical',
-    assignee: { id: 'u1', name: 'علی رضایی', avatar_url: null },
+    assignee: { id: 'u1', name: 'علی محمدآبادی', avatar_url: null },
     labels: [labels[0]!],
     due_date: '2026-06-15T00:00:00Z',
     order_index: 2000,
@@ -201,7 +208,7 @@ let tasks: Task[] = [
     description: null,
     status: 'backlog',
     priority: 'medium',
-    assignee: { id: 'u1', name: 'علی رضایی', avatar_url: null },
+    assignee: { id: 'u1', name: 'علی محمدآبادی', avatar_url: null },
     labels: [labels[1]!],
     due_date: '2026-04-01T00:00:00Z',
     order_index: 800,
@@ -248,7 +255,7 @@ const comments = new Map<string, Comment[]>([
     {
       id: 'cm2',
       body: 'Optimistic UI پیاده شد',
-      user: { id: 'u1', name: 'علی رضایی', avatar_url: null },
+      user: { id: 'u1', name: 'علی محمدآبادی', avatar_url: null },
       created_at: '2026-06-18T10:00:00Z'
     }
   ]]
@@ -281,7 +288,7 @@ const teams: Team[] = [
 ]
 
 const projectMembers: ProjectMember[] = [
-  { id: 'pm1', user: { id: 'u1', name: 'علی رضایی', email: 'demo@midesk.io', avatar_url: null }, role: 'OWNER', joined_at: '2026-01-15T08:00:00Z' },
+  { id: 'pm1', user: { id: 'u1', name: 'علی محمدآبادی', email: 'demo@midesk.io', avatar_url: null }, role: 'OWNER', joined_at: '2026-01-15T08:00:00Z' },
   { id: 'pm2', user: { id: 'u2', name: 'Sara Johnson', email: 'sara@midesk.io', avatar_url: null }, role: 'MEMBER', joined_at: '2026-01-20T08:00:00Z' },
   { id: 'pm3', user: { id: 'u3', name: 'محمد کریمی', email: 'mohammad@midesk.io', avatar_url: null }, role: 'MANAGER', joined_at: '2026-02-01T08:00:00Z' }
 ]

@@ -17,6 +17,8 @@ const { can } = usePermissions()
 const policies = ref<LeavePolicy[]>([])
 const approvers = ref<User[]>([])
 const loading = ref(true)
+const editingPolicy = ref<LeavePolicy | null>(null)
+const showEdit = ref(false)
 
 async function load() {
   loading.value = true
@@ -40,6 +42,24 @@ async function load() {
 async function onSubmit(payload: CreateLeavePolicyPayload) {
   try {
     await api('/leave/policies', { method: 'POST', body: payload })
+    toast.add({ title: t('common.save'), color: 'success' })
+    await load()
+  } catch {
+    toast.add({ title: t('common.error'), color: 'error' })
+  }
+}
+
+function onEditPolicy(policy: LeavePolicy) {
+  editingPolicy.value = policy
+  showEdit.value = true
+}
+
+async function onUpdatePolicy(payload: CreateLeavePolicyPayload) {
+  if (!editingPolicy.value) return
+  try {
+    await api(`/leave/policies/${editingPolicy.value.id}`, { method: 'PATCH', body: payload })
+    showEdit.value = false
+    editingPolicy.value = null
     toast.add({ title: t('common.save'), color: 'success' })
     await load()
   } catch {
@@ -98,10 +118,34 @@ onMounted(load)
               <UBadge :color="policy.auto_approve ? 'success' : 'warning'" variant="subtle">
                 {{ policy.auto_approve ? t('leave.policy.autoApprove') : `${policy.approval_chain.length} ${t('leave.policy.approvers')}` }}
               </UBadge>
+              <UButton
+                v-if="can('leave:policies:manage')"
+                size="xs"
+                variant="ghost"
+                icon="i-lucide-pencil"
+                @click="onEditPolicy(policy)"
+              >
+                {{ t('common.edit') }}
+              </UButton>
             </div>
           </li>
         </ul>
       </section>
     </div>
+
+    <MideskModal v-model:open="showEdit" :title="t('leave.policy.editTitle')">
+      <LeavePolicyForm
+        v-if="editingPolicy"
+        :approvers="approvers"
+        :initial="{
+          leave_type_id: editingPolicy.leave_type.id,
+          auto_approve: editingPolicy.auto_approve,
+          approval_chain: editingPolicy.approval_chain,
+          min_notice_days: editingPolicy.min_notice_days,
+          allow_negative_balance: editingPolicy.allow_negative_balance
+        }"
+        @submit="onUpdatePolicy"
+      />
+    </MideskModal>
   </div>
 </template>

@@ -1,8 +1,9 @@
+import { hasTenantContext } from '~/utils/auth-redirect'
+
 export default defineNuxtRouteMiddleware(() => {
   if (!hasAuthSession()) return
 
-  const tenantStore = safeTenantStore()
-  if (tenantStore?.hasTenant) {
+  if (hasTenantContext()) {
     return navigateTo('/dashboard', { replace: true })
   }
 })

@@ -155,6 +155,43 @@ export default defineAppConfig({
           }
         }
       }
+    },
+    tabs: {
+      slots: {
+        list: 'relative flex p-1 group w-full bg-white/[0.04] ring-1 ring-inset ring-[var(--color-midesk-border)] rounded-lg',
+        indicator: 'absolute transition-[translate,width] duration-200 rounded-md bg-[var(--color-midesk-accent)] shadow-sm',
+        trigger: [
+          'inline-flex flex-row items-center justify-center gap-1.5',
+          'rounded-md font-medium transition-colors',
+          'data-[state=inactive]:text-[var(--color-midesk-muted)]',
+          'hover:data-[state=inactive]:not-disabled:text-[var(--color-midesk-text)]',
+          'hover:data-[state=inactive]:not-disabled:bg-white/[0.06]',
+          'data-[state=active]:text-white',
+          'focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[var(--color-midesk-accent)]/50'
+        ].join(' '),
+        label: 'truncate text-start',
+        leadingIcon: 'shrink-0'
+      },
+      defaultVariants: {
+        color: 'primary',
+        variant: 'pill',
+        size: 'md'
+      }
+    },
+    button: {
+      slots: {
+        base: 'rounded-md font-medium inline-flex flex-row items-center disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:opacity-75 transition-colors',
+        label: 'truncate text-start',
+        leadingIcon: 'shrink-0',
+        trailingIcon: 'shrink-0'
+      }
+    },
+    dropdownMenu: {
+      slots: {
+        item: 'group relative w-full flex flex-row items-start select-none outline-none before:absolute before:z-[-1] before:inset-px before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75',
+        itemLabel: 'truncate text-start',
+        itemWrapper: 'flex-1 flex flex-col text-start min-w-0'
+      }
     }
   }
 })

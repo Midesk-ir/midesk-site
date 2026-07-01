@@ -85,10 +85,10 @@ async function submit() {
 
         <div class="grid gap-4 sm:grid-cols-2">
           <MideskFormField :label="t('leave.request.startDate')" :model-value="form.start_date" field-class="midesk-ltr-field" required>
-            <UInput v-model="form.start_date" type="date" />
+            <MideskDatePicker v-model="form.start_date" />
           </MideskFormField>
           <MideskFormField :label="t('leave.request.endDate')" :model-value="form.end_date" field-class="midesk-ltr-field" required>
-            <UInput v-model="form.end_date" type="date" />
+            <MideskDatePicker v-model="form.end_date" />
           </MideskFormField>
         </div>
 

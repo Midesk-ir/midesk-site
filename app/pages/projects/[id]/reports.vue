@@ -119,7 +119,7 @@ onMounted(async () => {
     </div>
 
     <template v-else>
-      <UTabs v-model="tab" :items="tabItems" class="mb-6" />
+      <UTabs v-model="tab" :items="tabItems" :content="false" class="mb-6" />
 
       <section class="midesk-card p-5">
         <div v-if="tab === 'burndown'" class="space-y-4">

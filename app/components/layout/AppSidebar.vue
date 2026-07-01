@@ -3,21 +3,24 @@ const uiStore = useUiStore()
 const authStore = useAuthStore()
 const route = useRoute()
 const { logout } = useAuth()
-const { t } = useI18n()
+const { t, localeProperties } = useI18n()
 const { isMobileNav, closeMobileSidebar } = useAppLayout()
 const { can, canAny } = usePermissions()
 
-const hrExpanded = ref(route.path.startsWith('/hr'))
+const hrExpanded = ref(true)
 
 watch(() => route.path, (path) => {
   if (path.startsWith('/hr')) hrExpanded.value = true
-})
+}, { immediate: true })
 
-const showHrNav = computed(() =>
-  can('hr:dashboard:view')
-  || can('hr:attendance:clock')
-  || authStore.permissions.some(p => p.startsWith('hr:'))
-)
+const isRtl = computed(() => localeProperties.value.dir === 'rtl')
+
+const showHrNav = computed(() => {
+  if (!authStore.isAuthenticated) return false
+  return can('hr:dashboard:view')
+    || can('hr:attendance:clock')
+    || authStore.permissions.some((p: string) => p.startsWith('hr:'))
+})
 
 const hrNavItems = computed(() => [
   { label: t('nav.hr.dashboard'), to: '/hr', icon: 'i-lucide-chart-pie', show: can('hr:dashboard:view') },
@@ -28,7 +31,7 @@ const hrNavItems = computed(() => [
     icon: 'i-lucide-calendar-clock',
     show: can('hr:attendance:view') || can('hr:attendance:clock')
   },
-  { label: t('nav.hr.contracts'), to: '/hr/contracts', icon: 'i-lucide-file-signature', show: can('hr:contracts:view') },
+  { label: t('nav.hr.contracts'), to: '/hr/contracts', icon: 'i-lucide-scroll-text', show: can('hr:contracts:view') },
   { label: t('nav.hr.documents'), to: '/hr/documents', icon: 'i-lucide-archive', show: can('hr:documents:view') },
   {
     label: t('nav.hr.missions'),
@@ -50,12 +53,15 @@ const hrDropdownItems = computed(() => [
   }))
 ])
 
-const navItems = computed(() => [
+const navItemsPrimary = computed(() => [
   { label: t('nav.dashboard'), to: '/dashboard', icon: 'i-lucide-layout-dashboard' },
   { label: t('nav.projects'), to: '/projects', icon: 'i-lucide-folder-kanban' },
   { label: t('nav.worklog'), to: '/worklog', icon: 'i-lucide-clock' },
   { label: t('nav.calendar'), to: '/calendar', icon: 'i-lucide-calendar' },
-  { label: t('nav.leave'), to: '/leave', icon: 'i-lucide-tree-palm' },
+  { label: t('nav.leave'), to: '/leave', icon: 'i-lucide-tree-palm' }
+])
+
+const navItemsSecondary = computed(() => [
   { label: t('nav.teams'), to: '/teams', icon: 'i-lucide-users' },
   ...(authStore.isAdmin ? [{ label: t('nav.members'), to: '/members', icon: 'i-lucide-user-cog' }] : []),
   { label: t('nav.settings'), to: '/settings', icon: 'i-lucide-settings' }
@@ -110,11 +116,11 @@ function toggleHr() {
     <!-- Nav -->
     <nav class="min-h-0 flex-1 space-y-1 overflow-y-auto p-3">
       <NuxtLink
-        v-for="item in navItems"
+        v-for="item in navItemsPrimary"
         :key="item.to"
         :to="item.to"
         :title="showCompact ? item.label : undefined"
-        class="flex items-center rounded-xl text-sm font-medium transition-all duration-150"
+        class="flex w-full items-center rounded-xl text-sm font-medium transition-all duration-150"
         :class="[
           showCompact ? 'justify-center p-2.5' : 'gap-3 px-3 py-2.5',
           isActive(item.to)
@@ -128,21 +134,26 @@ function toggleHr() {
       </NuxtLink>
 
       <!-- HR cascading menu -->
-      <div v-if="showHrNav" class="pt-1">
+      <div v-if="showHrNav && hrNavItems.length" class="pt-1">
         <UDropdownMenu
           v-if="showCompact"
           :items="hrDropdownItems"
-          :content="{ side: 'right', align: 'start', sideOffset: 8 }"
+          :content="{ side: isRtl ? 'left' : 'right', align: 'start', sideOffset: 8 }"
         >
           <button
             type="button"
             :title="t('nav.hr.section')"
-            class="flex w-full items-center justify-center rounded-xl p-2.5 transition-all duration-150"
+            class="relative flex w-full items-center justify-center rounded-xl p-2.5 transition-all duration-150"
             :class="isHrActive()
               ? 'bg-[var(--color-midesk-accent)] text-white shadow-[0_0_20px_var(--color-midesk-accent-glow)]'
               : 'text-[var(--color-midesk-muted)] hover:bg-white/[0.06] hover:text-[var(--color-midesk-text)]'"
           >
             <UIcon name="i-lucide-building-2" class="size-5 shrink-0" />
+            <span
+              class="absolute bottom-1 end-1 flex size-3.5 items-center justify-center rounded-full bg-[var(--color-midesk-accent)] text-white"
+            >
+              <UIcon name="i-lucide-chevrons-up-down" class="size-2.5" />
+            </span>
           </button>
         </UDropdownMenu>
 
@@ -151,48 +162,76 @@ function toggleHr() {
             type="button"
             class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-150"
             :class="isHrActive()
-              ? 'bg-white/[0.04] text-[var(--color-midesk-text)]'
+              ? 'bg-white/[0.06] text-[var(--color-midesk-text)] ring-1 ring-[var(--color-midesk-border)]'
               : 'text-[var(--color-midesk-muted)] hover:bg-white/[0.06] hover:text-[var(--color-midesk-text)]'"
             :aria-expanded="hrExpanded"
+            :aria-label="t('nav.hr.section')"
             @click="toggleHr"
           >
             <UIcon name="i-lucide-building-2" class="size-5 shrink-0" />
-            <span class="flex-1 truncate text-start">{{ t('nav.hr.section') }}</span>
-            <UIcon
-              name="i-lucide-chevron-down"
-              class="size-4 shrink-0 transition-transform duration-200"
-              :class="{ 'rotate-180': hrExpanded }"
-            />
+            <span class="min-w-0 flex-1 truncate text-start">{{ t('nav.hr.section') }}</span>
+            <span
+              class="flex size-6 shrink-0 items-center justify-center rounded-md border border-[var(--color-midesk-border)] bg-white/[0.04]"
+              :class="hrExpanded ? 'text-[var(--color-midesk-accent)]' : 'text-[var(--color-midesk-muted)]'"
+              aria-hidden="true"
+            >
+              <UIcon
+                :name="isRtl ? 'i-lucide-chevron-left' : 'i-lucide-chevron-right'"
+                class="size-3.5 transition-transform duration-200"
+                :class="{ 'rotate-90': hrExpanded && !isRtl, '-rotate-90': hrExpanded && isRtl }"
+              />
+            </span>
           </button>
 
-          <div
-            class="grid transition-[grid-template-rows] duration-200 ease-out"
-            :class="hrExpanded ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'"
+          <Transition
+            enter-active-class="transition duration-200 ease-out"
+            enter-from-class="opacity-0 -translate-y-1"
+            enter-to-class="opacity-100 translate-y-0"
+            leave-active-class="transition duration-150 ease-in"
+            leave-from-class="opacity-100 translate-y-0"
+            leave-to-class="opacity-0 -translate-y-1"
           >
-            <div class="overflow-hidden">
-              <div
-                class="ms-5 mt-1 space-y-0.5 border-s border-[var(--color-midesk-border)] ps-2"
-                role="group"
-                :aria-label="t('nav.hr.section')"
+            <div
+              v-show="hrExpanded"
+              class="mt-1 space-y-0.5 border-s-2 border-[var(--color-midesk-border)] ps-3 ms-3.5"
+              role="group"
+              :aria-label="t('nav.hr.section')"
+            >
+              <NuxtLink
+                v-for="item in hrNavItems"
+                :key="item.to"
+                :to="item.to"
+                class="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm transition-all duration-150"
+                :class="isActive(item.to)
+                  ? 'bg-[var(--color-midesk-accent-soft)] font-medium text-[var(--color-midesk-accent)]'
+                  : 'text-[var(--color-midesk-muted)] hover:bg-white/[0.04] hover:text-[var(--color-midesk-text)]'"
+                @click="onNavigate"
               >
-                <NuxtLink
-                  v-for="item in hrNavItems"
-                  :key="item.to"
-                  :to="item.to"
-                  class="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm transition-all duration-150"
-                  :class="isActive(item.to)
-                    ? 'bg-[var(--color-midesk-accent-soft)] font-medium text-[var(--color-midesk-accent)]'
-                    : 'text-[var(--color-midesk-muted)] hover:bg-white/[0.04] hover:text-[var(--color-midesk-text)]'"
-                  @click="onNavigate"
-                >
-                  <UIcon :name="item.icon" class="size-[1.125rem] shrink-0" />
-                  <span class="truncate">{{ item.label }}</span>
-                </NuxtLink>
-              </div>
+                <UIcon :name="item.icon" class="size-4 shrink-0" />
+                <span class="truncate">{{ item.label }}</span>
+              </NuxtLink>
             </div>
-          </div>
+          </Transition>
         </template>
       </div>
+
+      <NuxtLink
+        v-for="item in navItemsSecondary"
+        :key="item.to"
+        :to="item.to"
+        :title="showCompact ? item.label : undefined"
+        class="flex w-full items-center rounded-xl text-sm font-medium transition-all duration-150"
+        :class="[
+          showCompact ? 'justify-center p-2.5' : 'gap-3 px-3 py-2.5',
+          isActive(item.to)
+            ? 'bg-[var(--color-midesk-accent)] text-white shadow-[0_0_20px_var(--color-midesk-accent-glow)]'
+            : 'text-[var(--color-midesk-muted)] hover:bg-white/[0.06] hover:text-[var(--color-midesk-text)]'
+        ]"
+        @click="onNavigate"
+      >
+        <UIcon :name="item.icon" class="size-5 shrink-0" />
+        <span v-if="!showCompact" class="truncate">{{ item.label }}</span>
+      </NuxtLink>
     </nav>
 
     <!-- Footer -->
@@ -203,7 +242,7 @@ function toggleHr() {
       <NuxtLink
         to="/notifications"
         :title="t('nav.notifications')"
-        class="flex items-center rounded-xl text-sm transition-all duration-150"
+        class="flex w-full items-center rounded-xl text-sm transition-all duration-150"
         :class="[
           showCompact ? 'justify-center p-2.5' : 'gap-3 px-3 py-2.5',
           isActive('/notifications')
@@ -228,7 +267,7 @@ function toggleHr() {
 
       <div
         v-if="authStore.user"
-        class="midesk-glass mt-2 flex items-center rounded-xl border border-[var(--color-midesk-border)]"
+        class="midesk-glass mt-2 flex w-full items-center rounded-xl border border-[var(--color-midesk-border)]"
         :class="showCompact ? 'justify-center p-2' : 'gap-3 p-2'"
       >
         <UAvatar

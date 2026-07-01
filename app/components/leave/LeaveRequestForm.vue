@@ -39,7 +39,10 @@ function resetForm() {
 }
 
 async function submit() {
-  if (!form.leave_type_id || !form.start_date || !form.end_date) return
+  if (!form.leave_type_id || !form.start_date || !form.end_date) {
+    toast.add({ title: t('common.fillRequired'), color: 'warning' })
+    return
+  }
   submitting.value = true
   try {
     await leaveStore.request({
@@ -68,10 +71,10 @@ async function submit() {
 
       <div class="grid gap-4 sm:grid-cols-2">
           <MideskFormField :label="t('leave.request.startDate')" :model-value="form.start_date" field-class="midesk-ltr-field" required>
-          <UInput v-model="form.start_date" type="date" />
+          <MideskDatePicker v-model="form.start_date" />
         </MideskFormField>
         <MideskFormField :label="t('leave.request.endDate')" :model-value="form.end_date" field-class="midesk-ltr-field" required>
-          <UInput v-model="form.end_date" type="date" />
+          <MideskDatePicker v-model="form.end_date" />
         </MideskFormField>
       </div>
 

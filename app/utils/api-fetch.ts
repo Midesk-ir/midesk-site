@@ -41,16 +41,33 @@ export async function bootstrapSession(
   return data
 }
 
-export function createApiContext() {
+/** Always reads the latest token/tenant from Pinia (or cookies as fallback). */
+export function buildApiContext(overrides: Partial<ApiContext> = {}): ApiContext {
   const config = useRuntimeConfig()
-  const token = useCookie<string | null>('midesk_token')
-  const tenantId = useCookie<string | null>('midesk_tenant_id')
   const localeCookie = useCookie<string>('i18n_locale', { default: () => 'fa' })
 
-  return (): ApiContext => ({
+  let token: string | null = null
+  let tenantId: string | null = null
+
+  if (ensureActivePinia()) {
+    const authStore = useAuthStore()
+    const tenantStore = useTenantStore()
+    token = toValue(authStore.token)
+    tenantId = toValue(tenantStore.tenantId)
+  } else {
+    token = getAuthTokenCookie().value
+    tenantId = getTenantIdCookie().value
+  }
+
+  return {
     baseURL: config.public.apiBase,
-    token: token.value,
-    tenantId: tenantId.value,
-    locale: localeCookie.value || 'fa'
-  })
+    token,
+    tenantId,
+    locale: localeCookie.value || 'fa',
+    ...overrides
+  }
+}
+
+export function createApiContext() {
+  return () => buildApiContext()
 }

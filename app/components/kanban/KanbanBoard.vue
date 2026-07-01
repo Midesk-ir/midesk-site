@@ -192,13 +192,13 @@ defineExpose({ loadBoard })
     </div>
 
     <div v-if="loading" class="flex gap-4 overflow-x-auto pb-4">
-      <USkeleton v-for="i in 5" :key="i" class="h-96 w-72 shrink-0" />
+      <USkeleton v-for="i in 5" :key="i" class="h-[28rem] w-[17.5rem] shrink-0 rounded-xl" />
     </div>
 
     <UiEmptyState
       v-else-if="error"
       :title="t('common.error')"
-      icon="i-lucide-alert-circle"
+      icon="i-lucide-circle-alert"
     >
       <template #action>
         <UButton @click="loadBoard">
@@ -225,9 +225,11 @@ defineExpose({ loadBoard })
               v-for="col in lane.columns"
               :key="`${lane.id}-${col.slug}`"
               :column="col"
+              :project-id="projectId"
               @update:tasks="updateColumnTasks(col.slug as TaskStatus, $event)"
               @move="handleMove"
               @open="(id: string) => emit('openTask', id)"
+              @created="loadBoard"
             />
           </div>
         </div>

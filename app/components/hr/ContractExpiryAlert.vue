@@ -36,7 +36,7 @@ const expiring = computed(() =>
     class="midesk-glass rounded-xl border border-red-500/30 bg-red-500/5 p-4"
   >
     <div class="mb-3 flex items-center gap-2">
-      <UIcon name="i-lucide-alert-triangle" class="size-5 text-red-400" />
+      <UIcon name="i-lucide-triangle-alert" class="size-5 text-red-400" />
       <h3 class="font-semibold text-red-300">{{ t('hr.contracts.expiryAlert.title') }}</h3>
       <UBadge color="error" variant="solid" size="xs">{{ expiring.length }}</UBadge>
     </div>

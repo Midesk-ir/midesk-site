@@ -12,7 +12,7 @@ import {
 const props = defineProps<{
   title: string
   description?: string
-  ui?: { content?: string }
+  ui?: { content?: string, body?: string, header?: string }
 }>()
 
 const open = defineModel<boolean>('open', { default: false })
@@ -32,8 +32,8 @@ const contentClass = computed(() =>
       <DialogOverlay class="midesk-modal-overlay" />
 
       <DialogContent :class="contentClass">
-        <header class="midesk-modal-header">
-          <div class="min-w-0 flex-1">
+        <header :class="['midesk-modal-header', props.ui?.header]">
+          <div class="midesk-modal-header-slot min-w-0 flex-1">
             <slot name="header">
               <DialogTitle class="midesk-modal-title">
                 {{ title }}
@@ -45,6 +45,9 @@ const contentClass = computed(() =>
                 {{ description }}
               </DialogDescription>
             </slot>
+            <DialogTitle v-if="$slots.header" class="sr-only">
+              {{ title }}
+            </DialogTitle>
           </div>
           <DialogClose as-child>
             <UButton
@@ -58,7 +61,7 @@ const contentClass = computed(() =>
           </DialogClose>
         </header>
 
-        <div v-if="$slots.default" class="midesk-modal-body">
+        <div v-if="$slots.default" :class="['midesk-modal-body', props.ui?.body]">
           <slot />
         </div>
 

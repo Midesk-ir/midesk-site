@@ -1,6 +1,14 @@
 <script setup lang="ts">
-import type { ChecklistItem, Comment, Task, User } from '~/types'
+import { useDebounceFn } from '@vueuse/core'
+import type { ChecklistItem, Comment, Project, Task, TaskPriority, TaskStatus, User } from '~/types'
 import type { Sprint } from '~/types/phase1'
+
+const PRIORITY_META: Record<TaskPriority, { color: string, icon: string }> = {
+  low: { color: '#6b7280', icon: 'i-lucide-arrow-down' },
+  medium: { color: '#3b82f6', icon: 'i-lucide-minus' },
+  high: { color: '#f59e0b', icon: 'i-lucide-arrow-up' },
+  critical: { color: '#ef4444', icon: 'i-lucide-alert-triangle' }
+}
 
 const props = defineProps<{
   taskId: string
@@ -10,44 +18,77 @@ const open = defineModel<boolean>('open', { default: false })
 
 const { api } = useApi()
 const { t } = useI18n()
-const { formatDateTime } = useCalendar()
+const { formatDate, formatDateTime, formatRelative, isOverdue } = useCalendar()
+const { loadMembers, loadColumns, loadProject } = useTaskModalMeta()
+const authStore = useAuthStore()
 const toast = useToast()
 
 const task = ref<Task | null>(null)
+const project = ref<Project | null>(null)
 const sprint = ref<Sprint | null>(null)
-const columns = ref<Array<{ slug: string, name: string }>>([])
+const columns = ref<Array<{ slug: string, name: string, color: string }>>([])
 const comments = ref<Comment[]>([])
 const members = ref<User[]>([])
-const labels = ref<Array<{ id: string, name: string, color: string }>>([])
 const loading = ref(false)
 const newComment = ref('')
 const newChecklistItem = ref('')
 const showWorklogForm = ref(false)
+const mobileDetailsOpen = ref(false)
+const titleDraft = ref('')
+const descriptionDraft = ref('')
+const commentSubmitting = ref(false)
+const checklistSubmitting = ref(false)
+const saveState = ref<'idle' | 'saving' | 'saved'>('idle')
 
 const statusItems = computed(() =>
   columns.value.map(c => ({ label: c.name, value: c.slug }))
 )
 
-const modalTitle = computed(() => {
-  if (loading.value) return t('common.loading')
-  return task.value?.title ?? t('task.details')
+const statusColor = computed(() =>
+  columns.value.find(c => c.slug === task.value?.status)?.color ?? '#6b7280'
+)
+
+const statusName = computed(() =>
+  columns.value.find(c => c.slug === task.value?.status)?.name ?? task.value?.status ?? ''
+)
+
+const isDone = computed(() => task.value?.status === 'done')
+
+const shortTaskId = computed(() => props.taskId.slice(0, 8).toUpperCase())
+
+const checklistDone = computed(() =>
+  task.value?.checklist.filter(c => c.is_done).length ?? 0
+)
+
+const checklistPercent = computed(() => {
+  if (!task.value?.checklist.length) return 0
+  return Math.round((checklistDone.value / task.value.checklist.length) * 100)
 })
+
+const priorityMeta = computed(() =>
+  task.value ? PRIORITY_META[task.value.priority as TaskPriority] : PRIORITY_META.medium
+)
+
+const currentUser = computed(() => authStore.user)
 
 async function load() {
   loading.value = true
   try {
     const taskData = await api<Task>(`/tasks/${props.taskId}`)
-    const [commentsData, membersData, labelsData, columnsData] = await Promise.all([
+    const [commentsData, membersData, columnsData, projectData] = await Promise.all([
       api<{ data: Comment[] }>(`/tasks/${props.taskId}/comments`),
-      api<{ data: User[] }>('/members'),
-      api<{ data: typeof labels.value }>('/tasks/labels/all'),
-      api<{ data: Array<{ slug: string, name: string }> }>(`/projects/${taskData.project_id}/columns`)
+      loadMembers(),
+      loadColumns(taskData.project_id),
+      loadProject(taskData.project_id)
     ])
+
     task.value = taskData
+    project.value = projectData
+    titleDraft.value = taskData.title
+    descriptionDraft.value = taskData.description ?? ''
     comments.value = commentsData.data
-    members.value = membersData.data
-    labels.value = labelsData.data
-    columns.value = columnsData.data
+    members.value = membersData
+    columns.value = columnsData
 
     if (taskData.sprint_id) {
       try {
@@ -68,25 +109,70 @@ async function load() {
 
 async function saveField(field: Partial<Task>) {
   if (!task.value) return
+  saveState.value = 'saving'
   try {
     task.value = await api<Task>(`/tasks/${props.taskId}`, {
       method: 'PATCH',
       body: field
     })
+    saveState.value = 'saved'
+    setTimeout(() => {
+      if (saveState.value === 'saved') saveState.value = 'idle'
+    }, 1800)
   } catch {
+    saveState.value = 'idle'
     toast.add({ title: t('common.error'), color: 'error' })
   }
 }
 
+function saveTitle() {
+  if (!task.value || titleDraft.value.trim() === task.value.title) return
+  saveField({ title: titleDraft.value.trim() })
+}
+
+const debouncedSaveDescription = useDebounceFn((value: string) => {
+  if (!task.value || value === (task.value.description ?? '')) return
+  saveField({ description: value })
+}, 650)
+
+watch(descriptionDraft, value => debouncedSaveDescription(value))
+
+async function toggleComplete() {
+  if (!task.value) return
+  const next: TaskStatus = isDone.value ? 'todo' : 'done'
+  await saveField({ status: next })
+}
+
+async function toggleChecklistItem(item: ChecklistItem, isDone: boolean) {
+  if (!task.value || checklistSubmitting.value) return
+  if (item.is_done === isDone) return
+  checklistSubmitting.value = true
+  const checklist = task.value.checklist.map(c =>
+    c.id === item.id ? { ...c, is_done: isDone } : c
+  )
+  try {
+    await saveField({ checklist })
+  } finally {
+    checklistSubmitting.value = false
+  }
+}
+
 async function addComment() {
-  if (!newComment.value.trim()) return
-  const comment = await api<Comment>(`/tasks/${props.taskId}/comments`, {
-    method: 'POST',
-    body: { body: newComment.value }
-  })
-  comments.value.push(comment)
-  newComment.value = ''
-  if (task.value) task.value.comments_count++
+  if (!newComment.value.trim() || commentSubmitting.value) return
+  commentSubmitting.value = true
+  try {
+    const comment = await api<Comment>(`/tasks/${props.taskId}/comments`, {
+      method: 'POST',
+      body: { body: newComment.value }
+    })
+    comments.value.push(comment)
+    newComment.value = ''
+    if (task.value) task.value.comments_count++
+  } catch {
+    toast.add({ title: t('common.error'), color: 'error' })
+  } finally {
+    commentSubmitting.value = false
+  }
 }
 
 async function addChecklistItem() {
@@ -106,7 +192,12 @@ watch(() => props.taskId, () => {
 watch(open, (v) => {
   if (v) {
     showWorklogForm.value = false
+    mobileDetailsOpen.value = false
     task.value = null
+    project.value = null
+    titleDraft.value = ''
+    descriptionDraft.value = ''
+    saveState.value = 'idle'
     loading.value = true
     load()
   }
@@ -116,105 +207,328 @@ watch(open, (v) => {
 <template>
   <MideskModal
     v-model:open="open"
-    :title="modalTitle"
-    :ui="{ content: 'sm:max-w-2xl' }"
+    :title="task?.title ?? t('task.details')"
+    :ui="{
+      content: 'midesk-task-modal',
+      body: 'midesk-task-modal-body',
+      header: 'midesk-task-modal-header'
+    }"
   >
-    <div v-if="loading || !task" class="space-y-4">
-      <USkeleton class="h-8 w-2/3" />
-      <USkeleton class="h-32 w-full" />
+    <template #header>
+      <div v-if="loading" class="task-modal-toolbar w-full">
+        <USkeleton class="h-4 w-40" />
+      </div>
+      <div v-else class="task-modal-toolbar w-full">
+        <div class="task-modal-toolbar-start">
+          <NuxtLink
+            v-if="project"
+            :to="`/projects/${project.id}`"
+            class="task-modal-project-link"
+            @click.stop
+          >
+            <UIcon name="i-lucide-kanban-square" class="size-3.5 shrink-0" />
+            <span class="truncate">{{ project.name }}</span>
+          </NuxtLink>
+          <span class="task-modal-task-id">#{{ shortTaskId }}</span>
+        </div>
+        <p v-if="task" class="task-modal-toolbar-meta">
+          {{ formatRelative(task.updated_at) }}
+        </p>
+      </div>
+    </template>
+
+    <div v-if="loading || !task" class="task-modal-loading">
+      <div class="task-modal-loading-hero">
+        <USkeleton class="size-7 rounded-full" />
+        <USkeleton class="h-8 w-2/3" />
+      </div>
+      <div class="task-modal-loading-grid">
+        <div class="space-y-3">
+          <USkeleton class="h-24 w-full rounded-lg" />
+          <USkeleton class="h-32 w-full rounded-lg" />
+        </div>
+        <USkeleton class="hidden h-64 rounded-lg md:block" />
+      </div>
     </div>
 
-    <div v-else class="space-y-6">
-        <MideskFormField :label="t('task.title')" :model-value="task.title">
-          <UInput
-            :model-value="task.title"
-            placeholder=" "
-            @blur="(e: FocusEvent) => saveField({ title: (e.target as HTMLInputElement).value })"
+    <div
+      v-else
+      class="task-modal-content"
+      :style="{ '--task-status-color': statusColor }"
+    >
+      <div class="task-modal-hero">
+        <button
+          type="button"
+          class="task-modal-complete"
+          :class="{ 'task-modal-complete--done': isDone }"
+          :title="isDone ? t('task.markIncomplete') : t('task.markComplete')"
+          @click="toggleComplete"
+        >
+          <UIcon
+            :name="isDone ? 'i-lucide-check-circle-2' : 'i-lucide-circle'"
+            class="size-7"
           />
-        </MideskFormField>
+        </button>
 
-        <div class="grid gap-4 sm:grid-cols-2">
-          <MideskFormField :label="t('task.status')" :model-value="task.status">
-            <USelect
-              :model-value="task.status"
-              :items="statusItems.length ? statusItems : [{ label: task.status, value: task.status }]"
-              @update:model-value="saveField({ status: $event as Task['status'] })"
-            />
-          </MideskFormField>
+        <div class="task-modal-hero-body">
+          <textarea
+            v-model="titleDraft"
+            rows="1"
+            class="task-modal-title"
+            :placeholder="t('task.title')"
+            @blur="saveTitle"
+            @keydown.enter.prevent="($event.target as HTMLTextAreaElement).blur()"
+          />
 
-          <MideskFormField :label="t('task.priority')" :model-value="task.priority">
-            <USelect
-              :model-value="task.priority"
-              :items="(['low','medium','high','critical'] as const).map(p => ({
-                label: t(`task.priorities.${p}`),
-                value: p
-              }))"
-              @update:model-value="saveField({ priority: $event as Task['priority'] })"
-            />
-          </MideskFormField>
-
-          <MideskFormField :label="t('task.assignee')" :model-value="task.assignee?.id ?? 'none'">
-            <USelect
-              :model-value="task.assignee?.id ?? 'none'"
-              :items="[
-                { label: t('task.unassigned'), value: 'none' },
-                ...members.map(m => ({ label: m.name, value: m.id }))
-              ]"
-              @update:model-value="(v: string) => {
-                const user = members.find(m => m.id === v)
-                saveField({ assignee: user ? { id: user.id, name: user.name, avatar_url: user.avatar_url } : null })
+          <div class="task-modal-hero-meta">
+            <span
+              class="task-modal-status-badge"
+              :style="{
+                color: statusColor,
+                backgroundColor: `color-mix(in srgb, ${statusColor} 18%, transparent)`,
+                borderColor: `color-mix(in srgb, ${statusColor} 40%, transparent)`
               }"
-            />
-          </MideskFormField>
+            >
+              {{ statusName }}
+            </span>
 
-          <MideskFormField
-            :label="t('task.dueDate')"
-            :model-value="task.due_date?.slice(0, 10)"
-            field-class="midesk-ltr-field"
-          >
-            <UInput
-              type="date"
-              :model-value="task.due_date?.slice(0, 10) ?? ''"
-              @update:model-value="saveField({ due_date: $event ? `${$event}T00:00:00Z` : null })"
-            />
-          </MideskFormField>
+            <span
+              v-if="task.assignee"
+              class="task-modal-meta-chip"
+            >
+              <UAvatar
+                :alt="task.assignee.name"
+                size="2xs"
+                icon="i-lucide-user"
+              />
+              {{ task.assignee.name }}
+            </span>
 
-          <MideskFormField
-            :label="t('task.storyPoints')"
-            :model-value="task.story_points != null ? String(task.story_points) : ''"
-            field-class="midesk-ltr-field"
-          >
-            <UInput
-              type="number"
-              min="0"
-              placeholder=" "
-              :model-value="task.story_points != null ? String(task.story_points) : ''"
-              @update:model-value="(v: string | number) => saveField({
-                story_points: v === '' || v == null ? null : Number(v)
-              })"
-            />
-          </MideskFormField>
+            <span
+              v-if="task.due_date"
+              class="task-modal-meta-chip"
+              :class="{ 'task-modal-meta-chip--danger': isOverdue(task.due_date) }"
+            >
+              <UIcon name="i-lucide-calendar" class="size-3.5" />
+              {{ formatDate(task.due_date) }}
+            </span>
+          </div>
+        </div>
+      </div>
 
-          <MideskFormField :label="t('task.sprint')" :model-value="sprint?.name">
-            <div class="flex min-h-10 items-center pt-1">
-              <NuxtLink
-                v-if="sprint"
-                :to="`/projects/${task.project_id}/sprints`"
-                class="midesk-link inline-flex items-center gap-1 text-sm"
+      <div class="task-modal-body-grid">
+        <div class="task-modal-main">
+          <div class="task-modal-mobile-details md:hidden">
+            <button
+              type="button"
+              class="task-modal-details-toggle"
+              @click="mobileDetailsOpen = !mobileDetailsOpen"
+            >
+              <span class="flex items-center gap-2">
+                <UIcon name="i-lucide-sliders-horizontal" class="size-4" />
+                {{ t('task.detailsPanel') }}
+              </span>
+              <UIcon
+                name="i-lucide-chevron-down"
+                class="size-4 transition-transform duration-200"
+                :class="{ 'rotate-180': mobileDetailsOpen }"
+              />
+            </button>
+            <div v-show="mobileDetailsOpen" class="task-modal-details-panel">
+              <TaskModalDetails
+                :task="task"
+                :members="members"
+                :columns="columns"
+                :status-items="statusItems"
+                :sprint="sprint"
+                :priority-meta="priorityMeta"
+                @save="saveField"
+              />
+              <UButton
+                icon="i-lucide-clock"
+                variant="soft"
+                size="sm"
+                block
+                class="mt-3"
+                @click="showWorklogForm = !showWorklogForm"
               >
-                <UIcon name="i-lucide-zap" class="size-4" />
-                {{ sprint.name }}
-              </NuxtLink>
-              <span v-else class="text-sm text-muted">—</span>
+                {{ t('task.logTime') }}
+              </UButton>
+              <WorklogForm
+                v-if="showWorklogForm"
+                compact
+                :preset-project-id="task.project_id"
+                :preset-task-id="task.id"
+                class="mt-3"
+                @saved="showWorklogForm = false"
+                @cancel="showWorklogForm = false"
+              />
             </div>
-          </MideskFormField>
+          </div>
+
+          <section class="task-modal-section">
+            <div class="task-modal-section-icon">
+              <UIcon name="i-lucide-align-right" class="size-4" />
+            </div>
+            <div class="task-modal-section-body">
+              <div class="task-modal-section-head">
+                <h3>{{ t('task.description') }}</h3>
+                <span v-if="saveState !== 'idle'" class="task-modal-save-hint">
+                  {{ saveState === 'saving' ? t('task.saving') : t('task.saved') }}
+                </span>
+              </div>
+              <textarea
+                v-model="descriptionDraft"
+                rows="4"
+                class="task-modal-description"
+                :placeholder="t('task.addDescription')"
+              />
+            </div>
+          </section>
+
+          <section class="task-modal-section">
+            <div class="task-modal-section-icon">
+              <UIcon name="i-lucide-list-checks" class="size-4" />
+            </div>
+            <div class="task-modal-section-body">
+              <div class="task-modal-section-head">
+                <h3>{{ t('task.checklist') }}</h3>
+                <span v-if="task.checklist.length" class="task-modal-section-count">
+                  {{ checklistDone }}/{{ task.checklist.length }}
+                </span>
+              </div>
+
+              <div v-if="task.checklist.length" class="task-modal-progress">
+                <div
+                  class="task-modal-progress-fill"
+                  :style="{ width: `${checklistPercent}%` }"
+                />
+              </div>
+
+              <div v-if="task.checklist.length" class="task-modal-checklist">
+                <label
+                  v-for="item in task.checklist"
+                  :key="item.id"
+                  class="task-modal-checklist-row"
+                >
+                  <UCheckbox
+                    :model-value="item.is_done"
+                    :disabled="checklistSubmitting"
+                    @update:model-value="(v: boolean | 'indeterminate') => toggleChecklistItem(item, v === true)"
+                  />
+                  <span :class="{ 'task-modal-checklist-done': item.is_done }">
+                    {{ item.title }}
+                  </span>
+                </label>
+              </div>
+              <p v-else class="task-modal-empty">{{ t('task.noChecklist') }}</p>
+
+              <div class="task-modal-inline-add">
+                <UInput
+                  v-model="newChecklistItem"
+                  size="sm"
+                  :placeholder="t('task.addChecklistItem')"
+                  class="flex-1"
+                  @keydown.enter.prevent="addChecklistItem"
+                />
+                <UButton
+                  size="sm"
+                  variant="soft"
+                  icon="i-lucide-plus"
+                  :disabled="!newChecklistItem.trim()"
+                  @click="addChecklistItem"
+                />
+              </div>
+            </div>
+          </section>
+
+          <section class="task-modal-section">
+            <div class="task-modal-section-icon">
+              <UIcon name="i-lucide-messages-square" class="size-4" />
+            </div>
+            <div class="task-modal-section-body">
+              <div class="task-modal-section-head">
+                <h3>{{ t('task.activity') }}</h3>
+                <span v-if="comments.length" class="task-modal-section-count">
+                  {{ comments.length }}
+                </span>
+              </div>
+
+              <div v-if="comments.length" class="task-modal-activity">
+                <article
+                  v-for="comment in comments"
+                  :key="comment.id"
+                  class="task-modal-activity-item"
+                >
+                  <UAvatar
+                    :alt="comment.user.name"
+                    size="sm"
+                    icon="i-lucide-user"
+                    class="shrink-0"
+                  />
+                  <div class="task-modal-activity-bubble">
+                    <div class="task-modal-activity-meta">
+                      <span class="task-modal-activity-author">{{ comment.user.name }}</span>
+                      <span>{{ formatDateTime(comment.created_at) }}</span>
+                    </div>
+                    <p>{{ comment.body }}</p>
+                  </div>
+                </article>
+              </div>
+              <p v-else class="task-modal-empty">{{ t('task.noComments') }}</p>
+
+              <div class="task-modal-compose">
+                <UAvatar
+                  v-if="currentUser"
+                  :alt="currentUser.name"
+                  size="sm"
+                  icon="i-lucide-user"
+                  class="shrink-0"
+                />
+                <div class="task-modal-compose-inner">
+                  <textarea
+                    v-model="newComment"
+                    rows="2"
+                    class="task-modal-compose-input"
+                    :placeholder="t('task.addComment')"
+                    @keydown.meta.enter.prevent="addComment"
+                    @keydown.ctrl.enter.prevent="addComment"
+                  />
+                  <div class="task-modal-compose-foot">
+                    <UButton
+                      size="sm"
+                      :loading="commentSubmitting"
+                      :disabled="!newComment.trim()"
+                      @click="addComment"
+                    >
+                      {{ t('task.postComment') }}
+                    </UButton>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
 
-        <div class="mb-6">
+        <aside class="task-modal-aside hidden md:block">
+          <p class="task-modal-aside-title">{{ t('task.detailsPanel') }}</p>
+          <TaskModalDetails
+            :task="task"
+            :members="members"
+            :columns="columns"
+            :status-items="statusItems"
+            :sprint="sprint"
+            :priority-meta="priorityMeta"
+            @save="saveField"
+          />
+
+          <div class="task-modal-aside-divider" />
+
           <UButton
             icon="i-lucide-clock"
             variant="soft"
             size="sm"
+            block
             @click="showWorklogForm = !showWorklogForm"
           >
             {{ t('task.logTime') }}
@@ -229,59 +543,8 @@ watch(open, (v) => {
             @saved="showWorklogForm = false"
             @cancel="showWorklogForm = false"
           />
-        </div>
-
-        <MideskFormField :label="t('task.description')" :model-value="task.description" field-class="mb-6">
-          <UTextarea
-            :model-value="task.description ?? ''"
-            :rows="3"
-            placeholder=" "
-            @blur="(e: FocusEvent) => saveField({ description: (e.target as HTMLTextAreaElement).value })"
-          />
-        </MideskFormField>
-
-        <div class="mb-6">
-          <h4 class="mb-2 text-sm font-medium">{{ t('task.checklist') }}</h4>
-          <div class="space-y-2">
-            <label
-              v-for="item in task.checklist"
-              :key="item.id"
-              class="flex items-center gap-2 text-sm"
-            >
-              <UCheckbox :model-value="item.is_done" disabled />
-              {{ item.title }}
-            </label>
-          </div>
-          <div class="mt-2 flex gap-2">
-            <UInput v-model="newChecklistItem" size="sm" :placeholder="t('task.addChecklistItem')" />
-            <UButton size="sm" @click="addChecklistItem">
-              {{ t('common.create') }}
-            </UButton>
-          </div>
-        </div>
-
-        <div>
-          <h4 class="mb-2 text-sm font-medium">{{ t('task.comments') }}</h4>
-          <div class="space-y-3 mb-4">
-            <div
-              v-for="comment in comments"
-              :key="comment.id"
-              class="rounded-lg bg-white/5 p-3"
-            >
-              <div class="mb-1 flex items-center gap-2 text-xs text-muted">
-                <span class="font-medium text-[var(--color-midesk-text)]">{{ comment.user.name }}</span>
-                <span>{{ formatDateTime(comment.created_at) }}</span>
-              </div>
-              <p class="text-sm">{{ comment.body }}</p>
-            </div>
-          </div>
-          <div class="flex gap-2">
-            <UInput v-model="newComment" :placeholder="t('task.addComment')" class="flex-1" />
-            <UButton @click="addComment">
-              {{ t('common.save') }}
-            </UButton>
-          </div>
-        </div>
+        </aside>
       </div>
+    </div>
   </MideskModal>
 </template>

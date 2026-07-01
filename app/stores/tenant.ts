@@ -10,7 +10,7 @@ export const useTenantStore = defineStore('tenant', () => {
 
   const tenant = ref<Tenant | null>(null)
 
-  const hasTenant = computed(() => !!tenant.value?.id)
+  const hasTenant = computed(() => !!tenantId.value)
   const isIran = computed(() => tenant.value?.region === 'IR')
   const calendarType = computed(() => tenant.value?.calendar_type ?? 'jalali')
 

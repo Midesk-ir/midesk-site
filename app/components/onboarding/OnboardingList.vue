@@ -4,6 +4,8 @@ import type { OnboardingProgress, OnboardingStatus } from '~/types/phase2'
 defineProps<{
   onboardings: OnboardingProgress[]
   loading?: boolean
+  hideHeader?: boolean
+  selectedId?: string | null
 }>()
 
 const emit = defineEmits<{
@@ -28,7 +30,7 @@ function progressPercent(item: OnboardingProgress) {
 
 <template>
   <div class="midesk-glass overflow-hidden rounded-xl border border-[var(--color-midesk-border)]">
-    <div class="border-b border-[var(--color-midesk-border)] px-5 py-4">
+    <div v-if="!hideHeader" class="border-b border-[var(--color-midesk-border)] px-5 py-4">
       <h2 class="midesk-card-header mb-0">{{ t('onboarding.list.title') }}</h2>
     </div>
 
@@ -48,6 +50,7 @@ function progressPercent(item: OnboardingProgress) {
         v-for="item in onboardings"
         :key="item.id"
         class="cursor-pointer px-5 py-4 transition hover:bg-white/[0.02]"
+        :class="selectedId === item.id ? 'bg-[var(--color-midesk-accent-soft)]' : ''"
         @click="emit('select', item)"
       >
         <div class="flex flex-wrap items-center justify-between gap-3">

@@ -45,7 +45,7 @@ onMounted(load)
     </div>
 
     <div class="space-y-6">
-      <HrAttendanceClock />
+      <HrAttendanceClock v-if="can('hr:attendance:clock')" />
 
       <section v-if="can('hr:attendance:view')" class="midesk-glass overflow-hidden rounded-xl border border-[var(--color-midesk-border)]">
         <div class="border-b border-[var(--color-midesk-border)] px-5 py-4">

@@ -61,6 +61,13 @@ async function onHire() {
   showProfile.value = false
 }
 
+async function onFeedbackSubmitted() {
+  await recruitmentStore.fetchCandidates(requisitionId.value)
+  if (selectedCandidate.value) {
+    selectedCandidate.value = recruitmentStore.candidates.find(c => c.id === selectedCandidate.value!.id) ?? null
+  }
+}
+
 watch(requisitionId, load)
 onMounted(load)
 </script>
@@ -103,6 +110,7 @@ onMounted(load)
         :candidate="selectedCandidate"
         @hire="onHire"
         @schedule-interview="onScheduleInterview"
+        @feedback-submitted="onFeedbackSubmitted"
       />
     </MideskModal>
 

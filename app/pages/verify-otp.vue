@@ -6,10 +6,11 @@ definePageMeta({ layout: 'auth', middleware: 'guest' })
 
 const { t } = useI18n()
 const route = useRoute()
-const { verifyOtp } = useAuth()
-const tenantStore = useTenantStore()
+const { verifyOtp, loginOtp } = useAuth()
+import { resolvePostAuthTarget } from '~/utils/auth-redirect'
 const toast = useToast()
 const loading = ref(false)
+const resending = ref(false)
 const countdown = ref(0)
 
 const phone = computed(() => route.query.phone as string)
@@ -31,16 +32,26 @@ function startCountdown() {
 onMounted(startCountdown)
 onUnmounted(() => { if (timer) clearInterval(timer) })
 
+async function onResend() {
+  if (!phone.value || resending.value) return
+  resending.value = true
+  try {
+    await loginOtp({ phone: phone.value })
+    toast.add({ title: t('auth.otpSent'), color: 'success' })
+    if (timer) clearInterval(timer)
+    startCountdown()
+  } catch {
+    toast.add({ title: t('common.error'), color: 'error' })
+  } finally {
+    resending.value = false
+  }
+}
+
 async function onSubmit(values: { code: string }) {
   loading.value = true
   try {
     await verifyOtp({ phone: phone.value, code: values.code })
-
-    const target = tenantStore.hasTenant
-      ? ((route.query.redirect as string) || '/dashboard')
-      : '/onboarding'
-
-    await navigateTo(target, { replace: true })
+    await navigateTo(resolvePostAuthTarget(route.query.redirect as string | undefined), { replace: true })
   } catch (e: unknown) {
     const err = e as { data?: { details?: Record<string, string[]> } }
     toast.add({
@@ -85,7 +96,7 @@ async function onSubmit(values: { code: string }) {
 
     <p class="mt-4 text-center text-sm text-[var(--color-midesk-muted)]">
       <span v-if="countdown > 0">{{ t('auth.resendIn', { seconds: countdown }) }}</span>
-      <UButton v-else variant="link" size="sm">{{ t('auth.resend') }}</UButton>
+      <UButton v-else variant="link" size="sm" :loading="resending" @click="onResend">{{ t('auth.resend') }}</UButton>
     </p>
   </UCard>
 </template>

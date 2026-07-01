@@ -29,15 +29,7 @@ async function load() {
   }
 }
 
-onMounted(async () => {
-  if (!can('hr:dashboard:view')) {
-    if (can('hr:attendance:clock')) {
-      await navigateTo('/hr/attendance/my')
-      return
-    }
-  }
-  await load()
-})
+onMounted(load)
 
 const dashboard = computed(() => hrStore.dashboard)
 const attendance = computed(() => dashboard.value?.attendance_today)
@@ -78,6 +70,8 @@ const attendance = computed(() => dashboard.value?.attendance_today)
           <p class="text-3xl font-bold tracking-tight">{{ attendance?.present ?? 0 }}</p>
           <p class="mt-1 text-xs text-[var(--color-midesk-muted)]">
             {{ t('hr.dashboard.present') }} · {{ attendance?.absent ?? 0 }} {{ t('hr.dashboard.absent') }}
+            · {{ attendance?.on_leave ?? 0 }} {{ t('hr.dashboard.onLeave') }}
+            · {{ attendance?.on_mission ?? 0 }} {{ t('hr.dashboard.onMission') }}
           </p>
           <NuxtLink to="/hr/attendance" class="midesk-link mt-2 inline-block text-sm">
             {{ t('nav.hr.attendance') }}
@@ -125,7 +119,7 @@ const attendance = computed(() => dashboard.value?.attendance_today)
             v-for="link in quickLinks"
             :key="link.to"
             :to="link.to"
-            class="flex items-center gap-3 rounded-xl border border-[var(--color-midesk-border)] bg-white/[0.02] px-4 py-3 text-sm font-medium transition hover:border-[var(--color-midesk-accent)] hover:bg-white/[0.04]"
+            class="flex w-full items-center gap-3 rounded-xl border border-[var(--color-midesk-border)] bg-white/[0.02] px-4 py-3 text-sm font-medium transition hover:border-[var(--color-midesk-accent)] hover:bg-white/[0.04]"
           >
             <UIcon :name="link.icon" class="size-5 text-[var(--color-midesk-accent)]" />
             {{ link.label }}

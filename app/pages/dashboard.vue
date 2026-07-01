@@ -8,6 +8,7 @@ definePageMeta({ layout: 'default', middleware: ['auth', 'tenant'] })
 const { t } = useI18n()
 const { api } = useApi()
 const { formatRelative } = useCalendar()
+const toast = useToast()
 const authStore = useAuthStore()
 const leaveStore = useLeaveStore()
 const { can } = usePermissions()
@@ -59,25 +60,27 @@ async function load() {
   loading.value = true
   error.value = false
   try {
-    const tasks: Promise<unknown>[] = [
-      api<DashboardSummary>('/dashboard/summary').then(data => { summary.value = data }),
-      leaveStore.fetchAll().catch(() => {})
-    ]
+    summary.value = await api<DashboardSummary>('/dashboard/summary')
+
+    await leaveStore.fetchAll().catch(() => {
+      toast.add({ title: t('leave.balance.title'), description: t('common.error'), color: 'warning' })
+    })
+
     if (can('hr:attendance:clock')) {
-      tasks.push(
-        api<{ data: { clock_status: ClockStatus } }>('/hr/attendance/my').then(res => {
-          clockStatus.value = res.data.clock_status
-        }).catch(() => {})
-      )
+      await api<{ data: { clock_status: ClockStatus } }>('/hr/attendance/my').then(res => {
+        clockStatus.value = res.data.clock_status
+      }).catch(() => {
+        toast.add({ title: t('dashboard.attendanceToday'), description: t('common.error'), color: 'warning' })
+      })
     }
+
     if (can('hr:dashboard:view')) {
-      tasks.push(
-        api<{ data: HrDashboardSummary }>('/hr/dashboard').then(res => {
-          hrSummary.value = res.data
-        }).catch(() => {})
-      )
+      await api<{ data: HrDashboardSummary }>('/hr/dashboard').then(res => {
+        hrSummary.value = res.data
+      }).catch(() => {
+        toast.add({ title: t('hr.dashboard.title'), description: t('common.error'), color: 'warning' })
+      })
     }
-    await Promise.all(tasks)
   } catch {
     error.value = true
   } finally {
@@ -114,23 +117,12 @@ onMounted(load)
     </div>
 
     <UiEmptyState
-      v-else-if="error"
+      v-else-if="error || !summary"
       :title="t('common.error')"
-      icon="i-lucide-alert-circle"
+      icon="i-lucide-circle-alert"
     >
       <template #action>
         <UButton color="primary" @click="load">{{ t('common.retry') }}</UButton>
-      </template>
-    </UiEmptyState>
-
-    <UiEmptyState
-      v-else-if="!summary?.active_projects.length"
-      :title="t('dashboard.emptyTitle')"
-      :description="t('dashboard.emptyDesc')"
-      icon="i-lucide-folder-plus"
-    >
-      <template #action>
-        <UButton to="/projects" color="primary">{{ t('dashboard.createProject') }}</UButton>
       </template>
     </UiEmptyState>
 
@@ -319,6 +311,17 @@ onMounted(load)
             :project="project"
           />
         </div>
+        <UiEmptyState
+          v-if="!summary.active_projects.length"
+          :title="t('dashboard.emptyTitle')"
+          :description="t('dashboard.emptyDesc')"
+          icon="i-lucide-folder-plus"
+          class="py-8"
+        >
+          <template #action>
+            <UButton to="/projects" color="primary">{{ t('dashboard.createProject') }}</UButton>
+          </template>
+        </UiEmptyState>
       </section>
 
       <!-- Activity -->

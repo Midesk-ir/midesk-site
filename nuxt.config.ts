@@ -38,6 +38,16 @@ export default defineNuxtConfig({
 
   compatibilityDate: '2025-01-15',
 
+  icon: {
+    provider: 'server',
+    fallbackToApi: false,
+    clientBundle: {
+      scan: true,
+      sizeLimitKb: 768
+    },
+    serverBundle: 'local'
+  },
+
   colorMode: {
     preference: 'dark',
     fallback: 'dark'

@@ -2,6 +2,7 @@
 definePageMeta({ layout: 'marketing' })
 
 const { t } = useI18n()
+const { nextIcon } = useDirectionalIcons()
 
 const stats = [
   { value: '6+', labelKey: 'landing.stats.modules' },
@@ -18,7 +19,7 @@ const values = [
 ] as const
 
 const features = [
-  { key: 'kanban', icon: 'i-lucide-kanban-square' },
+  { key: 'kanban', icon: 'i-lucide-square-kanban' },
   { key: 'sprints', icon: 'i-lucide-rocket' },
   { key: 'worklog', icon: 'i-lucide-clock' },
   { key: 'calendar', icon: 'i-lucide-calendar-days' },
@@ -81,9 +82,8 @@ useSeoMeta({
           </p>
 
           <div class="midesk-landing-actions">
-            <UButton to="/register" size="xl" color="primary" class="midesk-landing-btn-primary">
+            <UButton to="/register" size="xl" color="primary" class="midesk-landing-btn-primary" :icon="nextIcon">
               {{ t('landing.getStarted') }}
-              <UIcon name="i-lucide-arrow-left" class="size-4 rtl:rotate-180" />
             </UButton>
             <UButton
               to="/login"

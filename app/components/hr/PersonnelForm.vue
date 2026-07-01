@@ -5,6 +5,7 @@ import type { User } from '~/types'
 const props = defineProps<{
   initial?: Personnel | null
   users?: User[]
+  loading?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -12,8 +13,7 @@ const emit = defineEmits<{
 }>()
 
 const { t } = useI18n()
-
-const submitting = ref(false)
+const toast = useToast()
 
 const form = reactive<CreatePersonnelPayload>({
   user_id: '',
@@ -73,8 +73,10 @@ watch(
 )
 
 function onSubmit() {
-  if (!form.user_id || !form.employee_code || !form.hire_date) return
-  submitting.value = true
+  if (!form.user_id || !form.employee_code || !form.hire_date) {
+    toast.add({ title: t('common.fillRequired'), color: 'warning' })
+    return
+  }
   emit('submit', {
     user_id: form.user_id,
     employee_code: form.employee_code,
@@ -87,7 +89,6 @@ function onSubmit() {
     address: form.address || undefined,
     emergency_contact: form.emergency_contact || undefined
   })
-  submitting.value = false
 }
 </script>
 
@@ -107,7 +108,7 @@ function onSubmit() {
         <UInput v-model="form.employee_code" />
       </MideskFormField>
       <MideskFormField :label="t('hr.personnel.fields.hireDate')" :model-value="form.hire_date" field-class="midesk-ltr-field" required>
-        <UInput v-model="form.hire_date" type="date" />
+        <MideskDatePicker v-model="form.hire_date" />
       </MideskFormField>
     </div>
 
@@ -129,7 +130,7 @@ function onSubmit() {
         <UInput v-model="form.national_id" />
       </MideskFormField>
       <MideskFormField :label="t('hr.personnel.fields.birthDate')" :model-value="form.birth_date" field-class="midesk-ltr-field">
-        <UInput v-model="form.birth_date" type="date" />
+        <MideskDatePicker v-model="form.birth_date" />
       </MideskFormField>
     </div>
 
@@ -142,7 +143,7 @@ function onSubmit() {
     </MideskFormField>
 
     <div class="flex justify-end gap-2">
-      <UButton type="submit" color="primary" :loading="submitting">
+      <UButton type="submit" color="primary" :loading="loading">
         {{ initial ? t('common.save') : t('common.create') }}
       </UButton>
     </div>

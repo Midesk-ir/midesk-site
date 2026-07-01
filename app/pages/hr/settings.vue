@@ -12,11 +12,15 @@ const toast = useToast()
 const hrStore = useHrStore()
 
 const loading = ref(true)
+const error = ref(false)
 
 async function load() {
   loading.value = true
+  error.value = false
   try {
     await hrStore.fetchSettings()
+  } catch {
+    error.value = true
   } finally {
     loading.value = false
   }
@@ -39,6 +43,16 @@ onMounted(load)
     <h1 class="midesk-page-title mb-6">{{ t('nav.hr.settings') }}</h1>
 
     <USkeleton v-if="loading" class="midesk-skeleton-card h-80" />
+
+    <UiEmptyState
+      v-else-if="error"
+      :title="t('common.error')"
+      icon="i-lucide-circle-alert"
+    >
+      <template #action>
+        <UButton color="primary" @click="load">{{ t('common.retry') }}</UButton>
+      </template>
+    </UiEmptyState>
 
     <HrSettingsForm
       v-else

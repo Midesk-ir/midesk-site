@@ -13,7 +13,9 @@ const contracts = ref<Contract[]>([])
 const personnel = ref<Personnel[]>([])
 const loading = ref(true)
 const showRenew = ref(false)
+const showCreate = ref(false)
 const renewing = ref(false)
+const creating = ref(false)
 const renewContractId = ref<string | null>(null)
 const renewInitial = ref<Partial<CreateContractPayload> | null>(null)
 
@@ -71,12 +73,37 @@ async function onRenewSubmit(payload: CreateContractPayload) {
   }
 }
 
+async function onCreateSubmit(payload: CreateContractPayload) {
+  creating.value = true
+  try {
+    await api('/hr/contracts', { method: 'POST', body: payload })
+    showCreate.value = false
+    toast.add({ title: t('common.create'), color: 'success' })
+    await load()
+  } catch {
+    toast.add({ title: t('common.error'), color: 'error' })
+  } finally {
+    creating.value = false
+  }
+}
+
 onMounted(load)
 </script>
 
 <template>
   <div>
-    <h1 class="midesk-page-title mb-6">{{ t('nav.hr.contracts') }}</h1>
+    <div class="midesk-page-header mb-6">
+      <h1 class="midesk-page-title">{{ t('nav.hr.contracts') }}</h1>
+      <UButton
+        v-if="can('hr:contracts:manage')"
+        icon="i-lucide-plus"
+        color="primary"
+        class="shrink-0"
+        @click="showCreate = true"
+      >
+        {{ t('common.create') }}
+      </UButton>
+    </div>
 
     <div class="space-y-6">
       <HrContractExpiryAlert :contracts="contracts" />
@@ -92,7 +119,18 @@ onMounted(load)
       <HrContractForm
         :personnel="personnel"
         :initial="renewInitial ?? undefined"
+        :allow-file="true"
+        :loading="renewing"
+        submit-label="save"
         @submit="onRenewSubmit"
+      />
+    </MideskModal>
+
+    <MideskModal v-model:open="showCreate" :title="t('hr.contracts.create')">
+      <HrContractForm
+        :personnel="personnel"
+        :loading="creating"
+        @submit="onCreateSubmit"
       />
     </MideskModal>
   </div>

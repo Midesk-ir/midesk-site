@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import type { Task, TaskPriority } from '~/types'
 
-const PRIORITY_BADGE_COLORS = {
-  low: 'neutral',
-  medium: 'info',
-  high: 'warning',
-  critical: 'error'
-} as const
+const PRIORITY_ACCENT: Record<TaskPriority, string> = {
+  low: '#6b7280',
+  medium: '#3b82f6',
+  high: '#f59e0b',
+  critical: '#ef4444'
+}
 
 const props = defineProps<{
   task: Task
@@ -16,66 +16,72 @@ defineEmits<{
   click: [id: string]
 }>()
 
-const { t } = useI18n()
 const { formatDate, isOverdue } = useCalendar()
 
-const checklistPercent = computed(() => {
-  if (!props.task.checklist.length) return 0
-  const done = props.task.checklist.filter(c => c.is_done).length
-  return Math.round((done / props.task.checklist.length) * 100)
-})
+const checklistDone = computed(() =>
+  props.task.checklist.filter(c => c.is_done).length
+)
 
-const priorityColor = computed(() => PRIORITY_BADGE_COLORS[props.task.priority as TaskPriority])
+const visibleLabels = computed(() => props.task.labels.slice(0, 4))
+
+const priorityAccent = computed(() => PRIORITY_ACCENT[props.task.priority as TaskPriority])
+const dueOverdue = computed(() => props.task.due_date ? isOverdue(props.task.due_date) : false)
 </script>
 
 <template>
   <button
     type="button"
-    class="midesk-glass w-full rounded-lg border border-[var(--color-midesk-border)] p-3 text-start transition hover:border-[var(--color-midesk-accent)]/40"
+    class="kanban-card group"
+    :style="{ '--kanban-priority-accent': priorityAccent }"
     @click="$emit('click', task.id)"
   >
-    <div class="flex items-start justify-between gap-2">
-      <span class="text-sm font-medium leading-snug text-[var(--color-midesk-text)]">
-        {{ task.title }}
-      </span>
-      <UBadge :color="priorityColor" size="xs" variant="subtle">
-        {{ t(`task.priorities.${task.priority}`) }}
-      </UBadge>
-    </div>
-
-    <div v-if="task.labels.length" class="mt-2 flex flex-wrap gap-1">
+    <div v-if="visibleLabels.length" class="kanban-card-labels">
       <span
-        v-for="label in task.labels"
+        v-for="label in visibleLabels"
         :key="label.id"
-        class="rounded px-2 py-0.5 text-xs font-medium"
-        :style="{ backgroundColor: `${label.color}22`, color: label.color }"
-      >
-        {{ label.name }}
-      </span>
+        class="kanban-card-label"
+        :style="{ backgroundColor: label.color }"
+        :title="label.name"
+      />
     </div>
 
-    <div class="mt-3 flex items-center justify-between gap-2 text-xs text-[var(--color-midesk-muted)]">
-      <div class="flex items-center gap-2">
-        <UAvatar
-          v-if="task.assignee"
-          :alt="task.assignee.name"
-          size="2xs"
-          icon="i-lucide-user"
-        />
-        <span v-if="task.due_date" :class="{ 'text-red-400': isOverdue(task.due_date) }">
+    <p class="kanban-card-title">
+      {{ task.title }}
+    </p>
+
+    <div class="kanban-card-meta">
+      <div class="kanban-card-badges">
+        <span
+          v-if="task.due_date"
+          class="kanban-card-badge"
+          :class="{ 'kanban-card-badge--overdue': dueOverdue }"
+        >
+          <UIcon name="i-lucide-clock" class="size-3" />
           {{ formatDate(task.due_date) }}
         </span>
-      </div>
-      <div class="flex items-center gap-2">
-        <span v-if="task.checklist.length" class="flex items-center gap-1">
-          <UIcon name="i-lucide-check-square" class="size-3" />
-          {{ checklistPercent }}%
+
+        <span v-if="task.story_points != null" class="kanban-card-badge">
+          {{ task.story_points }}
         </span>
-        <span v-if="task.comments_count" class="flex items-center gap-1">
+
+        <span v-if="task.checklist.length" class="kanban-card-badge">
+          <UIcon name="i-lucide-check-square" class="size-3" />
+          {{ checklistDone }}/{{ task.checklist.length }}
+        </span>
+
+        <span v-if="task.comments_count" class="kanban-card-badge">
           <UIcon name="i-lucide-message-square" class="size-3" />
           {{ task.comments_count }}
         </span>
       </div>
+
+      <UAvatar
+        v-if="task.assignee"
+        :alt="task.assignee.name"
+        size="2xs"
+        icon="i-lucide-user"
+        class="kanban-card-avatar"
+      />
     </div>
   </button>
 </template>

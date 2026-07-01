@@ -87,7 +87,7 @@ let worklogs: Worklog[] = [
     description: 'پیاده‌سازی drag & drop',
     duration_minutes: 240,
     logged_date: '2026-06-20',
-    user: { id: 'u1', name: 'علی رضایی', avatar_url: null }
+    user: { id: 'u1', name: 'علی محمدآبادی', avatar_url: null }
   },
   {
     id: 'wl2',
@@ -97,7 +97,7 @@ let worklogs: Worklog[] = [
     task_title: 'اتصال API احراز هویت',
     duration_minutes: 120,
     logged_date: '2026-06-21',
-    user: { id: 'u1', name: 'علی رضایی', avatar_url: null }
+    user: { id: 'u1', name: 'علی محمدآبادی', avatar_url: null }
   },
   {
     id: 'wl3',

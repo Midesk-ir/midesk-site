@@ -2,25 +2,35 @@
 import { z } from 'zod'
 import { toTypedSchema } from '@vee-validate/zod'
 import { isNavigationFailure } from 'vue-router'
+import { authQueryFromRoute, resolvePostAuthTarget } from '~/utils/auth-redirect'
+import { ensureSessionBootstrap } from '~/utils/session-bootstrap'
 
 definePageMeta({ layout: 'auth', middleware: 'guest' })
 
 const { t } = useI18n()
-const { login, loginOtp, logout, bootstrap } = useAuth()
+const { login, loginOtp, logout } = useAuth()
 const authStore = useAuthStore()
 const tenantStore = useTenantStore()
 const route = useRoute()
 const toast = useToast()
 
 const alreadyLoggedIn = computed(() => authStore.isAuthenticated)
+const sessionLoading = ref(false)
 
 onMounted(async () => {
-  if (authStore.isAuthenticated && !authStore.bootstrapped) {
-    try {
-      await bootstrap()
-    } catch {
-      // guest page — ignore bootstrap errors
+  if (!authStore.isAuthenticated) return
+
+  sessionLoading.value = true
+  try {
+    await ensureSessionBootstrap()
+  } catch (error: unknown) {
+    const status = (error as { statusCode?: number })?.statusCode
+    if (status === 401) {
+      authStore.clearAuth()
+      tenantStore.clearTenant()
     }
+  } finally {
+    sessionLoading.value = false
   }
 })
 
@@ -40,16 +50,11 @@ async function onPasswordSubmit(values: { email: string, password: string }) {
   loading.value = true
   try {
     await login(values)
-
-    const target = tenantStore.hasTenant
-      ? ((route.query.redirect as string) || '/dashboard')
-      : '/onboarding'
-
-    await navigateTo(target, { replace: true })
+    await navigateTo(resolvePostAuthTarget(route.query.redirect as string | undefined), { replace: true })
   } catch (e: unknown) {
     if (isNavigationFailure(e)) return
 
-    const err = e as { data?: { details?: Record<string, string[]> } }
+    const err = e as { data?: { details?: Record<string, string[]> }, statusCode?: number }
     toast.add({
       title: err.data?.details?.email?.[0] || err.data?.details?.password?.[0] || t('common.error'),
       color: 'error'
@@ -63,7 +68,11 @@ async function onOtpSubmit(values: { phone: string }) {
   loading.value = true
   try {
     await loginOtp(values)
-    await navigateTo({ path: '/verify-otp', query: { phone: values.phone }, replace: true })
+    await navigateTo({
+      path: '/verify-otp',
+      query: { phone: values.phone, ...authQueryFromRoute(route) },
+      replace: true
+    })
   } catch (e: unknown) {
     if (isNavigationFailure(e)) return
     toast.add({ title: t('common.error'), color: 'error' })
@@ -72,13 +81,8 @@ async function onOtpSubmit(values: { phone: string }) {
   }
 }
 
-const showGoogle = computed(() => !tenantStore.isIran)
-
 async function goToApp() {
-  const target = tenantStore.hasTenant
-    ? ((route.query.redirect as string) || '/dashboard')
-    : '/onboarding'
-  await navigateTo(target, { replace: true })
+  await navigateTo(resolvePostAuthTarget(route.query.redirect as string | undefined), { replace: true })
 }
 </script>
 
@@ -89,117 +93,107 @@ async function goToApp() {
     </template>
 
     <div v-if="alreadyLoggedIn" class="space-y-4 text-center">
-      <UAvatar :alt="authStore.user?.name ?? ''" size="lg" icon="i-lucide-user" class="mx-auto" />
+      <USkeleton v-if="sessionLoading" class="mx-auto size-12 rounded-full" />
+      <UAvatar v-else :alt="authStore.user?.name ?? ''" size="lg" icon="i-lucide-user" class="mx-auto" />
       <p class="text-sm text-[var(--color-midesk-muted)]">{{ t('auth.alreadyLoggedIn') }}</p>
       <p class="font-medium">{{ authStore.user?.name ?? '—' }}</p>
-      <UButton block color="primary" @click="goToApp">
+      <UButton block color="primary" :loading="sessionLoading" @click="goToApp">
         {{ t('auth.continueToApp') }}
       </UButton>
-      <UButton block variant="outline" color="neutral" @click="logout">
+      <UButton block variant="outline" color="neutral" :disabled="sessionLoading" @click="logout">
         {{ t('auth.switchAccount') }}
       </UButton>
     </div>
 
     <div v-else>
       <div class="mb-4 flex gap-2">
-      <UButton
-        :variant="mode === 'password' ? 'solid' : 'ghost'"
-        size="sm"
-        @click="mode = 'password'"
-      >
-        {{ t('auth.loginWithPassword') }}
-      </UButton>
-      <UButton
-        :variant="mode === 'otp' ? 'solid' : 'ghost'"
-        size="sm"
-        @click="mode = 'otp'"
-      >
-        {{ t('auth.loginWithOtp') }}
-      </UButton>
-    </div>
-
-    <VeeForm
-      v-if="mode === 'password'"
-      :validation-schema="passwordSchema"
-      @submit="onPasswordSubmit"
-    >
-      <div class="midesk-form-fields">
-        <VeeField v-slot="{ field, errorMessage }" name="email">
-          <MideskFormField
-            :label="t('auth.email')"
-            :error="errorMessage"
-            :model-value="field.value"
-            field-class="midesk-ltr-field"
-          >
-            <UInput
-              :model-value="field.value"
-              type="email"
-              placeholder=" "
-              @update:model-value="field.onChange"
-              @blur="field.onBlur"
-            />
-          </MideskFormField>
-        </VeeField>
-        <VeeField v-slot="{ field, errorMessage }" name="password">
-          <MideskFormField
-            :label="t('auth.password')"
-            :error="errorMessage"
-            :model-value="field.value"
-          >
-            <UInput
-              :model-value="field.value"
-              type="password"
-              placeholder=" "
-              @update:model-value="field.onChange"
-              @blur="field.onBlur"
-            />
-          </MideskFormField>
-        </VeeField>
-      <p class="text-xs text-[var(--color-midesk-muted)]">{{ t('auth.demoHint') }}</p>
-        <UButton type="submit" block :loading="loading" color="primary">
-          {{ t('auth.login') }}
+        <UButton
+          :variant="mode === 'password' ? 'solid' : 'ghost'"
+          size="sm"
+          @click="mode = 'password'"
+        >
+          {{ t('auth.loginWithPassword') }}
+        </UButton>
+        <UButton
+          :variant="mode === 'otp' ? 'solid' : 'ghost'"
+          size="sm"
+          @click="mode = 'otp'"
+        >
+          {{ t('auth.loginWithOtp') }}
         </UButton>
       </div>
-    </VeeForm>
 
-    <VeeForm
-      v-else
-      :validation-schema="otpSchema"
-      @submit="onOtpSubmit"
-    >
-      <div class="midesk-form-fields">
-        <VeeField v-slot="{ field, errorMessage }" name="phone">
-          <MideskFormField
-            :label="t('auth.phone')"
-            :error="errorMessage"
-            :model-value="field.value"
-            field-class="midesk-ltr-field"
-          >
-            <UInput
+      <VeeForm
+        v-if="mode === 'password'"
+        :validation-schema="passwordSchema"
+        @submit="onPasswordSubmit"
+      >
+        <div class="midesk-form-fields">
+          <VeeField v-slot="{ field, errorMessage }" name="email">
+            <MideskFormField
+              :label="t('auth.email')"
+              :error="errorMessage"
               :model-value="field.value"
-              placeholder=" "
-              dir="ltr"
-              @update:model-value="field.onChange"
-              @blur="field.onBlur"
-            />
-          </MideskFormField>
-        </VeeField>
-        <UButton type="submit" block :loading="loading" color="primary">
-          {{ t('auth.sendOtp') }}
-        </UButton>
-      </div>
-    </VeeForm>
+              field-class="midesk-ltr-field"
+            >
+              <UInput
+                :model-value="field.value"
+                type="email"
+                placeholder=" "
+                @update:model-value="field.onChange"
+                @blur="field.onBlur"
+              />
+            </MideskFormField>
+          </VeeField>
+          <VeeField v-slot="{ field, errorMessage }" name="password">
+            <MideskFormField
+              :label="t('auth.password')"
+              :error="errorMessage"
+              :model-value="field.value"
+            >
+              <UInput
+                :model-value="field.value"
+                type="password"
+                placeholder=" "
+                @update:model-value="field.onChange"
+                @blur="field.onBlur"
+              />
+            </MideskFormField>
+          </VeeField>
+          <p class="text-xs text-[var(--color-midesk-muted)]">{{ t('auth.demoHint') }}</p>
+          <UButton type="submit" block :loading="loading" color="primary">
+            {{ t('auth.login') }}
+          </UButton>
+        </div>
+      </VeeForm>
 
-    <UButton
-      v-if="showGoogle"
-      block
-      class="mt-4"
-      color="neutral"
-      variant="outline"
-      icon="i-simple-icons-google"
-    >
-      {{ t('auth.googleLogin') }}
-    </UButton>
+      <VeeForm
+        v-else
+        :validation-schema="otpSchema"
+        @submit="onOtpSubmit"
+      >
+        <div class="midesk-form-fields">
+          <VeeField v-slot="{ field, errorMessage }" name="phone">
+            <MideskFormField
+              :label="t('auth.phone')"
+              :error="errorMessage"
+              :model-value="field.value"
+              field-class="midesk-ltr-field"
+            >
+              <UInput
+                :model-value="field.value"
+                placeholder=" "
+                dir="ltr"
+                @update:model-value="field.onChange"
+                @blur="field.onBlur"
+              />
+            </MideskFormField>
+          </VeeField>
+          <UButton type="submit" block :loading="loading" color="primary">
+            {{ t('auth.sendOtp') }}
+          </UButton>
+        </div>
+      </VeeForm>
 
       <p class="mt-6 text-center text-sm text-[var(--color-midesk-muted)]">
         {{ t('auth.noAccount') }}

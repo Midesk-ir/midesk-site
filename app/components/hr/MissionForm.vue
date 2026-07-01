@@ -49,10 +49,10 @@ defineExpose({ reset })
 
     <div class="grid gap-4 sm:grid-cols-2">
       <MideskFormField :label="t('hr.missions.fields.startDate')" :model-value="form.start_date" field-class="midesk-ltr-field" required>
-        <UInput v-model="form.start_date" type="date" />
+        <MideskDatePicker v-model="form.start_date" />
       </MideskFormField>
       <MideskFormField :label="t('hr.missions.fields.endDate')" :model-value="form.end_date" field-class="midesk-ltr-field" required>
-        <UInput v-model="form.end_date" type="date" />
+        <MideskDatePicker v-model="form.end_date" />
       </MideskFormField>
     </div>
 
