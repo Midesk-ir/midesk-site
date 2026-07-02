@@ -92,33 +92,33 @@ export default defineAppConfig({
     },
     badge: {
       slots: {
-        base: 'font-semibold inline-flex items-center leading-normal tracking-normal',
+        base: 'font-semibold inline-flex items-center justify-center leading-normal tracking-normal',
         label: 'truncate'
       },
       variants: {
         size: {
           xs: {
-            base: 'text-[11px] leading-4 px-1.5 py-0.5 gap-1 rounded-md',
+            base: 'text-[11px] px-1.5 py-0.5 gap-1 rounded-md',
             leadingIcon: 'size-3.5',
             trailingIcon: 'size-3.5'
           },
           sm: {
-            base: 'text-xs leading-4 px-2 py-0.5 gap-1 rounded-md',
+            base: 'text-xs px-2 py-1 gap-1 rounded-md',
             leadingIcon: 'size-4',
             trailingIcon: 'size-4'
           },
           md: {
-            base: 'text-sm leading-5 px-2.5 py-1 gap-1.5 rounded-md',
+            base: 'text-sm px-2.5 py-1 gap-1.5 rounded-md',
             leadingIcon: 'size-4',
             trailingIcon: 'size-4'
           },
           lg: {
-            base: 'text-sm leading-5 px-3 py-1 gap-1.5 rounded-lg',
+            base: 'text-sm px-3 py-1 gap-1.5 rounded-lg',
             leadingIcon: 'size-5',
             trailingIcon: 'size-5'
           },
           xl: {
-            base: 'text-base leading-6 px-3 py-1.5 gap-2 rounded-lg',
+            base: 'text-base px-3 py-1.5 gap-2 rounded-lg',
             leadingIcon: 'size-5',
             trailingIcon: 'size-5'
           }
@@ -180,7 +180,7 @@ export default defineAppConfig({
     },
     button: {
       slots: {
-        base: 'rounded-md font-medium inline-flex flex-row items-center disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:opacity-75 transition-colors',
+        base: 'rounded-md font-medium inline-flex flex-row items-center justify-center disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:opacity-75 transition-colors',
         label: 'truncate text-start',
         leadingIcon: 'shrink-0',
         trailingIcon: 'shrink-0'

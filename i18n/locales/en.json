@@ -1123,6 +1123,7 @@
   "landing": {
     "nav": {
       "ariaLabel": "Main navigation",
+      "mobileMenu": "Mobile menu",
       "features": "Features",
       "howItWorks": "How it works",
       "pricing": "Pricing",
@@ -1134,6 +1135,31 @@
     "heroTitleAfter": "needs in one place",
     "heroSubtitle": "Projects, HR, finance, CRM, chat, meetings & AI — no tool sprawl. Built for agile teams in Iran and worldwide.",
     "heroTrust": "No credit card · 5-minute setup · Persian support",
+    "heroTrustItems": {
+      "noCard": "No credit card",
+      "setup": "5-minute setup",
+      "support": "Persian support"
+    },
+    "scrollHint": "Explore more",
+    "sectionEyebrows": {
+      "values": "Benefits",
+      "compare": "Compare",
+      "features": "Features",
+      "how": "Get started",
+      "testimonials": "Testimonials",
+      "pricing": "Pricing",
+      "faq": "Support"
+    },
+    "previewModules": {
+      "kanban": "Kanban",
+      "crm": "CRM",
+      "ai": "AI"
+    },
+    "previewLabels": {
+      "burndown": "Burndown",
+      "ai": "AI",
+      "crm": "CRM"
+    },
     "heroCtaNote": "14-day full access — cancel anytime",
     "viewPlans": "View plans",
     "getStarted": "Get started free",
