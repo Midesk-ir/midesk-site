@@ -1,0 +1,57 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches: [master, main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-site-vps
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build site image
+        run: |
+          docker build \
+            --build-arg NUXT_PUBLIC_API_BASE=/api/v1 \
+            --build-arg NUXT_PUBLIC_SITE_URL=http://185.239.2.179 \
+            -t deploy-site:latest \
+            .
+
+      - name: Save image
+        run: docker save deploy-site:latest | gzip -1 > midesk-site.tar.gz
+
+      - name: Upload image to VPS
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT || 22 }}
+          source: midesk-site.tar.gz
+          target: /tmp/
+          overwrite: true
+
+      - name: Load image + pull code + restart
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT || 22 }}
+          script: |
+            set -euo pipefail
+            gunzip -c /tmp/midesk-site.tar.gz | sg docker -c 'docker load'
+            rm -f /tmp/midesk-site.tar.gz
+            cd /opt/midesk/deploy
+            export SITE_BRANCH=master
+            sg docker -c 'bash scripts/deploy-from-git.sh site'
