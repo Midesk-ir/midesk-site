@@ -1,4 +1,1 @@
-export default defineEventHandler((event) => {
-  const { db } = requireSaAuth(event)
-  return { data: db.saDashboard() }
-})
+export default defineEventHandler((event) => proxyToBackend(event))

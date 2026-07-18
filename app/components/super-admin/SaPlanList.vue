@@ -63,13 +63,13 @@ const { t } = useI18n()
               <UBadge variant="subtle">{{ plan.code }}</UBadge>
             </td>
             <td class="px-4 py-3">
-              <MideskCurrency :amount="plan.price_monthly.IR" currency="IRR" />
+              <MideskCurrency :amount="plan.price_monthly?.IR ?? 0" currency="IRR" />
             </td>
             <td class="px-4 py-3">
-              <MideskCurrency :amount="plan.price_yearly.IR" currency="IRR" />
+              <MideskCurrency :amount="plan.price_yearly?.IR ?? 0" currency="IRR" />
             </td>
-            <td class="px-4 py-3">{{ plan.max_users }}</td>
-            <td class="px-4 py-3">{{ plan.max_projects }}</td>
+            <td class="px-4 py-3">{{ plan.max_users ?? '—' }}</td>
+            <td class="px-4 py-3">{{ plan.max_projects ?? '—' }}</td>
             <td class="px-4 py-3 text-end">
               <div class="flex justify-end gap-1">
                 <UButton

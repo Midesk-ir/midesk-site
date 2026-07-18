@@ -1,11 +1,32 @@
 const FIX_ID = 'midesk-ui-cascade-fix'
 
 /**
- * @mahlaparvaz/vue-datepicker injects global `button { background: inherit }` into
- * document.head at runtime, which breaks UTabs hover/focus/active contrast.
  * Keep this stylesheet last so our overrides win the cascade.
+ * We intentionally avoid global direction rules since they can
+ * interfere with interactive overlays (e.g. datepicker close behavior).
  */
 const FIX_CSS = `
+.datepicker__overlay,
+.datepicker__overlay *,
+.datepicker__overlay *::before,
+.datepicker__overlay *::after {
+  direction: inherit;
+}
+
+html[dir='ltr'] .datepicker__overlay,
+html[dir='ltr'] .datepicker__overlay *,
+html[dir='ltr'] .datepicker__overlay *::before,
+html[dir='ltr'] .datepicker__overlay *::after {
+  direction: ltr;
+}
+
+html[dir='rtl'] .datepicker__overlay,
+html[dir='rtl'] .datepicker__overlay *,
+html[dir='rtl'] .datepicker__overlay *::before,
+html[dir='rtl'] .datepicker__overlay *::after {
+  direction: rtl;
+}
+
 [data-slot='list'] [data-slot='trigger'] {
   background-color: transparent !important;
   border: none;
@@ -41,8 +62,11 @@ function ensureFixLast() {
     el.id = FIX_ID
     el.textContent = FIX_CSS
     document.head.appendChild(el)
-  } else if (el !== document.head.lastElementChild) {
-    document.head.appendChild(el)
+  } else {
+    el.textContent = FIX_CSS
+    if (el !== document.head.lastElementChild) {
+      document.head.appendChild(el)
+    }
   }
 }
 

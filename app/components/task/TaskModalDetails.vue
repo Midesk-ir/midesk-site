@@ -8,11 +8,13 @@ const props = defineProps<{
   columns: Array<{ slug: string, name: string, color: string }>
   statusItems: Array<{ label: string, value: string }>
   sprint: Sprint | null
+  sprints: Sprint[]
   priorityMeta: { color: string, icon: string }
 }>()
 
 const emit = defineEmits<{
   save: [field: Partial<Task>]
+  'assign-sprint': [sprintId: string | null]
 }>()
 
 const { t } = useI18n()
@@ -33,6 +35,39 @@ const assigneeItems = computed(() => [
   { label: t('task.unassigned'), value: 'none' },
   ...props.members.map(m => ({ label: m.name, value: m.id }))
 ])
+
+const sprintItems = computed(() => {
+  const assignable = props.sprints.filter(s => s.status !== 'closed')
+  const currentId = props.task.sprint_id
+  const current = currentId
+    ? props.sprints.find(s => s.id === currentId) ?? props.sprint
+    : null
+
+  const items = [
+    { label: t('sprint.backlog'), value: 'none' },
+    ...assignable.map(s => ({
+      label: `${s.name} (${t(`sprint.${s.status}`)})`,
+      value: s.id
+    }))
+  ]
+
+  if (current && current.status === 'closed' && !items.some(i => i.value === current.id)) {
+    items.push({
+      label: `${current.name} (${t('sprint.closed')})`,
+      value: current.id
+    })
+  }
+
+  return items
+})
+
+const selectedSprintId = computed(() => props.task.sprint_id ?? 'none')
+
+function onSprintChange(value: string) {
+  const next = value === 'none' ? null : value
+  if ((props.task.sprint_id ?? null) === next) return
+  emit('assign-sprint', next)
+}
 </script>
 
 <template>
@@ -114,23 +149,6 @@ const assigneeItems = computed(() => [
       </dd>
     </div>
 
-    <div class="task-modal-prop">
-      <dt class="task-modal-prop-label">{{ t('task.storyPoints') }}</dt>
-      <dd class="task-modal-prop-value">
-        <UInput
-          type="number"
-          min="0"
-          size="sm"
-          class="task-modal-control midesk-ltr-field"
-          :model-value="task.story_points != null ? String(task.story_points) : ''"
-          placeholder="—"
-          @update:model-value="(v: string | number) => emit('save', {
-            story_points: v === '' || v == null ? null : Number(v)
-          })"
-        />
-      </dd>
-    </div>
-
     <div v-if="task.labels.length" class="task-modal-prop task-modal-prop--stack">
       <dt class="task-modal-prop-label">{{ t('task.labels') }}</dt>
       <dd class="task-modal-prop-value">
@@ -150,15 +168,13 @@ const assigneeItems = computed(() => [
     <div class="task-modal-prop">
       <dt class="task-modal-prop-label">{{ t('task.sprint') }}</dt>
       <dd class="task-modal-prop-value">
-        <NuxtLink
-          v-if="sprint"
-          :to="`/projects/${task.project_id}/sprints`"
-          class="task-modal-sprint-link"
-        >
-          <UIcon name="i-lucide-zap" class="size-3.5" />
-          {{ sprint.name }}
-        </NuxtLink>
-        <span v-else class="task-modal-prop-empty">—</span>
+        <USelect
+          :model-value="selectedSprintId"
+          :items="sprintItems"
+          size="sm"
+          class="task-modal-control"
+          @update:model-value="(v: string) => onSprintChange(v)"
+        />
       </dd>
     </div>
   </dl>

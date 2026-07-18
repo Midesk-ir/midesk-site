@@ -25,7 +25,12 @@ export default defineNuxtRouteMiddleware(async (to) => {
     return navigateTo('/dashboard', { replace: true })
   }
 
-  const authStore = useAuthStore()
+  const pinia = ensureActivePinia()
+  if (!pinia) {
+    return navigateTo('/dashboard', { replace: true })
+  }
+
+  const authStore = useAuthStore(pinia)
   const metaPermission = to.meta.permission as string | string[] | undefined
   const required = metaPermission
     ? (Array.isArray(metaPermission) ? metaPermission : [metaPermission])

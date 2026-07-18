@@ -28,9 +28,9 @@ export const useSprintStore = defineStore('sprint', () => {
   }
 
   async function fetchBacklog(id: string) {
-    const data = await storeApi<{ data: Task[] }>(`/projects/${id}/backlog`)
-    backlog.value = data.data
-    return data.data
+    const data = await storeApi<{ data?: Task[], tasks?: Task[] }>(`/projects/${id}/backlog`)
+    backlog.value = data.data ?? data.tasks ?? []
+    return backlog.value
   }
 
   async function createSprint(id: string, payload: CreateSprintPayload) {

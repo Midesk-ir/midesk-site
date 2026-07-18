@@ -1,5 +1,1 @@
-export default defineEventHandler((event) => {
-  const db = useMockDb()
-  db.requireAuth(event)
-  return { data: db.phase1.shifts }
-})
+export default defineEventHandler((event) => proxyToBackend(event))

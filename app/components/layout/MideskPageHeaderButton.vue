@@ -17,9 +17,14 @@ const props = withDefaults(defineProps<{
   type: 'button'
 })
 
-defineEmits<{
+const emit = defineEmits<{
   click: []
 }>()
+
+/** Defer so parent state updates run after UButton's async click handler finishes. */
+function handleClick() {
+  return nextTick(() => emit('click'))
+}
 
 const { backIcon } = useDirectionalIcons()
 
@@ -60,7 +65,7 @@ const ui = computed(() => {
     :size="ui.size"
     class="midesk-page-header-btn"
     :class="`midesk-page-header-btn--${resolvedVariant}`"
-    @click="$emit('click')"
+    @click="handleClick"
   >
     <slot />
   </UButton>

@@ -6,9 +6,12 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
+    "postinstall": "nuxt prepare && node scripts/patch-vue-datepicker.mjs",
     "lint": "eslint .",
-    "typecheck": "nuxt typecheck"
+    "typecheck": "nuxt typecheck",
+    "test:e2e": "node node_modules/cypress/bin/cypress run",
+    "test:e2e:open": "node node_modules/cypress/bin/cypress open",
+    "cypress:install": "node node_modules/cypress/bin/cypress install"
   },
   "dependencies": {
     "@fontsource/vazirmatn": "^5.2.8",
@@ -36,9 +39,15 @@
     "@nuxt/eslint": "^1.16.0",
     "@types/markdown-it": "^14.1.2",
     "@types/node": "^26.0.1",
+    "cypress": "^15.18.1",
     "eslint": "^10.6.0",
     "typescript": "^6.0.3",
     "vue-tsc": "^3.3.5"
   },
-  "packageManager": "pnpm@11.9.0"
+  "packageManager": "pnpm@11.9.0",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "cypress"
+    ]
+  }
 }

@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { toTypedSchema } from '@vee-validate/zod'
 import { isNavigationFailure } from 'vue-router'
 import { authQueryFromRoute, resolvePostAuthTarget } from '~/utils/auth-redirect'
+import { readApiError } from '~/utils/api-fetch'
 import { ensureSessionBootstrap } from '~/utils/session-bootstrap'
 
 definePageMeta({ layout: 'auth', middleware: 'guest' })
@@ -36,6 +37,24 @@ onMounted(async () => {
 
 const mode = ref<'password' | 'otp'>('password')
 const loading = ref(false)
+const captchaToken = ref('')
+const captchaVerified = ref(false)
+
+function ensureCaptcha(): boolean {
+  if (captchaVerified.value && captchaToken.value) return true
+  toast.add({ title: t('auth.captcha.required'), color: 'error' })
+  return false
+}
+
+function onCaptchaVerified(token: string) {
+  captchaToken.value = token
+  captchaVerified.value = true
+}
+
+function resetCaptcha() {
+  captchaToken.value = ''
+  captchaVerified.value = false
+}
 
 const passwordSchema = toTypedSchema(z.object({
   email: z.string().email(),
@@ -47,16 +66,25 @@ const otpSchema = toTypedSchema(z.object({
 }))
 
 async function onPasswordSubmit(values: { email: string, password: string }) {
+  if (!ensureCaptcha()) return
   loading.value = true
   try {
-    await login(values)
+    await login({ ...values, captchaToken: captchaToken.value })
     await navigateTo(resolvePostAuthTarget(route.query.redirect as string | undefined), { replace: true })
   } catch (e: unknown) {
     if (isNavigationFailure(e)) return
 
-    const err = e as { data?: { details?: Record<string, string[]> }, statusCode?: number }
+    const err = e as { data?: { message?: string, details?: Record<string, string[]> }, statusCode?: number }
+    const captchaMsg = err.data?.message === 'captcha_required' || err.data?.message === 'captcha_invalid'
+      ? t('auth.captcha.required')
+      : null
     toast.add({
-      title: err.data?.details?.email?.[0] || err.data?.details?.password?.[0] || t('common.error'),
+      title: captchaMsg
+        || readApiError(e, 'email')
+        || readApiError(e, 'password')
+        || err.data?.details?.email?.[0]
+        || err.data?.details?.password?.[0]
+        || t('common.error'),
       color: 'error'
     })
   } finally {
@@ -65,9 +93,10 @@ async function onPasswordSubmit(values: { email: string, password: string }) {
 }
 
 async function onOtpSubmit(values: { phone: string }) {
+  if (!ensureCaptcha()) return
   loading.value = true
   try {
-    await loginOtp(values)
+    await loginOtp({ ...values, captchaToken: captchaToken.value })
     await navigateTo({
       path: '/verify-otp',
       query: { phone: values.phone, ...authQueryFromRoute(route) },
@@ -90,7 +119,7 @@ async function goToApp() {
   <div class="midesk-auth-card">
     <div class="midesk-auth-card-header">
       <div class="midesk-auth-card-icon-wrap">
-        <UIcon name="i-lucide-log-in" class="size-6 text-[var(--color-midesk-accent)]" />
+        <UIcon name="i-lucide-log-in" class="size-5 text-[var(--color-midesk-accent)]" />
       </div>
       <h1 class="midesk-auth-card-title">{{ t('auth.login') }}</h1>
       <p class="midesk-auth-card-subtitle">{{ t('auth.loginSubtitle') }}</p>
@@ -115,7 +144,7 @@ async function goToApp() {
           type="button"
           class="midesk-auth-mode-tab"
           :class="{ 'is-active': mode === 'password' }"
-          @click="mode = 'password'"
+          @click="mode = 'password'; resetCaptcha()"
         >
           <UIcon name="i-lucide-key-round" class="size-4" />
           {{ t('auth.loginWithPassword') }}
@@ -124,7 +153,7 @@ async function goToApp() {
           type="button"
           class="midesk-auth-mode-tab"
           :class="{ 'is-active': mode === 'otp' }"
-          @click="mode = 'otp'"
+          @click="mode = 'otp'; resetCaptcha()"
         >
           <UIcon name="i-lucide-smartphone" class="size-4" />
           {{ t('auth.loginWithOtp') }}
@@ -171,12 +200,13 @@ async function goToApp() {
             </MideskFormField>
           </VeeField>
 
-          <div class="midesk-auth-demo-hint">
-            <UIcon name="i-lucide-sparkles" class="size-4 shrink-0 text-[var(--color-midesk-accent)]" />
-            <span>{{ t('auth.demoHint') }}</span>
-          </div>
+          <MideskMotionCaptcha
+            :key="mode"
+            v-model="captchaVerified"
+            @verified="onCaptchaVerified"
+          />
 
-          <UButton type="submit" block size="lg" :loading="loading" color="primary" class="midesk-auth-submit">
+          <UButton type="submit" block size="md" :loading="loading" color="primary" class="midesk-auth-submit" :disabled="!captchaVerified">
             {{ t('auth.login') }}
           </UButton>
         </div>
@@ -205,7 +235,14 @@ async function goToApp() {
               />
             </MideskFormField>
           </VeeField>
-          <UButton type="submit" block size="lg" :loading="loading" color="primary" class="midesk-auth-submit">
+
+          <MideskMotionCaptcha
+            :key="mode"
+            v-model="captchaVerified"
+            @verified="onCaptchaVerified"
+          />
+
+          <UButton type="submit" block size="md" :loading="loading" color="primary" class="midesk-auth-submit" :disabled="!captchaVerified">
             {{ t('auth.sendOtp') }}
           </UButton>
         </div>
@@ -215,7 +252,7 @@ async function goToApp() {
         <span>{{ t('auth.or') }}</span>
       </div>
 
-      <UButton to="/register" block size="lg" variant="outline" color="neutral" class="midesk-auth-alt-cta">
+      <UButton to="/register" block size="md" variant="outline" color="neutral" class="midesk-auth-alt-cta">
         {{ t('auth.createFreeAccount') }}
       </UButton>
     </div>

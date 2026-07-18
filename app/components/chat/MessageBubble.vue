@@ -12,7 +12,9 @@ const authStore = useAuthStore()
 const { formatDateTime } = useCalendar()
 
 const showEmoji = ref(false)
-const isOwn = computed(() => props.isOwn ?? props.message.sender.id === authStore.user?.id)
+const isOwn = computed(() => props.isOwn ?? props.message.sender?.id === authStore.user?.id)
+
+const senderName = computed(() => props.message.sender?.name ?? '—')
 </script>
 
 <template>
@@ -22,14 +24,14 @@ const isOwn = computed(() => props.isOwn ?? props.message.sender.id === authStor
   >
     <UAvatar
       v-if="!isOwn"
-      :alt="message.sender.name"
+      :alt="senderName"
       size="xs"
       icon="i-lucide-user"
       class="mt-1 shrink-0 ring-1 ring-[var(--color-midesk-border)]"
     />
     <div class="midesk-chat-message-content">
       <div v-if="!isOwn" class="midesk-chat-message-meta">
-        <span class="font-medium text-[var(--color-midesk-text)]">{{ message.sender.name }}</span>
+        <span class="font-medium text-[var(--color-midesk-text)]">{{ senderName }}</span>
         <span>{{ formatDateTime(message.created_at) }}</span>
       </div>
 
@@ -80,7 +82,7 @@ const isOwn = computed(() => props.isOwn ?? props.message.sender.id === authStor
         </div>
       </template>
 
-      <div v-if="message.reactions.length" class="mt-1 flex flex-wrap gap-1">
+      <div v-if="message.reactions?.length" class="mt-1 flex flex-wrap gap-1">
         <button
           v-for="r in message.reactions"
           :key="r.emoji"

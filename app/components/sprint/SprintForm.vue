@@ -4,6 +4,7 @@ import type { CreateSprintPayload } from '~/types/phase1'
 
 const props = defineProps<{
   sprint?: Sprint | null
+  loading?: boolean
 }>()
 
 const open = defineModel<boolean>('open', { default: false })
@@ -14,7 +15,6 @@ const emit = defineEmits<{
 
 const { t } = useI18n()
 
-const saving = ref(false)
 const form = reactive<CreateSprintPayload>({
   name: '',
   goal: '',
@@ -39,8 +39,8 @@ function resetForm() {
 }
 
 function submit() {
+  if (props.loading) return
   if (!form.name.trim() || !form.start_date || !form.end_date) return
-  saving.value = true
   emit('save', {
     name: form.name.trim(),
     goal: form.goal?.trim() || undefined,
@@ -54,8 +54,6 @@ watch(open, (v) => {
 })
 
 watch(() => props.sprint, resetForm)
-
-defineExpose({ saving })
 </script>
 
 <template>
@@ -84,12 +82,12 @@ defineExpose({ saving })
         {{ t('common.cancel') }}
       </UButton>
       <UButton
-        :loading="saving"
-        :disabled="isEdit"
+        v-if="!isEdit"
+        :loading="loading"
         color="primary"
         @click="submit"
       >
-        {{ isEdit ? t('common.save') : t('common.create') }}
+        {{ t('common.create') }}
       </UButton>
     </template>
   </MideskModal>

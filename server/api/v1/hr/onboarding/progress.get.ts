@@ -1,4 +1,1 @@
-export default defineEventHandler((event) => {
-  const { db } = requireAuthWithPermission(event, 'hr:onboarding:view')
-  return { data: db.phase2.listOnboardingProgress() }
-})
+export default defineEventHandler((event) => proxyToBackend(event))

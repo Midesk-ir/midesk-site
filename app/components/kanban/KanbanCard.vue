@@ -18,11 +18,14 @@ defineEmits<{
 
 const { formatDate, isOverdue } = useCalendar()
 
+const checklist = computed(() => props.task.checklist ?? [])
+const labels = computed(() => props.task.labels ?? [])
+
 const checklistDone = computed(() =>
-  props.task.checklist.filter(c => c.is_done).length
+  checklist.value.filter(c => c.is_done).length
 )
 
-const visibleLabels = computed(() => props.task.labels.slice(0, 4))
+const visibleLabels = computed(() => labels.value.slice(0, 4))
 
 const priorityAccent = computed(() => PRIORITY_ACCENT[props.task.priority as TaskPriority])
 const dueOverdue = computed(() => props.task.due_date ? isOverdue(props.task.due_date) : false)
@@ -60,13 +63,9 @@ const dueOverdue = computed(() => props.task.due_date ? isOverdue(props.task.due
           {{ formatDate(task.due_date) }}
         </span>
 
-        <span v-if="task.story_points != null" class="kanban-card-badge">
-          {{ task.story_points }}
-        </span>
-
-        <span v-if="task.checklist.length" class="kanban-card-badge">
+        <span v-if="checklist.length" class="kanban-card-badge">
           <UIcon name="i-lucide-check-square" class="size-3" />
-          {{ checklistDone }}/{{ task.checklist.length }}
+          {{ checklistDone }}/{{ checklist.length }}
         </span>
 
         <span v-if="task.comments_count" class="kanban-card-badge">

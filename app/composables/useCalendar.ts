@@ -17,7 +17,8 @@ export function useCalendar() {
   const tenantId = useCookie<string | null>('midesk_tenant_id')
 
   const calendarType = computed(() => {
-    if (import.meta.server || !tenantId.value) return 'jalali'
+    if (locale.value === 'en') return 'gregorian' as const
+    if (import.meta.server || !tenantId.value) return 'jalali' as const
     return useTenantStore().calendarType
   })
 

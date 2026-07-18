@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { DatepickerHeadless } from '@mahlaparvaz/vue-datepicker'
+import { DatePicker } from '@mahlaparvaz/vue-datepicker'
 import {
   isoToPickerValue,
   pickerValueToIso,
@@ -27,17 +27,31 @@ const emit = defineEmits<{
 const { t } = useI18n()
 const { calendarType } = useCalendar()
 
+const isOpen = ref(false)
+const pickerValue = ref<PickerDateValue>(null)
+
 const pickerLocale = computed(() =>
   calendarType.value === 'jalali' ? 'jalali' : 'gregorian'
 )
 
-const pickerValue = ref<PickerDateValue>(null)
-
-const displayFormat = 'YYYY/MM/DD'
-
 const placeholderText = computed(() =>
   props.placeholder ?? t('datepicker.placeholder')
 )
+
+const formattedDate = computed(() => {
+  const value = pickerValue.value
+  if (!value) return ''
+
+  if (pickerLocale.value === 'jalali') {
+    const { jy, jm, jd } = value
+    if (jy == null || jm == null || jd == null) return ''
+    return `${jy}/${String(jm).padStart(2, '0')}/${String(jd).padStart(2, '0')}`
+  }
+
+  const { year, month, day } = value
+  if (year == null || month == null || day == null) return ''
+  return `${year}/${String(month).padStart(2, '0')}/${String(day).padStart(2, '0')}`
+})
 
 const mideskTheme = computed(() => ({
   colors: {
@@ -123,16 +137,34 @@ watch(
 
 watch(pickerLocale, () => syncFromModel(props.modelValue))
 
-function onConfirm(value: PickerDateValue) {
-  pickerValue.value = value
-  emitIso(value)
+watch(pickerLocale, (value) => {
+  if (import.meta.client) {
+    localStorage.setItem('datepicker_locale', value)
+  }
+}, { immediate: true })
+
+function openPicker() {
+  if (props.disabled) return
+  syncFromModel(props.modelValue)
+  isOpen.value = true
 }
 
-function emitIso(value: PickerDateValue) {
+function closePicker() {
+  isOpen.value = false
+}
+
+function togglePicker() {
+  if (isOpen.value) closePicker()
+  else openPicker()
+}
+
+function onConfirm(value: PickerDateValue) {
+  pickerValue.value = value
   const iso = pickerValueToIso(value, pickerLocale.value)
   if (iso !== (props.modelValue?.slice(0, 10) ?? null)) {
     emit('update:modelValue', iso)
   }
+  closePicker()
 }
 
 function clearDate(event: MouseEvent) {
@@ -140,53 +172,83 @@ function clearDate(event: MouseEvent) {
   pickerValue.value = null
   emit('update:modelValue', null)
 }
+
+function onEscape(event: KeyboardEvent) {
+  if (event.key === 'Escape' && isOpen.value) closePicker()
+}
+
+onMounted(() => {
+  window.addEventListener('keydown', onEscape)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', onEscape)
+  closePicker()
+})
 </script>
 
 <template>
-  <DatepickerHeadless
-    v-model="pickerValue"
-    class="midesk-datepicker-root"
-    :locale="pickerLocale"
-    :format="displayFormat"
-    :enable-locale-selector="false"
-    :available-locales="['jalali', 'gregorian']"
-    :font-config="fontConfig"
-    :theme="mideskTheme"
-    @confirm="onConfirm"
-  >
-    <template #default="{ open, formattedDate }">
-      <div
-        role="button"
-        tabindex="0"
-        class="midesk-date-trigger"
-        :class="{
-          'midesk-date-trigger--sm': size === 'sm',
-          'midesk-date-trigger--filled': !!formattedDate,
-          'midesk-date-trigger--disabled': disabled
-        }"
-        @click="!disabled && open()"
-        @keydown.enter.prevent="!disabled && open()"
-        @keydown.space.prevent="!disabled && open()"
+  <div class="midesk-datepicker-root">
+    <div
+      role="button"
+      tabindex="0"
+      class="midesk-date-trigger"
+      :aria-expanded="isOpen"
+      :class="{
+        'midesk-date-trigger--sm': size === 'sm',
+        'midesk-date-trigger--filled': !!formattedDate,
+        'midesk-date-trigger--disabled': disabled
+      }"
+      @click="togglePicker"
+      @keydown.enter.prevent="togglePicker"
+      @keydown.space.prevent="togglePicker"
+    >
+      <span
+        class="midesk-date-trigger__value"
+        :class="{ 'midesk-date-trigger__placeholder': !formattedDate }"
       >
-        <span
-          class="midesk-date-trigger__value"
-          :class="{ 'midesk-date-trigger__placeholder': !formattedDate }"
+        {{ formattedDate || placeholderText }}
+      </span>
+      <div class="midesk-date-trigger__trailing">
+        <button
+          v-if="formattedDate && !disabled"
+          type="button"
+          class="midesk-date-trigger__clear"
+          :aria-label="t('datepicker.clear')"
+          @click="clearDate"
         >
-          {{ formattedDate || placeholderText }}
-        </span>
-        <div class="midesk-date-trigger__trailing">
-          <button
-            v-if="formattedDate && !disabled"
-            type="button"
-            class="midesk-date-trigger__clear"
-            :aria-label="t('datepicker.clear')"
-            @click="clearDate"
-          >
-            <UIcon name="i-lucide-x" class="size-3.5" />
-          </button>
-          <UIcon name="i-lucide-calendar-days" class="midesk-date-trigger__icon size-4" aria-hidden="true" />
+          <UIcon name="i-lucide-x" class="size-3.5" />
+        </button>
+        <UIcon name="i-lucide-calendar-days" class="midesk-date-trigger__icon size-4" aria-hidden="true" />
+      </div>
+    </div>
+
+    <Teleport to="body">
+      <div
+        v-if="isOpen"
+        class="datepicker__overlay midesk-datepicker-overlay"
+        role="presentation"
+        @mousedown.self.prevent="closePicker"
+      >
+        <div
+          class="datepicker__overlay-content"
+          role="dialog"
+          aria-modal="true"
+          @mousedown.stop
+          @click.stop
+        >
+          <DatePicker
+            v-model="pickerValue"
+            :locale="pickerLocale"
+            :enable-locale-selector="false"
+            :available-locales="['jalali', 'gregorian']"
+            :font-config="fontConfig"
+            :theme="mideskTheme"
+            @confirm="onConfirm"
+            @close="closePicker"
+          />
         </div>
       </div>
-    </template>
-  </DatepickerHeadless>
+    </Teleport>
+  </div>
 </template>

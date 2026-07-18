@@ -2,10 +2,13 @@
 import draggable from 'vuedraggable'
 import type { Task } from '~/types'
 
-const props = defineProps<{
-  tasks: Task[]
+const props = withDefaults(defineProps<{
+  tasks?: Task[]
   loading?: boolean
-}>()
+}>(), {
+  tasks: () => [],
+  loading: false
+})
 
 const emit = defineEmits<{
   'update:tasks': [tasks: Task[]]
@@ -15,8 +18,10 @@ const emit = defineEmits<{
 
 const { t } = useI18n()
 
+const taskList = computed(() => props.tasks ?? [])
+
 const localTasks = computed({
-  get: () => props.tasks,
+  get: () => taskList.value,
   set: (val: Task[]) => emit('update:tasks', val)
 })
 
@@ -32,7 +37,7 @@ function onAdd(evt: { added?: { element: Task } }) {
     <div class="mb-4 flex items-center justify-between">
       <h2 class="midesk-card-header mb-0">{{ t('sprint.backlog') }}</h2>
       <UBadge color="neutral" variant="subtle" size="xs">
-        {{ tasks.length }}
+        {{ taskList.length }}
       </UBadge>
     </div>
 
@@ -41,7 +46,7 @@ function onAdd(evt: { added?: { element: Task } }) {
     </div>
 
     <UiEmptyState
-      v-else-if="!tasks.length"
+      v-else-if="!taskList.length"
       :title="t('sprint.backlog')"
       icon="i-lucide-inbox"
     />

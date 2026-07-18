@@ -74,8 +74,8 @@ async function onSubmit(values: { email: string, password: string }) {
           </MideskFormField>
         </VeeField>
 
-        <p class="text-xs text-[var(--color-midesk-muted)]">{{ t('superAdmin.demoHint') }}</p>
-
+   
+     <!-- <p class="text-xs text-[var(--color-midesk-muted)]">{{ t('superAdmin.demoHint') }}</p> -->
         <UButton type="submit" block :loading="loading" color="error">
           {{ t('auth.login') }}
         </UButton>

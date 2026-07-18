@@ -1,6 +1,7 @@
-export default defineEventHandler(async (event) => {
-  const { db } = requireAuthWithPermission(event, 'hr:contracts:manage')
+export default defineEventHandler((event) => {
   const id = getRouterParam(event, 'id')!
-  const body = await readBody<{ end_date: string, base_salary?: number }>(event)
-  return { data: db.phase2.renewContract(id, body) }
+  return proxyToBackend(event, {
+    method: 'POST',
+    path: `/hr/contracts/${id}/renew`
+  })
 })

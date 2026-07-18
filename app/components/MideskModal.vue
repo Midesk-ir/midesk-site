@@ -24,6 +24,19 @@ const contentClass = computed(() =>
     props.ui?.content ?? 'max-w-lg'
   ].join(' ')
 )
+
+function isDatepickerOverlayTarget(target: EventTarget | null) {
+  return target instanceof Element
+    && Boolean(target.closest('.midesk-datepicker-overlay, .datepicker__overlay'))
+}
+
+function onInteractOutside(event: Event) {
+  const detail = (event as CustomEvent<{ originalEvent?: Event }>).detail
+  const originalTarget = detail?.originalEvent?.target ?? event.target
+  if (isDatepickerOverlayTarget(originalTarget)) {
+    event.preventDefault()
+  }
+}
 </script>
 
 <template>
@@ -31,7 +44,12 @@ const contentClass = computed(() =>
     <DialogPortal>
       <DialogOverlay class="midesk-modal-overlay" />
 
-      <DialogContent :class="contentClass">
+      <DialogContent
+        :class="contentClass"
+        @pointer-down-outside="onInteractOutside"
+        @interact-outside="onInteractOutside"
+        @focus-outside="onInteractOutside"
+      >
         <header :class="['midesk-modal-header', props.ui?.header]">
           <div class="midesk-modal-header-slot min-w-0 flex-1">
             <slot name="header">
@@ -50,14 +68,13 @@ const contentClass = computed(() =>
             </DialogTitle>
           </div>
           <DialogClose as-child>
-            <UButton
-              icon="i-lucide-x"
-              color="neutral"
-              variant="ghost"
-              size="sm"
-              class="shrink-0"
+            <button
+              type="button"
+              class="midesk-modal-close shrink-0"
               :aria-label="t('common.close')"
-            />
+            >
+              <UIcon name="i-lucide-x" class="size-4" />
+            </button>
           </DialogClose>
         </header>
 

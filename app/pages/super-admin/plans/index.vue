@@ -27,7 +27,10 @@ async function load() {
   loading.value = true
   try {
     const res = await saStore.api<{ data: SubscriptionPlan[] }>('/super-admin/plans')
-    plans.value = res.data
+    plans.value = Array.isArray(res.data) ? res.data : []
+  } catch {
+    toast.add({ title: t('common.error'), color: 'error' })
+    plans.value = []
   } finally {
     loading.value = false
   }

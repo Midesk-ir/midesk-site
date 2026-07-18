@@ -13,7 +13,12 @@ export default defineNuxtRouteMiddleware(async (to) => {
     return navigateTo('/leave', { replace: true })
   }
 
-  const authStore = useAuthStore()
+  const pinia = ensureActivePinia()
+  if (!pinia) {
+    return navigateTo('/leave', { replace: true })
+  }
+
+  const authStore = useAuthStore(pinia)
   const role = authStore.user?.role
   const canManage = role === 'OWNER' || role === 'ADMIN' || role === 'MANAGER'
 

@@ -8,6 +8,7 @@ const links = computed(() => [
   { label: t('superAdmin.nav.plans'), to: '/super-admin/plans', icon: 'i-lucide-credit-card' },
   { label: t('superAdmin.nav.financial'), to: '/super-admin/financial', icon: 'i-lucide-trending-up' },
   { label: t('superAdmin.nav.consultations'), to: '/super-admin/consultations', icon: 'i-lucide-message-circle' },
+  { label: t('superAdmin.nav.systemCheck'), to: '/super-admin/system-check', icon: 'i-lucide-activity' },
   { label: t('superAdmin.nav.settings'), to: '/super-admin/settings', icon: 'i-lucide-settings' }
 ])
 

@@ -2,9 +2,23 @@
 const { t } = useI18n()
 
 const activeModule = ref(0)
-const modules = ['kanban', 'crm', 'ai'] as const
+const modules = ['kanban', 'crm', 'ai', 'hr'] as const
+
+const previewStats = [
+  { key: 'tasks', value: 47, icon: 'i-lucide-list-checks' },
+  { key: 'sprint', value: 82, suffix: '%', icon: 'i-lucide-target' },
+  { key: 'hours', value: 126, icon: 'i-lucide-clock' }
+] as const
 
 let timer: ReturnType<typeof setInterval> | undefined
+
+function selectModule(index: number) {
+  activeModule.value = index
+  if (timer) clearInterval(timer)
+  timer = setInterval(() => {
+    activeModule.value = (activeModule.value + 1) % modules.length
+  }, 4200)
+}
 
 onMounted(() => {
   timer = setInterval(() => {
@@ -18,21 +32,22 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="midesk-landing-preview-wrap">
-    <div class="midesk-landing-preview" aria-hidden="true">
+  <div class="midesk-landing-preview" aria-hidden="true">
       <div class="midesk-landing-preview-chrome">
         <div class="midesk-landing-preview-dots">
           <span /><span /><span />
         </div>
         <div class="midesk-landing-preview-tabs">
-          <span
+          <button
             v-for="(mod, i) in modules"
             :key="mod"
+            type="button"
             class="midesk-landing-preview-tab"
             :class="{ 'is-active': activeModule === i }"
+            @click="selectModule(i)"
           >
             {{ t(`landing.previewModules.${mod}`) }}
-          </span>
+          </button>
         </div>
       </div>
 
@@ -54,9 +69,14 @@ onUnmounted(() => {
           </div>
 
           <div class="midesk-landing-preview-stats">
-            <div v-for="i in 3" :key="i" class="midesk-landing-preview-stat">
-              <span class="midesk-landing-preview-stat-bar" />
-              <span class="midesk-landing-preview-stat-val" />
+            <div v-for="stat in previewStats" :key="stat.key" class="midesk-landing-preview-stat is-live">
+              <UIcon :name="stat.icon" class="size-3 text-[var(--color-midesk-accent)]" />
+              <div class="midesk-landing-preview-stat-body">
+                <span class="midesk-landing-preview-stat-val">
+                  {{ stat.value }}{{ 'suffix' in stat ? stat.suffix : '' }}
+                </span>
+                <span class="midesk-landing-preview-stat-label">{{ t(`landing.previewStats.${stat.key}`) }}</span>
+              </div>
             </div>
           </div>
 
@@ -80,7 +100,7 @@ onUnmounted(() => {
               </div>
             </div>
 
-            <div v-else key="ai" class="midesk-landing-preview-ai">
+            <div v-else-if="activeModule === 2" key="ai" class="midesk-landing-preview-ai">
               <div class="midesk-landing-preview-ai-msg is-user">
                 <span />
               </div>
@@ -89,6 +109,16 @@ onUnmounted(() => {
                 <span /><span class="is-short" />
               </div>
               <div class="midesk-landing-preview-ai-input" />
+            </div>
+
+            <div v-else key="hr" class="midesk-landing-preview-hr">
+              <div v-for="row in 3" :key="row" class="midesk-landing-preview-hr-row">
+                <span class="midesk-landing-preview-hr-avatar" />
+                <div class="midesk-landing-preview-hr-lines">
+                  <span /><span />
+                </div>
+                <span class="midesk-landing-preview-hr-status" :class="{ 'is-present': row !== 2 }" />
+              </div>
             </div>
           </Transition>
         </div>
@@ -101,7 +131,7 @@ onUnmounted(() => {
 
       <div class="midesk-landing-preview-float midesk-landing-preview-float--crm">
         <UIcon name="i-lucide-trending-up" class="size-3.5 text-emerald-400" />
-        <span>+24%</span>
+        <span>{{ t('landing.previewLabels.crmGrowth') }}</span>
       </div>
 
       <div class="midesk-landing-preview-float midesk-landing-preview-float--ai">
@@ -114,5 +144,4 @@ onUnmounted(() => {
         <span>3</span>
       </div>
     </div>
-  </div>
 </template>

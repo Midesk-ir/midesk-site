@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { CreateSprintPayload } from '~/types/phase1'
+import type { Task } from '~/types'
 import { storeToRefs } from 'pinia'
 
 definePageMeta({ middleware: ['auth', 'tenant'] })
@@ -15,7 +16,7 @@ const openProjectTask = inject<(id: string) => void>('openProjectTask')
 const pageLoading = ref(true)
 
 const showCreateForm = ref(false)
-const sprintFormRef = ref<{ saving: boolean } | null>(null)
+const creatingSprint = ref(false)
 
 const showActivateModal = ref(false)
 const activateTargetId = ref('')
@@ -48,6 +49,8 @@ async function load() {
 }
 
 async function handleCreate(payload: CreateSprintPayload) {
+  if (creatingSprint.value) return
+  creatingSprint.value = true
   try {
     await sprintStore.createSprint(projectId.value, {
       ...payload,
@@ -55,11 +58,11 @@ async function handleCreate(payload: CreateSprintPayload) {
       end_date: `${payload.end_date}T00:00:00Z`
     })
     showCreateForm.value = false
-    toast.add({ title: t('common.create'), color: 'success' })
+    toast.add({ title: t('sprint.created'), color: 'success' })
   } catch {
     toast.add({ title: t('common.error'), color: 'error' })
   } finally {
-    if (sprintFormRef.value) sprintFormRef.value.saving = false
+    creatingSprint.value = false
   }
 }
 
@@ -146,6 +149,10 @@ function startClose(sprintId: string) {
   showCloseModal.value = true
 }
 
+function updateBacklog(tasks: Task[]) {
+  backlog.value = tasks
+}
+
 onMounted(load)
 </script>
 
@@ -217,69 +224,72 @@ onMounted(load)
           </div>
         </section>
 
-        <BacklogList
+        <SprintBacklogList
           :tasks="backlog"
           :loading="loading"
-          @update:tasks="backlog = $event"
+          @update:tasks="updateBacklog"
           @remove-from-sprint="handleRemoveFromSprint"
           @open-task="openTask"
         />
       </div>
-
-      <SprintForm
-        ref="sprintFormRef"
-        v-model:open="showCreateForm"
-        @save="handleCreate"
-      />
-
-      <MideskModal
-        v-model:open="showActivateModal"
-        :title="t('sprint.activate')"
-        :description="t('sprint.confirmActivate')"
-        :ui="{ content: 'sm:max-w-md' }"
-      >
-        <template #footer>
-          <UButton variant="ghost" @click="showActivateModal = false">
-            {{ t('common.cancel') }}
-          </UButton>
-          <UButton :loading="actionLoading" color="primary" @click="confirmActivate">
-            {{ t('sprint.activate') }}
-          </UButton>
-        </template>
-      </MideskModal>
-
-      <MideskModal
-        v-model:open="showCloseModal"
-        :title="t('sprint.close')"
-        :description="t('sprint.confirmClose')"
-        :ui="{ content: 'sm:max-w-md' }"
-      >
-        <MideskFormField :label="t('sprint.moveToBacklog')" :model-value="closeMoveTo">
-          <USelect
-            v-model="closeMoveTo"
-            :items="[
-              { label: t('sprint.backlog'), value: 'backlog' },
-              ...(nextPlanningSprint
-                ? [{ label: nextPlanningSprint.name, value: nextPlanningSprint.id }]
-                : [])
-            ]"
-          />
-        </MideskFormField>
-        <template #footer>
-          <UButton variant="ghost" @click="showCloseModal = false">
-            {{ t('common.cancel') }}
-          </UButton>
-          <UButton :loading="actionLoading" color="primary" @click="confirmClose">
-            {{ t('sprint.close') }}
-          </UButton>
-        </template>
-      </MideskModal>
-
-      <TaskModal
-        v-if="taskModalOpen && !openProjectTask"
-        v-model:open="taskModalOpen"
-        :task-id="activeTaskId"
-      />
     </template>
+
+    <SprintForm
+      v-if="!pageLoading"
+      v-model:open="showCreateForm"
+      :loading="creatingSprint"
+      @save="handleCreate"
+    />
+
+    <MideskModal
+      v-if="!pageLoading"
+      v-model:open="showActivateModal"
+      :title="t('sprint.activate')"
+      :description="t('sprint.confirmActivate')"
+      :ui="{ content: 'sm:max-w-md' }"
+    >
+      <template #footer>
+        <UButton variant="ghost" @click="showActivateModal = false">
+          {{ t('common.cancel') }}
+        </UButton>
+        <UButton :loading="actionLoading" color="primary" @click="confirmActivate">
+          {{ t('sprint.activate') }}
+        </UButton>
+      </template>
+    </MideskModal>
+
+    <MideskModal
+      v-if="!pageLoading"
+      v-model:open="showCloseModal"
+      :title="t('sprint.close')"
+      :description="t('sprint.confirmClose')"
+      :ui="{ content: 'sm:max-w-md' }"
+    >
+      <MideskFormField :label="t('sprint.moveToBacklog')" :model-value="closeMoveTo">
+        <USelect
+          v-model="closeMoveTo"
+          :items="[
+            { label: t('sprint.backlog'), value: 'backlog' },
+            ...(nextPlanningSprint
+              ? [{ label: nextPlanningSprint.name, value: nextPlanningSprint.id }]
+              : [])
+          ]"
+        />
+      </MideskFormField>
+      <template #footer>
+        <UButton variant="ghost" @click="showCloseModal = false">
+          {{ t('common.cancel') }}
+        </UButton>
+        <UButton :loading="actionLoading" color="primary" @click="confirmClose">
+          {{ t('sprint.close') }}
+        </UButton>
+      </template>
+    </MideskModal>
+
+    <TaskModal
+      v-if="!pageLoading && taskModalOpen && !openProjectTask"
+      v-model:open="taskModalOpen"
+      :task-id="activeTaskId"
+    />
   </div>
 </template>

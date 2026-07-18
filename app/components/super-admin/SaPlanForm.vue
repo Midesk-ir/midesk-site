@@ -15,7 +15,7 @@ const { t } = useI18n()
 
 const form = reactive({
   name: '',
-  code: 'starter' as SubscriptionPlanCode,
+  code: 'silver' as SubscriptionPlanCode,
   features: '',
   priceMonthlyIr: 0,
   priceMonthlyIntl: 0,
@@ -26,7 +26,7 @@ const form = reactive({
 })
 
 const codeItems = computed(() =>
-  (['free', 'starter', 'pro', 'enterprise'] as SubscriptionPlanCode[]).map(code => ({
+  (['bronze', 'silver', 'gold', 'diamond'] as SubscriptionPlanCode[]).map(code => ({
     label: code,
     value: code
   }))
@@ -35,7 +35,7 @@ const codeItems = computed(() =>
 watch(() => props.initial, (plan) => {
   if (!plan) {
     form.name = ''
-    form.code = 'starter'
+    form.code = 'silver'
     form.features = ''
     form.priceMonthlyIr = 0
     form.priceMonthlyIntl = 0
@@ -48,13 +48,13 @@ watch(() => props.initial, (plan) => {
 
   form.name = plan.name
   form.code = plan.code
-  form.features = plan.features.join(', ')
-  form.priceMonthlyIr = plan.price_monthly.IR
-  form.priceMonthlyIntl = plan.price_monthly.INTL
-  form.priceYearlyIr = plan.price_yearly.IR
-  form.priceYearlyIntl = plan.price_yearly.INTL
-  form.maxUsers = plan.max_users
-  form.maxProjects = plan.max_projects
+  form.features = Array.isArray(plan.features) ? plan.features.join(', ') : ''
+  form.priceMonthlyIr = plan.price_monthly?.IR ?? 0
+  form.priceMonthlyIntl = plan.price_monthly?.INTL ?? 0
+  form.priceYearlyIr = plan.price_yearly?.IR ?? 0
+  form.priceYearlyIntl = plan.price_yearly?.INTL ?? 0
+  form.maxUsers = plan.max_users ?? 10
+  form.maxProjects = plan.max_projects ?? 10
 }, { immediate: true })
 
 function onSubmit() {

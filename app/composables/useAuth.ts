@@ -3,7 +3,7 @@ import type {
   CreateOrgPayload,
   Tenant
 } from '~/types'
-import { apiFetch, bootstrapSession, buildApiContext } from '~/utils/api-fetch'
+import { apiFetch, bootstrapSession, bootstrapSessionIfTenant, buildApiContext } from '~/utils/api-fetch'
 
 function rollbackAuth() {
   useAuthStore().clearAuth()
@@ -14,7 +14,7 @@ export function useAuth() {
   const authStore = useAuthStore()
   const tenantStore = useTenantStore()
 
-  async function login(credentials: { email?: string, phone?: string, password: string }) {
+  async function login(credentials: { email?: string, phone?: string, password: string, captchaToken?: string }) {
     const data = await apiFetch<AuthResponse>(buildApiContext(), '/auth/login', {
       method: 'POST',
       body: credentials
@@ -22,7 +22,7 @@ export function useAuth() {
     authStore.setAuth(data)
     if (data.tenant) tenantStore.setTenant(data.tenant)
     try {
-      await bootstrapSession(
+      await bootstrapSessionIfTenant(
         buildApiContext({ token: data.token, tenantId: data.tenant?.id ?? null }),
         authStore,
         tenantStore
@@ -34,14 +34,14 @@ export function useAuth() {
     return data
   }
 
-  async function loginOtp(payload: { phone: string }) {
+  async function loginOtp(payload: { phone: string, captchaToken?: string }) {
     return apiFetch<{ message: string }>(buildApiContext(), '/auth/login/otp', {
       method: 'POST',
       body: payload
     })
   }
 
-  async function register(payload: { name: string, email?: string, phone?: string, password: string }) {
+  async function register(payload: { name: string, email?: string, phone?: string, password: string, captchaToken?: string }) {
     return apiFetch<{ message: string, phone?: string }>(buildApiContext(), '/auth/register', {
       method: 'POST',
       body: payload
@@ -56,7 +56,7 @@ export function useAuth() {
     authStore.setAuth(data)
     if (data.tenant) tenantStore.setTenant(data.tenant)
     try {
-      await bootstrapSession(
+      await bootstrapSessionIfTenant(
         buildApiContext({ token: data.token, tenantId: data.tenant?.id ?? null }),
         authStore,
         tenantStore
@@ -73,13 +73,18 @@ export function useAuth() {
   }
 
   async function createOrg(payload: CreateOrgPayload) {
-    const tenant = await apiFetch<Tenant>(buildApiContext(), '/orgs', {
+    const data = await apiFetch<{ tenant: Tenant, token: string }>(buildApiContext(), '/orgs', {
       method: 'POST',
       body: payload
     })
-    tenantStore.setTenant(tenant)
+    if (authStore.user) {
+      authStore.setAuth({ token: data.token, user: authStore.user })
+    } else {
+      authStore.token = data.token
+    }
+    tenantStore.setTenant(data.tenant)
     await bootstrapSession(buildApiContext(), authStore, tenantStore)
-    return tenant
+    return data.tenant
   }
 
   async function logout() {

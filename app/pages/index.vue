@@ -1,15 +1,11 @@
 <script setup lang="ts">
+import { LANDING_HERO_STATS, LANDING_MODULE_KEYS, LANDING_PRODUCT_SECTIONS } from '~/utils/landing-data'
+
 definePageMeta({ layout: 'marketing' })
 
 const { t } = useI18n()
 const { nextIcon } = useDirectionalIcons()
-
-const stats = [
-  { value: '15+', labelKey: 'landing.stats.modules' },
-  { value: '2', labelKey: 'landing.stats.languages' },
-  { value: '5m', labelKey: 'landing.stats.setup' },
-  { value: '∞', labelKey: 'landing.stats.scale' }
-] as const
+const { heroGlowShift, previewTilt } = useLandingParallax()
 
 const heroChips = ['kanban', 'hr', 'crm', 'chat', 'ai', 'finance'] as const
 
@@ -31,6 +27,11 @@ const heroTrustIcons: Record<typeof heroTrustItems[number], string> = {
 }
 
 const socialItems = ['agile', 'hr', 'finance', 'remote'] as const
+
+const socialMarqueeItems = computed(() => [
+  ...socialItems.map(key => ({ type: 'social' as const, key })),
+  ...LANDING_MODULE_KEYS.slice(0, 8).map(key => ({ type: 'module' as const, key }))
+])
 
 const socialIcons: Record<typeof socialItems[number], string> = {
   agile: 'i-lucide-kanban-square',
@@ -93,11 +94,69 @@ const testimonials = [
 ] as const
 
 const pricingTiers = [
-  { key: 'free', highlighted: false },
-  { key: 'startup', highlighted: false },
-  { key: 'pro', highlighted: true },
-  { key: 'enterprise', highlighted: false }
+  { key: 'bronze', highlighted: false, icon: 'i-lucide-medal' },
+  { key: 'silver', highlighted: false, icon: 'i-lucide-shield-check' },
+  { key: 'gold', highlighted: true, icon: 'i-lucide-crown' },
+  { key: 'diamond', highlighted: false, icon: 'i-lucide-gem' }
 ] as const
+
+type BillingCycle = 'monthly' | 'quarterly' | 'semiannual' | 'yearly'
+type TierKey = typeof pricingTiers[number]['key']
+
+const selectedBillingCycle = ref<BillingCycle>('monthly')
+
+const billingCycleItems: Array<{ key: BillingCycle, label: string }> = [
+  { key: 'monthly', label: t('landing.pricingCycles.monthly') },
+  { key: 'quarterly', label: t('landing.pricingCycles.quarterly') },
+  { key: 'semiannual', label: t('landing.pricingCycles.semiannual') },
+  { key: 'yearly', label: t('landing.pricingCycles.yearly') }
+]
+
+const pricingByCycle: Record<TierKey, Record<BillingCycle, string>> = {
+  bronze: {
+    monthly: '۳۹۹,۰۰۰',
+    quarterly: '۱,۱۰۰,۰۰۰',
+    semiannual: '۲,۱۰۰,۰۰۰',
+    yearly: '۳,۹۰۰,۰۰۰'
+  },
+  silver: {
+    monthly: '۹۹۹,۰۰۰',
+    quarterly: '۳,۹۰۰,۰۰۰',
+    semiannual: '۷,۰۰۰,۰۰۰',
+    yearly: '۱۲,۰۰۰,۰۰۰'
+  },
+  gold: {
+    monthly: '۲,۵۰۰,۰۰۰',
+    quarterly: '۷,۰۰۰,۰۰۰',
+    semiannual: '۱۲,۰۰۰,۰۰۰',
+    yearly: '۲۲,۰۰۰,۰۰۰'
+  },
+  diamond: {
+    monthly: '۴,۵۰۰,۰۰۰',
+    quarterly: '۱۲,۰۰۰,۰۰۰',
+    semiannual: '۲۱,۰۰۰,۰۰۰',
+    yearly: '۴۰,۰۰۰,۰۰۰'
+  }
+}
+
+const pricingOriginalMonthly: Partial<Record<TierKey, string>> = {
+  silver: '۱,۵۰۰,۰۰۰',
+  gold: '۳,۰۰۰,۰۰۰',
+  diamond: '۵,۰۰۰,۰۰۰'
+}
+
+const pricingFeatureKeys = ['projects', 'work', 'collab', 'org', 'hr', 'business', 'finance'] as const
+
+const pricingFeatureMatrix: Record<TierKey, Record<typeof pricingFeatureKeys[number], boolean>> = {
+  bronze: { projects: true, work: true, collab: true, org: true, hr: false, business: false, finance: false },
+  silver: { projects: true, work: true, collab: true, org: true, hr: true, business: false, finance: false },
+  gold: { projects: true, work: true, collab: true, org: true, hr: true, business: true, finance: false },
+  diamond: { projects: true, work: true, collab: true, org: true, hr: true, business: true, finance: true }
+}
+
+function cycleSuffix(cycle: BillingCycle) {
+  return t(`landing.pricingCycleSuffix.${cycle}`)
+}
 
 const faqItems = ['what', 'free', 'calendar', 'security', 'roadmap'] as const
 
@@ -109,7 +168,7 @@ const faqAccordion = computed(() =>
 )
 
 function pricingLink(tierKey: string) {
-  if (tierKey === 'free') return '/register'
+  if (tierKey === 'bronze') return '/register'
   return { path: '/register', query: { plan: tierKey } }
 }
 
@@ -121,16 +180,29 @@ function testimonialInitials(name: string) {
     .join('')
 }
 
+function getMarqueeIcon(item: { type: 'social' | 'module', key: string }) {
+  if (item.type === 'module') return 'i-lucide-box'
+  return socialIcons[item.key as typeof socialItems[number]]
+}
+
 useLandingSeo()
 </script>
 
 <template>
   <div class="midesk-landing">
+    <LandingScrollProgress />
+
     <!-- Hero -->
     <section class="midesk-landing-hero">
       <div class="midesk-landing-hero-bg" aria-hidden="true">
-        <div class="midesk-landing-hero-glow midesk-landing-hero-glow--primary" />
-        <div class="midesk-landing-hero-glow midesk-landing-hero-glow--secondary" />
+        <div
+          class="midesk-landing-hero-glow midesk-landing-hero-glow--primary"
+          :style="{ transform: heroGlowShift.primary }"
+        />
+        <div
+          class="midesk-landing-hero-glow midesk-landing-hero-glow--secondary"
+          :style="{ transform: heroGlowShift.secondary }"
+        />
         <div class="midesk-landing-hero-glow midesk-landing-hero-glow--tertiary" />
         <div class="midesk-landing-hero-grid" />
         <div class="midesk-landing-hero-noise" />
@@ -145,7 +217,9 @@ useLandingSeo()
 
           <h1 class="midesk-landing-headline">
             {{ t('landing.heroTitleBefore') }}
-            <span class="midesk-landing-headline-accent">{{ t('landing.heroTitleHighlight') }}</span>
+            <span class="midesk-landing-headline-accent midesk-landing-headline-accent--scroll">
+              {{ t('landing.heroTitleHighlight') }}
+            </span>
             {{ t('landing.heroTitleAfter') }}
           </h1>
 
@@ -190,17 +264,26 @@ useLandingSeo()
           </div>
 
           <dl class="midesk-landing-stats">
-            <div v-for="stat in stats" :key="stat.labelKey" class="midesk-landing-stat">
-              <dt class="midesk-landing-stat-value">{{ stat.value }}</dt>
+            <div v-for="stat in LANDING_HERO_STATS" :key="stat.labelKey" class="midesk-landing-stat">
+              <dt class="midesk-landing-stat-value">
+                <LandingCountUp
+                  :value="stat.value"
+                  :suffix="stat.suffix"
+                  :prefix="stat.prefix"
+                  :decimals="stat.decimals"
+                />
+              </dt>
               <dd class="midesk-landing-stat-label">{{ t(stat.labelKey) }}</dd>
             </div>
           </dl>
         </div>
 
-        <LandingProductPreview class="midesk-landing-hero-preview" />
+        <LandingPreviewTilt class="midesk-landing-hero-preview" :style="{ transform: previewTilt }">
+          <LandingProductPreview />
+        </LandingPreviewTilt>
       </div>
 
-      <a href="#features" class="midesk-landing-scroll-hint">
+      <a href="#sections" class="midesk-landing-scroll-hint">
         <span>{{ t('landing.scrollHint') }}</span>
         <UIcon name="i-lucide-chevron-down" class="size-4 midesk-landing-scroll-hint-icon" />
       </a>
@@ -213,17 +296,33 @@ useLandingSeo()
         <div class="midesk-landing-marquee" aria-hidden="true">
           <div class="midesk-landing-marquee-track">
             <span
-              v-for="(item, i) in [...socialItems, ...socialItems]"
-              :key="`${item}-${i}`"
+              v-for="(item, i) in [...socialMarqueeItems, ...socialMarqueeItems]"
+              :key="`${item.type}-${item.key}-${i}`"
               class="midesk-landing-social-pill"
             >
-              <UIcon :name="socialIcons[socialItems[i % socialItems.length]]" class="size-4 text-[var(--color-midesk-accent)]" />
-              {{ t(`landing.socialItems.${socialItems[i % socialItems.length]}`) }}
+              <UIcon
+                :name="getMarqueeIcon(item)"
+                class="size-4 text-[var(--color-midesk-accent)]"
+              />
+              {{
+                item.type === 'social'
+                  ? t(`landing.socialItems.${item.key}`)
+                  : t(`landing.featureItems.${item.key}.title`)
+              }}
             </span>
           </div>
         </div>
       </div>
     </section>
+
+    <LandingSectionsOverview />
+
+    <LandingSectionDetail
+      v-for="(section, index) in LANDING_PRODUCT_SECTIONS"
+      :key="section.key"
+      :section="section"
+      :reversed="index % 2 === 1"
+    />
 
     <!-- Values -->
     <section class="midesk-landing-section midesk-landing-values" aria-labelledby="landing-values-title">
@@ -432,6 +531,19 @@ useLandingSeo()
           </div>
         </LandingReveal>
 
+        <div class="mb-6 flex flex-wrap items-center justify-center gap-2">
+          <UButton
+            v-for="cycle in billingCycleItems"
+            :key="cycle.key"
+            :variant="selectedBillingCycle === cycle.key ? 'solid' : 'outline'"
+            :color="selectedBillingCycle === cycle.key ? 'primary' : 'neutral'"
+            size="sm"
+            @click="selectedBillingCycle = cycle.key"
+          >
+            {{ cycle.label }}
+          </UButton>
+        </div>
+
         <div class="midesk-landing-pricing-grid">
           <LandingReveal
             v-for="(tier, index) in pricingTiers"
@@ -452,21 +564,42 @@ useLandingSeo()
               </UBadge>
 
               <h3>{{ t(`landing.pricingTiers.${tier.key}.name`) }}</h3>
+              <p class="mb-2 text-[var(--color-midesk-muted)]">
+                <UIcon :name="tier.icon" class="me-1 inline size-4 text-[var(--color-midesk-accent)]" />
+                {{ t(`landing.pricingTiers.${tier.key}.subtitle`) }}
+              </p>
               <p class="midesk-landing-pricing-desc">{{ t(`landing.pricingTiers.${tier.key}.desc`) }}</p>
 
               <div class="midesk-landing-pricing-price">
                 <span class="midesk-landing-pricing-amount">
-                  {{ t(`landing.pricingTiers.${tier.key}.price`) }}
+                  {{ pricingByCycle[tier.key][selectedBillingCycle] }}
                 </span>
                 <span class="midesk-landing-pricing-period">
-                  / {{ t(`landing.pricingTiers.${tier.key}.period`) }}
+                  {{ cycleSuffix(selectedBillingCycle) }}
                 </span>
               </div>
+              <p
+                v-if="selectedBillingCycle === 'monthly' && pricingOriginalMonthly[tier.key]"
+                class="text-xs text-[var(--color-midesk-muted)]"
+              >
+                <span class="line-through">{{ pricingOriginalMonthly[tier.key] }}</span>
+                <span class="ms-1">{{ t('landing.pricingDiscountLabel') }}</span>
+              </p>
+              <p
+                v-if="tier.key === 'bronze'"
+                class="text-xs text-emerald-400"
+              >
+                {{ t('landing.pricingBronzeTrial') }}
+              </p>
 
               <ul class="midesk-landing-pricing-features">
-                <li v-for="fi in 4" :key="fi">
-                  <UIcon name="i-lucide-check" class="size-4 shrink-0 text-[var(--color-midesk-accent)]" />
-                  {{ t(`landing.pricingTiers.${tier.key}.features.${fi - 1}`) }}
+                <li v-for="featureKey in pricingFeatureKeys" :key="featureKey">
+                  <UIcon
+                    :name="pricingFeatureMatrix[tier.key][featureKey] ? 'i-lucide-check' : 'i-lucide-x'"
+                    class="size-4 shrink-0"
+                    :class="pricingFeatureMatrix[tier.key][featureKey] ? 'text-emerald-400' : 'text-red-400'"
+                  />
+                  {{ t(`landing.pricingFeatureMatrix.${featureKey}`) }}
                 </li>
               </ul>
 
@@ -546,12 +679,13 @@ useLandingSeo()
           <p class="midesk-landing-footer-tagline">{{ t('landing.footerTagline') }}</p>
         </div>
         <nav class="midesk-landing-footer-nav" :aria-label="t('landing.nav.ariaLabel')">
-          <a href="#features">{{ t('landing.nav.features') }}</a>
-          <a href="#how-it-works">{{ t('landing.nav.howItWorks') }}</a>
-          <a href="#pricing">{{ t('landing.nav.pricing') }}</a>
-          <a href="#faq">{{ t('landing.nav.faq') }}</a>
-          <NuxtLink to="/login">{{ t('landing.login') }}</NuxtLink>
-          <NuxtLink to="/register">{{ t('landing.getStarted') }}</NuxtLink>
+          <a href="#features" class="midesk-landing-footer-link">{{ t('landing.nav.features') }}</a>
+          <a href="#sections" class="midesk-landing-footer-link">{{ t('landing.nav.sections') }}</a>
+          <a href="#how-it-works" class="midesk-landing-footer-link">{{ t('landing.nav.howItWorks') }}</a>
+          <a href="#pricing" class="midesk-landing-footer-link">{{ t('landing.nav.pricing') }}</a>
+          <a href="#faq" class="midesk-landing-footer-link">{{ t('landing.nav.faq') }}</a>
+          <NuxtLink to="/login" class="midesk-landing-footer-link">{{ t('landing.login') }}</NuxtLink>
+          <NuxtLink to="/register" class="midesk-landing-footer-link">{{ t('landing.getStarted') }}</NuxtLink>
         </nav>
         <p class="midesk-landing-footer-copy">{{ t('landing.footer') }}</p>
       </div>

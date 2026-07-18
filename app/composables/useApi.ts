@@ -15,10 +15,10 @@ export function useApi() {
       const data = fetchError.data
 
       if (status === 401) {
-        const authStore = useAuthStore()
-        const tenantStore = useTenantStore()
-        authStore.clearAuth()
-        tenantStore.clearTenant()
+        const authStore = safeAuthStore()
+        const tenantStore = safeTenantStore()
+        authStore?.clearAuth()
+        tenantStore?.clearTenant()
         if (!url.startsWith('/auth/')) {
           const route = useRoute()
           await navigateTo(`/login?redirect=${encodeURIComponent(route.fullPath)}`, { replace: true })

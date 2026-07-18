@@ -9,7 +9,7 @@
         {{ $t('nav.logout') }}
       </UButton>
     </header>
-    <main class="midesk-sa-main px-4 py-5 sm:px-6 sm:py-6 lg:px-8">
+    <main class="midesk-main midesk-sa-main px-4 py-5 sm:px-6 sm:py-6 lg:px-8">
       <div class="mx-auto w-full min-w-0 max-w-7xl">
         <slot />
       </div>
@@ -38,8 +38,15 @@ async function logout() {
     'sidebar topbar'
     'sidebar main';
 }
-.midesk-sa-topbar { grid-area: topbar; }
-.midesk-sa-main { grid-area: main; }
+.midesk-sa-topbar {
+  grid-area: topbar;
+  flex-shrink: 0;
+}
+
+.midesk-sa-main {
+  grid-area: main;
+  min-height: 0;
+}
 @media (max-width: 768px) {
   .midesk-sa-shell {
     grid-template-columns: 1fr;

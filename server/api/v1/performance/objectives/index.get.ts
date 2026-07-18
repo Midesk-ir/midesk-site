@@ -1,5 +1,1 @@
-export default defineEventHandler((event) => {
-  requireAuthWithPermission(event, 'performance:objectives:view')
-  const db = useMockDb()
-  return { data: db.phase5.listObjectives() }
-})
+export default defineEventHandler((event) => proxyToBackend(event, { path: '/objectives' }))

@@ -1,4 +1,5 @@
-import { getActivePinia, setActivePinia } from 'pinia'
+import { getActivePinia, setActivePinia, type Pinia } from 'pinia'
+import { tryUseNuxtApp } from '#app'
 
 const BOOTSTRAP_CACHE_KEY = 'midesk_bootstrap'
 export const BOOTSTRAP_CACHE_VERSION = 2
@@ -16,17 +17,15 @@ export function hasAuthSession() {
 }
 
 export function hasActivePinia() {
-  return !!getActivePinia()
+  return !!ensureActivePinia()
 }
 
-export function ensureActivePinia() {
-  if (getActivePinia()) return true
-  const nuxtApp = useNuxtApp()
-  if (nuxtApp.$pinia) {
-    setActivePinia(nuxtApp.$pinia)
-    return true
-  }
-  return false
+/** Resolve Nuxt Pinia and mark it active for store access outside component setup. */
+export function ensureActivePinia(): Pinia | null {
+  const nuxtApp = tryUseNuxtApp()
+  const pinia = nuxtApp?.$pinia ?? getActivePinia() ?? null
+  if (pinia) setActivePinia(pinia)
+  return pinia
 }
 
 export function readBootstrapCache(): { user: import('~/types').User, permissions: string[] } | null {
@@ -61,11 +60,11 @@ export function clearBootstrapCache() {
 }
 
 export function safeAuthStore() {
-  if (!ensureActivePinia()) return null
-  return useAuthStore()
+  const pinia = ensureActivePinia()
+  return pinia ? useAuthStore(pinia) : null
 }
 
 export function safeTenantStore() {
-  if (!ensureActivePinia()) return null
-  return useTenantStore()
+  const pinia = ensureActivePinia()
+  return pinia ? useTenantStore(pinia) : null
 }

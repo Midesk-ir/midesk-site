@@ -34,6 +34,9 @@ const form = reactive({
 })
 
 const isEdit = computed(() => !!props.worklog)
+const canSubmit = computed(() =>
+  Boolean(form.project_id) && (form.hours * 60 + form.minutes) > 0
+)
 
 async function loadProjects() {
   const data = await api<{ data: Project[] }>('/projects')
@@ -98,14 +101,12 @@ watch(() => form.project_id, (id) => {
 })
 
 async function submit() {
-  if (!form.project_id) return
-  const duration_minutes = form.hours * 60 + form.minutes
-  if (duration_minutes <= 0) return
+  if (!canSubmit.value) return
 
   const payload: CreateWorklogPayload = {
     project_id: form.project_id,
     task_id: form.task_id,
-    duration_minutes,
+    duration_minutes: form.hours * 60 + form.minutes,
     logged_date: form.logged_date,
     description: form.description || undefined
   }
@@ -134,11 +135,15 @@ onMounted(loadProjects)
 </script>
 
 <template>
-  <div :class="compact ? 'space-y-3' : 'midesk-card p-5'">
+  <div :class="compact ? 'worklog-form worklog-form--compact' : 'worklog-form midesk-card p-5'">
     <h2 v-if="!compact" class="midesk-card-header">
       {{ isEdit ? t('common.edit') : t('worklog.form.title') }}
     </h2>
-    <form class="midesk-form-fields" @submit.prevent="submit">
+
+    <form
+      :class="compact ? 'worklog-form__fields' : 'midesk-form-fields'"
+      @submit.prevent="submit"
+    >
       <MideskFormField
         v-if="!presetProjectId"
         :label="t('worklog.form.project')"
@@ -166,46 +171,123 @@ onMounted(loadProjects)
         />
       </MideskFormField>
 
-      <div class="grid gap-4 sm:grid-cols-2">
-        <MideskFormField :label="t('worklog.form.date')" :model-value="form.logged_date" field-class="midesk-ltr-field" required>
-          <MideskDatePicker v-model="form.logged_date" />
-        </MideskFormField>
-        <MideskFormField
-          :label="t('worklog.form.duration')"
-          :model-value="form.hours || form.minutes"
-          required
-          field-class="midesk-ltr-field"
-        >
-          <div class="flex gap-2">
-            <UInput
-              v-model.number="form.hours"
-              type="number"
-              min="0"
-              placeholder=" "
-            />
-            <UInput
-              v-model.number="form.minutes"
-              type="number"
-              min="0"
-              max="59"
-              placeholder=" "
-            />
+      <template v-if="compact">
+        <div class="worklog-form__field">
+          <span class="worklog-form__label">{{ t('worklog.form.date') }}</span>
+          <MideskDatePicker v-model="form.logged_date" size="sm" />
+        </div>
+
+        <div class="worklog-form__field">
+          <span class="worklog-form__label">{{ t('worklog.form.duration') }}</span>
+          <div class="worklog-form__duration">
+            <label class="worklog-form__duration-unit">
+              <UInput
+                v-model.number="form.hours"
+                type="number"
+                min="0"
+                size="sm"
+                class="midesk-ltr-field"
+              />
+              <span>{{ t('worklog.form.hours') }}</span>
+            </label>
+            <label class="worklog-form__duration-unit">
+              <UInput
+                v-model.number="form.minutes"
+                type="number"
+                min="0"
+                max="59"
+                size="sm"
+                class="midesk-ltr-field"
+              />
+              <span>{{ t('worklog.form.minutes') }}</span>
+            </label>
           </div>
+        </div>
+
+        <div class="worklog-form__field">
+          <span class="worklog-form__label">{{ t('worklog.form.description') }}</span>
+          <UTextarea
+            v-model="form.description"
+            :rows="2"
+            size="sm"
+            autoresize
+            :maxrows="4"
+            placeholder=" "
+          />
+        </div>
+
+        <div class="worklog-form__actions">
+          <UButton
+            variant="soft"
+            color="neutral"
+            size="sm"
+            type="button"
+            class="task-modal-action-btn"
+            @click="emit('cancel')"
+          >
+            {{ t('common.cancel') }}
+          </UButton>
+          <UButton
+            type="submit"
+            color="primary"
+            variant="soft"
+            size="sm"
+            class="task-modal-action-btn task-modal-action-btn--primary"
+            :loading="submitting"
+            :disabled="!canSubmit"
+          >
+            {{ isEdit ? t('common.save') : t('worklog.form.submit') }}
+          </UButton>
+        </div>
+      </template>
+
+      <template v-else>
+        <div class="grid gap-4 sm:grid-cols-2">
+          <MideskFormField
+            :label="t('worklog.form.date')"
+            :model-value="form.logged_date"
+            field-class="midesk-ltr-field"
+            required
+          >
+            <MideskDatePicker v-model="form.logged_date" />
+          </MideskFormField>
+          <MideskFormField
+            :label="t('worklog.form.duration')"
+            :model-value="form.hours || form.minutes"
+            required
+            field-class="midesk-ltr-field"
+          >
+            <div class="flex gap-2">
+              <UInput
+                v-model.number="form.hours"
+                type="number"
+                min="0"
+                :placeholder="t('worklog.form.hours')"
+              />
+              <UInput
+                v-model.number="form.minutes"
+                type="number"
+                min="0"
+                max="59"
+                :placeholder="t('worklog.form.minutes')"
+              />
+            </div>
+          </MideskFormField>
+        </div>
+
+        <MideskFormField :label="t('worklog.form.description')" :model-value="form.description">
+          <UTextarea v-model="form.description" :rows="3" placeholder=" " />
         </MideskFormField>
-      </div>
 
-      <MideskFormField :label="t('worklog.form.description')" :model-value="form.description">
-        <UTextarea v-model="form.description" :rows="3" placeholder=" " />
-      </MideskFormField>
-
-      <div class="flex justify-end gap-2">
-        <UButton v-if="isEdit" variant="ghost" type="button" @click="emit('cancel')">
-          {{ t('common.cancel') }}
-        </UButton>
-        <UButton type="submit" color="primary" :loading="submitting">
-          {{ isEdit ? t('common.save') : t('worklog.form.submit') }}
-        </UButton>
-      </div>
+        <div class="flex justify-end gap-2">
+          <UButton v-if="isEdit" variant="outline" color="neutral" type="button" @click="emit('cancel')">
+            {{ t('common.cancel') }}
+          </UButton>
+          <UButton type="submit" color="primary" variant="solid" :loading="submitting" :disabled="!canSubmit">
+            {{ isEdit ? t('common.save') : t('worklog.form.submit') }}
+          </UButton>
+        </div>
+      </template>
     </form>
   </div>
 </template>

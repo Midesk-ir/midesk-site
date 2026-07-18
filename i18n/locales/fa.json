@@ -115,15 +115,49 @@
                 }
             },
             "stats": {
-                "modules": { "value": "15+", "label": "ماژول" },
-                "setup": { "value": "۵ دقیقه", "label": "راه‌اندازی" },
-                "free": { "value": "رایگان", "label": "شروع" }
+                "modules": {
+                    "value": "15+",
+                    "label": "ماژول"
+                },
+                "setup": {
+                    "value": "۵ دقیقه",
+                    "label": "راه‌اندازی"
+                },
+                "free": {
+                    "value": "رایگان",
+                    "label": "شروع"
+                }
             }
+        },
+        "confirmPassword": "تکرار رمز عبور",
+        "passwordMismatch": "رمز عبور و تکرار آن یکسان نیستند",
+        "captcha": {
+            "title": "تأیید امنیتی",
+            "hint": "دکمه را روی ناحیه هدف بکشید",
+            "refresh": "چالش جدید",
+            "success": "تأیید شد",
+            "fail": "کمی خارج از هدف بود؛ دوباره تلاش کنید",
+            "near": "نزدیک هدف هستید…",
+            "drag": "بکشید تا روی هدف قرار بگیرد",
+            "loadError": "بارگذاری چالش ناموفق بود",
+            "required": "لطفاً تأیید امنیتی را کامل کنید"
         }
     },
     "onboarding": {
         "title": "ساخت سازمان",
         "subtitle": "در چند مرحله ساده، فضای کاری تیم خود را بسازید",
+        "chooseTitle": "چطور می‌خواهید ادامه دهید؟",
+        "chooseSubtitle": "می‌توانید همین حالا سازمان بسازید، یا فقط ثبت‌نام کنید و منتظر دعوت به یک سازمان بمانید.",
+        "chooseCreateTitle": "ساخت سازمان جدید",
+        "chooseCreateDesc": "فضای کاری خودتان را بسازید و اعضا را دعوت کنید.",
+        "chooseWaitTitle": "منتظر دعوت می‌مانم",
+        "chooseWaitDesc": "بعداً به‌عنوان عضو یا مدیر به سازمانی که دیگران ساخته‌اند اضافه می‌شوید.",
+        "waitingTitle": "حساب شما آماده است",
+        "waitingSubtitle": "فعلاً به سازمانی متصل نیستید. وقتی دعوت شوید، با ورود دوباره به همان سازمان دسترسی پیدا می‌کنید.",
+        "waitingHint": "اگر دعوت را با ایمیل یا شماره ثبت‌نام‌شده دریافت کردید، کافی است دوباره وارد شوید.",
+        "waitingCreateCta": "می‌خواهم خودم سازمان بسازم",
+        "waitingLogout": "خروج از حساب",
+        "backToChoices": "بازگشت به انتخاب",
         "stepOf": "مرحله {current} از {total}",
         "preview": "پیش‌نمایش تنظیمات",
         "addInvite": "افزودن ایمیل دیگر",
@@ -317,6 +351,10 @@
     "members": {
         "title": "اعضای سازمان",
         "invite": "دعوت عضو",
+        "inviteHint": "ایمیل یا شماره موبایل کاربری را وارد کنید که قبلاً در میدسک ثبت‌نام کرده است.",
+        "emailOrPhone": "ایمیل یا شماره موبایل",
+        "emailOrPhonePlaceholder": "example{'@'}email.com یا 09123456789",
+        "inviteSuccess": "دعوت ارسال شد",
         "role": "نقش",
         "changeRole": "تغییر نقش",
         "roles": {
@@ -345,6 +383,7 @@
     "sprint": {
         "title": "اسپرینت‌ها",
         "create": "اسپرینت جدید",
+        "created": "اسپرینت با موفقیت ایجاد شد",
         "name": "نام اسپرینت",
         "goal": "هدف",
         "startDate": "شروع",
@@ -811,7 +850,13 @@
             "title": "تنظیمات اعلان",
             "subtitle": "کانال اعلان برای هر رویداد",
             "event": "رویداد",
-            "channels": { "in_app": "درون‌برنامه", "email": "ایمیل", "sms": "پیامک", "push": "Push", "telegram": "تلگرام" }
+            "channels": {
+                "in_app": "درون‌برنامه",
+                "email": "ایمیل",
+                "sms": "پیامک",
+                "push": "Push",
+                "telegram": "تلگرام"
+            }
         }
     },
     "common": {
@@ -831,7 +876,8 @@
         "actions": "عملیات",
         "view": "مشاهده",
         "back": "بازگشت",
-        "next": "بعدی"
+        "next": "بعدی",
+        "comingSoon": "به‌زودی"
     },
     "finance": {
         "dashboard": {
@@ -1370,7 +1416,12 @@
                 "price": "۰",
                 "period": "برای همیشه",
                 "cta": "شروع کنید",
-                "features": ["تا ۵ عضو", "۲ پروژه", "کانبان و تسک", "تقویم پایه"]
+                "features": [
+                    "تا ۵ عضو",
+                    "۲ پروژه",
+                    "کانبان و تسک",
+                    "تقویم پایه"
+                ]
             },
             "startup": {
                 "name": "استارتاپ",
@@ -1378,7 +1429,12 @@
                 "price": "تماس",
                 "period": "ماهانه",
                 "cta": "درخواست مشاوره",
-                "features": ["تا ۱۵ عضو", "پروژه نامحدود", "اسپرینت و گزارش", "تایم‌شیت تیمی"]
+                "features": [
+                    "تا ۱۵ عضو",
+                    "پروژه نامحدود",
+                    "اسپرینت و گزارش",
+                    "تایم‌شیت تیمی"
+                ]
             },
             "pro": {
                 "name": "حرفه‌ای",
@@ -1386,7 +1442,12 @@
                 "price": "تماس",
                 "period": "ماهانه",
                 "cta": "شروع با پلن حرفه‌ای",
-                "features": ["همه ماژول‌ها", "CRM و دبیرخانه", "گزارش‌ساز پیشرفته", "پشتیبانی اولویت‌دار"]
+                "features": [
+                    "همه ماژول‌ها",
+                    "CRM و دبیرخانه",
+                    "گزارش‌ساز پیشرفته",
+                    "پشتیبانی اولویت‌دار"
+                ]
             },
             "enterprise": {
                 "name": "سازمانی",
@@ -1394,7 +1455,12 @@
                 "price": "تماس",
                 "period": "سفارشی",
                 "cta": "مشاوره رایگان",
-                "features": ["Self-hosted", "SSO و امنیت", "سفارشی‌سازی", "مدیر اختصاصی"]
+                "features": [
+                    "Self-hosted",
+                    "SSO و امنیت",
+                    "سفارشی‌سازی",
+                    "مدیر اختصاصی"
+                ]
             }
         },
         "faqTitle": "سوالات متداول",
@@ -1445,10 +1511,26 @@
         "members": "عضو",
         "inputPlaceholder": "پیام بنویسید…",
         "loadOlder": "پیام‌های قدیمی‌تر",
-        "actions": { "reply": "پاسخ", "react": "واکنش" },
-        "tabs": { "all": "همه", "dm": "شخصی", "group": "گروه", "channel": "کانال" },
-        "types": { "dm": "پیام خصوصی", "group": "گروه", "channel": "کانال" },
-        "fields": { "type": "نوع", "name": "نام", "members": "اعضا" }
+        "actions": {
+            "reply": "پاسخ",
+            "react": "واکنش"
+        },
+        "tabs": {
+            "all": "همه",
+            "dm": "شخصی",
+            "group": "گروه",
+            "channel": "کانال"
+        },
+        "types": {
+            "dm": "پیام خصوصی",
+            "group": "گروه",
+            "channel": "کانال"
+        },
+        "fields": {
+            "type": "نوع",
+            "name": "نام",
+            "members": "اعضا"
+        }
     },
     "meetings": {
         "create": "جلسه جدید",
@@ -1463,9 +1545,24 @@
         "pageSubtitle": "جلسات آنلاین تیم",
         "emptyTitle": "جلسه‌ای یافت نشد",
         "emptyDesc": "فیلتر دیگری را امتحان کنید یا جلسه جدید بسازید.",
-        "filters": { "today": "امروز", "upcoming": "آینده", "past": "گذشته", "all": "همه" },
-        "status": { "scheduled": "برنامه‌ریزی‌شده", "in_progress": "در حال برگزاری", "completed": "پایان‌یافته", "cancelled": "لغوشده" },
-        "attendeeStatus": { "invited": "دعوت‌شده", "accepted": "پذیرفته", "declined": "رد شده", "attended": "حاضر" },
+        "filters": {
+            "today": "امروز",
+            "upcoming": "آینده",
+            "past": "گذشته",
+            "all": "همه"
+        },
+        "status": {
+            "scheduled": "برنامه‌ریزی‌شده",
+            "in_progress": "در حال برگزاری",
+            "completed": "پایان‌یافته",
+            "cancelled": "لغوشده"
+        },
+        "attendeeStatus": {
+            "invited": "دعوت‌شده",
+            "accepted": "پذیرفته",
+            "declined": "رد شده",
+            "attended": "حاضر"
+        },
         "fields": {
             "title": "عنوان",
             "start": "شروع",
@@ -1491,8 +1588,20 @@
         "copy": "کپی",
         "copied": "کپی شد",
         "emptyTitle": "هنوز درخواستی ندارید",
-        "status": { "queued": "در صف", "processing": "در حال پردازش", "completed": "تکمیل", "failed": "خطا" },
-        "context": { "label": "زمینه", "id": "شناسه زمینه", "general": "عمومی", "project": "پروژه", "task": "تسک", "candidate": "کاندیدا" },
+        "status": {
+            "queued": "در صف",
+            "processing": "در حال پردازش",
+            "completed": "تکمیل",
+            "failed": "خطا"
+        },
+        "context": {
+            "label": "زمینه",
+            "id": "شناسه زمینه",
+            "general": "عمومی",
+            "project": "پروژه",
+            "task": "تسک",
+            "candidate": "کاندیدا"
+        },
         "shortcuts": {
             "label": "میانبرها",
             "taskAnalysis": "تحلیل تسک‌های پروژه",
@@ -1627,9 +1736,24 @@
         "revoked": "دسترسی مهمان لغو شد",
         "emptyTitle": "مهمانی نیست",
         "emptyDesc": "همکاران خارجی را با دسترسی محدود دعوت کنید.",
-        "columns": { "email": "ایمیل", "name": "نام", "role": "نقش", "projects": "پروژه‌ها", "expiresAt": "انقضا" },
-        "roles": { "viewer": "مشاهده‌گر", "commenter": "نظردهنده" },
-        "fields": { "email": "ایمیل", "name": "نام", "role": "نقش", "projects": "پروژه‌ها", "expiresAt": "تاریخ انقضا" }
+        "columns": {
+            "email": "ایمیل",
+            "name": "نام",
+            "role": "نقش",
+            "projects": "پروژه‌ها",
+            "expiresAt": "انقضا"
+        },
+        "roles": {
+            "viewer": "مشاهده‌گر",
+            "commenter": "نظردهنده"
+        },
+        "fields": {
+            "email": "ایمیل",
+            "name": "نام",
+            "role": "نقش",
+            "projects": "پروژه‌ها",
+            "expiresAt": "تاریخ انقضا"
+        }
     },
     "roles": {
         "title": "نقش‌های سفارشی",
@@ -1638,7 +1762,10 @@
         "emptyTitle": "نقش سفارشی نیست",
         "emptyDesc": "نقش‌های با مجموعه دسترسی دلخواه بسازید.",
         "permissionCount": "{count} دسترسی",
-        "fields": { "name": "نام نقش", "permissions": "دسترسی‌ها" },
+        "fields": {
+            "name": "نام نقش",
+            "permissions": "دسترسی‌ها"
+        },
         "groups": {
             "correspondence": "دبیرخانه",
             "surveys": "نظرسنجی",
@@ -1672,9 +1799,20 @@
         "invoiceAmount": "مبلغ",
         "invoiceDue": "سررسید",
         "invoiceStatus": "وضعیت",
-        "invoiceStatuses": { "pending": "در انتظار", "paid": "پرداخت‌شده", "failed": "ناموفق" },
-        "status": { "active": "فعال", "expired": "منقضی", "trial": "آزمایشی" },
-        "usage": { "users": "کاربران", "projects": "پروژه‌ها" }
+        "invoiceStatuses": {
+            "pending": "در انتظار",
+            "paid": "پرداخت‌شده",
+            "failed": "ناموفق"
+        },
+        "status": {
+            "active": "فعال",
+            "expired": "منقضی",
+            "trial": "آزمایشی"
+        },
+        "usage": {
+            "users": "کاربران",
+            "projects": "پروژه‌ها"
+        }
     },
     "files": {
         "title": "فایل‌های پروژه",
@@ -1689,7 +1827,9 @@
         "selectFile": "انتخاب فایل",
         "uploaded": "فایل آپلود شد",
         "deleted": "فایل حذف شد",
-        "newVersion": "نسخه جدید آپلود شد"
+        "newVersion": "نسخه جدید آپلود شد",
+        "uploadComingSoon": "آپلود فایل به‌زودی فعال می‌شود. در حال ساخت امکان آپلود و مدیریت فایل در پروژه‌های مختلف هستیم.",
+        "subtitleComingSoon": "این بخش به‌زودی آماده می‌شود"
     },
     "reports": {
         "title": "گزارش‌ها",
@@ -1727,13 +1867,22 @@
         "daily": "روزانه",
         "weekly": "هفتگی",
         "monthly": "ماهانه",
-        "types": { "table": "جدول", "bar": "ستونی", "line": "خطی", "pie": "دایره‌ای" }
+        "types": {
+            "table": "جدول",
+            "bar": "ستونی",
+            "line": "خطی",
+            "pie": "دایره‌ای"
+        }
     },
     "crm": {
         "dashboardSubtitle": "قیف فروش و فعالیت‌های اخیر",
         "contactsSubtitle": "مدیریت سرنخ‌ها، مشتریان و شرکا",
         "pipelineSubtitle": "فرصت‌ها را بین مراحل فروش جابه‌جا کنید",
-        "nav": { "dashboard": "داشبورد", "contacts": "مخاطبین", "pipeline": "قیف فروش" },
+        "nav": {
+            "dashboard": "داشبورد",
+            "contacts": "مخاطبین",
+            "pipeline": "قیف فروش"
+        },
         "contacts": "مخاطبین",
         "pipeline": "قیف فروش",
         "addContact": "مخاطب جدید",
@@ -1764,7 +1913,11 @@
         "funnel": "قیف فروش",
         "hotOpportunities": "فرصت‌های داغ",
         "recentActivity": "فعالیت اخیر",
-        "tabs": { "info": "پروفایل", "opportunities": "فرصت‌ها", "activities": "فعالیت‌ها" },
+        "tabs": {
+            "info": "پروفایل",
+            "opportunities": "فرصت‌ها",
+            "activities": "فعالیت‌ها"
+        },
         "fields": {
             "name": "نام",
             "company": "شرکت",
@@ -1780,13 +1933,32 @@
             "probability": "احتمال (%)",
             "expectedClose": "تاریخ بسته‌شدن"
         },
-        "types": { "lead": "سرنخ", "customer": "مشتری", "partner": "شریک", "vendor": "تأمین‌کننده" },
-        "filters": { "all": "همه" },
-        "stages": { "lead": "سرنخ", "qualified": "واجد شرایط", "proposal": "پیشنهاد", "negotiation": "مذاکره", "won": "برنده", "lost": "از دست رفته" },
+        "types": {
+            "lead": "سرنخ",
+            "customer": "مشتری",
+            "partner": "شریک",
+            "vendor": "تأمین‌کننده"
+        },
+        "filters": {
+            "all": "همه"
+        },
+        "stages": {
+            "lead": "سرنخ",
+            "qualified": "واجد شرایط",
+            "proposal": "پیشنهاد",
+            "negotiation": "مذاکره",
+            "won": "برنده",
+            "lost": "از دست رفته"
+        },
         "activityType": "نوع فعالیت",
         "activitySubject": "موضوع",
         "activityNotes": "یادداشت",
-        "activityTypes": { "call": "تماس", "email": "ایمیل", "meeting": "جلسه", "note": "یادداشت" }
+        "activityTypes": {
+            "call": "تماس",
+            "email": "ایمیل",
+            "meeting": "جلسه",
+            "note": "یادداشت"
+        }
     },
     "surveys": {
         "pageSubtitle": "ساخت و تحلیل نظرسنجی",
@@ -1807,10 +1979,31 @@
         "questionTitle": "عنوان سؤال",
         "required": "الزامی",
         "avgRating": "میانگین امتیاز",
-        "fields": { "title": "عنوان", "type": "نوع", "status": "وضعیت", "responses": "پاسخ‌ها" },
-        "types": { "survey": "نظرسنجی", "quiz": "آزمون", "form": "فرم" },
-        "statuses": { "draft": "پیش‌نویس", "active": "فعال", "closed": "بسته" },
-        "questionTypes": { "text": "متن کوتاه", "textarea": "متن بلند", "single_choice": "تک‌گزینه‌ای", "multiple_choice": "چندگزینه‌ای", "rating": "امتیاز", "number": "عدد", "date": "تاریخ" }
+        "fields": {
+            "title": "عنوان",
+            "type": "نوع",
+            "status": "وضعیت",
+            "responses": "پاسخ‌ها"
+        },
+        "types": {
+            "survey": "نظرسنجی",
+            "quiz": "آزمون",
+            "form": "فرم"
+        },
+        "statuses": {
+            "draft": "پیش‌نویس",
+            "active": "فعال",
+            "closed": "بسته"
+        },
+        "questionTypes": {
+            "text": "متن کوتاه",
+            "textarea": "متن بلند",
+            "single_choice": "تک‌گزینه‌ای",
+            "multiple_choice": "چندگزینه‌ای",
+            "rating": "امتیاز",
+            "number": "عدد",
+            "date": "تاریخ"
+        }
     },
     "correspondence": {
         "pageSubtitle": "نامه‌نگاری و ارجاع داخلی",
@@ -1836,12 +2029,40 @@
         "action": "اقدام",
         "note": "یادداشت",
         "dueDate": "مهلت",
-        "tabs": { "outgoing": "صادره", "incoming": "وارده", "internal": "داخلی", "archive": "آرشیو" },
-        "types": { "incoming": "وارده", "outgoing": "صادره", "internal": "داخلی" },
-        "statuses": { "draft": "پیش‌نویس", "sent": "ارسال‌شده", "received": "دریافت‌شده", "archived": "آرشیو" },
-        "priorities": { "normal": "عادی", "urgent": "فوری", "confidential": "محرمانه" },
-        "actions": { "review": "بررسی", "approve": "تأیید", "sign": "امضا", "for_info": "اطلاع", "execute": "اقدام" },
-        "routingStatuses": { "pending": "در انتظار", "seen": "مشاهده‌شده", "completed": "تکمیل" }
+        "tabs": {
+            "outgoing": "صادره",
+            "incoming": "وارده",
+            "internal": "داخلی",
+            "archive": "آرشیو"
+        },
+        "types": {
+            "incoming": "وارده",
+            "outgoing": "صادره",
+            "internal": "داخلی"
+        },
+        "statuses": {
+            "draft": "پیش‌نویس",
+            "sent": "ارسال‌شده",
+            "received": "دریافت‌شده",
+            "archived": "آرشیو"
+        },
+        "priorities": {
+            "normal": "عادی",
+            "urgent": "فوری",
+            "confidential": "محرمانه"
+        },
+        "actions": {
+            "review": "بررسی",
+            "approve": "تأیید",
+            "sign": "امضا",
+            "for_info": "اطلاع",
+            "execute": "اقدام"
+        },
+        "routingStatuses": {
+            "pending": "در انتظار",
+            "seen": "مشاهده‌شده",
+            "completed": "تکمیل"
+        }
     },
     "performance": {
         "pageSubtitle": "KPI، OKR و بازبینی عملکرد",
@@ -1851,9 +2072,23 @@
         "employee": "کارمند",
         "period": "دوره",
         "reviewStatus": "وضعیت",
-        "summary": { "on_track": "در مسیر", "at_risk": "در خطر", "off_track": "خارج از مسیر", "completed": "تکمیل" },
-        "statuses": { "on_track": "در مسیر", "at_risk": "در خطر", "off_track": "خارج از مسیر", "completed": "تکمیل" },
-        "reviewStatuses": { "scheduled": "برنامه‌ریزی‌شده", "in_progress": "در جریان", "completed": "تکمیل" }
+        "summary": {
+            "on_track": "در مسیر",
+            "at_risk": "در خطر",
+            "off_track": "خارج از مسیر",
+            "completed": "تکمیل"
+        },
+        "statuses": {
+            "on_track": "در مسیر",
+            "at_risk": "در خطر",
+            "off_track": "خارج از مسیر",
+            "completed": "تکمیل"
+        },
+        "reviewStatuses": {
+            "scheduled": "برنامه‌ریزی‌شده",
+            "in_progress": "در جریان",
+            "completed": "تکمیل"
+        }
     },
     "notes": {
         "create": "یادداشت جدید",
@@ -1865,8 +2100,19 @@
         "untitled": "بدون عنوان",
         "emptyTitle": "یادداشتی نیست",
         "emptyDesc": "اولین یادداشت خود را بسازید.",
-        "filters": { "all": "همه" },
-        "visibility": { "private": "شخصی", "team": "تیمی", "project": "پروژه" },
-        "fields": { "title": "عنوان", "body": "متن", "visibility": "دسترسی", "color": "رنگ" }
+        "filters": {
+            "all": "همه"
+        },
+        "visibility": {
+            "private": "شخصی",
+            "team": "تیمی",
+            "project": "پروژه"
+        },
+        "fields": {
+            "title": "عنوان",
+            "body": "متن",
+            "visibility": "دسترسی",
+            "color": "رنگ"
+        }
     }
 }

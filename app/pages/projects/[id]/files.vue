@@ -1,13 +1,8 @@
 <script setup lang="ts">
-import type { ProjectFile, ProjectFolder } from '~/types/phase5'
-import { storeApi } from '~/utils/api-client'
+definePageMeta({ layout: 'default', middleware: ['auth', 'tenant'] })
 
 const route = useRoute()
 const projectId = computed(() => route.params.id as string)
-
-definePageMeta({ layout: 'default', middleware: ['auth', 'tenant'] })
-
-const { t } = useI18n()
 </script>
 
 <template>

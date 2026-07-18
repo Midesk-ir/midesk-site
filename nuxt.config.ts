@@ -1,4 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { fileURLToPath } from 'node:url'
+
+const componentsDir = fileURLToPath(new URL('./app/components', import.meta.url))
+
 export default defineNuxtConfig({
   ssr: false,
 
@@ -37,12 +41,14 @@ export default defineNuxtConfig({
   ],
 
   devtools: {
-    enabled: true
+    enabled: false
   },
 
   css: ['~/assets/css/main.css', 'apexcharts/dist/apexcharts.css'],
 
   runtimeConfig: {
+    backendApiUrl: process.env.NUXT_BACKEND_API_URL || 'http://localhost:8080/api/v1',
+    captchaSecret: process.env.NUXT_CAPTCHA_SECRET || 'midesk-dev-captcha-secret',
     public: {
       apiBase: '/api/v1',
       siteUrl: process.env.NUXT_PUBLIC_SITE_URL || ''
@@ -65,6 +71,18 @@ export default defineNuxtConfig({
   },
 
   compatibilityDate: '2025-01-15',
+
+  alias: {
+    '/components': componentsDir
+  },
+
+  vite: {
+    resolve: {
+      alias: {
+        '/components': componentsDir
+      }
+    }
+  },
 
   icon: {
     provider: 'server',

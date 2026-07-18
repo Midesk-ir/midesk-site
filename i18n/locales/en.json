@@ -1,1897 +1,2117 @@
 {
-  "app": {
-    "name": "Midesk",
-    "tagline": "Unified organization management platform for modern teams"
-  },
-  "nav": {
-    "dashboard": "Dashboard",
-    "projects": "Projects",
-    "teams": "Teams",
-    "members": "Members",
-    "settings": "Settings",
-    "notifications": "Notifications",
-    "worklog": "Worklog",
-    "calendar": "Calendar",
-    "leave": "Leave",
-    "chat": "Chat",
-    "meetings": "Meetings",
-    "ai": "AI",
-    "notes": "Notes",
-    "correspondence": "Correspondence",
-    "surveys": "Surveys",
-    "crm": "CRM",
-    "reportBuilder": "Report builder",
-    "performance": "Performance",
-    "subscription": "Subscription",
-    "collabSection": "Collaboration",
-    "workSection": "Time & schedule",
-    "businessSection": "Business & processes",
-    "orgSection": "Organization",
-    "sprints": "Sprints",
-    "reports": "Reports",
-    "logout": "Logout",
-    "menu": "Menu",
+    "app": {
+        "name": "Midesk",
+        "tagline": "Unified organization management platform for modern teams"
+    },
+    "nav": {
+        "dashboard": "Dashboard",
+        "projects": "Projects",
+        "teams": "Teams",
+        "members": "Members",
+        "settings": "Settings",
+        "notifications": "Notifications",
+        "worklog": "Worklog",
+        "calendar": "Calendar",
+        "leave": "Leave",
+        "chat": "Chat",
+        "meetings": "Meetings",
+        "ai": "AI",
+        "notes": "Notes",
+        "correspondence": "Correspondence",
+        "surveys": "Surveys",
+        "crm": "CRM",
+        "reportBuilder": "Report builder",
+        "performance": "Performance",
+        "subscription": "Subscription",
+        "collabSection": "Collaboration",
+        "workSection": "Time & schedule",
+        "businessSection": "Business & processes",
+        "orgSection": "Organization",
+        "sprints": "Sprints",
+        "reports": "Reports",
+        "logout": "Logout",
+        "menu": "Menu",
+        "hr": {
+            "section": "Human Resources",
+            "dashboard": "HR Dashboard",
+            "personnel": "Personnel",
+            "attendance": "Attendance",
+            "contracts": "Contracts",
+            "documents": "Documents",
+            "missions": "Missions",
+            "recruitment": "Recruitment",
+            "onboarding": "Onboarding",
+            "settings": "HR Settings"
+        },
+        "finance": {
+            "section": "Finance",
+            "dashboard": "Finance Dashboard",
+            "expenses": "Expenses",
+            "budgets": "Budgets",
+            "invoices": "Invoices",
+            "purchaseRequests": "Purchase requests",
+            "purchaseOrders": "Purchase orders",
+            "vendors": "Vendors",
+            "payroll": "Payroll",
+            "myFinance": "My Finance"
+        }
+    },
+    "auth": {
+        "login": "Login",
+        "register": "Register",
+        "email": "Email",
+        "phone": "Phone",
+        "password": "Password",
+        "name": "Name",
+        "loginWithPassword": "Login with password",
+        "loginWithOtp": "Login with SMS code",
+        "googleLogin": "Sign in with Google",
+        "noAccount": "Don't have an account?",
+        "hasAccount": "Already have an account?",
+        "sendOtp": "Send code",
+        "verifyOtp": "Verify code",
+        "otpSent": "Verification code sent",
+        "otpCode": "Verification code",
+        "resendIn": "Resend in {seconds}s",
+        "resend": "Resend",
+        "demoHint": "Demo: demo{'@'}midesk.io / password",
+        "alreadyLoggedIn": "You are already signed in",
+        "continueToApp": "Continue to dashboard",
+        "switchAccount": "Sign out and use another account",
+        "backHome": "Home",
+        "loginSubtitle": "Sign in to your unified team workspace",
+        "registerSubtitle": "Create your organization in under 5 minutes",
+        "registerCta": "Create free account",
+        "createFreeAccount": "Create free account",
+        "or": "or",
+        "selectedPlan": "Selected plan: {plan}",
+        "registerBenefits": {
+            "free": "No credit card",
+            "fast": "5-minute setup",
+            "secure": "Isolated & secure data"
+        },
+        "showcase": {
+            "eyebrow": "Unified organization platform",
+            "loginTitle": "One login, every tool",
+            "loginSubtitle": "Projects, HR, finance, chat & reports — one dashboard",
+            "registerTitle": "Your team's growth starts here",
+            "registerSubtitle": "Agile teams replace 10 tools with one platform",
+            "slides": {
+                "kanban": {
+                    "title": "Kanban & Agile sprints",
+                    "desc": "Planning, backlog & Burndown reports in one place"
+                },
+                "hr": {
+                    "title": "Full HR suite",
+                    "desc": "Personnel, attendance, contracts & recruitment"
+                },
+                "collab": {
+                    "title": "Real-time collaboration",
+                    "desc": "Team chat, online meetings & shared notes"
+                },
+                "reports": {
+                    "title": "Reports & CRM",
+                    "desc": "Finance dashboards, sales pipeline & custom reports"
+                }
+            },
+            "stats": {
+                "modules": {
+                    "value": "15+",
+                    "label": "modules"
+                },
+                "setup": {
+                    "value": "5 min",
+                    "label": "setup"
+                },
+                "free": {
+                    "value": "Free",
+                    "label": "to start"
+                }
+            }
+        },
+        "confirmPassword": "Confirm password",
+        "passwordMismatch": "Passwords must match",
+        "captcha": {
+            "title": "Security check",
+            "hint": "Drag the handle onto the target zone",
+            "refresh": "New challenge",
+            "success": "Verified",
+            "fail": "Slightly off target — try again",
+            "near": "Almost there…",
+            "drag": "Drag to align with the target",
+            "loadError": "Could not load the challenge",
+            "required": "Please complete the security check"
+        }
+    },
+    "onboarding": {
+        "title": "Create organization",
+        "subtitle": "Set up your team workspace in a few simple steps",
+        "chooseTitle": "How would you like to continue?",
+        "chooseSubtitle": "Create an organization now, or just sign up and wait to be invited to one later.",
+        "chooseCreateTitle": "Create a new organization",
+        "chooseCreateDesc": "Start your own workspace and invite your team.",
+        "chooseWaitTitle": "I'll wait for an invitation",
+        "chooseWaitDesc": "You'll join later as a member, admin, or other role when someone invites you.",
+        "waitingTitle": "Your account is ready",
+        "waitingSubtitle": "You're not connected to an organization yet. When you're invited, sign in again to access that workspace.",
+        "waitingHint": "Use the same email or phone you registered with when accepting an invite.",
+        "waitingCreateCta": "Create an organization instead",
+        "waitingLogout": "Sign out",
+        "backToChoices": "Back to choices",
+        "stepOf": "Step {current} of {total}",
+        "preview": "Settings preview",
+        "addInvite": "Add another email",
+        "regionIRHint": "Jalali calendar, Persian, IRR",
+        "regionINTLHint": "Gregorian calendar, English, USD",
+        "steps": {
+            "org": {
+                "title": "Organization name",
+                "description": "Choose a name your team will recognize"
+            },
+            "region": {
+                "title": "Region",
+                "description": "Default language and calendar are set based on region"
+            },
+            "settings": {
+                "title": "Basic settings",
+                "description": "Calendar, currency, and timezone for your org"
+            },
+            "invite": {
+                "title": "Invite members",
+                "description": "You can always add members later"
+            }
+        },
+        "orgName": "Organization name",
+        "region": "Region",
+        "regionIR": "Iran",
+        "regionINTL": "International",
+        "language": "Language",
+        "calendar": "Calendar",
+        "calendarJalali": "Jalali",
+        "calendarGregorian": "Gregorian",
+        "currency": "Currency",
+        "timezone": "Timezone",
+        "inviteMembers": "Invite members (optional)",
+        "inviteEmail": "Member email",
+        "next": "Next",
+        "back": "Back",
+        "finish": "Get started",
+        "template": {
+            "addStep": "Add step",
+            "newStep": "New step",
+            "step": "Step",
+            "saved": "Template saved",
+            "emptySteps": "No steps yet",
+            "fields": {
+                "title": "Step title",
+                "description": "Description",
+                "assigneeRole": "Assignee role",
+                "deadlineDays": "Deadline (days)"
+            }
+        },
+        "progress": {
+            "started": "Started",
+            "completeStep": "Mark step complete"
+        },
+        "list": {
+            "title": "Active onboardings",
+            "emptyTitle": "No active onboardings",
+            "emptyDesc": "Employee onboarding progress will appear here."
+        },
+        "hrTabs": {
+            "template": "Onboarding template",
+            "employees": "Employees in progress",
+            "selectEmployee": "Select an employee",
+            "selectEmployeeDesc": "Choose an employee from the list to view their onboarding progress."
+        },
+        "status": {
+            "in_progress": "In progress",
+            "completed": "Completed",
+            "cancelled": "Cancelled"
+        }
+    },
+    "dashboard": {
+        "title": "Dashboard",
+        "myTasks": "My tasks",
+        "overdueTasks": "Overdue",
+        "activeProjects": "Active projects",
+        "recentActivity": "Recent activity",
+        "emptyTitle": "No projects yet",
+        "emptyDesc": "Create your first project to get started.",
+        "createProject": "Create first project",
+        "activeSprint": "Active sprint",
+        "weekHours": "Hours this week",
+        "pendingLeave": "Pending leave requests",
+        "attendanceToday": "Today's attendance",
+        "quickLinks": "Quick links",
+        "unreadNotifications": "Unread notifications",
+        "chatUnread": "Unread messages",
+        "meetingsToday": "Meetings today",
+        "meetingsUpcoming": "Upcoming meetings",
+        "myNotes": "My notes",
+        "correspondenceInbox": "Pending routing",
+        "crmHotDeals": "Hot opportunities",
+        "crmOpenDeals": "Open opportunities",
+        "crmContacts": "CRM contacts",
+        "activeSurveys": "Active surveys",
+        "draftSurveys": "Draft surveys",
+        "objectivesAtRisk": "Objectives at risk",
+        "upcomingReviews": "Upcoming reviews",
+        "savedReports": "Saved reports"
+    },
+    "projects": {
+        "title": "Projects",
+        "create": "New project",
+        "name": "Project name",
+        "description": "Description",
+        "members": "Members",
+        "tasks": "Tasks",
+        "progress": "Progress",
+        "tabs": {
+            "kanban": "Kanban",
+            "list": "List",
+            "members": "Members",
+            "sprints": "Sprints",
+            "reports": "Reports",
+            "files": "Files",
+            "settings": "Settings"
+        },
+        "emptyTitle": "No projects found",
+        "emptyDesc": "Create your team's first project."
+    },
+    "kanban": {
+        "columns": {
+            "backlog": "Backlog",
+            "todo": "To Do",
+            "in_progress": "In Progress",
+            "review": "Review",
+            "done": "Done"
+        },
+        "newTask": "New task",
+        "addCard": "Add a card",
+        "addCardPlaceholder": "Enter a title for this card...",
+        "addCardSubmit": "Add card",
+        "filterAssignee": "Assignee",
+        "filterLabel": "Label",
+        "filterPriority": "Priority",
+        "search": "Search...",
+        "all": "All",
+        "wipConfirmTitle": "WIP limit reached",
+        "wipConfirmBody": "This column is at its WIP limit. Move the task anyway?",
+        "wipConfirmAction": "Move anyway"
+    },
+    "datepicker": {
+        "placeholder": "Select date...",
+        "clear": "Clear date"
+    },
+    "task": {
+        "title": "Title",
+        "description": "Description",
+        "status": "Status",
+        "priority": "Priority",
+        "assignee": "Assignee",
+        "dueDate": "Due date",
+        "labels": "Labels",
+        "checklist": "Checklist",
+        "comments": "Comments",
+        "addComment": "Add a comment...",
+        "addChecklistItem": "Add item",
+        "priorities": {
+            "low": "Low",
+            "medium": "Medium",
+            "high": "High",
+            "critical": "Critical"
+        },
+        "unassigned": "Unassigned",
+        "storyPoints": "Story points",
+        "sprint": "Sprint",
+        "logTime": "Log time",
+        "details": "Task details",
+        "addDescription": "Add a more detailed description...",
+        "detailsPanel": "Details",
+        "activity": "Activity",
+        "noComments": "No comments yet",
+        "noChecklist": "No checklist items",
+        "lastUpdated": "Updated",
+        "saving": "Saving...",
+        "saved": "Saved",
+        "markComplete": "Mark complete",
+        "markIncomplete": "Mark incomplete",
+        "postComment": "Post comment",
+        "commentShortcut": "Ctrl+Enter to post",
+        "overdue": "Overdue"
+    },
+    "teams": {
+        "title": "Teams",
+        "members": "Members",
+        "emptyTitle": "No teams found",
+        "emptyDesc": "Organization teams will appear here."
+    },
+    "members": {
+        "title": "Organization members",
+        "invite": "Invite member",
+        "inviteHint": "Enter the email or phone number of a user already registered in Midesk.",
+        "emailOrPhone": "Email or phone number",
+        "emailOrPhonePlaceholder": "example{'@'}email.com or 09123456789",
+        "inviteSuccess": "Invitation sent",
+        "role": "Role",
+        "changeRole": "Change role",
+        "roles": {
+            "OWNER": "Owner",
+            "ADMIN": "Admin",
+            "MANAGER": "Manager",
+            "MEMBER": "Member"
+        }
+    },
+    "settings": {
+        "title": "Settings",
+        "profile": "Profile",
+        "organization": "Organization",
+        "tabs": {
+            "profileDesc": "Your account name and password",
+            "organizationDesc": "Organization name, calendar, currency, and timezone",
+            "guestsDesc": "Invite external guests with limited project access",
+            "rolesDesc": "Define custom roles and permission sets"
+        },
+        "avatar": "Avatar",
+        "changePassword": "Change password",
+        "newPassword": "New password",
+        "save": "Save",
+        "saved": "Saved"
+    },
+    "sprint": {
+        "title": "Sprints",
+        "create": "New sprint",
+        "created": "Sprint created successfully",
+        "name": "Sprint name",
+        "goal": "Goal",
+        "startDate": "Start",
+        "endDate": "End",
+        "status": "Status",
+        "backlog": "Backlog",
+        "active": "Active",
+        "planning": "Planning",
+        "review": "Review",
+        "closed": "Closed",
+        "activate": "Activate",
+        "close": "Close sprint",
+        "assignToSprint": "Add to sprint",
+        "removeFromSprint": "Remove from sprint",
+        "moveToBacklog": "Move to backlog",
+        "moveToNext": "Move to next sprint",
+        "points": "Points",
+        "tasks": "Tasks",
+        "done": "Done",
+        "daysRemaining": "{days} days left",
+        "progress": "Progress",
+        "emptyTitle": "No sprints yet",
+        "emptyDesc": "Create the first sprint for this project.",
+        "confirmActivate": "The current sprint will be closed. Continue?",
+        "confirmClose": "Close sprint — where should open tasks go?",
+        "noActive": "No active sprint",
+        "selectSprint": "Select sprint"
+    },
+    "columns": {
+        "settings": "Column settings",
+        "wip": "WIP limit",
+        "reorder": "Reorder",
+        "wipLimit": "WIP limit",
+        "add": "New column",
+        "name": "Column name",
+        "color": "Color",
+        "isDone": "Done column",
+        "currentCount": "Current count",
+        "saveOrder": "Save order"
+    },
+    "swimlane": {
+        "mode": "Swimlane",
+        "none": "No swimlane",
+        "assignee": "By assignee",
+        "priority": "By priority",
+        "labels": {
+            "unassigned": "Unassigned",
+            "low": "Low priority",
+            "medium": "Medium priority",
+            "high": "High priority",
+            "critical": "Critical priority"
+        }
+    },
+    "worklog": {
+        "title": "Worklog",
+        "form": {
+            "title": "Log time",
+            "project": "Project",
+            "task": "Task (optional)",
+            "date": "Date",
+            "duration": "Duration",
+            "hours": "Hours",
+            "minutes": "Minutes",
+            "description": "Description",
+            "submit": "Log"
+        },
+        "table": {
+            "date": "Date",
+            "project": "Project",
+            "task": "Task",
+            "duration": "Duration",
+            "description": "Description",
+            "emptyTitle": "No time logged",
+            "emptyDesc": "Log your first worklog entry."
+        },
+        "summary": {
+            "title": "Week summary",
+            "total": "Total",
+            "today": "Today",
+            "thisWeek": "This week"
+        },
+        "team": {
+            "title": "Team worklog",
+            "member": "Member",
+            "emptyTitle": "No team entries",
+            "emptyDesc": "No team time logged in this range."
+        }
+    },
+    "calendar": {
+        "title": "Calendar",
+        "month": "Month",
+        "week": "Week",
+        "today": "Today",
+        "newEvent": "New event",
+        "eventTitle": "Title",
+        "eventType": "Event type",
+        "allDay": "All day",
+        "holidays": "Holidays",
+        "shifts": "Shifts",
+        "types": {
+            "meeting": "Meeting",
+            "deadline": "Deadline",
+            "reminder": "Reminder",
+            "other": "Other"
+        },
+        "emptyTitle": "No events",
+        "emptyDesc": "Add a new event or meeting."
+    },
+    "leave": {
+        "title": "Leave",
+        "balance": {
+            "title": "Leave balance",
+            "total": "Total",
+            "used": "Used",
+            "remaining": "Remaining",
+            "days": "days",
+            "hours": "hours"
+        },
+        "request": {
+            "title": "Leave request",
+            "type": "Leave type",
+            "startDate": "Start",
+            "endDate": "End",
+            "duration": "Duration",
+            "note": "Note",
+            "submit": "Submit request",
+            "emptyTitle": "No requests",
+            "emptyDesc": "Submit a new leave request."
+        },
+        "approve": "Approve",
+        "reject": "Reject",
+        "rejectReason": "Rejection reason",
+        "pendingApprovals": "Pending approvals",
+        "approvalChain": {
+            "manager": "Manager",
+            "hr": "HR"
+        },
+        "status": {
+            "pending": "Pending",
+            "approved": "Approved",
+            "rejected": "Rejected",
+            "cancelled": "Cancelled"
+        },
+        "policy": {
+            "title": "Leave policy",
+            "listTitle": "Configured policies",
+            "editTitle": "Edit policy",
+            "emptyTitle": "No policies configured",
+            "approvers": "approvers",
+            "autoApprove": "Auto approve",
+            "autoApproveHint": "Skip approval workflow for this leave type",
+            "approvalChain": "Approval chain",
+            "approvalChainHint": "Approvers in order — first to last",
+            "minNoticeDays": "Minimum notice (days)",
+            "allowNegativeBalance": "Allow negative balance",
+            "allowNegativeBalanceHint": "Permit requests exceeding remaining balance"
+        },
+        "report": {
+            "title": "Leave report",
+            "totalDays": "Total days",
+            "export": "Export CSV",
+            "emptyTitle": "No report data",
+            "emptyDesc": "Leave usage will appear here once recorded.",
+            "columns": {
+                "member": "Member",
+                "total": "Total",
+                "byType": "By type",
+                "byMonth": "By month"
+            }
+        }
+    },
     "hr": {
-      "section": "Human Resources",
-      "dashboard": "HR Dashboard",
-      "personnel": "Personnel",
-      "attendance": "Attendance",
-      "contracts": "Contracts",
-      "documents": "Documents",
-      "missions": "Missions",
-      "recruitment": "Recruitment",
-      "onboarding": "Onboarding",
-      "settings": "HR Settings"
+        "dashboard": {
+            "title": "HR Dashboard",
+            "personnelCount": "Active personnel",
+            "attendanceToday": "Attendance today",
+            "expiringContracts": "Expiring contracts",
+            "newCandidates": "New candidates",
+            "activeOnboarding": "Active onboarding",
+            "present": "Present",
+            "absent": "Absent",
+            "onLeave": "On leave",
+            "onMission": "On mission",
+            "quickLinks": "Quick links"
+        },
+        "personnel": {
+            "title": "Personnel",
+            "emptyTitle": "No personnel",
+            "emptyDesc": "Add employees to get started.",
+            "deleteConfirm": "Are you sure you want to delete this employee?",
+            "filters": {
+                "search": "Search by name or code…",
+                "allStatus": "All statuses",
+                "allDepartments": "All departments"
+            },
+            "columns": {
+                "name": "Name",
+                "code": "Employee code",
+                "department": "Department",
+                "jobTitle": "Job title",
+                "hireDate": "Hire date",
+                "status": "Status"
+            },
+            "status": {
+                "active": "Active",
+                "on_leave": "On leave",
+                "terminated": "Terminated"
+            },
+            "employmentType": {
+                "full_time": "Full time",
+                "part_time": "Part time",
+                "contract": "Contract",
+                "intern": "Intern"
+            },
+            "tabs": {
+                "personal": "Personal",
+                "job": "Job",
+                "contracts": "Contracts",
+                "documents": "Documents",
+                "attendance": "Attendance",
+                "leave": "Leave"
+            },
+            "fields": {
+                "user": "User",
+                "employeeCode": "Employee code",
+                "hireDate": "Hire date",
+                "employmentType": "Employment type",
+                "jobTitle": "Job title",
+                "department": "Department",
+                "nationalId": "National ID",
+                "birthDate": "Birth date",
+                "address": "Address",
+                "emergencyContact": "Emergency contact",
+                "email": "Email",
+                "phone": "Phone"
+            }
+        },
+        "attendance": {
+            "emptyTitle": "No attendance records",
+            "emptyDesc": "Attendance data will appear here.",
+            "columns": {
+                "member": "Member",
+                "date": "Date",
+                "checkIn": "Check in",
+                "checkOut": "Check out",
+                "effective": "Effective",
+                "overtime": "Overtime",
+                "status": "Status"
+            },
+            "status": {
+                "present": "Present",
+                "late": "Late",
+                "absent": "Absent",
+                "half_day": "Half day",
+                "on_leave": "On leave",
+                "mission": "Mission",
+                "holiday": "Holiday"
+            },
+            "clock": {
+                "title": "Today's attendance",
+                "checkIn": "Check in",
+                "checkOut": "Check out",
+                "startBreak": "Start break",
+                "endBreak": "End break",
+                "checkInAt": "Checked in at",
+                "checkOutAt": "Checked out at",
+                "duration": "Time on site",
+                "doneForToday": "You have checked out for today."
+            },
+            "clockStatus": {
+                "not_started": "Not started",
+                "checked_in": "Checked in",
+                "on_break": "On break",
+                "checked_out": "Checked out"
+            },
+            "summary": {
+                "title": "Monthly summary",
+                "present": "Present days",
+                "late": "Late days",
+                "absent": "Absent days",
+                "overtime": "Overtime"
+            },
+            "myAttendance": "My attendance",
+            "todayOverview": "Today's overview",
+            "reportMonth": "Report month",
+            "monthlyReport": "Monthly report",
+            "history": "History"
+        },
+        "contracts": {
+            "emptyTitle": "No contracts",
+            "emptyDesc": "Employment contracts will appear here.",
+            "create": "New contract",
+            "renew": "Renew",
+            "columns": {
+                "employee": "Employee",
+                "type": "Type",
+                "startDate": "Start date",
+                "endDate": "End date",
+                "salary": "Salary",
+                "status": "Status"
+            },
+            "type": {
+                "permanent": "Permanent",
+                "fixed_term": "Fixed term",
+                "trial": "Trial",
+                "intern": "Intern"
+            },
+            "status": {
+                "active": "Active",
+                "expired": "Expired",
+                "terminated": "Terminated",
+                "renewed": "Renewed"
+            },
+            "fields": {
+                "personnel": "Employee",
+                "type": "Contract type",
+                "startDate": "Start date",
+                "endDate": "End date",
+                "salary": "Base salary",
+                "currency": "Currency",
+                "attachment": "Contract attachment"
+            },
+            "expiryAlert": {
+                "title": "Contracts expiring soon",
+                "daysLeft": "{days} days left"
+            }
+        },
+        "documents": {
+            "upload": "Upload document",
+            "uploadSuccess": "Document uploaded",
+            "download": "Download",
+            "listTitle": "Documents",
+            "emptyTitle": "No documents",
+            "emptyDesc": "Uploaded documents will appear here.",
+            "filters": {
+                "allCategories": "All categories",
+                "allPersonnel": "All personnel"
+            },
+            "fields": {
+                "personnel": "Employee",
+                "category": "Category",
+                "file": "File"
+            },
+            "category": {
+                "contract": "Contract",
+                "id": "ID",
+                "certificate": "Certificate",
+                "other": "Other"
+            }
+        },
+        "missions": {
+            "submit": "Submit mission",
+            "newRequest": "New mission request",
+            "myMissions": "My missions",
+            "allMissions": "All missions",
+            "emptyTitle": "No missions",
+            "emptyDesc": "Mission requests will appear here.",
+            "fields": {
+                "destination": "Destination",
+                "startDate": "Start date",
+                "endDate": "End date",
+                "transport": "Transport",
+                "description": "Description"
+            },
+            "status": {
+                "pending": "Pending",
+                "approved": "Approved",
+                "rejected": "Rejected",
+                "completed": "Completed"
+            }
+        },
+        "settings": {
+            "title": "HR settings",
+            "workStart": "Work start time",
+            "workEnd": "Work end time",
+            "lateThreshold": "Late threshold (minutes)",
+            "overtimeEnabled": "Overtime tracking",
+            "overtimeEnabledHint": "Enable overtime calculation",
+            "contractExpiryAlert": "Contract expiry alert (days)"
+        }
+    },
+    "recruitment": {
+        "priority": {
+            "low": "Low",
+            "medium": "Medium",
+            "high": "High",
+            "urgent": "Urgent"
+        },
+        "requisitions": {
+            "create": "Create requisition",
+            "emptyTitle": "No requisitions",
+            "emptyDesc": "Open job requisitions will appear here.",
+            "columns": {
+                "title": "Title",
+                "department": "Department",
+                "positions": "Positions",
+                "priority": "Priority",
+                "candidates": "Candidates",
+                "status": "Status",
+                "created": "Created"
+            },
+            "status": {
+                "open": "Open",
+                "filled": "Filled",
+                "cancelled": "Cancelled"
+            },
+            "fields": {
+                "title": "Job title",
+                "department": "Department",
+                "positions": "Number of positions",
+                "priority": "Priority"
+            }
+        },
+        "candidateStatus": {
+            "new": "New",
+            "screening": "Screening",
+            "interview": "Interview",
+            "offer": "Offer",
+            "hired": "Hired",
+            "rejected": "Rejected"
+        },
+        "candidate": {
+            "title": "Candidate",
+            "hire": "Hire",
+            "hiredSuccess": "Candidate hired successfully",
+            "resume": "Resume",
+            "downloadResume": "Download resume"
+        },
+        "interview": {
+            "title": "Interviews",
+            "schedule": "Schedule interview",
+            "scheduledSuccess": "Interview scheduled",
+            "submitFeedback": "Submit feedback",
+            "feedbackSuccess": "Feedback submitted",
+            "avgScore": "Avg. score",
+            "emptyTitle": "No interviews scheduled",
+            "fields": {
+                "interviewer": "Interviewer",
+                "type": "Interview type",
+                "scheduledAt": "Scheduled at",
+                "score": "Score",
+                "feedback": "Feedback"
+            },
+            "type": {
+                "phone": "Phone",
+                "video": "Video",
+                "in_person": "In person",
+                "technical": "Technical"
+            },
+            "status": {
+                "scheduled": "Scheduled",
+                "completed": "Completed",
+                "cancelled": "Cancelled",
+                "no_show": "No show"
+            }
+        }
+    },
+    "notifications": {
+        "title": "Notifications",
+        "markAllRead": "Mark all read",
+        "emptyTitle": "No notifications",
+        "emptyDesc": "New notifications will appear here.",
+        "settings": {
+            "title": "Notification settings",
+            "subtitle": "Delivery channel per event type",
+            "event": "Event",
+            "channels": {
+                "in_app": "In-app",
+                "email": "Email",
+                "sms": "SMS",
+                "push": "Push",
+                "telegram": "Telegram"
+            }
+        }
+    },
+    "common": {
+        "loading": "Loading...",
+        "error": "Failed to load",
+        "retry": "Retry",
+        "cancel": "Cancel",
+        "save": "Save",
+        "create": "Create",
+        "edit": "Edit",
+        "delete": "Delete",
+        "close": "Close",
+        "noResults": "No results found",
+        "fillRequired": "Please fill in all required fields",
+        "select": "Select",
+        "optional": "Optional",
+        "actions": "Actions",
+        "view": "View",
+        "back": "Back",
+        "next": "Next",
+        "comingSoon": "Coming soon"
     },
     "finance": {
-      "section": "Finance",
-      "dashboard": "Finance Dashboard",
-      "expenses": "Expenses",
-      "budgets": "Budgets",
-      "invoices": "Invoices",
-      "purchaseRequests": "Purchase requests",
-      "purchaseOrders": "Purchase orders",
-      "vendors": "Vendors",
-      "payroll": "Payroll",
-      "myFinance": "My Finance"
-    }
-  },
-  "auth": {
-    "login": "Login",
-    "register": "Register",
-    "email": "Email",
-    "phone": "Phone",
-    "password": "Password",
-    "name": "Name",
-    "loginWithPassword": "Login with password",
-    "loginWithOtp": "Login with SMS code",
-    "googleLogin": "Sign in with Google",
-    "noAccount": "Don't have an account?",
-    "hasAccount": "Already have an account?",
-    "sendOtp": "Send code",
-    "verifyOtp": "Verify code",
-    "otpSent": "Verification code sent",
-    "otpCode": "Verification code",
-    "resendIn": "Resend in {seconds}s",
-    "resend": "Resend",
-    "demoHint": "Demo: demo{'@'}midesk.io / password",
-    "alreadyLoggedIn": "You are already signed in",
-    "continueToApp": "Continue to dashboard",
-    "switchAccount": "Sign out and use another account",
-    "backHome": "Home",
-    "loginSubtitle": "Sign in to your unified team workspace",
-    "registerSubtitle": "Create your organization in under 5 minutes",
-    "registerCta": "Create free account",
-    "createFreeAccount": "Create free account",
-    "or": "or",
-    "selectedPlan": "Selected plan: {plan}",
-    "registerBenefits": {
-      "free": "No credit card",
-      "fast": "5-minute setup",
-      "secure": "Isolated & secure data"
-    },
-    "showcase": {
-      "eyebrow": "Unified organization platform",
-      "loginTitle": "One login, every tool",
-      "loginSubtitle": "Projects, HR, finance, chat & reports — one dashboard",
-      "registerTitle": "Your team's growth starts here",
-      "registerSubtitle": "Agile teams replace 10 tools with one platform",
-      "slides": {
-        "kanban": {
-          "title": "Kanban & Agile sprints",
-          "desc": "Planning, backlog & Burndown reports in one place"
+        "dashboard": {
+            "title": "Finance Dashboard",
+            "subtitle": "Budget, expenses and payroll summary",
+            "pendingExpenses": "Pending expenses",
+            "overdueInvoices": "Overdue invoices",
+            "latestPayslip": "Latest payslip",
+            "myPendingExpenses": "My pending expenses",
+            "payrollStatus": "Current payroll",
+            "budgetCenters": "Cost centers",
+            "payroll": {
+                "not_calculated": "Not calculated",
+                "calculated": "Calculated",
+                "approved": "Approved",
+                "paid": "Paid"
+            },
+            "emptyTitle": "Nothing to show",
+            "emptyDesc": "Finance summary is not loaded yet or you lack access.",
+            "quickLinks": "Quick links"
         },
-        "hr": {
-          "title": "Full HR suite",
-          "desc": "Personnel, attendance, contracts & recruitment"
+        "expenses": {
+            "newExpense": "New expense",
+            "pageSubtitle": "Submit, track and approve organizational expenses",
+            "myExpenses": "My expenses",
+            "detail": "Expense details",
+            "emptyTitle": "No expenses yet",
+            "emptyDesc": "Create your first expense.",
+            "columns": {
+                "date": "Date",
+                "user": "User",
+                "category": "Category",
+                "amount": "Amount",
+                "status": "Status"
+            },
+            "fields": {
+                "category": "Category",
+                "date": "Date",
+                "costCenter": "Cost center",
+                "budget": "Budget",
+                "amount": "Amount",
+                "currency": "Currency",
+                "description": "Description",
+                "receipt": "Receipt / attachment"
+            },
+            "filters": {
+                "status": "Status",
+                "category": "Category",
+                "allStatuses": "All statuses",
+                "allCategories": "All categories",
+                "fromDate": "From date",
+                "toDate": "To date"
+            },
+            "categories": {
+                "travel": "Travel",
+                "office": "Office",
+                "software": "Software",
+                "meals": "Meals",
+                "equipment": "Equipment",
+                "other": "Other"
+            },
+            "status": {
+                "draft": "Draft",
+                "submitted": "Submitted",
+                "manager_review": "Manager review",
+                "finance_review": "Finance review",
+                "approved": "Approved",
+                "ready_to_pay": "Ready to pay",
+                "paid": "Paid",
+                "rejected": "Rejected"
+            },
+            "flow": {
+                "draft": "Draft",
+                "submitted": "Submit",
+                "manager": "Manager",
+                "finance": "Finance",
+                "approved": "Approved",
+                "paid": "Paid",
+                "rejected": "Rejected"
+            },
+            "actions": {
+                "create": "Create expense",
+                "created": "Expense created",
+                "submit": "Submit for approval",
+                "financeApprove": "Finance approve",
+                "pay": "Pay"
+            },
+            "rejectTitle": "Reject expense",
+            "rejectHint": "Enter a rejection reason (optional).",
+            "rejectReason": "Rejection reason"
         },
-        "collab": {
-          "title": "Real-time collaboration",
-          "desc": "Team chat, online meetings & shared notes"
+        "payroll": {
+            "payslipTitle": "Payslip details",
+            "baseSalary": "Base salary",
+            "overtime": "Overtime",
+            "gross": "Gross",
+            "net": "Net pay",
+            "pageSubtitle": "Calculate, approve and pay monthly payroll",
+            "calculateTitle": "Calculate payroll",
+            "selectedCount": "{count} selected",
+            "emptyTitle": "No payroll records",
+            "emptyDesc": "Pick a period and run payroll calculation.",
+            "fields": {
+                "period": "Period (month)"
+            },
+            "columns": {
+                "employee": "Employee",
+                "period": "Period",
+                "base": "Base",
+                "overtime": "Overtime",
+                "deductions": "Deductions",
+                "net": "Net",
+                "status": "Status"
+            },
+            "status": {
+                "draft": "Draft",
+                "calculated": "Calculated",
+                "approved": "Approved",
+                "paid": "Paid"
+            },
+            "actions": {
+                "calculate": "Calculate payroll",
+                "calculated": "Payroll calculated",
+                "approve": "Approve",
+                "bulkPay": "Pay {count} selected",
+                "bulkPaid": "Bulk payment completed"
+            }
         },
-        "reports": {
-          "title": "Reports & CRM",
-          "desc": "Finance dashboards, sales pipeline & custom reports"
+        "invoices": {
+            "pageSubtitle": "Manage vendor invoices",
+            "newInvoice": "New invoice",
+            "emptyTitle": "No invoices yet",
+            "emptyDesc": "Create your first invoice.",
+            "fields": {
+                "vendor": "Vendor",
+                "number": "Invoice number",
+                "issueDate": "Issue date",
+                "dueDate": "Due date",
+                "amount": "Amount",
+                "currency": "Currency",
+                "description": "Description"
+            },
+            "columns": {
+                "number": "Number",
+                "vendor": "Vendor",
+                "dueDate": "Due date",
+                "amount": "Amount",
+                "status": "Status"
+            },
+            "filters": {
+                "status": "Status",
+                "allStatuses": "All statuses"
+            },
+            "status": {
+                "draft": "Draft",
+                "sent": "Sent",
+                "partially_paid": "Partially paid",
+                "paid": "Paid",
+                "overdue": "Overdue",
+                "cancelled": "Cancelled"
+            },
+            "actions": {
+                "create": "Create invoice",
+                "created": "Invoice created",
+                "pay": "Pay",
+                "paid": "Invoice paid"
+            }
+        },
+        "vendors": {
+            "pageSubtitle": "Organization vendor directory",
+            "newVendor": "New vendor",
+            "emptyTitle": "No vendors yet",
+            "emptyDesc": "Add your first vendor to get started.",
+            "fields": {
+                "name": "Name",
+                "code": "Code",
+                "contact": "Contact name",
+                "email": "Email",
+                "phone": "Phone",
+                "taxId": "Tax ID"
+            },
+            "columns": {
+                "name": "Name",
+                "code": "Code",
+                "contact": "Contact",
+                "email": "Email"
+            },
+            "actions": {
+                "create": "Add vendor",
+                "created": "Vendor added"
+            }
+        },
+        "purchaseRequests": {
+            "pageSubtitle": "Equipment and supply purchase requests",
+            "newRequest": "New request",
+            "emptyTitle": "No purchase requests",
+            "emptyDesc": "Create a purchase request to begin the approval flow.",
+            "fields": {
+                "title": "Title",
+                "description": "Description",
+                "items": "Line items",
+                "itemName": "Item name",
+                "qty": "Qty",
+                "unitPrice": "Unit price",
+                "total": "Total"
+            },
+            "columns": {
+                "title": "Title",
+                "user": "Requester",
+                "amount": "Amount",
+                "date": "Date",
+                "status": "Status"
+            },
+            "status": {
+                "draft": "Draft",
+                "submitted": "Submitted",
+                "owner_review": "Manager review",
+                "finance_review": "Finance review",
+                "approved": "Approved",
+                "rejected": "Rejected",
+                "converted": "Converted to PO"
+            },
+            "actions": {
+                "create": "Create request",
+                "created": "Request created",
+                "addItem": "Add line",
+                "submit": "Submit",
+                "ownerApprove": "Manager approve",
+                "financeApprove": "Finance approve",
+                "convert": "Convert to PO",
+                "converted": "Purchase order created"
+            }
+        },
+        "purchaseOrders": {
+            "pageSubtitle": "Issued purchase orders",
+            "emptyTitle": "No purchase orders",
+            "emptyDesc": "Approved purchase requests can be converted into orders here.",
+            "columns": {
+                "title": "Title",
+                "vendor": "Vendor",
+                "amount": "Amount",
+                "date": "Date",
+                "status": "Status"
+            },
+            "status": {
+                "draft": "Draft",
+                "issued": "Issued",
+                "received": "Received",
+                "cancelled": "Cancelled"
+            }
+        },
+        "budgets": {
+            "overview": "Budget utilization",
+            "overviewHint": "Spending per cost center against the current year budget",
+            "pageSubtitle": "Track organizational budgets and cost centers",
+            "budget": "Budget",
+            "spent": "Spent",
+            "utilized": "utilized",
+            "remaining": "Remaining",
+            "costCenters": "Cost centers",
+            "newBudget": "New budget",
+            "emptyTitle": "No budget data",
+            "noCostCenters": "No cost centers defined",
+            "fields": {
+                "costCenter": "Cost center",
+                "year": "Year",
+                "amount": "Budget amount"
+            },
+            "actions": {
+                "create": "Create budget",
+                "created": "Budget created"
+            }
+        },
+        "my": {
+            "subtitle": "Payslips, expenses and payment receipts",
+            "tabs": {
+                "payslips": "Payslips",
+                "expenses": "My expenses",
+                "receipts": "Receipts"
+            },
+            "payslipsEmpty": "No payslips available",
+            "receiptsEmpty": "No receipts available",
+            "payslipStatus": {
+                "calculated": "Calculated",
+                "approved": "Approved",
+                "paid": "Paid"
+            }
         }
-      },
-      "stats": {
-        "modules": { "value": "15+", "label": "modules" },
-        "setup": { "value": "5 min", "label": "setup" },
-        "free": { "value": "Free", "label": "to start" }
-      }
-    }
-  },
-  "onboarding": {
-    "title": "Create organization",
-    "subtitle": "Set up your team workspace in a few simple steps",
-    "stepOf": "Step {current} of {total}",
-    "preview": "Settings preview",
-    "addInvite": "Add another email",
-    "regionIRHint": "Jalali calendar, Persian, IRR",
-    "regionINTLHint": "Gregorian calendar, English, USD",
-    "steps": {
-      "org": {
-        "title": "Organization name",
-        "description": "Choose a name your team will recognize"
-      },
-      "region": {
-        "title": "Region",
-        "description": "Default language and calendar are set based on region"
-      },
-      "settings": {
-        "title": "Basic settings",
-        "description": "Calendar, currency, and timezone for your org"
-      },
-      "invite": {
-        "title": "Invite members",
-        "description": "You can always add members later"
-      }
     },
-    "orgName": "Organization name",
-    "region": "Region",
-    "regionIR": "Iran",
-    "regionINTL": "International",
-    "language": "Language",
-    "calendar": "Calendar",
-    "calendarJalali": "Jalali",
-    "calendarGregorian": "Gregorian",
-    "currency": "Currency",
-    "timezone": "Timezone",
-    "inviteMembers": "Invite members (optional)",
-    "inviteEmail": "Member email",
-    "next": "Next",
-    "back": "Back",
-    "finish": "Get started",
-    "template": {
-      "addStep": "Add step",
-      "newStep": "New step",
-      "step": "Step",
-      "saved": "Template saved",
-      "emptySteps": "No steps yet",
-      "fields": {
-        "title": "Step title",
-        "description": "Description",
-        "assigneeRole": "Assignee role",
-        "deadlineDays": "Deadline (days)"
-      }
+    "landing": {
+        "nav": {
+            "ariaLabel": "Main navigation",
+            "mobileMenu": "Mobile menu",
+            "features": "Features",
+            "howItWorks": "How it works",
+            "pricing": "Pricing",
+            "faq": "FAQ"
+        },
+        "eyebrow": "Unified organization platform",
+        "heroTitleBefore": "Everything your",
+        "heroTitleHighlight": "modern team",
+        "heroTitleAfter": "needs in one place",
+        "heroSubtitle": "Projects, HR, finance, CRM, chat, meetings & AI — no tool sprawl. Built for agile teams in Iran and worldwide.",
+        "heroTrust": "No credit card · 5-minute setup · Persian support",
+        "heroTrustItems": {
+            "noCard": "No credit card",
+            "setup": "5-minute setup",
+            "support": "Persian support"
+        },
+        "scrollHint": "Explore more",
+        "sectionEyebrows": {
+            "values": "Benefits",
+            "compare": "Compare",
+            "features": "Features",
+            "how": "Get started",
+            "testimonials": "Testimonials",
+            "pricing": "Pricing",
+            "faq": "Support"
+        },
+        "previewModules": {
+            "kanban": "Kanban",
+            "crm": "CRM",
+            "ai": "AI"
+        },
+        "previewLabels": {
+            "burndown": "Burndown",
+            "ai": "AI",
+            "crm": "CRM"
+        },
+        "heroCtaNote": "14-day full access — cancel anytime",
+        "viewPlans": "View plans",
+        "getStarted": "Get started free",
+        "getStartedShort": "Start",
+        "login": "Login",
+        "consult": "Free consultation",
+        "stats": {
+            "modules": "integrated modules",
+            "languages": "languages",
+            "setup": "setup time",
+            "scale": "scalable"
+        },
+        "heroChips": {
+            "kanban": "Kanban",
+            "hr": "HR",
+            "crm": "CRM",
+            "chat": "Chat",
+            "ai": "AI",
+            "finance": "Finance"
+        },
+        "socialProof": "Built for teams in",
+        "socialItems": {
+            "agile": "Agile & Scrum",
+            "hr": "Human resources",
+            "finance": "Finance & accounting",
+            "remote": "Remote & hybrid"
+        },
+        "compareTitle": "One platform instead of scattered tools",
+        "compareSubtitle": "Lower cost, unified data, faster decisions",
+        "compareBefore": "Before",
+        "compareAfter": "With Midesk",
+        "compareItems": {
+            "tools": {
+                "before": "Jira + Excel + separate chat + HR software",
+                "after": "All modules in one dashboard with shared data"
+            },
+            "data": {
+                "before": "Manual reporting and human error",
+                "after": "Report builder, dashboards & live KPIs"
+            },
+            "calendar": {
+                "before": "Gregorian-only Western tools",
+                "after": "Jalali calendar, RTL & native Persian"
+            },
+            "cost": {
+                "before": "Multiple subscriptions + integrations",
+                "after": "One transparent plan with free start"
+            }
+        },
+        "valuesTitle": "Why Midesk?",
+        "values": {
+            "integration": {
+                "title": "True integration",
+                "desc": "Projects, time, calendar, and teams in one database"
+            },
+            "agility": {
+                "title": "Native agility",
+                "desc": "Kanban, sprints, backlog, and Agile reports"
+            },
+            "multitenancy": {
+                "title": "Multi-tenancy",
+                "desc": "Each organization gets isolated data and settings"
+            },
+            "i18n": {
+                "title": "Global & local",
+                "desc": "Persian/English, RTL, and Jalali calendar"
+            }
+        },
+        "featuresTitle": "Everything your organization needs",
+        "featuresSubtitle": "From Kanban to CRM and AI — available in Midesk today",
+        "featureCategories": {
+            "projects": {
+                "title": "Projects & Agile",
+                "desc": "Plan, execute and report for product teams"
+            },
+            "people": {
+                "title": "People & time",
+                "desc": "HR, calendar, teams & performance"
+            },
+            "business": {
+                "title": "Business ops",
+                "desc": "Finance, sales, correspondence & surveys"
+            },
+            "collab": {
+                "title": "Smart collaboration",
+                "desc": "Communication, meetings, AI & reports"
+            }
+        },
+        "featureItems": {
+            "kanban": {
+                "title": "Smart Kanban",
+                "desc": "Drag & drop, swimlanes, WIP limits, and custom columns"
+            },
+            "sprints": {
+                "title": "Sprints & backlog",
+                "desc": "Agile planning with Burndown, Velocity, and CFD charts"
+            },
+            "worklog": {
+                "title": "Timesheet",
+                "desc": "Personal and team worklogs with weekly summaries"
+            },
+            "calendar": {
+                "title": "Calendar & leave",
+                "desc": "Events, holidays, shifts, and leave approvals"
+            },
+            "teams": {
+                "title": "Teams & access",
+                "desc": "Org structure, roles, and member invites"
+            },
+            "dashboard": {
+                "title": "Dashboard",
+                "desc": "Tasks overview, active sprint, and team activity"
+            },
+            "hr": {
+                "title": "Human resources",
+                "desc": "Personnel, contracts, attendance, recruitment, and onboarding"
+            },
+            "finance": {
+                "title": "Finance & payroll",
+                "desc": "Expenses, budgets, payslips, and finance approvals"
+            },
+            "crm": {
+                "title": "CRM & sales",
+                "desc": "Contacts, pipeline and sales opportunities"
+            },
+            "correspondence": {
+                "title": "Correspondence",
+                "desc": "Letters, routing, e-sign and archive"
+            },
+            "surveys": {
+                "title": "Surveys",
+                "desc": "Form builder, responses and analytics"
+            },
+            "chat": {
+                "title": "Team chat",
+                "desc": "DM, group and channel messaging"
+            },
+            "meetings": {
+                "title": "Online meetings",
+                "desc": "Scheduling and integrated meeting rooms"
+            },
+            "ai": {
+                "title": "AI assistant",
+                "desc": "Task analysis, screening and content generation"
+            },
+            "notes": {
+                "title": "Notes",
+                "desc": "Personal and shared Markdown notes"
+            },
+            "reports": {
+                "title": "Report builder",
+                "desc": "Custom reports from multiple data sources"
+            },
+            "performance": {
+                "title": "Performance & OKR",
+                "desc": "Goals, KPIs and periodic reviews"
+            }
+        },
+        "howTitle": "How it works",
+        "howSubtitle": "Get your organization running in three steps",
+        "howSteps": {
+            "register": {
+                "title": "Sign up & create org",
+                "desc": "Create an account, set up your organization, language, and calendar"
+            },
+            "setup": {
+                "title": "Projects & team",
+                "desc": "Create projects, invite members, and configure your Kanban board"
+            },
+            "run": {
+                "title": "Run & track",
+                "desc": "Plan sprints, log time, and monitor progress with reports"
+            }
+        },
+        "testimonialsTitle": "What teams say",
+        "testimonials": {
+            "one": {
+                "quote": "We stopped juggling Jira and spreadsheets. Kanban and timesheets together changed our workflow.",
+                "name": "Sarah Chen",
+                "role": "Product Manager",
+                "company": "Fintech startup"
+            },
+            "two": {
+                "quote": "Jalali calendar and RTL felt natural for our team from day one.",
+                "name": "Ali Rezaei",
+                "role": "Tech Lead",
+                "company": "Software team"
+            },
+            "three": {
+                "quote": "Sprint reports made our planning meetings much faster.",
+                "name": "Maria Santos",
+                "role": "Scrum Master",
+                "company": "Digital agency"
+            }
+        },
+        "pricingTitle": "Plans for every team",
+        "pricingSubtitle": "From free start to enterprise — no surprises",
+        "pricingBadge": "Free to start",
+        "pricingGuarantee": "No credit card to start · upgrade anytime",
+        "pricingPopular": "Popular",
+        "pricingContact": "Contact us",
+        "pricingFree": "Free",
+        "pricingTiers": {
+            "free": {
+                "name": "Free Sign Up",
+                "desc": "To start and explore",
+                "price": "0",
+                "period": "forever",
+                "cta": "Get started",
+                "features": [
+                    "Up to 5 members",
+                    "2 projects",
+                    "Kanban & tasks",
+                    "Basic calendar"
+                ]
+            },
+            "startup": {
+                "name": "Startup",
+                "desc": "Growing small teams",
+                "price": "Contact",
+                "period": "monthly",
+                "cta": "Request consultation",
+                "features": [
+                    "Up to 15 members",
+                    "Unlimited projects",
+                    "Sprints & reports",
+                    "Team timesheet"
+                ]
+            },
+            "pro": {
+                "name": "Professional",
+                "desc": "Scaling teams",
+                "price": "Contact",
+                "period": "monthly",
+                "cta": "Start with Pro",
+                "features": [
+                    "All modules",
+                    "CRM & correspondence",
+                    "Advanced reports",
+                    "Priority support"
+                ]
+            },
+            "enterprise": {
+                "name": "Enterprise",
+                "desc": "Dedicated deployment & SLA",
+                "price": "Contact",
+                "period": "custom",
+                "cta": "Free consultation",
+                "features": [
+                    "Self-hosted",
+                    "SSO & security",
+                    "Customization",
+                    "Dedicated manager"
+                ]
+            }
+        },
+        "faqTitle": "FAQ",
+        "faqItems": {
+            "what": {
+                "q": "What is Midesk?",
+                "a": "A SaaS platform for unified organization management: projects, Agile, timesheets, calendar, and teams in one system."
+            },
+            "free": {
+                "q": "Is it really free to start?",
+                "a": "Yes. Free sign-up lets you create an organization and use core features without a credit card."
+            },
+            "calendar": {
+                "q": "Does it support Jalali calendar?",
+                "a": "Yes. Jalali and Gregorian calendars, RTL, and Persian/English are natively supported."
+            },
+            "security": {
+                "q": "Is organization data isolated?",
+                "a": "Yes. Multi-tenant architecture keeps each organization's data and settings separate."
+            },
+            "roadmap": {
+                "q": "What is coming next?",
+                "a": "Advanced AI, more integrations and enterprise customization tools are on the roadmap."
+            }
+        },
+        "ctaBadge": "Start now",
+        "ctaTitle": "Ready to unify your team?",
+        "ctaSubtitle": "Start free today — no card, no commitment.",
+        "footerTagline": "Unified organization management platform for modern teams.",
+        "footer": "© Midesk — Built for modern teams",
+        "seo": {
+            "title": "Midesk | Project, HR & Finance Management Software",
+            "description": "Midesk is an all-in-one SaaS platform for modern organizations: Kanban, sprints, timesheets, Jalali calendar, HR, finance, chat, and custom reports — built for agile teams in Iran and worldwide.",
+            "keywords": "project management, kanban software, sprint planning, timesheet, HR software, payroll, organization management, jalali calendar, SaaS, agile",
+            "ogImageAlt": "Midesk — unified organization management platform"
+        }
     },
-    "progress": {
-      "started": "Started",
-      "completeStep": "Mark step complete"
+    "chat": {
+        "search": "Search channels…",
+        "create": "New channel",
+        "pageSubtitle": "Team, group, and channel messages",
+        "conversations": "Conversations",
+        "selectChannel": "Select a conversation",
+        "selectChannelDesc": "Pick a chat from the list on the right or start a new one.",
+        "emptyRoster": "No conversations found",
+        "readonly": "Read only",
+        "unnamed": "Unnamed",
+        "members": "members",
+        "inputPlaceholder": "Write a message…",
+        "loadOlder": "Load older messages",
+        "actions": {
+            "reply": "Reply",
+            "react": "React"
+        },
+        "tabs": {
+            "all": "All",
+            "dm": "Direct",
+            "group": "Group",
+            "channel": "Channel"
+        },
+        "types": {
+            "dm": "Direct message",
+            "group": "Group",
+            "channel": "Channel"
+        },
+        "fields": {
+            "type": "Type",
+            "name": "Name",
+            "members": "Members"
+        }
     },
-    "list": {
-      "title": "Active onboardings",
-      "emptyTitle": "No active onboardings",
-      "emptyDesc": "Employee onboarding progress will appear here."
+    "meetings": {
+        "create": "New meeting",
+        "created": "Meeting created",
+        "join": "Join",
+        "leave": "Leave",
+        "room": "Meeting room",
+        "attendees": "Attendees",
+        "details": "Details",
+        "organizer": "Organizer",
+        "statusLabel": "Status",
+        "pageSubtitle": "Team video meetings",
+        "emptyTitle": "No meetings",
+        "emptyDesc": "Try another filter or create a new meeting.",
+        "filters": {
+            "today": "Today",
+            "upcoming": "Upcoming",
+            "past": "Past",
+            "all": "All"
+        },
+        "status": {
+            "scheduled": "Scheduled",
+            "in_progress": "In progress",
+            "completed": "Completed",
+            "cancelled": "Cancelled"
+        },
+        "attendeeStatus": {
+            "invited": "Invited",
+            "accepted": "Accepted",
+            "declined": "Declined",
+            "attended": "Attended"
+        },
+        "fields": {
+            "title": "Title",
+            "start": "Start",
+            "end": "End",
+            "startDate": "Start date",
+            "startTime": "Start time",
+            "endDate": "End date",
+            "endTime": "End time",
+            "provider": "Provider",
+            "attendees": "Attendees",
+            "attendeesPlaceholder": "Select members…"
+        }
     },
-    "hrTabs": {
-      "template": "Onboarding template",
-      "employees": "Employees in progress",
-      "selectEmployee": "Select an employee",
-      "selectEmployeeDesc": "Choose an employee from the list to view their onboarding progress."
+    "ai": {
+        "subtitle": "Ask organizational AI",
+        "formTitle": "New question",
+        "formDesc": "Write your question or use a shortcut below.",
+        "formHint": "The answer is generated based on the selected context.",
+        "prompt": "Your question",
+        "send": "Send",
+        "history": "History",
+        "processing": "Processing…",
+        "copy": "Copy",
+        "copied": "Copied",
+        "emptyTitle": "No requests yet",
+        "status": {
+            "queued": "Queued",
+            "processing": "Processing",
+            "completed": "Completed",
+            "failed": "Failed"
+        },
+        "context": {
+            "label": "Context",
+            "id": "Context ID",
+            "general": "General",
+            "project": "Project",
+            "task": "Task",
+            "candidate": "Candidate"
+        },
+        "shortcuts": {
+            "label": "Shortcuts",
+            "taskAnalysis": "Analyze project tasks",
+            "taskAnalysisPrompt": "Analyze current project tasks",
+            "document": "Generate document",
+            "documentPrompt": "Draft an HR policy document",
+            "resume": "Screen resume",
+            "resumePrompt": "Evaluate this resume"
+        }
     },
-    "status": {
-      "in_progress": "In progress",
-      "completed": "Completed",
-      "cancelled": "Cancelled"
-    }
-  },
-  "dashboard": {
-    "title": "Dashboard",
-    "myTasks": "My tasks",
-    "overdueTasks": "Overdue",
-    "activeProjects": "Active projects",
-    "recentActivity": "Recent activity",
-    "emptyTitle": "No projects yet",
-    "emptyDesc": "Create your first project to get started.",
-    "createProject": "Create first project",
-    "activeSprint": "Active sprint",
-    "weekHours": "Hours this week",
-    "pendingLeave": "Pending leave requests",
-    "attendanceToday": "Today's attendance",
-    "quickLinks": "Quick links",
-    "unreadNotifications": "Unread notifications",
-    "chatUnread": "Unread messages",
-    "meetingsToday": "Meetings today",
-    "meetingsUpcoming": "Upcoming meetings",
-    "myNotes": "My notes",
-    "correspondenceInbox": "Pending routing",
-    "crmHotDeals": "Hot opportunities",
-    "crmOpenDeals": "Open opportunities",
-    "crmContacts": "CRM contacts",
-    "activeSurveys": "Active surveys",
-    "draftSurveys": "Draft surveys",
-    "objectivesAtRisk": "Objectives at risk",
-    "upcomingReviews": "Upcoming reviews",
-    "savedReports": "Saved reports"
-  },
-  "projects": {
-    "title": "Projects",
-    "create": "New project",
-    "name": "Project name",
-    "description": "Description",
-    "members": "Members",
-    "tasks": "Tasks",
-    "progress": "Progress",
-    "tabs": {
-      "kanban": "Kanban",
-      "list": "List",
-      "members": "Members",
-      "sprints": "Sprints",
-      "reports": "Reports",
-      "files": "Files",
-      "settings": "Settings"
-    },
-    "emptyTitle": "No projects found",
-    "emptyDesc": "Create your team's first project."
-  },
-  "kanban": {
-    "columns": {
-      "backlog": "Backlog",
-      "todo": "To Do",
-      "in_progress": "In Progress",
-      "review": "Review",
-      "done": "Done"
-    },
-    "newTask": "New task",
-    "addCard": "Add a card",
-    "addCardPlaceholder": "Enter a title for this card...",
-    "addCardSubmit": "Add card",
-    "filterAssignee": "Assignee",
-    "filterLabel": "Label",
-    "filterPriority": "Priority",
-    "search": "Search...",
-    "all": "All",
-    "wipConfirmTitle": "WIP limit reached",
-    "wipConfirmBody": "This column is at its WIP limit. Move the task anyway?",
-    "wipConfirmAction": "Move anyway"
-  },
-  "datepicker": {
-    "placeholder": "Select date...",
-    "clear": "Clear date"
-  },
-  "task": {
-    "title": "Title",
-    "description": "Description",
-    "status": "Status",
-    "priority": "Priority",
-    "assignee": "Assignee",
-    "dueDate": "Due date",
-    "labels": "Labels",
-    "checklist": "Checklist",
-    "comments": "Comments",
-    "addComment": "Add a comment...",
-    "addChecklistItem": "Add item",
-    "priorities": {
-      "low": "Low",
-      "medium": "Medium",
-      "high": "High",
-      "critical": "Critical"
-    },
-    "unassigned": "Unassigned",
-    "storyPoints": "Story points",
-    "sprint": "Sprint",
-    "logTime": "Log time",
-    "details": "Task details",
-    "addDescription": "Add a more detailed description...",
-    "detailsPanel": "Details",
-    "activity": "Activity",
-    "noComments": "No comments yet",
-    "noChecklist": "No checklist items",
-    "lastUpdated": "Updated",
-    "saving": "Saving...",
-    "saved": "Saved",
-    "markComplete": "Mark complete",
-    "markIncomplete": "Mark incomplete",
-    "postComment": "Post comment",
-    "commentShortcut": "Ctrl+Enter to post",
-    "overdue": "Overdue"
-  },
-  "teams": {
-    "title": "Teams",
-    "members": "Members",
-    "emptyTitle": "No teams found",
-    "emptyDesc": "Organization teams will appear here."
-  },
-  "members": {
-    "title": "Organization members",
-    "invite": "Invite member",
-    "role": "Role",
-    "changeRole": "Change role",
-    "roles": {
-      "OWNER": "Owner",
-      "ADMIN": "Admin",
-      "MANAGER": "Manager",
-      "MEMBER": "Member"
-    }
-  },
-  "settings": {
-    "title": "Settings",
-    "profile": "Profile",
-    "organization": "Organization",
-    "tabs": {
-      "profileDesc": "Your account name and password",
-      "organizationDesc": "Organization name, calendar, currency, and timezone",
-      "guestsDesc": "Invite external guests with limited project access",
-      "rolesDesc": "Define custom roles and permission sets"
-    },
-    "avatar": "Avatar",
-    "changePassword": "Change password",
-    "newPassword": "New password",
-    "save": "Save",
-    "saved": "Saved"
-  },
-  "sprint": {
-    "title": "Sprints",
-    "create": "New sprint",
-    "name": "Sprint name",
-    "goal": "Goal",
-    "startDate": "Start",
-    "endDate": "End",
-    "status": "Status",
-    "backlog": "Backlog",
-    "active": "Active",
-    "planning": "Planning",
-    "review": "Review",
-    "closed": "Closed",
-    "activate": "Activate",
-    "close": "Close sprint",
-    "assignToSprint": "Add to sprint",
-    "removeFromSprint": "Remove from sprint",
-    "moveToBacklog": "Move to backlog",
-    "moveToNext": "Move to next sprint",
-    "points": "Points",
-    "tasks": "Tasks",
-    "done": "Done",
-    "daysRemaining": "{days} days left",
-    "progress": "Progress",
-    "emptyTitle": "No sprints yet",
-    "emptyDesc": "Create the first sprint for this project.",
-    "confirmActivate": "The current sprint will be closed. Continue?",
-    "confirmClose": "Close sprint — where should open tasks go?",
-    "noActive": "No active sprint",
-    "selectSprint": "Select sprint"
-  },
-  "columns": {
-    "settings": "Column settings",
-    "wip": "WIP limit",
-    "reorder": "Reorder",
-    "wipLimit": "WIP limit",
-    "add": "New column",
-    "name": "Column name",
-    "color": "Color",
-    "isDone": "Done column",
-    "currentCount": "Current count",
-    "saveOrder": "Save order"
-  },
-  "swimlane": {
-    "mode": "Swimlane",
-    "none": "No swimlane",
-    "assignee": "By assignee",
-    "priority": "By priority",
-    "labels": {
-      "unassigned": "Unassigned",
-      "low": "Low priority",
-      "medium": "Medium priority",
-      "high": "High priority",
-      "critical": "Critical priority"
-    }
-  },
-  "worklog": {
-    "title": "Worklog",
-    "form": {
-      "title": "Log time",
-      "project": "Project",
-      "task": "Task (optional)",
-      "date": "Date",
-      "duration": "Duration",
-      "hours": "Hours",
-      "minutes": "Minutes",
-      "description": "Description",
-      "submit": "Log"
-    },
-    "table": {
-      "date": "Date",
-      "project": "Project",
-      "task": "Task",
-      "duration": "Duration",
-      "description": "Description",
-      "emptyTitle": "No time logged",
-      "emptyDesc": "Log your first worklog entry."
-    },
-    "summary": {
-      "title": "Week summary",
-      "total": "Total",
-      "today": "Today",
-      "thisWeek": "This week"
-    },
-    "team": {
-      "title": "Team worklog",
-      "member": "Member",
-      "emptyTitle": "No team entries",
-      "emptyDesc": "No team time logged in this range."
-    }
-  },
-  "calendar": {
-    "title": "Calendar",
-    "month": "Month",
-    "week": "Week",
-    "today": "Today",
-    "newEvent": "New event",
-    "eventTitle": "Title",
-    "eventType": "Event type",
-    "allDay": "All day",
-    "holidays": "Holidays",
-    "shifts": "Shifts",
-    "types": {
-      "meeting": "Meeting",
-      "deadline": "Deadline",
-      "reminder": "Reminder",
-      "other": "Other"
-    },
-    "emptyTitle": "No events",
-    "emptyDesc": "Add a new event or meeting."
-  },
-  "leave": {
-    "title": "Leave",
-    "balance": {
-      "title": "Leave balance",
-      "total": "Total",
-      "used": "Used",
-      "remaining": "Remaining",
-      "days": "days",
-      "hours": "hours"
-    },
-    "request": {
-      "title": "Leave request",
-      "type": "Leave type",
-      "startDate": "Start",
-      "endDate": "End",
-      "duration": "Duration",
-      "note": "Note",
-      "submit": "Submit request",
-      "emptyTitle": "No requests",
-      "emptyDesc": "Submit a new leave request."
-    },
-    "approve": "Approve",
-    "reject": "Reject",
-    "rejectReason": "Rejection reason",
-    "pendingApprovals": "Pending approvals",
-    "approvalChain": {
-      "manager": "Manager",
-      "hr": "HR"
-    },
-    "status": {
-      "pending": "Pending",
-      "approved": "Approved",
-      "rejected": "Rejected",
-      "cancelled": "Cancelled"
-    },
-    "policy": {
-      "title": "Leave policy",
-      "listTitle": "Configured policies",
-      "editTitle": "Edit policy",
-      "emptyTitle": "No policies configured",
-      "approvers": "approvers",
-      "autoApprove": "Auto approve",
-      "autoApproveHint": "Skip approval workflow for this leave type",
-      "approvalChain": "Approval chain",
-      "approvalChainHint": "Approvers in order — first to last",
-      "minNoticeDays": "Minimum notice (days)",
-      "allowNegativeBalance": "Allow negative balance",
-      "allowNegativeBalanceHint": "Permit requests exceeding remaining balance"
-    },
-    "report": {
-      "title": "Leave report",
-      "totalDays": "Total days",
-      "export": "Export CSV",
-      "emptyTitle": "No report data",
-      "emptyDesc": "Leave usage will appear here once recorded.",
-      "columns": {
-        "member": "Member",
-        "total": "Total",
-        "byType": "By type",
-        "byMonth": "By month"
-      }
-    }
-  },
-  "hr": {
-    "dashboard": {
-      "title": "HR Dashboard",
-      "personnelCount": "Active personnel",
-      "attendanceToday": "Attendance today",
-      "expiringContracts": "Expiring contracts",
-      "newCandidates": "New candidates",
-      "activeOnboarding": "Active onboarding",
-      "present": "Present",
-      "absent": "Absent",
-      "onLeave": "On leave",
-      "onMission": "On mission",
-      "quickLinks": "Quick links"
-    },
-    "personnel": {
-      "title": "Personnel",
-      "emptyTitle": "No personnel",
-      "emptyDesc": "Add employees to get started.",
-      "deleteConfirm": "Are you sure you want to delete this employee?",
-      "filters": {
-        "search": "Search by name or code…",
-        "allStatus": "All statuses",
-        "allDepartments": "All departments"
-      },
-      "columns": {
-        "name": "Name",
-        "code": "Employee code",
-        "department": "Department",
-        "jobTitle": "Job title",
-        "hireDate": "Hire date",
-        "status": "Status"
-      },
-      "status": {
-        "active": "Active",
-        "on_leave": "On leave",
-        "terminated": "Terminated"
-      },
-      "employmentType": {
-        "full_time": "Full time",
-        "part_time": "Part time",
-        "contract": "Contract",
-        "intern": "Intern"
-      },
-      "tabs": {
-        "personal": "Personal",
-        "job": "Job",
-        "contracts": "Contracts",
-        "documents": "Documents",
-        "attendance": "Attendance",
-        "leave": "Leave"
-      },
-      "fields": {
-        "user": "User",
-        "employeeCode": "Employee code",
-        "hireDate": "Hire date",
-        "employmentType": "Employment type",
-        "jobTitle": "Job title",
-        "department": "Department",
-        "nationalId": "National ID",
-        "birthDate": "Birth date",
-        "address": "Address",
-        "emergencyContact": "Emergency contact",
-        "email": "Email",
-        "phone": "Phone"
-      }
-    },
-    "attendance": {
-      "emptyTitle": "No attendance records",
-      "emptyDesc": "Attendance data will appear here.",
-      "columns": {
-        "member": "Member",
-        "date": "Date",
-        "checkIn": "Check in",
-        "checkOut": "Check out",
-        "effective": "Effective",
-        "overtime": "Overtime",
-        "status": "Status"
-      },
-      "status": {
-        "present": "Present",
-        "late": "Late",
-        "absent": "Absent",
-        "half_day": "Half day",
-        "on_leave": "On leave",
-        "mission": "Mission",
-        "holiday": "Holiday"
-      },
-      "clock": {
-        "title": "Today's attendance",
-        "checkIn": "Check in",
-        "checkOut": "Check out",
-        "startBreak": "Start break",
-        "endBreak": "End break",
-        "checkInAt": "Checked in at",
-        "checkOutAt": "Checked out at",
-        "duration": "Time on site",
-        "doneForToday": "You have checked out for today."
-      },
-      "clockStatus": {
-        "not_started": "Not started",
-        "checked_in": "Checked in",
-        "on_break": "On break",
-        "checked_out": "Checked out"
-      },
-      "summary": {
-        "title": "Monthly summary",
-        "present": "Present days",
-        "late": "Late days",
-        "absent": "Absent days",
-        "overtime": "Overtime"
-      },
-      "myAttendance": "My attendance",
-      "todayOverview": "Today's overview",
-      "reportMonth": "Report month",
-      "monthlyReport": "Monthly report",
-      "history": "History"
-    },
-    "contracts": {
-      "emptyTitle": "No contracts",
-      "emptyDesc": "Employment contracts will appear here.",
-      "create": "New contract",
-      "renew": "Renew",
-      "columns": {
-        "employee": "Employee",
-        "type": "Type",
-        "startDate": "Start date",
-        "endDate": "End date",
-        "salary": "Salary",
-        "status": "Status"
-      },
-      "type": {
-        "permanent": "Permanent",
-        "fixed_term": "Fixed term",
-        "trial": "Trial",
-        "intern": "Intern"
-      },
-      "status": {
-        "active": "Active",
-        "expired": "Expired",
-        "terminated": "Terminated",
-        "renewed": "Renewed"
-      },
-      "fields": {
-        "personnel": "Employee",
-        "type": "Contract type",
-        "startDate": "Start date",
-        "endDate": "End date",
-        "salary": "Base salary",
-        "currency": "Currency",
-        "attachment": "Contract attachment"
-      },
-      "expiryAlert": {
-        "title": "Contracts expiring soon",
-        "daysLeft": "{days} days left"
-      }
-    },
-    "documents": {
-      "upload": "Upload document",
-      "uploadSuccess": "Document uploaded",
-      "download": "Download",
-      "listTitle": "Documents",
-      "emptyTitle": "No documents",
-      "emptyDesc": "Uploaded documents will appear here.",
-      "filters": {
-        "allCategories": "All categories",
-        "allPersonnel": "All personnel"
-      },
-      "fields": {
-        "personnel": "Employee",
-        "category": "Category",
-        "file": "File"
-      },
-      "category": {
-        "contract": "Contract",
-        "id": "ID",
-        "certificate": "Certificate",
-        "other": "Other"
-      }
-    },
-    "missions": {
-      "submit": "Submit mission",
-      "newRequest": "New mission request",
-      "myMissions": "My missions",
-      "allMissions": "All missions",
-      "emptyTitle": "No missions",
-      "emptyDesc": "Mission requests will appear here.",
-      "fields": {
-        "destination": "Destination",
-        "startDate": "Start date",
-        "endDate": "End date",
-        "transport": "Transport",
-        "description": "Description"
-      },
-      "status": {
-        "pending": "Pending",
-        "approved": "Approved",
-        "rejected": "Rejected",
-        "completed": "Completed"
-      }
-    },
-    "settings": {
-      "title": "HR settings",
-      "workStart": "Work start time",
-      "workEnd": "Work end time",
-      "lateThreshold": "Late threshold (minutes)",
-      "overtimeEnabled": "Overtime tracking",
-      "overtimeEnabledHint": "Enable overtime calculation",
-      "contractExpiryAlert": "Contract expiry alert (days)"
-    }
-  },
-  "recruitment": {
-    "priority": {
-      "low": "Low",
-      "medium": "Medium",
-      "high": "High",
-      "urgent": "Urgent"
-    },
-    "requisitions": {
-      "create": "Create requisition",
-      "emptyTitle": "No requisitions",
-      "emptyDesc": "Open job requisitions will appear here.",
-      "columns": {
-        "title": "Title",
-        "department": "Department",
-        "positions": "Positions",
-        "priority": "Priority",
-        "candidates": "Candidates",
-        "status": "Status",
-        "created": "Created"
-      },
-      "status": {
-        "open": "Open",
-        "filled": "Filled",
-        "cancelled": "Cancelled"
-      },
-      "fields": {
-        "title": "Job title",
-        "department": "Department",
-        "positions": "Number of positions",
-        "priority": "Priority"
-      }
-    },
-    "candidateStatus": {
-      "new": "New",
-      "screening": "Screening",
-      "interview": "Interview",
-      "offer": "Offer",
-      "hired": "Hired",
-      "rejected": "Rejected"
-    },
-    "candidate": {
-      "title": "Candidate",
-      "hire": "Hire",
-      "hiredSuccess": "Candidate hired successfully",
-      "resume": "Resume",
-      "downloadResume": "Download resume"
-    },
-    "interview": {
-      "title": "Interviews",
-      "schedule": "Schedule interview",
-      "scheduledSuccess": "Interview scheduled",
-      "submitFeedback": "Submit feedback",
-      "feedbackSuccess": "Feedback submitted",
-      "avgScore": "Avg. score",
-      "emptyTitle": "No interviews scheduled",
-      "fields": {
-        "interviewer": "Interviewer",
-        "type": "Interview type",
-        "scheduledAt": "Scheduled at",
-        "score": "Score",
-        "feedback": "Feedback"
-      },
-      "type": {
-        "phone": "Phone",
-        "video": "Video",
-        "in_person": "In person",
-        "technical": "Technical"
-      },
-      "status": {
-        "scheduled": "Scheduled",
-        "completed": "Completed",
-        "cancelled": "Cancelled",
-        "no_show": "No show"
-      }
-    }
-  },
-  "notifications": {
-    "title": "Notifications",
-    "markAllRead": "Mark all read",
-    "emptyTitle": "No notifications",
-    "emptyDesc": "New notifications will appear here.",
-    "settings": {
-      "title": "Notification settings",
-      "subtitle": "Delivery channel per event type",
-      "event": "Event",
-      "channels": { "in_app": "In-app", "email": "Email", "sms": "SMS", "push": "Push", "telegram": "Telegram" }
-    }
-  },
-  "common": {
-    "loading": "Loading...",
-    "error": "Failed to load",
-    "retry": "Retry",
-    "cancel": "Cancel",
-    "save": "Save",
-    "create": "Create",
-    "edit": "Edit",
-    "delete": "Delete",
-    "close": "Close",
-      "noResults": "No results found",
-      "fillRequired": "Please fill in all required fields",
-      "select": "Select",
-      "optional": "Optional",
-      "actions": "Actions",
-      "view": "View",
-      "back": "Back",
-      "next": "Next"
-  },
-  "finance": {
-    "dashboard": {
-      "title": "Finance Dashboard",
-      "subtitle": "Budget, expenses and payroll summary",
-      "pendingExpenses": "Pending expenses",
-      "overdueInvoices": "Overdue invoices",
-      "latestPayslip": "Latest payslip",
-      "myPendingExpenses": "My pending expenses",
-      "payrollStatus": "Current payroll",
-      "budgetCenters": "Cost centers",
-      "payroll": {
-        "not_calculated": "Not calculated",
-        "calculated": "Calculated",
-        "approved": "Approved",
-        "paid": "Paid"
-      },
-      "emptyTitle": "Nothing to show",
-      "emptyDesc": "Finance summary is not loaded yet or you lack access.",
-      "quickLinks": "Quick links"
-    },
-    "expenses": {
-      "newExpense": "New expense",
-      "pageSubtitle": "Submit, track and approve organizational expenses",
-      "myExpenses": "My expenses",
-      "detail": "Expense details",
-      "emptyTitle": "No expenses yet",
-      "emptyDesc": "Create your first expense.",
-      "columns": {
-        "date": "Date",
-        "user": "User",
-        "category": "Category",
-        "amount": "Amount",
-        "status": "Status"
-      },
-      "fields": {
-        "category": "Category",
-        "date": "Date",
-        "costCenter": "Cost center",
-        "budget": "Budget",
-        "amount": "Amount",
-        "currency": "Currency",
-        "description": "Description",
-        "receipt": "Receipt / attachment"
-      },
-      "filters": {
-        "status": "Status",
-        "category": "Category",
-        "allStatuses": "All statuses",
-        "allCategories": "All categories",
-        "fromDate": "From date",
-        "toDate": "To date"
-      },
-      "categories": {
-        "travel": "Travel",
-        "office": "Office",
-        "software": "Software",
-        "meals": "Meals",
-        "equipment": "Equipment",
-        "other": "Other"
-      },
-      "status": {
-        "draft": "Draft",
-        "submitted": "Submitted",
-        "manager_review": "Manager review",
-        "finance_review": "Finance review",
-        "approved": "Approved",
-        "ready_to_pay": "Ready to pay",
-        "paid": "Paid",
-        "rejected": "Rejected"
-      },
-      "flow": {
-        "draft": "Draft",
-        "submitted": "Submit",
-        "manager": "Manager",
-        "finance": "Finance",
-        "approved": "Approved",
-        "paid": "Paid",
-        "rejected": "Rejected"
-      },
-      "actions": {
-        "create": "Create expense",
-        "created": "Expense created",
-        "submit": "Submit for approval",
-        "financeApprove": "Finance approve",
-        "pay": "Pay"
-      },
-      "rejectTitle": "Reject expense",
-      "rejectHint": "Enter a rejection reason (optional).",
-      "rejectReason": "Rejection reason"
-    },
-    "payroll": {
-      "payslipTitle": "Payslip details",
-      "baseSalary": "Base salary",
-      "overtime": "Overtime",
-      "gross": "Gross",
-      "net": "Net pay",
-      "pageSubtitle": "Calculate, approve and pay monthly payroll",
-      "calculateTitle": "Calculate payroll",
-      "selectedCount": "{count} selected",
-      "emptyTitle": "No payroll records",
-      "emptyDesc": "Pick a period and run payroll calculation.",
-      "fields": {
-        "period": "Period (month)"
-      },
-      "columns": {
-        "employee": "Employee",
-        "period": "Period",
-        "base": "Base",
-        "overtime": "Overtime",
-        "deductions": "Deductions",
-        "net": "Net",
-        "status": "Status"
-      },
-      "status": {
-        "draft": "Draft",
-        "calculated": "Calculated",
-        "approved": "Approved",
-        "paid": "Paid"
-      },
-      "actions": {
-        "calculate": "Calculate payroll",
-        "calculated": "Payroll calculated",
-        "approve": "Approve",
-        "bulkPay": "Pay {count} selected",
-        "bulkPaid": "Bulk payment completed"
-      }
-    },
-    "invoices": {
-      "pageSubtitle": "Manage vendor invoices",
-      "newInvoice": "New invoice",
-      "emptyTitle": "No invoices yet",
-      "emptyDesc": "Create your first invoice.",
-      "fields": {
-        "vendor": "Vendor",
-        "number": "Invoice number",
-        "issueDate": "Issue date",
-        "dueDate": "Due date",
-        "amount": "Amount",
-        "currency": "Currency",
-        "description": "Description"
-      },
-      "columns": {
-        "number": "Number",
-        "vendor": "Vendor",
-        "dueDate": "Due date",
-        "amount": "Amount",
-        "status": "Status"
-      },
-      "filters": {
-        "status": "Status",
-        "allStatuses": "All statuses"
-      },
-      "status": {
-        "draft": "Draft",
-        "sent": "Sent",
-        "partially_paid": "Partially paid",
-        "paid": "Paid",
-        "overdue": "Overdue",
-        "cancelled": "Cancelled"
-      },
-      "actions": {
-        "create": "Create invoice",
-        "created": "Invoice created",
-        "pay": "Pay",
-        "paid": "Invoice paid"
-      }
-    },
-    "vendors": {
-      "pageSubtitle": "Organization vendor directory",
-      "newVendor": "New vendor",
-      "emptyTitle": "No vendors yet",
-      "emptyDesc": "Add your first vendor to get started.",
-      "fields": {
-        "name": "Name",
-        "code": "Code",
-        "contact": "Contact name",
-        "email": "Email",
-        "phone": "Phone",
-        "taxId": "Tax ID"
-      },
-      "columns": {
-        "name": "Name",
-        "code": "Code",
-        "contact": "Contact",
-        "email": "Email"
-      },
-      "actions": {
-        "create": "Add vendor",
-        "created": "Vendor added"
-      }
-    },
-    "purchaseRequests": {
-      "pageSubtitle": "Equipment and supply purchase requests",
-      "newRequest": "New request",
-      "emptyTitle": "No purchase requests",
-      "emptyDesc": "Create a purchase request to begin the approval flow.",
-      "fields": {
-        "title": "Title",
-        "description": "Description",
-        "items": "Line items",
-        "itemName": "Item name",
-        "qty": "Qty",
-        "unitPrice": "Unit price",
-        "total": "Total"
-      },
-      "columns": {
-        "title": "Title",
-        "user": "Requester",
-        "amount": "Amount",
-        "date": "Date",
-        "status": "Status"
-      },
-      "status": {
-        "draft": "Draft",
-        "submitted": "Submitted",
-        "owner_review": "Manager review",
-        "finance_review": "Finance review",
-        "approved": "Approved",
-        "rejected": "Rejected",
-        "converted": "Converted to PO"
-      },
-      "actions": {
-        "create": "Create request",
-        "created": "Request created",
-        "addItem": "Add line",
-        "submit": "Submit",
-        "ownerApprove": "Manager approve",
-        "financeApprove": "Finance approve",
-        "convert": "Convert to PO",
-        "converted": "Purchase order created"
-      }
-    },
-    "purchaseOrders": {
-      "pageSubtitle": "Issued purchase orders",
-      "emptyTitle": "No purchase orders",
-      "emptyDesc": "Approved purchase requests can be converted into orders here.",
-      "columns": {
-        "title": "Title",
-        "vendor": "Vendor",
-        "amount": "Amount",
-        "date": "Date",
-        "status": "Status"
-      },
-      "status": {
-        "draft": "Draft",
-        "issued": "Issued",
-        "received": "Received",
-        "cancelled": "Cancelled"
-      }
-    },
-    "budgets": {
-      "overview": "Budget utilization",
-      "overviewHint": "Spending per cost center against the current year budget",
-      "pageSubtitle": "Track organizational budgets and cost centers",
-      "budget": "Budget",
-      "spent": "Spent",
-      "utilized": "utilized",
-      "remaining": "Remaining",
-      "costCenters": "Cost centers",
-      "newBudget": "New budget",
-      "emptyTitle": "No budget data",
-      "noCostCenters": "No cost centers defined",
-      "fields": {
-        "costCenter": "Cost center",
-        "year": "Year",
-        "amount": "Budget amount"
-      },
-      "actions": {
-        "create": "Create budget",
-        "created": "Budget created"
-      }
-    },
-    "my": {
-      "subtitle": "Payslips, expenses and payment receipts",
-      "tabs": {
-        "payslips": "Payslips",
-        "expenses": "My expenses",
-        "receipts": "Receipts"
-      },
-      "payslipsEmpty": "No payslips available",
-      "receiptsEmpty": "No receipts available",
-      "payslipStatus": {
-        "calculated": "Calculated",
-        "approved": "Approved",
-        "paid": "Paid"
-      }
-    }
-  },
-  "landing": {
-    "nav": {
-      "ariaLabel": "Main navigation",
-      "mobileMenu": "Mobile menu",
-      "features": "Features",
-      "howItWorks": "How it works",
-      "pricing": "Pricing",
-      "faq": "FAQ"
-    },
-    "eyebrow": "Unified organization platform",
-    "heroTitleBefore": "Everything your",
-    "heroTitleHighlight": "modern team",
-    "heroTitleAfter": "needs in one place",
-    "heroSubtitle": "Projects, HR, finance, CRM, chat, meetings & AI — no tool sprawl. Built for agile teams in Iran and worldwide.",
-    "heroTrust": "No credit card · 5-minute setup · Persian support",
-    "heroTrustItems": {
-      "noCard": "No credit card",
-      "setup": "5-minute setup",
-      "support": "Persian support"
-    },
-    "scrollHint": "Explore more",
-    "sectionEyebrows": {
-      "values": "Benefits",
-      "compare": "Compare",
-      "features": "Features",
-      "how": "Get started",
-      "testimonials": "Testimonials",
-      "pricing": "Pricing",
-      "faq": "Support"
-    },
-    "previewModules": {
-      "kanban": "Kanban",
-      "crm": "CRM",
-      "ai": "AI"
-    },
-    "previewLabels": {
-      "burndown": "Burndown",
-      "ai": "AI",
-      "crm": "CRM"
-    },
-    "heroCtaNote": "14-day full access — cancel anytime",
-    "viewPlans": "View plans",
-    "getStarted": "Get started free",
-    "getStartedShort": "Start",
-    "login": "Login",
-    "consult": "Free consultation",
-    "stats": {
-      "modules": "integrated modules",
-      "languages": "languages",
-      "setup": "setup time",
-      "scale": "scalable"
-    },
-    "heroChips": {
-      "kanban": "Kanban",
-      "hr": "HR",
-      "crm": "CRM",
-      "chat": "Chat",
-      "ai": "AI",
-      "finance": "Finance"
-    },
-    "socialProof": "Built for teams in",
-    "socialItems": {
-      "agile": "Agile & Scrum",
-      "hr": "Human resources",
-      "finance": "Finance & accounting",
-      "remote": "Remote & hybrid"
-    },
-    "compareTitle": "One platform instead of scattered tools",
-    "compareSubtitle": "Lower cost, unified data, faster decisions",
-    "compareBefore": "Before",
-    "compareAfter": "With Midesk",
-    "compareItems": {
-      "tools": {
-        "before": "Jira + Excel + separate chat + HR software",
-        "after": "All modules in one dashboard with shared data"
-      },
-      "data": {
-        "before": "Manual reporting and human error",
-        "after": "Report builder, dashboards & live KPIs"
-      },
-      "calendar": {
-        "before": "Gregorian-only Western tools",
-        "after": "Jalali calendar, RTL & native Persian"
-      },
-      "cost": {
-        "before": "Multiple subscriptions + integrations",
-        "after": "One transparent plan with free start"
-      }
-    },
-    "valuesTitle": "Why Midesk?",
-    "values": {
-      "integration": {
-        "title": "True integration",
-        "desc": "Projects, time, calendar, and teams in one database"
-      },
-      "agility": {
-        "title": "Native agility",
-        "desc": "Kanban, sprints, backlog, and Agile reports"
-      },
-      "multitenancy": {
-        "title": "Multi-tenancy",
-        "desc": "Each organization gets isolated data and settings"
-      },
-      "i18n": {
-        "title": "Global & local",
-        "desc": "Persian/English, RTL, and Jalali calendar"
-      }
-    },
-    "featuresTitle": "Everything your organization needs",
-    "featuresSubtitle": "From Kanban to CRM and AI — available in Midesk today",
-    "featureCategories": {
-      "projects": {
-        "title": "Projects & Agile",
-        "desc": "Plan, execute and report for product teams"
-      },
-      "people": {
-        "title": "People & time",
-        "desc": "HR, calendar, teams & performance"
-      },
-      "business": {
-        "title": "Business ops",
-        "desc": "Finance, sales, correspondence & surveys"
-      },
-      "collab": {
-        "title": "Smart collaboration",
-        "desc": "Communication, meetings, AI & reports"
-      }
-    },
-    "featureItems": {
-      "kanban": {
-        "title": "Smart Kanban",
-        "desc": "Drag & drop, swimlanes, WIP limits, and custom columns"
-      },
-      "sprints": {
-        "title": "Sprints & backlog",
-        "desc": "Agile planning with Burndown, Velocity, and CFD charts"
-      },
-      "worklog": {
-        "title": "Timesheet",
-        "desc": "Personal and team worklogs with weekly summaries"
-      },
-      "calendar": {
-        "title": "Calendar & leave",
-        "desc": "Events, holidays, shifts, and leave approvals"
-      },
-      "teams": {
-        "title": "Teams & access",
-        "desc": "Org structure, roles, and member invites"
-      },
-      "dashboard": {
-        "title": "Dashboard",
-        "desc": "Tasks overview, active sprint, and team activity"
-      },
-      "hr": {
-        "title": "Human resources",
-        "desc": "Personnel, contracts, attendance, recruitment, and onboarding"
-      },
-      "finance": {
-        "title": "Finance & payroll",
-        "desc": "Expenses, budgets, payslips, and finance approvals"
-      },
-      "crm": {
-        "title": "CRM & sales",
-        "desc": "Contacts, pipeline and sales opportunities"
-      },
-      "correspondence": {
-        "title": "Correspondence",
-        "desc": "Letters, routing, e-sign and archive"
-      },
-      "surveys": {
-        "title": "Surveys",
-        "desc": "Form builder, responses and analytics"
-      },
-      "chat": {
-        "title": "Team chat",
-        "desc": "DM, group and channel messaging"
-      },
-      "meetings": {
-        "title": "Online meetings",
-        "desc": "Scheduling and integrated meeting rooms"
-      },
-      "ai": {
-        "title": "AI assistant",
-        "desc": "Task analysis, screening and content generation"
-      },
-      "notes": {
-        "title": "Notes",
-        "desc": "Personal and shared Markdown notes"
-      },
-      "reports": {
-        "title": "Report builder",
-        "desc": "Custom reports from multiple data sources"
-      },
-      "performance": {
-        "title": "Performance & OKR",
-        "desc": "Goals, KPIs and periodic reviews"
-      }
-    },
-    "howTitle": "How it works",
-    "howSubtitle": "Get your organization running in three steps",
-    "howSteps": {
-      "register": {
-        "title": "Sign up & create org",
-        "desc": "Create an account, set up your organization, language, and calendar"
-      },
-      "setup": {
-        "title": "Projects & team",
-        "desc": "Create projects, invite members, and configure your Kanban board"
-      },
-      "run": {
-        "title": "Run & track",
-        "desc": "Plan sprints, log time, and monitor progress with reports"
-      }
-    },
-    "testimonialsTitle": "What teams say",
-    "testimonials": {
-      "one": {
-        "quote": "We stopped juggling Jira and spreadsheets. Kanban and timesheets together changed our workflow.",
-        "name": "Sarah Chen",
-        "role": "Product Manager",
-        "company": "Fintech startup"
-      },
-      "two": {
-        "quote": "Jalali calendar and RTL felt natural for our team from day one.",
-        "name": "Ali Rezaei",
-        "role": "Tech Lead",
-        "company": "Software team"
-      },
-      "three": {
-        "quote": "Sprint reports made our planning meetings much faster.",
-        "name": "Maria Santos",
-        "role": "Scrum Master",
-        "company": "Digital agency"
-      }
-    },
-    "pricingTitle": "Plans for every team",
-    "pricingSubtitle": "From free start to enterprise — no surprises",
-    "pricingBadge": "Free to start",
-    "pricingGuarantee": "No credit card to start · upgrade anytime",
-    "pricingPopular": "Popular",
-    "pricingContact": "Contact us",
-    "pricingFree": "Free",
-    "pricingTiers": {
-      "free": {
-        "name": "Free Sign Up",
-        "desc": "To start and explore",
-        "price": "0",
-        "period": "forever",
-        "cta": "Get started",
-        "features": ["Up to 5 members", "2 projects", "Kanban & tasks", "Basic calendar"]
-      },
-      "startup": {
-        "name": "Startup",
-        "desc": "Growing small teams",
-        "price": "Contact",
-        "period": "monthly",
-        "cta": "Request consultation",
-        "features": ["Up to 15 members", "Unlimited projects", "Sprints & reports", "Team timesheet"]
-      },
-      "pro": {
-        "name": "Professional",
-        "desc": "Scaling teams",
-        "price": "Contact",
-        "period": "monthly",
-        "cta": "Start with Pro",
-        "features": ["All modules", "CRM & correspondence", "Advanced reports", "Priority support"]
-      },
-      "enterprise": {
-        "name": "Enterprise",
-        "desc": "Dedicated deployment & SLA",
-        "price": "Contact",
-        "period": "custom",
-        "cta": "Free consultation",
-        "features": ["Self-hosted", "SSO & security", "Customization", "Dedicated manager"]
-      }
-    },
-    "faqTitle": "FAQ",
-    "faqItems": {
-      "what": {
-        "q": "What is Midesk?",
-        "a": "A SaaS platform for unified organization management: projects, Agile, timesheets, calendar, and teams in one system."
-      },
-      "free": {
-        "q": "Is it really free to start?",
-        "a": "Yes. Free sign-up lets you create an organization and use core features without a credit card."
-      },
-      "calendar": {
-        "q": "Does it support Jalali calendar?",
-        "a": "Yes. Jalali and Gregorian calendars, RTL, and Persian/English are natively supported."
-      },
-      "security": {
-        "q": "Is organization data isolated?",
-        "a": "Yes. Multi-tenant architecture keeps each organization's data and settings separate."
-      },
-      "roadmap": {
-        "q": "What is coming next?",
-        "a": "Advanced AI, more integrations and enterprise customization tools are on the roadmap."
-      }
-    },
-    "ctaBadge": "Start now",
-    "ctaTitle": "Ready to unify your team?",
-    "ctaSubtitle": "Start free today — no card, no commitment.",
-    "footerTagline": "Unified organization management platform for modern teams.",
-    "footer": "© Midesk — Built for modern teams",
-    "seo": {
-      "title": "Midesk | Project, HR & Finance Management Software",
-      "description": "Midesk is an all-in-one SaaS platform for modern organizations: Kanban, sprints, timesheets, Jalali calendar, HR, finance, chat, and custom reports — built for agile teams in Iran and worldwide.",
-      "keywords": "project management, kanban software, sprint planning, timesheet, HR software, payroll, organization management, jalali calendar, SaaS, agile",
-      "ogImageAlt": "Midesk — unified organization management platform"
-    }
-  },
-  "chat": {
-    "search": "Search channels…",
-    "create": "New channel",
-    "pageSubtitle": "Team, group, and channel messages",
-    "conversations": "Conversations",
-    "selectChannel": "Select a conversation",
-    "selectChannelDesc": "Pick a chat from the list on the right or start a new one.",
-    "emptyRoster": "No conversations found",
-    "readonly": "Read only",
-    "unnamed": "Unnamed",
-    "members": "members",
-    "inputPlaceholder": "Write a message…",
-    "loadOlder": "Load older messages",
-    "actions": { "reply": "Reply", "react": "React" },
-    "tabs": { "all": "All", "dm": "Direct", "group": "Group", "channel": "Channel" },
-    "types": { "dm": "Direct message", "group": "Group", "channel": "Channel" },
-    "fields": { "type": "Type", "name": "Name", "members": "Members" }
-  },
-  "meetings": {
-    "create": "New meeting",
-    "created": "Meeting created",
-    "join": "Join",
-    "leave": "Leave",
-    "room": "Meeting room",
-    "attendees": "Attendees",
-    "details": "Details",
-    "organizer": "Organizer",
-    "statusLabel": "Status",
-    "pageSubtitle": "Team video meetings",
-    "emptyTitle": "No meetings",
-    "emptyDesc": "Try another filter or create a new meeting.",
-    "filters": { "today": "Today", "upcoming": "Upcoming", "past": "Past", "all": "All" },
-    "status": { "scheduled": "Scheduled", "in_progress": "In progress", "completed": "Completed", "cancelled": "Cancelled" },
-    "attendeeStatus": { "invited": "Invited", "accepted": "Accepted", "declined": "Declined", "attended": "Attended" },
-    "fields": {
-      "title": "Title",
-      "start": "Start",
-      "end": "End",
-      "startDate": "Start date",
-      "startTime": "Start time",
-      "endDate": "End date",
-      "endTime": "End time",
-      "provider": "Provider",
-      "attendees": "Attendees",
-      "attendeesPlaceholder": "Select members…"
-    }
-  },
-  "ai": {
-    "subtitle": "Ask organizational AI",
-    "formTitle": "New question",
-    "formDesc": "Write your question or use a shortcut below.",
-    "formHint": "The answer is generated based on the selected context.",
-    "prompt": "Your question",
-    "send": "Send",
-    "history": "History",
-    "processing": "Processing…",
-    "copy": "Copy",
-    "copied": "Copied",
-    "emptyTitle": "No requests yet",
-    "status": { "queued": "Queued", "processing": "Processing", "completed": "Completed", "failed": "Failed" },
-    "context": { "label": "Context", "id": "Context ID", "general": "General", "project": "Project", "task": "Task", "candidate": "Candidate" },
-    "shortcuts": {
-      "label": "Shortcuts",
-      "taskAnalysis": "Analyze project tasks",
-      "taskAnalysisPrompt": "Analyze current project tasks",
-      "document": "Generate document",
-      "documentPrompt": "Draft an HR policy document",
-      "resume": "Screen resume",
-      "resumePrompt": "Evaluate this resume"
-    }
-  },
-  "guest": {
-    "title": "Guest access",
-    "invite": "Invite guest",
-    "invited": "Guest invited",
-    "revoke": "Revoke",
-    "revoked": "Guest access revoked",
-    "emptyTitle": "No guests",
-    "emptyDesc": "Invite external collaborators with read-only or comment access.",
-    "columns": {
-      "email": "Email",
-      "name": "Name",
-      "role": "Role",
-      "projects": "Projects",
-      "expiresAt": "Expires"
+    "guest": {
+        "title": "Guest access",
+        "invite": "Invite guest",
+        "invited": "Guest invited",
+        "revoke": "Revoke",
+        "revoked": "Guest access revoked",
+        "emptyTitle": "No guests",
+        "emptyDesc": "Invite external collaborators with read-only or comment access.",
+        "columns": {
+            "email": "Email",
+            "name": "Name",
+            "role": "Role",
+            "projects": "Projects",
+            "expiresAt": "Expires"
+        },
+        "roles": {
+            "viewer": "Viewer",
+            "commenter": "Commenter"
+        },
+        "fields": {
+            "email": "Email",
+            "name": "Name",
+            "role": "Role",
+            "projects": "Projects",
+            "expiresAt": "Expires at"
+        }
     },
     "roles": {
-      "viewer": "Viewer",
-      "commenter": "Commenter"
+        "title": "Custom roles",
+        "create": "New role",
+        "edit": "Edit role",
+        "emptyTitle": "No custom roles",
+        "emptyDesc": "Create roles with tailored permission sets for your team.",
+        "permissionCount": "{count} permissions",
+        "fields": {
+            "name": "Role name",
+            "permissions": "Permissions"
+        },
+        "groups": {
+            "correspondence": "Correspondence",
+            "surveys": "Surveys",
+            "crm": "CRM",
+            "reports": "Reports",
+            "files": "Files",
+            "subscription": "Subscription",
+            "guests": "Guests",
+            "roles": "Roles",
+            "performance": "Performance"
+        }
     },
-    "fields": {
-      "email": "Email",
-      "name": "Name",
-      "role": "Role",
-      "projects": "Projects",
-      "expiresAt": "Expires at"
-    }
-  },
-  "roles": {
-    "title": "Custom roles",
-    "create": "New role",
-    "edit": "Edit role",
-    "emptyTitle": "No custom roles",
-    "emptyDesc": "Create roles with tailored permission sets for your team.",
-    "permissionCount": "{count} permissions",
-    "fields": {
-      "name": "Role name",
-      "permissions": "Permissions"
+    "superAdmin": {
+        "panelTitle": "Super Admin Panel",
+        "loginTitle": "Super Admin Login",
+        "demoHint": "Demo: superadmin{'@'}midesk.io / superadmin",
+        "nav": {
+            "dashboard": "Dashboard",
+            "tenants": "Tenants",
+            "plans": "Plans",
+            "financial": "Financial",
+            "consultations": "Consultations",
+            "settings": "Settings"
+        },
+        "dashboard": {
+            "title": "Platform Dashboard",
+            "subtitle": "Overview of tenants, revenue, and subscriptions",
+            "tenantsCount": "Total tenants",
+            "mrr": "MRR",
+            "arr": "ARR",
+            "activeSubscriptions": "Active subscriptions",
+            "newThisMonth": "New this month",
+            "revenueChart": "Revenue trend"
+        },
+        "tenants": {
+            "title": "Tenants",
+            "subtitle": "Manage tenant organizations",
+            "search": "Search tenants…",
+            "emptyTitle": "No tenants",
+            "emptyDesc": "No tenants match your search.",
+            "suspend": "Suspend",
+            "suspended": "Tenant suspended",
+            "columns": {
+                "name": "Name",
+                "plan": "Plan",
+                "status": "Status",
+                "users": "Users",
+                "mrr": "MRR",
+                "created": "Created"
+            },
+            "status": {
+                "active": "Active",
+                "suspended": "Suspended",
+                "trial": "Trial"
+            }
+        },
+        "plans": {
+            "title": "Subscription plans",
+            "subtitle": "Manage pricing and features",
+            "create": "New plan",
+            "edit": "Edit plan",
+            "emptyTitle": "No plans",
+            "emptyDesc": "Create your first subscription plan.",
+            "saved": "Plan saved",
+            "deleted": "Plan deleted",
+            "columns": {
+                "name": "Name",
+                "code": "Code",
+                "monthly": "Monthly",
+                "yearly": "Yearly",
+                "maxUsers": "Max users",
+                "maxProjects": "Max projects"
+            },
+            "fields": {
+                "name": "Name",
+                "code": "Code",
+                "features": "Features (comma-separated)",
+                "priceMonthlyIr": "Monthly price (IRR)",
+                "priceMonthlyIntl": "Monthly price (USD)",
+                "priceYearlyIr": "Yearly price (IRR)",
+                "priceYearlyIntl": "Yearly price (USD)",
+                "maxUsers": "Max users",
+                "maxProjects": "Max projects"
+            }
+        },
+        "financial": {
+            "title": "Financial overview",
+            "subtitle": "Revenue metrics and breakdown",
+            "mrr": "Monthly recurring revenue",
+            "arr": "Annual recurring revenue",
+            "byPlan": "Revenue by plan",
+            "byCycle": "Revenue by billing cycle",
+            "monthly": "Monthly billing",
+            "yearly": "Yearly billing",
+            "cancellations": "Cancellations this month"
+        },
+        "consultations": {
+            "title": "Consultation requests",
+            "subtitle": "Manage inbound demo and sales inquiries",
+            "emptyTitle": "No consultations",
+            "emptyDesc": "No consultation requests yet.",
+            "statusUpdated": "Status updated",
+            "columns": {
+                "name": "Name",
+                "email": "Email",
+                "company": "Company",
+                "message": "Message",
+                "status": "Status",
+                "created": "Created"
+            },
+            "status": {
+                "pending": "Pending",
+                "contacted": "Contacted",
+                "closed": "Closed"
+            }
+        },
+        "settings": {
+            "title": "Platform settings",
+            "subtitle": "Global configuration for Midesk",
+            "saved": "Settings saved",
+            "fields": {
+                "platformName": "Platform name",
+                "supportEmail": "Support email",
+                "defaultTrialDays": "Default trial days",
+                "maintenanceMode": "Maintenance mode"
+            }
+        }
     },
-    "groups": {
-      "correspondence": "Correspondence",
-      "surveys": "Surveys",
-      "crm": "CRM",
-      "reports": "Reports",
-      "files": "Files",
-      "subscription": "Subscription",
-      "guests": "Guests",
-      "roles": "Roles",
-      "performance": "Performance"
-    }
-  },
-  "superAdmin": {
-    "panelTitle": "Super Admin Panel",
-    "loginTitle": "Super Admin Login",
-    "demoHint": "Demo: superadmin{'@'}midesk.io / superadmin",
-    "nav": {
-      "dashboard": "Dashboard",
-      "tenants": "Tenants",
-      "plans": "Plans",
-      "financial": "Financial",
-      "consultations": "Consultations",
-      "settings": "Settings"
-    },
-    "dashboard": {
-      "title": "Platform Dashboard",
-      "subtitle": "Overview of tenants, revenue, and subscriptions",
-      "tenantsCount": "Total tenants",
-      "mrr": "MRR",
-      "arr": "ARR",
-      "activeSubscriptions": "Active subscriptions",
-      "newThisMonth": "New this month",
-      "revenueChart": "Revenue trend"
-    },
-    "tenants": {
-      "title": "Tenants",
-      "subtitle": "Manage tenant organizations",
-      "search": "Search tenants…",
-      "emptyTitle": "No tenants",
-      "emptyDesc": "No tenants match your search.",
-      "suspend": "Suspend",
-      "suspended": "Tenant suspended",
-      "columns": {
-        "name": "Name",
+    "subscription": {
+        "pageSubtitle": "Manage your organization plan and billing",
+        "currentPlan": "Current plan",
+        "comparePlans": "Compare plans",
+        "invoices": "Invoices",
+        "checkout": "Checkout",
+        "upgrade": "Upgrade",
+        "current": "Current",
         "plan": "Plan",
-        "status": "Status",
-        "users": "Users",
-        "mrr": "MRR",
-        "created": "Created"
-      },
-      "status": {
-        "active": "Active",
-        "suspended": "Suspended",
-        "trial": "Trial"
-      }
-    },
-    "plans": {
-      "title": "Subscription plans",
-      "subtitle": "Manage pricing and features",
-      "create": "New plan",
-      "edit": "Edit plan",
-      "emptyTitle": "No plans",
-      "emptyDesc": "Create your first subscription plan.",
-      "saved": "Plan saved",
-      "deleted": "Plan deleted",
-      "columns": {
-        "name": "Name",
-        "code": "Code",
+        "priceMonthly": "Monthly price",
         "monthly": "Monthly",
         "yearly": "Yearly",
-        "maxUsers": "Max users",
-        "maxProjects": "Max projects"
-      },
-      "fields": {
-        "name": "Name",
-        "code": "Code",
-        "features": "Features (comma-separated)",
-        "priceMonthlyIr": "Monthly price (IRR)",
-        "priceMonthlyIntl": "Monthly price (USD)",
-        "priceYearlyIr": "Yearly price (IRR)",
-        "priceYearlyIntl": "Yearly price (USD)",
-        "maxUsers": "Max users",
-        "maxProjects": "Max projects"
-      }
+        "pay": "Pay now",
+        "paymentSuccess": "Payment successful",
+        "paymentFailed": "Payment failed",
+        "expiresAt": "Expires",
+        "noInvoices": "No invoices yet",
+        "invoicePlan": "Plan",
+        "invoiceAmount": "Amount",
+        "invoiceDue": "Due date",
+        "invoiceStatus": "Status",
+        "invoiceStatuses": {
+            "pending": "Pending",
+            "paid": "Paid",
+            "failed": "Failed"
+        },
+        "status": {
+            "active": "Active",
+            "expired": "Expired",
+            "trial": "Trial"
+        },
+        "usage": {
+            "users": "Users",
+            "projects": "Projects"
+        }
     },
-    "financial": {
-      "title": "Financial overview",
-      "subtitle": "Revenue metrics and breakdown",
-      "mrr": "Monthly recurring revenue",
-      "arr": "Annual recurring revenue",
-      "byPlan": "Revenue by plan",
-      "byCycle": "Revenue by billing cycle",
-      "monthly": "Monthly billing",
-      "yearly": "Yearly billing",
-      "cancellations": "Cancellations this month"
-    },
-    "consultations": {
-      "title": "Consultation requests",
-      "subtitle": "Manage inbound demo and sales inquiries",
-      "emptyTitle": "No consultations",
-      "emptyDesc": "No consultation requests yet.",
-      "statusUpdated": "Status updated",
-      "columns": {
+    "files": {
+        "title": "Project files",
+        "subtitle": "Upload and manage project documents",
+        "root": "Root",
+        "empty": "No files in this folder",
         "name": "Name",
-        "email": "Email",
-        "company": "Company",
-        "message": "Message",
+        "size": "Size",
+        "version": "Version",
+        "uploadedBy": "Uploaded by",
+        "dropHint": "Drag and drop files here",
+        "selectFile": "Choose file",
+        "uploaded": "File uploaded",
+        "deleted": "File deleted",
+        "newVersion": "New version uploaded",
+        "uploadComingSoon": "File upload is coming soon. We're building upload and file management across projects.",
+        "subtitleComingSoon": "This section will be available soon"
+    },
+    "reports": {
+        "title": "Reports",
+        "burndown": "Burndown chart",
+        "velocity": "Velocity",
+        "cfd": "Cumulative flow (CFD)",
+        "tabs": {
+            "burndown": "Burndown",
+            "velocity": "Velocity",
+            "cfd": "CFD"
+        },
+        "committed": "Committed",
+        "completed": "Completed",
+        "average": "Average",
+        "remaining": "Remaining",
+        "ideal": "Ideal line",
+        "emptyTitle": "No report data",
+        "emptyDesc": "Reports appear after a sprint starts.",
+        "view": "View report",
+        "pageSubtitle": "Build custom reports from your data",
+        "create": "New report",
+        "name": "Report name",
+        "dataSource": "Data source",
+        "chartType": "Chart type",
+        "empty": "No saved reports",
+        "run": "Run",
+        "save": "Save report",
+        "saved": "Report saved",
+        "preview": "Preview",
+        "columns": "columns",
+        "contains": "contains",
+        "addFilter": "Add filter",
+        "chartPreview": "Chart preview",
+        "scheduleFrequency": "Schedule frequency",
+        "daily": "Daily",
+        "weekly": "Weekly",
+        "monthly": "Monthly",
+        "types": {
+            "table": "Table",
+            "bar": "Bar chart",
+            "line": "Line chart",
+            "pie": "Pie chart"
+        }
+    },
+    "crm": {
+        "dashboardSubtitle": "Sales funnel and activity overview",
+        "contactsSubtitle": "Manage leads, customers and partners",
+        "pipelineSubtitle": "Drag opportunities across sales stages",
+        "nav": {
+            "dashboard": "Dashboard",
+            "contacts": "Contacts",
+            "pipeline": "Pipeline"
+        },
+        "contacts": "Contacts",
+        "pipeline": "Pipeline",
+        "addContact": "Add contact",
+        "addOpportunity": "Add opportunity",
+        "backToContacts": "Back to contacts",
+        "addActivity": "Log activity",
+        "opportunities": "Opportunities",
+        "activities": "Activities",
+        "summary": "Summary",
+        "createdAt": "Created",
+        "probability": "Probability",
+        "searchContacts": "Search contacts…",
+        "selectContact": "Select contact",
+        "tagsPlaceholder": "e.g. VIP, B2B",
+        "contactCreated": "Contact created",
+        "opportunityCreated": "Opportunity created",
+        "activityCreated": "Activity logged",
+        "stageUpdated": "Stage updated",
+        "emptyContactsTitle": "No contacts",
+        "emptyContactsDesc": "Add your first contact to start tracking relationships.",
+        "emptyOpportunitiesTitle": "No opportunities",
+        "emptyOpportunitiesDesc": "Create an opportunity linked to this contact.",
+        "emptyActivitiesTitle": "No activities",
+        "emptyActivitiesDesc": "Log calls, emails and meetings here.",
+        "emptyHotTitle": "No hot deals",
+        "emptyHotDesc": "High-probability opportunities will appear here.",
+        "emptyPipelineColumn": "Drop here",
+        "funnel": "Sales funnel",
+        "hotOpportunities": "Hot opportunities",
+        "recentActivity": "Recent activity",
+        "tabs": {
+            "info": "Profile",
+            "opportunities": "Opportunities",
+            "activities": "Activities"
+        },
+        "fields": {
+            "name": "Name",
+            "company": "Company",
+            "email": "Email",
+            "phone": "Phone",
+            "type": "Type",
+            "tags": "Tags",
+            "assignedTo": "Assigned to",
+            "title": "Title",
+            "contact": "Contact",
+            "value": "Value",
+            "stage": "Stage",
+            "probability": "Probability (%)",
+            "expectedClose": "Expected close"
+        },
+        "types": {
+            "lead": "Lead",
+            "customer": "Customer",
+            "partner": "Partner",
+            "vendor": "Vendor"
+        },
+        "filters": {
+            "all": "All"
+        },
+        "stages": {
+            "lead": "Lead",
+            "qualified": "Qualified",
+            "proposal": "Proposal",
+            "negotiation": "Negotiation",
+            "won": "Won",
+            "lost": "Lost"
+        },
+        "activityType": "Activity type",
+        "activitySubject": "Subject",
+        "activityNotes": "Notes",
+        "activityTypes": {
+            "call": "Call",
+            "email": "Email",
+            "meeting": "Meeting",
+            "note": "Note"
+        }
+    },
+    "surveys": {
+        "pageSubtitle": "Create and analyze surveys",
+        "create": "New survey",
+        "createModalDesc": "Enter basic details, then add questions on the next screen.",
+        "createHint": "After saving, you will be taken to the question editor.",
+        "createAndEdit": "Create and add questions",
+        "created": "Survey created",
+        "emptyTitle": "No surveys yet",
+        "emptyDesc": "Create your first survey to collect feedback from your team.",
+        "report": "Report",
+        "editQuestions": "Edit questions",
+        "publish": "Publish",
+        "published": "Survey published",
+        "submit": "Submit",
+        "submitted": "Response submitted",
+        "addQuestion": "Add question",
+        "questionTitle": "Question title",
+        "required": "Required",
+        "avgRating": "avg rating",
+        "fields": {
+            "title": "Title",
+            "type": "Type",
+            "status": "Status",
+            "responses": "Responses"
+        },
+        "types": {
+            "survey": "Survey",
+            "quiz": "Quiz",
+            "form": "Form"
+        },
+        "statuses": {
+            "draft": "Draft",
+            "active": "Active",
+            "closed": "Closed"
+        },
+        "questionTypes": {
+            "text": "Short text",
+            "textarea": "Long text",
+            "single_choice": "Single choice",
+            "multiple_choice": "Multiple choice",
+            "rating": "Rating",
+            "number": "Number",
+            "date": "Date"
+        }
+    },
+    "correspondence": {
+        "pageSubtitle": "Internal correspondence and routing",
+        "create": "New letter",
+        "inbox": "My inbox",
+        "send": "Send",
+        "sent": "Letter sent",
+        "sign": "Sign",
+        "signed": "Letter signed",
+        "route": "Route",
+        "routed": "Routed successfully",
+        "completed": "Marked complete",
+        "markComplete": "Complete",
+        "inboxEmpty": "No routed items",
+        "noRouting": "No routing history",
+        "number": "Number",
+        "subject": "Subject",
+        "body": "Body",
+        "type": "Type",
         "status": "Status",
-        "created": "Created"
-      },
-      "status": {
-        "pending": "Pending",
-        "contacted": "Contacted",
-        "closed": "Closed"
-      }
+        "priority": "Priority",
+        "toUser": "Recipient",
+        "action": "Action",
+        "note": "Note",
+        "dueDate": "Due date",
+        "tabs": {
+            "outgoing": "Outgoing",
+            "incoming": "Incoming",
+            "internal": "Internal",
+            "archive": "Archive"
+        },
+        "types": {
+            "incoming": "Incoming",
+            "outgoing": "Outgoing",
+            "internal": "Internal"
+        },
+        "statuses": {
+            "draft": "Draft",
+            "sent": "Sent",
+            "received": "Received",
+            "archived": "Archived"
+        },
+        "priorities": {
+            "normal": "Normal",
+            "urgent": "Urgent",
+            "confidential": "Confidential"
+        },
+        "actions": {
+            "review": "Review",
+            "approve": "Approve",
+            "sign": "Sign",
+            "for_info": "For info",
+            "execute": "Execute"
+        },
+        "routingStatuses": {
+            "pending": "Pending",
+            "seen": "Seen",
+            "completed": "Completed"
+        }
     },
-    "settings": {
-      "title": "Platform settings",
-      "subtitle": "Global configuration for Midesk",
-      "saved": "Settings saved",
-      "fields": {
-        "platformName": "Platform name",
-        "supportEmail": "Support email",
-        "defaultTrialDays": "Default trial days",
-        "maintenanceMode": "Maintenance mode"
-      }
+    "performance": {
+        "pageSubtitle": "KPIs, OKRs and performance reviews",
+        "objectives": "Objectives (OKR)",
+        "reviews": "Reviews",
+        "kpis": "Key indicators",
+        "employee": "Employee",
+        "period": "Period",
+        "reviewStatus": "Status",
+        "summary": {
+            "on_track": "On track",
+            "at_risk": "At risk",
+            "off_track": "Off track",
+            "completed": "Completed"
+        },
+        "statuses": {
+            "on_track": "On track",
+            "at_risk": "At risk",
+            "off_track": "Off track",
+            "completed": "Completed"
+        },
+        "reviewStatuses": {
+            "scheduled": "Scheduled",
+            "in_progress": "In progress",
+            "completed": "Completed"
+        }
+    },
+    "notes": {
+        "create": "New note",
+        "pin": "Pin",
+        "pinned": "Pinned",
+        "pageSubtitle": "Personal and team notes",
+        "edit": "Edit",
+        "preview": "Preview",
+        "untitled": "Untitled",
+        "emptyTitle": "No notes",
+        "emptyDesc": "Create your first note.",
+        "filters": {
+            "all": "All"
+        },
+        "visibility": {
+            "private": "Private",
+            "team": "Team",
+            "project": "Project"
+        },
+        "fields": {
+            "title": "Title",
+            "body": "Body",
+            "visibility": "Visibility",
+            "color": "Color"
+        }
     }
-  },
-  "subscription": {
-    "pageSubtitle": "Manage your organization plan and billing",
-    "currentPlan": "Current plan",
-    "comparePlans": "Compare plans",
-    "invoices": "Invoices",
-    "checkout": "Checkout",
-    "upgrade": "Upgrade",
-    "current": "Current",
-    "plan": "Plan",
-    "priceMonthly": "Monthly price",
-    "monthly": "Monthly",
-    "yearly": "Yearly",
-    "pay": "Pay now",
-    "paymentSuccess": "Payment successful",
-    "paymentFailed": "Payment failed",
-    "expiresAt": "Expires",
-    "noInvoices": "No invoices yet",
-    "invoicePlan": "Plan",
-    "invoiceAmount": "Amount",
-    "invoiceDue": "Due date",
-    "invoiceStatus": "Status",
-    "invoiceStatuses": { "pending": "Pending", "paid": "Paid", "failed": "Failed" },
-    "status": { "active": "Active", "expired": "Expired", "trial": "Trial" },
-    "usage": { "users": "Users", "projects": "Projects" }
-  },
-  "files": {
-    "title": "Project files",
-    "subtitle": "Upload and manage project documents",
-    "root": "Root",
-    "empty": "No files in this folder",
-    "name": "Name",
-    "size": "Size",
-    "version": "Version",
-    "uploadedBy": "Uploaded by",
-    "dropHint": "Drag and drop files here",
-    "selectFile": "Choose file",
-    "uploaded": "File uploaded",
-    "deleted": "File deleted",
-    "newVersion": "New version uploaded"
-  },
-  "reports": {
-    "title": "Reports",
-    "burndown": "Burndown chart",
-    "velocity": "Velocity",
-    "cfd": "Cumulative flow (CFD)",
-    "tabs": {
-      "burndown": "Burndown",
-      "velocity": "Velocity",
-      "cfd": "CFD"
-    },
-    "committed": "Committed",
-    "completed": "Completed",
-    "average": "Average",
-    "remaining": "Remaining",
-    "ideal": "Ideal line",
-    "emptyTitle": "No report data",
-    "emptyDesc": "Reports appear after a sprint starts.",
-    "view": "View report",
-    "pageSubtitle": "Build custom reports from your data",
-    "create": "New report",
-    "name": "Report name",
-    "dataSource": "Data source",
-    "chartType": "Chart type",
-    "empty": "No saved reports",
-    "run": "Run",
-    "save": "Save report",
-    "saved": "Report saved",
-    "preview": "Preview",
-    "columns": "columns",
-    "contains": "contains",
-    "addFilter": "Add filter",
-    "chartPreview": "Chart preview",
-    "scheduleFrequency": "Schedule frequency",
-    "daily": "Daily",
-    "weekly": "Weekly",
-    "monthly": "Monthly",
-    "types": { "table": "Table", "bar": "Bar chart", "line": "Line chart", "pie": "Pie chart" }
-  },
-  "crm": {
-    "dashboardSubtitle": "Sales funnel and activity overview",
-    "contactsSubtitle": "Manage leads, customers and partners",
-    "pipelineSubtitle": "Drag opportunities across sales stages",
-    "nav": {
-      "dashboard": "Dashboard",
-      "contacts": "Contacts",
-      "pipeline": "Pipeline"
-    },
-    "contacts": "Contacts",
-    "pipeline": "Pipeline",
-    "addContact": "Add contact",
-    "addOpportunity": "Add opportunity",
-    "backToContacts": "Back to contacts",
-    "addActivity": "Log activity",
-    "opportunities": "Opportunities",
-    "activities": "Activities",
-    "summary": "Summary",
-    "createdAt": "Created",
-    "probability": "Probability",
-    "searchContacts": "Search contacts…",
-    "selectContact": "Select contact",
-    "tagsPlaceholder": "e.g. VIP, B2B",
-    "contactCreated": "Contact created",
-    "opportunityCreated": "Opportunity created",
-    "activityCreated": "Activity logged",
-    "stageUpdated": "Stage updated",
-    "emptyContactsTitle": "No contacts",
-    "emptyContactsDesc": "Add your first contact to start tracking relationships.",
-    "emptyOpportunitiesTitle": "No opportunities",
-    "emptyOpportunitiesDesc": "Create an opportunity linked to this contact.",
-    "emptyActivitiesTitle": "No activities",
-    "emptyActivitiesDesc": "Log calls, emails and meetings here.",
-    "emptyHotTitle": "No hot deals",
-    "emptyHotDesc": "High-probability opportunities will appear here.",
-    "emptyPipelineColumn": "Drop here",
-    "funnel": "Sales funnel",
-    "hotOpportunities": "Hot opportunities",
-    "recentActivity": "Recent activity",
-    "tabs": {
-      "info": "Profile",
-      "opportunities": "Opportunities",
-      "activities": "Activities"
-    },
-    "fields": {
-      "name": "Name",
-      "company": "Company",
-      "email": "Email",
-      "phone": "Phone",
-      "type": "Type",
-      "tags": "Tags",
-      "assignedTo": "Assigned to",
-      "title": "Title",
-      "contact": "Contact",
-      "value": "Value",
-      "stage": "Stage",
-      "probability": "Probability (%)",
-      "expectedClose": "Expected close"
-    },
-    "types": { "lead": "Lead", "customer": "Customer", "partner": "Partner", "vendor": "Vendor" },
-    "filters": { "all": "All" },
-    "stages": { "lead": "Lead", "qualified": "Qualified", "proposal": "Proposal", "negotiation": "Negotiation", "won": "Won", "lost": "Lost" },
-    "activityType": "Activity type",
-    "activitySubject": "Subject",
-    "activityNotes": "Notes",
-    "activityTypes": { "call": "Call", "email": "Email", "meeting": "Meeting", "note": "Note" }
-  },
-  "surveys": {
-    "pageSubtitle": "Create and analyze surveys",
-    "create": "New survey",
-    "createModalDesc": "Enter basic details, then add questions on the next screen.",
-    "createHint": "After saving, you will be taken to the question editor.",
-    "createAndEdit": "Create and add questions",
-    "created": "Survey created",
-    "emptyTitle": "No surveys yet",
-    "emptyDesc": "Create your first survey to collect feedback from your team.",
-    "report": "Report",
-    "editQuestions": "Edit questions",
-    "publish": "Publish",
-    "published": "Survey published",
-    "submit": "Submit",
-    "submitted": "Response submitted",
-    "addQuestion": "Add question",
-    "questionTitle": "Question title",
-    "required": "Required",
-    "avgRating": "avg rating",
-    "fields": { "title": "Title", "type": "Type", "status": "Status", "responses": "Responses" },
-    "types": { "survey": "Survey", "quiz": "Quiz", "form": "Form" },
-    "statuses": { "draft": "Draft", "active": "Active", "closed": "Closed" },
-    "questionTypes": { "text": "Short text", "textarea": "Long text", "single_choice": "Single choice", "multiple_choice": "Multiple choice", "rating": "Rating", "number": "Number", "date": "Date" }
-  },
-  "correspondence": {
-    "pageSubtitle": "Internal correspondence and routing",
-    "create": "New letter",
-    "inbox": "My inbox",
-    "send": "Send",
-    "sent": "Letter sent",
-    "sign": "Sign",
-    "signed": "Letter signed",
-    "route": "Route",
-    "routed": "Routed successfully",
-    "completed": "Marked complete",
-    "markComplete": "Complete",
-    "inboxEmpty": "No routed items",
-    "noRouting": "No routing history",
-    "number": "Number",
-    "subject": "Subject",
-    "body": "Body",
-    "type": "Type",
-    "status": "Status",
-    "priority": "Priority",
-    "toUser": "Recipient",
-    "action": "Action",
-    "note": "Note",
-    "dueDate": "Due date",
-    "tabs": { "outgoing": "Outgoing", "incoming": "Incoming", "internal": "Internal", "archive": "Archive" },
-    "types": { "incoming": "Incoming", "outgoing": "Outgoing", "internal": "Internal" },
-    "statuses": { "draft": "Draft", "sent": "Sent", "received": "Received", "archived": "Archived" },
-    "priorities": { "normal": "Normal", "urgent": "Urgent", "confidential": "Confidential" },
-    "actions": { "review": "Review", "approve": "Approve", "sign": "Sign", "for_info": "For info", "execute": "Execute" },
-    "routingStatuses": { "pending": "Pending", "seen": "Seen", "completed": "Completed" }
-  },
-  "performance": {
-    "pageSubtitle": "KPIs, OKRs and performance reviews",
-    "objectives": "Objectives (OKR)",
-    "reviews": "Reviews",
-    "kpis": "Key indicators",
-    "employee": "Employee",
-    "period": "Period",
-    "reviewStatus": "Status",
-    "summary": { "on_track": "On track", "at_risk": "At risk", "off_track": "Off track", "completed": "Completed" },
-    "statuses": { "on_track": "On track", "at_risk": "At risk", "off_track": "Off track", "completed": "Completed" },
-    "reviewStatuses": { "scheduled": "Scheduled", "in_progress": "In progress", "completed": "Completed" }
-  },
-  "notes": {
-    "create": "New note",
-    "pin": "Pin",
-    "pinned": "Pinned",
-    "pageSubtitle": "Personal and team notes",
-    "edit": "Edit",
-    "preview": "Preview",
-    "untitled": "Untitled",
-    "emptyTitle": "No notes",
-    "emptyDesc": "Create your first note.",
-    "filters": { "all": "All" },
-    "visibility": { "private": "Private", "team": "Team", "project": "Project" },
-    "fields": { "title": "Title", "body": "Body", "visibility": "Visibility", "color": "Color" }
-  }
 }

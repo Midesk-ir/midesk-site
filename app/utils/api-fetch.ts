@@ -18,6 +18,23 @@ function buildHeaders(ctx: ApiContext, extra?: Record<string, string>) {
   }
 }
 
+export function readApiError(err: unknown, field?: string): string | undefined {
+  const data = (err as {
+    data?: {
+      error?: {
+        message?: string
+        details?: Array<{ field: string, msg: string }>
+      }
+    }
+  }).data
+
+  if (field) {
+    return data?.error?.details?.find(detail => detail.field === field)?.msg
+  }
+
+  return data?.error?.message
+}
+
 export async function apiFetch<T>(
   ctx: ApiContext,
   url: string,
@@ -41,6 +58,27 @@ export async function bootstrapSession(
   return data
 }
 
+export async function bootstrapSessionIfTenant(
+  ctx: ApiContext,
+  authStore: ReturnType<typeof useAuthStore>,
+  tenantStore: ReturnType<typeof useTenantStore>
+) {
+  const tenantId = ctx.tenantId ?? tenantStore.tenantId
+
+  if (!tenantId) {
+    if (authStore.user) {
+      authStore.setBootstrap({
+        user: authStore.user,
+        tenant: null,
+        permissions: []
+      })
+    }
+    return null
+  }
+
+  return bootstrapSession(ctx, authStore, tenantStore)
+}
+
 /** Always reads the latest token/tenant from Pinia (or cookies as fallback). */
 export function buildApiContext(overrides: Partial<ApiContext> = {}): ApiContext {
   const config = useRuntimeConfig()
@@ -49,9 +87,10 @@ export function buildApiContext(overrides: Partial<ApiContext> = {}): ApiContext
   let token: string | null = null
   let tenantId: string | null = null
 
-  if (ensureActivePinia()) {
-    const authStore = useAuthStore()
-    const tenantStore = useTenantStore()
+  const pinia = ensureActivePinia()
+  if (pinia) {
+    const authStore = useAuthStore(pinia)
+    const tenantStore = useTenantStore(pinia)
     token = toValue(authStore.token)
     tenantId = toValue(tenantStore.tenantId)
   } else {

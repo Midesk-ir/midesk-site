@@ -1,4 +1,1 @@
-export default defineEventHandler((event) => {
-  const { db } = requireAuthWithPermission(event, 'hr:dashboard:view')
-  return { data: db.phase2.getDashboardSummary() }
-})
+export default defineEventHandler((event) => proxyToBackend(event))

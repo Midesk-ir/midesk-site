@@ -1,5 +1,3 @@
-export default defineEventHandler((event) => {
-  const db = useMockDb()
-  db.requireAuth(event)
-  return { data: db.notifications }
-})
+export default defineEventHandler((event) =>
+  proxyToBackend(event, { transformResponse: normalizeNotifications })
+)

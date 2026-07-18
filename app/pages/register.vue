@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { z } from 'zod'
 import { toTypedSchema } from '@vee-validate/zod'
+import { readApiError } from '~/utils/api-fetch'
 
 definePageMeta({ layout: 'auth', middleware: 'guest' })
 
@@ -9,36 +10,73 @@ const { register } = useAuth()
 const route = useRoute()
 const loading = ref(false)
 const toast = useToast()
+const captchaToken = ref('')
+const captchaVerified = ref(false)
+const phoneApiError = ref<string>()
+const emailApiError = ref<string>()
+
+function onCaptchaVerified(token: string) {
+  captchaToken.value = token
+  captchaVerified.value = true
+}
+
+const schema = toTypedSchema(
+  z.object({
+    name: z.string().min(2),
+    email: z.string().email().optional().or(z.literal('')),
+    phone: z.string().min(10).optional().or(z.literal('')),
+    password: z.string().min(6),
+    confirmPassword: z.string().min(6)
+  }).refine(data => data.password === data.confirmPassword, {
+    message: t('auth.passwordMismatch'),
+    path: ['confirmPassword']
+  })
+)
 
 const planQuery = computed(() => {
   const plan = route.query.plan as string | undefined
-  const valid = ['free', 'startup', 'pro', 'enterprise'] as const
+  const valid = ['bronze', 'silver', 'gold', 'diamond'] as const
   return plan && valid.includes(plan as typeof valid[number]) ? plan : undefined
 })
 
-const schema = toTypedSchema(z.object({
-  name: z.string().min(2),
-  email: z.string().email().optional().or(z.literal('')),
-  phone: z.string().min(10).optional().or(z.literal('')),
-  password: z.string().min(6)
-}))
+async function onSubmit(values: {
+  name: string
+  email?: string
+  phone?: string
+  password: string
+  confirmPassword: string
+}) {
+  if (!captchaVerified.value || !captchaToken.value) {
+    toast.add({ title: t('auth.captcha.required'), color: 'error' })
+    return
+  }
 
-async function onSubmit(values: { name: string, email?: string, phone?: string, password: string }) {
+  phoneApiError.value = undefined
+  emailApiError.value = undefined
   loading.value = true
   try {
     const result = await register({
       name: values.name,
       email: values.email || undefined,
       phone: values.phone || undefined,
-      password: values.password
+      password: values.password,
+      captchaToken: captchaToken.value
     })
     toast.add({ title: t('auth.otpSent'), color: 'success' })
     await navigateTo({
       path: '/verify-otp',
       query: { phone: result.phone || values.phone }
     })
-  } catch {
-    toast.add({ title: t('common.error'), color: 'error' })
+  } catch (e: unknown) {
+    phoneApiError.value = readApiError(e, 'phone')
+    emailApiError.value = readApiError(e, 'email')
+    toast.add({
+      title: phoneApiError.value
+        || emailApiError.value
+        || readApiError(e)
+        || t('common.error'),
+      color: 'error'
+    })
   } finally {
     loading.value = false
   }
@@ -49,7 +87,7 @@ async function onSubmit(values: { name: string, email?: string, phone?: string, 
   <div class="midesk-auth-card">
     <div class="midesk-auth-card-header">
       <div class="midesk-auth-card-icon-wrap midesk-auth-card-icon-wrap--register">
-        <UIcon name="i-lucide-rocket" class="size-6 text-[var(--color-midesk-accent)]" />
+        <UIcon name="i-lucide-rocket" class="size-5 text-[var(--color-midesk-accent)]" />
       </div>
       <h1 class="midesk-auth-card-title">{{ t('auth.register') }}</h1>
       <p class="midesk-auth-card-subtitle">{{ t('auth.registerSubtitle') }}</p>
@@ -74,33 +112,68 @@ async function onSubmit(values: { name: string, email?: string, phone?: string, 
             <UInput v-bind="field" placeholder=" " icon="i-lucide-user" />
           </MideskFormField>
         </VeeField>
+
         <VeeField v-slot="{ field, errorMessage }" name="email">
           <MideskFormField
             :label="t('auth.email')"
-            :error="errorMessage"
+            :error="errorMessage || emailApiError"
             :model-value="field.value"
             field-class="midesk-ltr-field"
           >
-            <UInput v-bind="field" type="email" placeholder=" " icon="i-lucide-mail" />
-          </MideskFormField>
-        </VeeField>
-        <VeeField v-slot="{ field, errorMessage }" name="phone">
-          <MideskFormField
-            :label="t('auth.phone')"
-            :error="errorMessage"
-            :model-value="field.value"
-            field-class="midesk-ltr-field"
-          >
-            <UInput v-bind="field" dir="ltr" placeholder=" " icon="i-lucide-phone" />
-          </MideskFormField>
-        </VeeField>
-        <VeeField v-slot="{ field, errorMessage }" name="password">
-          <MideskFormField :label="t('auth.password')" :error="errorMessage" :model-value="field.value">
-            <UInput v-bind="field" type="password" placeholder=" " icon="i-lucide-lock" />
+            <UInput
+              v-bind="field"
+              type="email"
+              placeholder=" "
+              icon="i-lucide-mail"
+              @update:model-value="emailApiError = undefined"
+            />
           </MideskFormField>
         </VeeField>
 
-        <UButton type="submit" block size="lg" :loading="loading" color="primary" class="midesk-auth-submit">
+        <VeeField v-slot="{ field, errorMessage }" name="phone">
+          <MideskFormField
+            :label="t('auth.phone')"
+            :error="errorMessage || phoneApiError"
+            :model-value="field.value"
+            field-class="midesk-ltr-field"
+          >
+            <UInput
+              v-bind="field"
+              dir="ltr"
+              placeholder=" "
+              icon="i-lucide-phone"
+              @update:model-value="phoneApiError = undefined"
+            />
+          </MideskFormField>
+        </VeeField>
+
+        <div class="midesk-auth-field-pair">
+          <VeeField v-slot="{ field, errorMessage }" name="password">
+            <MideskFormField :label="t('auth.password')" :error="errorMessage" :model-value="field.value">
+              <UInput v-bind="field" type="password" placeholder=" " icon="i-lucide-lock" />
+            </MideskFormField>
+          </VeeField>
+          <VeeField v-slot="{ field, errorMessage }" name="confirmPassword">
+            <MideskFormField :label="t('auth.confirmPassword')" :error="errorMessage" :model-value="field.value">
+              <UInput v-bind="field" type="password" placeholder=" " icon="i-lucide-lock-keyhole" />
+            </MideskFormField>
+          </VeeField>
+        </div>
+
+        <MideskMotionCaptcha
+          v-model="captchaVerified"
+          @verified="onCaptchaVerified"
+        />
+
+        <UButton
+          type="submit"
+          block
+          size="md"
+          :loading="loading"
+          color="primary"
+          class="midesk-auth-submit"
+          :disabled="!captchaVerified"
+        >
           {{ t('auth.registerCta') }}
         </UButton>
       </div>

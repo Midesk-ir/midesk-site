@@ -1,6 +1,1 @@
-export default defineEventHandler((event) => {
-  requireAuthWithPermission(event, 'crm:view')
-  const id = getRouterParam(event, 'id')!
-  const db = useMockDb()
-  return { data: db.phase5.getContact(id) }
-})
+export default defineEventHandler((event) => proxyToBackend(event))

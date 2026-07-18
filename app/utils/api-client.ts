@@ -12,10 +12,10 @@ export async function storeApi<T>(
   } catch (error: unknown) {
     const fetchError = error as { statusCode?: number, data?: ApiError }
     if (fetchError.statusCode === 401) {
-      const authStore = useAuthStore()
-      const tenantStore = useTenantStore()
-      authStore.clearAuth()
-      tenantStore.clearTenant()
+      const authStore = safeAuthStore()
+      const tenantStore = safeTenantStore()
+      authStore?.clearAuth()
+      tenantStore?.clearTenant()
       if (!url.startsWith('/auth/') && import.meta.client) {
         const route = useRoute()
         await navigateTo(`/login?redirect=${encodeURIComponent(route.fullPath)}`, { replace: true })

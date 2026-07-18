@@ -10,6 +10,7 @@ const localeOptions = computed(() =>
 
 const navLinks = computed(() => [
   { label: t('landing.nav.features'), to: '#features' },
+  { label: t('landing.nav.sections'), to: '#sections' },
   { label: t('landing.nav.howItWorks'), to: '#how-it-works' },
   { label: t('landing.nav.pricing'), to: '#pricing' },
   { label: t('landing.nav.faq'), to: '#faq' }
@@ -33,7 +34,7 @@ function closeMobileNav() {
             v-for="link in navLinks"
             :key="link.to"
             :href="link.to"
-            class="midesk-marketing-nav-link"
+            class="midesk-marketing-nav-link midesk-landing-line-link"
           >
             {{ link.label }}
           </a>

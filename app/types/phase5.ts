@@ -266,7 +266,7 @@ export interface CreateCustomRolePayload {
 }
 
 // ── Subscription ──
-export type SubscriptionPlanCode = 'free' | 'starter' | 'pro' | 'enterprise'
+export type SubscriptionPlanCode = 'bronze' | 'silver' | 'gold' | 'diamond'
 export type SubscriptionInvoiceStatus = 'pending' | 'paid' | 'failed'
 
 export interface SubscriptionPlan {
@@ -299,7 +299,7 @@ export interface SubscriptionInvoice {
 
 export interface CheckoutPayload {
   plan_code: SubscriptionPlanCode
-  cycle: 'monthly' | 'yearly'
+  cycle: 'monthly' | 'quarterly' | 'semiannual' | 'yearly'
 }
 
 // ── Super Admin ──

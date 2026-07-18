@@ -1,6 +1,1 @@
-export default defineEventHandler(async (event) => {
-  requireAuthWithPermission(event, 'surveys:manage')
-  const body = await readBody(event)
-  const db = useMockDb()
-  return { data: db.phase5.createSurvey(body) }
-})
+export default defineEventHandler((event) => proxyToBackend(event))

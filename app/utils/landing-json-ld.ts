@@ -57,7 +57,7 @@ export function buildLandingJsonLd(options: {
           '@type': 'Offer',
           price: '0',
           priceCurrency: 'IRR',
-          description: t('landing.pricingTiers.free.desc')
+          description: t('landing.pricingTiers.bronze.desc')
         },
         featureList: FEATURE_KEYS.map(key => t(`landing.featureItems.${key}.title`))
       },

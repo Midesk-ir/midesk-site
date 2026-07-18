@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ChatChannel, ChatChannelType, ChatMessage } from '~/types/phase4'
 import type { User } from '~/types'
+import { readApiError } from '~/utils/api-fetch'
 
 const props = defineProps<{
   channelId?: string
@@ -16,6 +17,9 @@ const { listenToChat } = useRealtime()
 
 const activeTab = ref<'all' | ChatChannelType>('all')
 const showCreate = ref(false)
+const createFormKey = ref(0)
+const createType = ref<ChatChannelType>('group')
+const creating = ref(false)
 const members = ref<User[]>([])
 const replyTo = ref<ChatMessage | null>(null)
 const hasMore = ref(true)
@@ -37,6 +41,23 @@ const tabItems = computed(() => [
   { label: t('chat.tabs.group'), value: 'group' as const, icon: 'i-lucide-users' },
   { label: t('chat.tabs.channel'), value: 'channel' as const, icon: 'i-lucide-hash' }
 ])
+
+const createModalTitle = computed(() => {
+  switch (createType.value) {
+    case 'dm':
+      return t('chat.createDm')
+    case 'group':
+      return t('chat.createGroup')
+    default:
+      return t('chat.createChannel')
+  }
+})
+
+function openCreateModal() {
+  createType.value = activeTab.value === 'all' ? 'group' : activeTab.value
+  createFormKey.value += 1
+  showCreate.value = true
+}
 
 const inputDisabled = computed(() => {
   if (!activeChannel.value?.is_readonly) return false
@@ -93,12 +114,15 @@ async function loadMembers() {
 }
 
 async function onCreate(payload: Parameters<typeof chatStore.createChannel>[0]) {
+  creating.value = true
   try {
     const ch = await chatStore.createChannel(payload)
     showCreate.value = false
-    navigateTo(`/chat/${ch.id}`)
-  } catch {
-    toast.add({ title: t('common.error'), color: 'error' })
+    await navigateTo(`/chat/${ch.id}`)
+  } catch (error: unknown) {
+    toast.add({ title: readApiError(error) || t('common.error'), color: 'error' })
+  } finally {
+    creating.value = false
   }
 }
 
@@ -121,7 +145,7 @@ onMounted(async () => {
   <div class="space-y-4">
     <LayoutMideskPageHeader :title="t('nav.chat')" :subtitle="t('chat.pageSubtitle')">
       <template #actions>
-        <LayoutMideskPageHeaderButton variant="primary" icon="i-lucide-plus" @click="showCreate = true">
+        <LayoutMideskPageHeaderButton variant="primary" icon="i-lucide-plus" @click="openCreateModal">
           {{ t('chat.create') }}
         </LayoutMideskPageHeaderButton>
       </template>
@@ -132,7 +156,7 @@ onMounted(async () => {
       <aside class="midesk-messenger-roster">
         <div class="midesk-messenger-roster__head">
           <h2 class="text-sm font-semibold text-[var(--color-midesk-text)]">{{ t('chat.conversations') }}</h2>
-          <UButton size="xs" variant="soft" icon="i-lucide-plus" @click="showCreate = true" />
+          <UButton size="xs" variant="soft" icon="i-lucide-plus" @click="openCreateModal" />
         </div>
 
         <div class="midesk-messenger-tabs">
@@ -225,8 +249,16 @@ onMounted(async () => {
       </section>
     </div>
 
-    <MideskModal v-model:open="showCreate" :title="t('chat.create')">
-      <ChatChannelForm :members="members" @submit="onCreate" />
+    <MideskModal v-model:open="showCreate" :title="createModalTitle">
+      <ChatChannelForm
+        :key="createFormKey"
+        :members="members"
+        :default-type="createType"
+        :loading="creating"
+        @update:type="createType = $event"
+        @submit="onCreate"
+        @cancel="showCreate = false"
+      />
     </MideskModal>
   </div>
 </template>

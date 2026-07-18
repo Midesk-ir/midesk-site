@@ -1,7 +1,7 @@
 export default defineEventHandler(async (event) => {
-  const db = useMockDb()
-  const body = await readBody<{ phone: string }>(event)
-  const code = '123456'
-  db.otpCodes.set(body.phone, { code, expires: Date.now() + 120000 })
-  return { message: 'OTP sent', debug_code: code }
+  const body = await readBody<Record<string, unknown>>(event)
+  assertMotionCaptchaToken(body?.captchaToken)
+
+  const { captchaToken: _captcha, ...rest } = body ?? {}
+  return proxyToBackend(event, { body: rest })
 })

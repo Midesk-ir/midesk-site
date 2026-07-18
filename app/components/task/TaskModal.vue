@@ -26,6 +26,7 @@ const toast = useToast()
 const task = ref<Task | null>(null)
 const project = ref<Project | null>(null)
 const sprint = ref<Sprint | null>(null)
+const sprints = ref<Sprint[]>([])
 const columns = ref<Array<{ slug: string, name: string, color: string }>>([])
 const comments = ref<Comment[]>([])
 const members = ref<User[]>([])
@@ -71,37 +72,56 @@ const priorityMeta = computed(() =>
 
 const currentUser = computed(() => authStore.user)
 
+function unwrapList<T>(payload: T[] | { data: T[] } | null | undefined): T[] {
+  if (!payload) return []
+  if (Array.isArray(payload)) return payload
+  if (Array.isArray(payload.data)) return payload.data
+  return []
+}
+
+function normalizeComment(raw: unknown): Comment {
+  const r = raw as Record<string, unknown>
+  const author = (r.user ?? r.author) as Record<string, unknown> | null | undefined
+  const name = author?.name ?? author?.full_name ?? '—'
+  return {
+    id: String(r.id ?? ''),
+    body: String(r.body ?? ''),
+    created_at: String(r.created_at ?? ''),
+    mentions: (r.mentions as string[] | undefined) ?? [],
+    user: {
+      id: String(author?.id ?? ''),
+      name: String(name),
+      avatar_url: (author?.avatar_url as string | null) ?? null
+    }
+  }
+}
+
 async function load() {
   loading.value = true
   try {
     const taskData = await api<Task>(`/tasks/${props.taskId}`)
-    const [commentsData, membersData, columnsData, projectData] = await Promise.all([
+    const [commentsData, membersData, columnsData, projectData, sprintsData] = await Promise.all([
       api<{ data: Comment[] }>(`/tasks/${props.taskId}/comments`),
       loadMembers(),
       loadColumns(taskData.project_id),
-      loadProject(taskData.project_id)
+      loadProject(taskData.project_id),
+      api<Sprint[] | { data: Sprint[] }>(`/projects/${taskData.project_id}/sprints`).catch(() => [])
     ])
 
-    task.value = taskData
+    task.value = {
+      ...taskData,
+      checklist: taskData.checklist ?? [],
+      labels: taskData.labels ?? [],
+      comments_count: taskData.comments_count ?? (taskData as Task & { comment_count?: number }).comment_count ?? 0
+    }
     project.value = projectData
     titleDraft.value = taskData.title
     descriptionDraft.value = taskData.description ?? ''
-    comments.value = commentsData.data
+    comments.value = unwrapList(commentsData).map(normalizeComment)
     members.value = membersData
     columns.value = columnsData
-
-    if (taskData.sprint_id) {
-      try {
-        const sprintData = await api<{ data: { sprint: Sprint } }>(
-          `/projects/${taskData.project_id}/sprints/${taskData.sprint_id}`
-        )
-        sprint.value = sprintData.data.sprint
-      } catch {
-        sprint.value = null
-      }
-    } else {
-      sprint.value = null
-    }
+    sprints.value = unwrapList(sprintsData)
+    sprint.value = sprints.value.find(s => s.id === taskData.sprint_id) ?? null
   } finally {
     loading.value = false
   }
@@ -125,6 +145,38 @@ async function saveField(field: Partial<Task>) {
   }
 }
 
+async function assignSprint(sprintId: string | null) {
+  if (!task.value) return
+  saveState.value = 'saving'
+  const previousSprintId = task.value.sprint_id
+  const previousSprint = sprint.value
+  task.value = { ...task.value, sprint_id: sprintId }
+  sprint.value = sprintId ? sprints.value.find(s => s.id === sprintId) ?? null : null
+  try {
+    const updated = await api<Task | { data: Task }>(`/tasks/${props.taskId}/sprint`, {
+      method: 'PATCH',
+      body: { sprint_id: sprintId }
+    })
+    const nextTask = unwrapTask(updated)
+    task.value = {
+      ...task.value,
+      ...nextTask,
+      checklist: nextTask.checklist ?? task.value.checklist ?? [],
+      labels: nextTask.labels ?? task.value.labels ?? []
+    }
+    sprint.value = sprintId ? sprints.value.find(s => s.id === sprintId) ?? sprint.value : null
+    saveState.value = 'saved'
+    setTimeout(() => {
+      if (saveState.value === 'saved') saveState.value = 'idle'
+    }, 1800)
+  } catch {
+    task.value = { ...task.value, sprint_id: previousSprintId }
+    sprint.value = previousSprint
+    saveState.value = 'idle'
+    toast.add({ title: t('common.error'), color: 'error' })
+  }
+}
+
 function saveTitle() {
   if (!task.value || titleDraft.value.trim() === task.value.title) return
   saveField({ title: titleDraft.value.trim() })
@@ -143,15 +195,32 @@ async function toggleComplete() {
   await saveField({ status: next })
 }
 
+function unwrapTask(payload: Task | { data: Task }): Task {
+  return 'data' in payload && payload.data ? payload.data : payload as Task
+}
+
 async function toggleChecklistItem(item: ChecklistItem, isDone: boolean) {
   if (!task.value || checklistSubmitting.value) return
   if (item.is_done === isDone) return
+
   checklistSubmitting.value = true
-  const checklist = task.value.checklist.map(c =>
+  const previous = task.value.checklist.map(c => ({ ...c }))
+  task.value.checklist = task.value.checklist.map(c =>
     c.id === item.id ? { ...c, is_done: isDone } : c
   )
+
   try {
-    await saveField({ checklist })
+    const updated = await api<Task | { data: Task }>(`/tasks/${props.taskId}/checklist`, {
+      method: 'PATCH',
+      body: { id: item.id, is_done: isDone }
+    })
+    const nextTask = unwrapTask(updated)
+    if (Array.isArray(nextTask.checklist)) {
+      task.value.checklist = nextTask.checklist
+    }
+  } catch {
+    task.value.checklist = previous
+    toast.add({ title: t('common.error'), color: 'error' })
   } finally {
     checklistSubmitting.value = false
   }
@@ -165,7 +234,7 @@ async function addComment() {
       method: 'POST',
       body: { body: newComment.value }
     })
-    comments.value.push(comment)
+    comments.value.push(normalizeComment(comment))
     newComment.value = ''
     if (task.value) task.value.comments_count++
   } catch {
@@ -176,13 +245,25 @@ async function addComment() {
 }
 
 async function addChecklistItem() {
-  if (!newChecklistItem.value.trim() || !task.value) return
-  const item = await api<ChecklistItem>(`/tasks/${props.taskId}/checklist`, {
-    method: 'POST',
-    body: { title: newChecklistItem.value }
-  })
-  task.value.checklist.push(item)
+  if (!newChecklistItem.value.trim() || !task.value || checklistSubmitting.value) return
+  checklistSubmitting.value = true
+  const title = newChecklistItem.value.trim()
   newChecklistItem.value = ''
+  try {
+    const updated = await api<Task | { data: Task }>(`/tasks/${props.taskId}/checklist`, {
+      method: 'POST',
+      body: { title }
+    })
+    const nextTask = unwrapTask(updated)
+    if (Array.isArray(nextTask.checklist)) {
+      task.value.checklist = nextTask.checklist
+    }
+  } catch {
+    newChecklistItem.value = title
+    toast.add({ title: t('common.error'), color: 'error' })
+  } finally {
+    checklistSubmitting.value = false
+  }
 }
 
 watch(() => props.taskId, () => {
@@ -195,6 +276,8 @@ watch(open, (v) => {
     mobileDetailsOpen.value = false
     task.value = null
     project.value = null
+    sprint.value = null
+    sprints.value = []
     titleDraft.value = ''
     descriptionDraft.value = ''
     saveState.value = 'idle'
@@ -341,8 +424,10 @@ watch(open, (v) => {
                 :columns="columns"
                 :status-items="statusItems"
                 :sprint="sprint"
+                :sprints="sprints"
                 :priority-meta="priorityMeta"
                 @save="saveField"
+                @assign-sprint="assignSprint"
               />
               <UButton
                 icon="i-lucide-clock"
@@ -359,7 +444,6 @@ watch(open, (v) => {
                 compact
                 :preset-project-id="task.project_id"
                 :preset-task-id="task.id"
-                class="mt-3"
                 @saved="showWorklogForm = false"
                 @cancel="showWorklogForm = false"
               />
@@ -406,20 +490,23 @@ watch(open, (v) => {
               </div>
 
               <div v-if="task.checklist.length" class="task-modal-checklist">
-                <label
+                <div
                   v-for="item in task.checklist"
                   :key="item.id"
                   class="task-modal-checklist-row"
+                  @click="toggleChecklistItem(item, !item.is_done)"
                 >
                   <UCheckbox
                     :model-value="item.is_done"
                     :disabled="checklistSubmitting"
+                    tabindex="-1"
+                    @click.stop
                     @update:model-value="(v: boolean | 'indeterminate') => toggleChecklistItem(item, v === true)"
                   />
                   <span :class="{ 'task-modal-checklist-done': item.is_done }">
                     {{ item.title }}
                   </span>
-                </label>
+                </div>
               </div>
               <p v-else class="task-modal-empty">{{ t('task.noChecklist') }}</p>
 
@@ -461,14 +548,14 @@ watch(open, (v) => {
                   class="task-modal-activity-item"
                 >
                   <UAvatar
-                    :alt="comment.user.name"
+                    :alt="comment.user?.name ?? ''"
                     size="sm"
                     icon="i-lucide-user"
                     class="shrink-0"
                   />
                   <div class="task-modal-activity-bubble">
                     <div class="task-modal-activity-meta">
-                      <span class="task-modal-activity-author">{{ comment.user.name }}</span>
+                      <span class="task-modal-activity-author">{{ comment.user?.name ?? '—' }}</span>
                       <span>{{ formatDateTime(comment.created_at) }}</span>
                     </div>
                     <p>{{ comment.body }}</p>
@@ -497,6 +584,10 @@ watch(open, (v) => {
                   <div class="task-modal-compose-foot">
                     <UButton
                       size="sm"
+                      color="primary"
+                      variant="soft"
+                      icon="i-lucide-send"
+                      class="task-modal-action-btn task-modal-action-btn--primary"
                       :loading="commentSubmitting"
                       :disabled="!newComment.trim()"
                       @click="addComment"
@@ -518,8 +609,10 @@ watch(open, (v) => {
             :columns="columns"
             :status-items="statusItems"
             :sprint="sprint"
+            :sprints="sprints"
             :priority-meta="priorityMeta"
             @save="saveField"
+            @assign-sprint="assignSprint"
           />
 
           <div class="task-modal-aside-divider" />
@@ -539,7 +632,6 @@ watch(open, (v) => {
             compact
             :preset-project-id="task.project_id"
             :preset-task-id="task.id"
-            class="mt-3"
             @saved="showWorklogForm = false"
             @cancel="showWorklogForm = false"
           />

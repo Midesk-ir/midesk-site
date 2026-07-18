@@ -6,5 +6,9 @@ const uiLocales = {
 } as const
 
 export function resolveUiLocale(code: string) {
-  return uiLocales[code as keyof typeof uiLocales] ?? en
+  const base = uiLocales[code as keyof typeof uiLocales] ?? en
+  return {
+    ...base,
+    dir: code === 'fa' ? 'rtl' : 'ltr'
+  }
 }
