@@ -1,5 +1,5 @@
 <script setup lang="ts">
-definePageMeta({ middleware: ['manager'] })
+definePageMeta({ layout: 'default', middleware: ['auth', 'tenant', 'leave', 'manager'] })
 
 const { t } = useI18n()
 const leaveStore = useLeaveStore()

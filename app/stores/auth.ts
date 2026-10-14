@@ -44,7 +44,7 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   function hasPermission(permission: string) {
-    return permissions.value.includes(permission) || isAdmin.value
+    return permissions.value.includes(permission)
   }
 
   return {

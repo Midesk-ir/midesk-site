@@ -1,8 +1,4 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import { fileURLToPath } from 'node:url'
-
-const componentsDir = fileURLToPath(new URL('./app/components', import.meta.url))
-
 export default defineNuxtConfig({
   ssr: false,
 
@@ -71,18 +67,6 @@ export default defineNuxtConfig({
   },
 
   compatibilityDate: '2025-01-15',
-
-  alias: {
-    '/components': componentsDir
-  },
-
-  vite: {
-    resolve: {
-      alias: {
-        '/components': componentsDir
-      }
-    }
-  },
 
   icon: {
     provider: 'server',

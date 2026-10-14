@@ -7,7 +7,7 @@ const route = useRoute()
 const { logout } = useAuth()
 const { t, localeProperties } = useI18n()
 const { isMobileNav, closeMobileSidebar } = useAppLayout()
-const { can, canAny } = usePermissions()
+const { can, canAny, hasLeaveModule } = usePermissions()
 const chatStore = useChatStore()
 
 const workExpanded = ref(false)
@@ -48,8 +48,13 @@ const navItemsPrimary = computed(() => [
 const workNavItems = computed<SidebarNavGroupItem[]>(() => [
   { label: t('nav.worklog'), to: '/worklog', icon: 'i-lucide-clock' },
   { label: t('nav.calendar'), to: '/calendar', icon: 'i-lucide-calendar' },
-  { label: t('nav.leave'), to: '/leave', icon: 'i-lucide-tree-palm' }
-])
+  {
+    label: t('nav.leave'),
+    to: '/leave',
+    icon: 'i-lucide-tree-palm',
+    show: hasLeaveModule.value
+  }
+].filter(item => item.show !== false).map(({ label, to, icon }) => ({ label, to, icon })))
 
 const collabNavItems = computed<SidebarNavGroupItem[]>(() => [
   { label: t('nav.chat'), to: '/chat', icon: 'i-lucide-message-square', badge: chatUnread.value },

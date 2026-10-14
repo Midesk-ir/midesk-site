@@ -24,6 +24,8 @@ async function load() {
     if (can('hr:dashboard:view')) {
       await hrStore.fetchDashboard()
     }
+  } catch {
+    // Plan/role gate may deny HR; page still renders without dashboard widgets.
   } finally {
     loading.value = false
   }

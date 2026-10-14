@@ -11,7 +11,7 @@ const { formatRelative } = useCalendar()
 const toast = useToast()
 const authStore = useAuthStore()
 const leaveStore = useLeaveStore()
-const { can } = usePermissions()
+const { can, hasLeaveModule } = usePermissions()
 
 const summary = ref<DashboardSummary | null>(null)
 const hrSummary = ref<HrDashboardSummary | null>(null)
@@ -60,7 +60,7 @@ const stats = computed(() => [
 const quickLinks = computed(() => [
   { label: t('nav.worklog'), to: '/worklog', icon: 'i-lucide-clock', show: true },
   { label: t('nav.calendar'), to: '/calendar', icon: 'i-lucide-calendar', show: true },
-  { label: t('nav.leave'), to: '/leave', icon: 'i-lucide-tree-palm', show: true },
+  { label: t('nav.leave'), to: '/leave', icon: 'i-lucide-tree-palm', show: hasLeaveModule.value },
   { label: t('nav.chat'), to: '/chat', icon: 'i-lucide-message-square', show: can('chat:view') },
   { label: t('nav.meetings'), to: '/meetings', icon: 'i-lucide-video', show: can('meetings:view') },
   { label: t('nav.ai'), to: '/ai', icon: 'i-lucide-sparkles', show: can('ai:view') },
@@ -84,9 +84,11 @@ async function load() {
   try {
     summary.value = await api<DashboardSummary>('/dashboard/summary')
 
-    await leaveStore.fetchAll().catch(() => {
-      toast.add({ title: t('leave.balance.title'), description: t('common.error'), color: 'warning' })
-    })
+    if (hasLeaveModule.value) {
+      await leaveStore.fetchAll().catch(() => {
+        toast.add({ title: t('leave.balance.title'), description: t('common.error'), color: 'warning' })
+      })
+    }
 
     if (can('hr:attendance:clock')) {
       await api<{ data: { clock_status: ClockStatus } }>('/hr/attendance/my').then(res => {
@@ -222,7 +224,7 @@ onMounted(load)
           </NuxtLink>
         </section>
 
-        <section v-if="isManager && summary.pending_leave_count != null" class="midesk-card p-5">
+        <section v-if="hasLeaveModule && isManager && summary.pending_leave_count != null" class="midesk-card p-5">
           <div class="mb-3 flex items-center justify-between">
             <h2 class="midesk-card-header mb-0">{{ t('dashboard.pendingLeave') }}</h2>
             <UIcon name="i-lucide-tree-palm" class="size-5 text-[var(--color-midesk-accent)]" />
@@ -235,7 +237,7 @@ onMounted(load)
           </NuxtLink>
         </section>
 
-        <section v-if="leaveStore.balances.length" class="midesk-card p-5">
+        <section v-if="hasLeaveModule && leaveStore.balances.length" class="midesk-card p-5">
           <div class="mb-3 flex items-center justify-between">
             <h2 class="midesk-card-header mb-0">{{ t('leave.balance.title') }}</h2>
             <UIcon name="i-lucide-tree-palm" class="size-5 text-[var(--color-midesk-accent)]" />

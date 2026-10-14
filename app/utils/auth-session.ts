@@ -2,7 +2,7 @@ import { getActivePinia, setActivePinia, type Pinia } from 'pinia'
 import { tryUseNuxtApp } from '#app'
 
 const BOOTSTRAP_CACHE_KEY = 'midesk_bootstrap'
-export const BOOTSTRAP_CACHE_VERSION = 2
+export const BOOTSTRAP_CACHE_VERSION = 3
 
 export function getAuthTokenCookie() {
   return useCookie<string | null>('midesk_token')

@@ -1,11 +1,11 @@
 <script setup lang="ts">
-withDefaults(defineProps<{
+const {
+  statCount = 4,
+  cardCount = 3
+} = defineProps<{
   statCount?: number
   cardCount?: number
-}>(), {
-  statCount: 4,
-  cardCount: 3
-})
+}>()
 </script>
 
 <template>
@@ -27,3 +27,7 @@ withDefaults(defineProps<{
     </div>
   </div>
 </template>
+
+<style scoped>
+/* Keep non-empty: empty style blocks are stripped and stale style requests break PostCSS. */
+</style>

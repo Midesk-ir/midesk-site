@@ -1,5 +1,6 @@
 import type { NitroFetchOptions, NitroFetchRequest } from 'nitropack'
 import type { BootstrapData } from '~/types'
+import { beginDataLoading, endDataLoading, isSilentLoadingUrl } from '~/utils/app-loading'
 
 export type ApiContext = {
   baseURL: string
@@ -40,11 +41,18 @@ export async function apiFetch<T>(
   url: string,
   options: NitroFetchOptions<NitroFetchRequest> = {}
 ): Promise<T> {
-  return $fetch<T>(url, {
-    baseURL: ctx.baseURL,
-    ...options,
-    headers: buildHeaders(ctx, options.headers as Record<string, string> | undefined)
-  }) as T
+  const trackLoading = import.meta.client && !isSilentLoadingUrl(url)
+  if (trackLoading) beginDataLoading()
+
+  try {
+    return await $fetch<T>(url, {
+      baseURL: ctx.baseURL,
+      ...options,
+      headers: buildHeaders(ctx, options.headers as Record<string, string> | undefined)
+    }) as T
+  } finally {
+    if (trackLoading) endDataLoading()
+  }
 }
 
 export async function bootstrapSession(

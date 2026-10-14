@@ -7,6 +7,28 @@ import type {
 } from '~/types/phase1'
 import { storeApi } from '~/utils/api-client'
 
+function unwrapSprint(response: Sprint | { data: Sprint }): Sprint {
+  if (
+    response
+    && typeof response === 'object'
+    && 'data' in response
+    && response.data
+    && typeof response.data === 'object'
+    && 'id' in response.data
+  ) {
+    return response.data
+  }
+  return response as Sprint
+}
+
+function unwrapSprintList(response: Sprint[] | { data: Sprint[] }): Sprint[] {
+  if (Array.isArray(response)) return response
+  if (response && typeof response === 'object' && Array.isArray(response.data)) {
+    return response.data
+  }
+  return []
+}
+
 export const useSprintStore = defineStore('sprint', () => {
   const sprints = ref<Sprint[]>([])
   const activeSprint = ref<Sprint | null>(null)
@@ -18,10 +40,11 @@ export const useSprintStore = defineStore('sprint', () => {
     projectId.value = id
     loading.value = true
     try {
-      const data = await storeApi<{ data: Sprint[] }>(`/projects/${id}/sprints`)
-      sprints.value = data.data
-      activeSprint.value = data.data.find(s => s.status === 'active') ?? null
-      return data.data
+      const data = await storeApi<Sprint[] | { data: Sprint[] }>(`/projects/${id}/sprints`)
+      const list = unwrapSprintList(data)
+      sprints.value = list
+      activeSprint.value = list.find(s => s.status === 'active') ?? null
+      return list
     } finally {
       loading.value = false
     }
@@ -34,19 +57,21 @@ export const useSprintStore = defineStore('sprint', () => {
   }
 
   async function createSprint(id: string, payload: CreateSprintPayload) {
-    const data = await storeApi<{ data: Sprint }>(`/projects/${id}/sprints`, {
+    const data = await storeApi<Sprint | { data: Sprint }>(`/projects/${id}/sprints`, {
       method: 'POST',
       body: payload
     })
-    sprints.value.push(data.data)
-    return data.data
+    const sprint = unwrapSprint(data)
+    sprints.value.push(sprint)
+    return sprint
   }
 
   async function activate(id: string, sprintId: string) {
-    const data = await storeApi<{ data: Sprint }>(
+    const data = await storeApi<Sprint | { data: Sprint }>(
       `/projects/${id}/sprints/${sprintId}/activate`,
       { method: 'PATCH' }
     )
+    const sprint = unwrapSprint(data)
     sprints.value = sprints.value.map(s => ({
       ...s,
       status: s.id === sprintId
@@ -55,8 +80,8 @@ export const useSprintStore = defineStore('sprint', () => {
           ? 'planning'
           : s.status
     }))
-    activeSprint.value = data.data
-    return data.data
+    activeSprint.value = sprint
+    return sprint
   }
 
   async function close(
@@ -64,14 +89,15 @@ export const useSprintStore = defineStore('sprint', () => {
     sprintId: string,
     payload: CloseSprintPayload
   ) {
-    const data = await storeApi<{ data: Sprint }>(
+    const data = await storeApi<Sprint | { data: Sprint }>(
       `/projects/${id}/sprints/${sprintId}/close`,
       { method: 'PATCH', body: payload }
     )
+    const sprint = unwrapSprint(data)
     const idx = sprints.value.findIndex(s => s.id === sprintId)
-    if (idx >= 0) sprints.value[idx] = data.data
+    if (idx >= 0) sprints.value[idx] = sprint
     if (activeSprint.value?.id === sprintId) activeSprint.value = null
-    return data.data
+    return sprint
   }
 
   async function assignTask(taskId: string, sprintId: string | null) {

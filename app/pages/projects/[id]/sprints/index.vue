@@ -29,7 +29,9 @@ const taskModalOpen = ref(false)
 const activeTaskId = ref('')
 
 const sortedSprints = computed(() =>
-  [...sprints.value].sort((a, b) => Date.parse(b.start_date) - Date.parse(a.start_date))
+  [...sprints.value]
+    .filter((sprint): sprint is NonNullable<typeof sprint> => Boolean(sprint?.id))
+    .sort((a, b) => Date.parse(b.start_date) - Date.parse(a.start_date))
 )
 
 const nextPlanningSprint = computed(() =>
@@ -58,6 +60,7 @@ async function handleCreate(payload: CreateSprintPayload) {
       end_date: `${payload.end_date}T00:00:00Z`
     })
     showCreateForm.value = false
+    await nextTick()
     toast.add({ title: t('sprint.created'), color: 'success' })
   } catch {
     toast.add({ title: t('common.error'), color: 'error' })

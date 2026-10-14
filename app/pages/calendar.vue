@@ -5,12 +5,18 @@ const { t } = useI18n()
 const authStore = useAuthStore()
 const leaveStore = useLeaveStore()
 const calendarStore = useCalendarStore()
+const { hasLeaveModule } = usePermissions()
 
 const showEventForm = ref(false)
 const selectedDate = ref<string>('')
 
 async function load() {
-  await leaveStore.fetchAll()
+  if (!hasLeaveModule.value) return
+  try {
+    await leaveStore.fetchAll()
+  } catch {
+    // Leave module may be blocked by plan.
+  }
 }
 
 function onDayClick(date: string) {

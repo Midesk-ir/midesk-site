@@ -22,6 +22,10 @@ export function usePermissions() {
     ])
   )
 
+  const hasLeaveModule = computed(() =>
+    authStore.permissions.some(p => p.startsWith('hr:') || p.startsWith('leave:'))
+  )
+
   const isFinanceAdmin = computed(() =>
     canAny([
       'finance:dashboard:view',
@@ -30,5 +34,5 @@ export function usePermissions() {
     ])
   )
 
-  return { can, canAny, canAll, isHrAdmin, isFinanceAdmin }
+  return { can, canAny, canAll, isHrAdmin, isFinanceAdmin, hasLeaveModule }
 }

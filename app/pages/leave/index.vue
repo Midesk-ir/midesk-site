@@ -1,4 +1,6 @@
 <script setup lang="ts">
+definePageMeta({ layout: 'default', middleware: ['auth', 'tenant', 'leave'] })
+
 const { t } = useI18n()
 const leaveStore = useLeaveStore()
 const { can } = usePermissions()

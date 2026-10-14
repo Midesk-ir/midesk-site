@@ -24,6 +24,7 @@ useHead({
     :dir="dir"
     :toaster="{ position: dir === 'rtl' ? 'top-left' : 'top-right' }"
   >
+    <MideskLoadingBar />
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
